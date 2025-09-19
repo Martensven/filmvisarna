@@ -17,6 +17,12 @@ export default function Header() {
                 <li>
                     <Link to="/theme">Theme</Link>
                 </li>
+                <li>
+                    <Link to="/my-page">My Page</Link>
+                </li>
+                <li>
+                    <Link to="/login">Login</Link>
+                </li>
             </ul>
         </nav>
     );
