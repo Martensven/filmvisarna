@@ -1,0 +1,11 @@
+:root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100svh;
+  width: 100svw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
