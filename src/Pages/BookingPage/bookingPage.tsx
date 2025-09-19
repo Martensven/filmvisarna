@@ -1,7 +1,7 @@
 export default function BookingPage() {
     return (
         <>
-            <h1>BookingPage</h1>
+            <h1 className="">BookingPage</h1>
         </>
     );
 }
