@@ -22,30 +22,38 @@ export default function BookingPage() {
         </section>
 
         {/*Container for chosing how many people and what age to get the different prizes*/}
-        <section className="flex flex-row justify-around container_box w-105 h-25 mt-1">
+        <section className="flex flex-col justify-around container_box w-105 h-25 mt-1">
           {/*Container for chosing the amount of people that need tickets*/}
-          <article className="flex flex-col">
-            <h2>ANTAL PERSONER</h2>
-            <select className="container_box"></select>
+          <article className="flex flex-row justify-around">
+            <section className="flex flex-row justify-center w-40">
+              <h2>Datum</h2>
+              <select></select>
+            </section>
+            
+            <section className="flex flex-row justify-center w-40">
+              <h2>ANTAL PERSONER</h2>
+              <select></select>
+            </section>
           </article>
           {/*Container for chosing age for different ticket prizes*/}
           <article className="flex flex-col justify-center items-center">
             <h2 className="text-xs">VAL FÖR ÅLDERSGRUPP (OLIKA PRISER)</h2>
             {/*Container for the selectbars for how many of different agespan*/}
-            <article className="flex flex-col justify-center container_box w-30">
+            <article className="flex flex-row justify-center container_box w-105">
               <p className="flex flex-row w-30 justify-between">
                 Vuxen
-                <select className="container_box w-10" name="" id=""></select>
+                <select className="w-8" name="" id=""></select>
               </p>
-              <p className="flex flex-row justify-between ">
+              <p className="flex flex-row justify-between w-30 ">
                 Senior
-                <select className="container_box w-10" name="" id=""></select>
+                <select className="w-8" name="" id=""></select>
               </p>
-              <p className="flex flex-row justify-between ">
+              <p className="flex flex-row justify-between w-30 ">
                 Barn
-                <select className="container_box w-10" name="" id=""></select>
+                <select className="w-8" name="" id=""></select>
               </p>
             </article>
+            <p className="flex justify-end">Summa: </p>
           </article>
         </section>
         {/*Container for a view of the salons*/}
@@ -59,7 +67,7 @@ export default function BookingPage() {
         </section>
         {/*Container for chosing chairs-button*/}
         <section className="flex flex-row justify-end w-105">
-          <button className="container_box w-20 m-2">Välj</button>
+          <button className="container_box w-20 m-2 text-sm">Välj</button>
         </section>
         {/*container for completing order which leads to an order confirmation and will be saved in my bookings and sent to mail*/}
         <section className="container_box w-105">
@@ -75,7 +83,7 @@ export default function BookingPage() {
               />
             </h2>
             <section className="flex flex-row justify-end ">
-              <button className="container_box w-20 m-5">Boka</button>
+              <button className="container_box w-20 m-2 text-sm">Boka</button>
             </section>
           </section>
 
@@ -88,8 +96,8 @@ export default function BookingPage() {
           </span>
 
           <section className="flex flex-row justify-around items-center container_box w-105 my-5">
-            <button className="container_box w-20 mt-5">Hem</button>
-            <button className="container_box w-20 mt-5">Mina Sidor</button>
+            <button className="container_box w-20 mt-5 text-sm">Hem</button>
+            <button className="container_box w-20 mt-5 text-sm">Mina Sidor</button>
           </section>
         </section>
       </main>
