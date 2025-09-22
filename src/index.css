@@ -6,7 +6,7 @@
   box-sizing: border-box;
   min-height: 100svh;
   width: 100svw;
-
+  background: linear-gradient(to bottom, #292929, #243365);
   display: flex;
   flex-direction: column;
   align-items: center;
