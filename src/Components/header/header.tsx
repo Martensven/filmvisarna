@@ -3,25 +3,25 @@ import { Link } from "react-router";
 export default function Header() {
     return (
         <nav>
-            <h1>Header</h1>
+            <h1></h1>
             <ul>
                 <li>
-                    <Link to="/">Home</Link>
+                    <Link to="/"></Link>
                 </li>
                 <li>
-                    <Link to="/booking">Booking</Link>
+                    <Link to="/booking"></Link>
                 </li>
                 <li>
-                    <Link to="/movie">Movie</Link>
+                    <Link to="/movie"></Link>
                 </li>
                 <li>
-                    <Link to="/theme">Theme</Link>
+                    <Link to="/theme"></Link>
                 </li>
                 <li>
-                    <Link to="/my-page">My Page</Link>
+                    <Link to="/my-page"></Link>
                 </li>
                 <li>
-                    <Link to="/login">Login</Link>
+                    <Link to="/login"></Link>
                 </li>
             </ul>
         </nav>
