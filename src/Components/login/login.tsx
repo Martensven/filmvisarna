@@ -3,8 +3,8 @@ import { Link } from "react-router";
 export default function Login() {
     return (
         <>
-            <h1>Login</h1>
-            <Link to="/register">Go to Register</Link>
+            <h1>Logga in</h1>
+            <Link to="/register">Registrera konto</Link>
         </>
     );
 }
