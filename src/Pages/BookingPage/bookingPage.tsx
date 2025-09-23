@@ -3,33 +3,33 @@ import "../../index.css";
 export default function BookingPage() {
   return (
     <>
-      <h1>BookingPage</h1>
+      <h1 className="p-5">BookingPage</h1>
       {/*----------Container for booking page----------*/}
-      <main className="grid gap-2 overscroll-y-auto w-screen md:grid md:grid-rows-1">
+      <main className="flex flex-col justify-center items-center overscroll-y-auto w-screen md:grid md:grid-rows-1">
         {/*----------Container for movie poster and title, Genre, age and time----------*/}
-        <section className="md:flex md:flex-row md:w-auto md:justify-center md:itmes-center">
+        <section className="md:flex md:flex-row md:w-full md:justify-center md:itmes-center">
           {" "}
           {/*This section is for bigger screens to mange responsive layout*/}
-          <section className="flex flex-row items-center justify-center w-full container_box h-65 md:w-96 md:m-4">
+          <section className="flex flex-row items-center justify-center w-screen container_box h-65 md:w-96 md:m-4 lg:w-120 lg:h-80">
             {/*----------Container for movie poster----------*/}
             <img
               src=""
               alt="FILM POSTER"
-              className="container_box w-40 h-60 m-0.5 sm:w-70 md:w-96 md:m-1"
+              className="container_box w-40 h-60 m-0.5 sm:w-70 md:w-96 md:m-1 lg:h-76"
             />
 
             {/*----------Container movie info ----------*/}
-            <article className="flex flex-col container_box h-40 ml-1 md:w-80 md:m-1">
-              <h1 className="container_box w-44 h-15 md:w-45">TITLE</h1>
-              <p className="container_box w-44 h-25 md:w-45">
+            <article className="flex flex-col container_box h-40 ml-1 md:w-80 md:m-1 lg:flex lg:justify-center lg:items-center lg:m-2">
+              <h1 className="container_box w-44 h-15 md:w-45 lg:m-1">TITLE</h1>
+              <p className="container_box w-44 h-25 md:w-45 lg:m-1">
                 FILM INFORMATION
               </p>
             </article>
           </section>
           {/*----------Container for chosing how many seats and what date----------*/}
-          <section className="flex flex-col justify-center items-center container_box h-36 w-full mt-1 sm:h-46 md:w-80 md:h-65 md:m-4 md:flex md:justify-center md:items-center">
+          <section className="flex flex-col justify-center items-center container_box h-36 w-screen mt-1 sm:h-46 md:w-80 md:h-65 md:m-4 md:flex md:justify-center md:items-center lg:h-80">
             {/*----------Container for chosing the amount of people that need tickets----------*/}
-            <article className="flex flex-col items-center w-screen h-34 md:w-auto md:h-65">
+            <article className="flex flex-col items-center w-screen h-34 md:w-screen md:h-65">
               <section className="flex flex-col justify-center w-auto md:flex-col md:justify-center md:items-center md:w-72 md:h-40">
                 <h2 className="text-sm md:text-s">DATUM</h2>
 
@@ -51,20 +51,21 @@ export default function BookingPage() {
         </section>
 
         {/*----------Container for a view of the salons----------*/}
-        <section className="flex flex-col justify-between w-auto container_box h-65 mt-2 sm:mx-2 sm:h-80 md:h-96 md:mx-2">
-          <article className="flex flex-col justify-between w-auto h-65 my-2 md:h-96 md-m-1">
+        <section className="flex flex-col justify-center items-center w-screen container_box h-65 sm:mx-2 sm:h-80 md:w-screen md:h-96 lg:w-full">
+          <article className="flex flex-col justify-between w-auto h-65 container_box md:h-96 lg:w-6/12 lg:h-4/5 lg:m-1">
             <span>
               VISA SALONG 1/2, "karta" över stolar, interaktiv för val av
               platser.
             </span>
           </article>
-        </section>
-        {/*----------Container for chosing chairs-button----------*/}
+           {/*----------Container for chosing chairs-button----------*/}
         <section className="flex flex-row justify-end">
           <button className="container_box w-20 m-2 text-sm">Välj</button>
         </section>
+        </section>
+       
         {/*----------container for completing order which leads to an order confirmation and will be saved in my bookings and sent to mail----------*/}
-        <section className="flex flex-col justify-center items-center container_box md:m-2">
+        <section className="flex flex-col justify-center items-center container_box w-screen md:w-full">
           <p>Sista stegen innan bokning</p>
           {/*----------Container for chosing age for different ticket prizes----------*/}
           <article className="flex flex-col justify-center items-center">
