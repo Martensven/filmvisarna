@@ -15,7 +15,7 @@ export default function BookingPage() {
             <img
               src=""
               alt="FILM POSTER"
-              className="container_box w-40 h-60 m-0.5 sm:w-60 md:w-96 md:m-1"
+              className="container_box w-40 h-60 m-0.5 sm:w-70 md:w-96 md:m-1"
             />
 
             {/*----------Container movie info ----------*/}
@@ -27,18 +27,18 @@ export default function BookingPage() {
             </article>
           </section>
           {/*----------Container for chosing how many seats and what date----------*/}
-          <section className="flex flex-col justify-around container_box h-25 w-full mt-1 md:w-80 md:h-65 md:m-4 md:flex md:justify-center md:items-center">
+          <section className="flex flex-col justify-center items-center container_box h-36 w-full mt-1 sm:h-46 md:w-80 md:h-65 md:m-4 md:flex md:justify-center md:items-center">
             {/*----------Container for chosing the amount of people that need tickets----------*/}
-            <article className="flex flex-col justify-around w-screen md:w-auto md:h-65">
-              <section className="flex flex-col justify-center w-40 md:flex-col md:justify-center md:items-center md:w-72 md:h-40">
+            <article className="flex flex-col items-center w-screen h-34 md:w-auto md:h-65">
+              <section className="flex flex-col justify-center w-auto md:flex-col md:justify-center md:items-center md:w-72 md:h-40">
                 <h2 className="text-sm md:text-s">DATUM</h2>
 
                 {/*----------Containers for calender days----------*/}
-                <section className="flex flex-row justify-center items-center container_box md:w-72 md:h-34">
-                  <span className="container_box md:w-20 md:h-32 md:text-xs">DATUM - TID</span>
-                   <span className="container_box md:w-20 md:h-32 md:text-xs">DATUM - TID</span>
-                   <span className="container_box md:w-20 md:h-32 md:text-xs">DATUM - TID</span>
-                   <span className="container_box md:w-20 md:h-32 md:text-xs">DATUM - TID</span>
+                <section className="flex flex-row  m-2 container_box w-auto h-15  md:w-72 md:h-34">
+                  <span className="container_box w-full md:w-20 md:h-32 md:text-xs">DATUM - TID</span>
+                   <span className="container_box w-full md:w-20 md:h-32 md:text-xs">DATUM - TID</span>
+                   <span className="container_box w-full md:w-20 md:h-32 md:text-xs">DATUM - TID</span>
+                   <span className="container_box w-full md:w-20 md:h-32 md:text-xs">DATUM - TID</span>
                 </section>
               </section>
 
