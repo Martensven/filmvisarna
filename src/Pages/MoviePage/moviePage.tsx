@@ -15,7 +15,7 @@ export default function MoviePage() {
                         <article className="border-2 w-full h-174 text-center pt-87">Beskrivning av filmen</article>
                     </section>
                 
-                    <aside className="border-2 w-1/3 h-220 text-center pt-110">Bild på filmen</aside>
+                    <aside className="border-2 w-1/3 h-219 text-center pt-110">Bild på filmen</aside>
                 </section>
                 <article className="border-2 mt-20 mb-20 mx-auto w-4/5 sm:w-2/3 md:w-1/2 lg:w-1/3 h-40 text-center pt-15">Boka knapp</article>
             </section>
