@@ -1,6 +1,9 @@
+import { Link } from "react-router";
+
+
 export default function Register() {
     return (
-        <section className="border p-5 flex flex-col">
+        <section className="border p-5 flex flex-col m-5">
             <h1 className="text-4xl">Skapa din konto</h1>
 
             <form className="flex flex-col m-4">
@@ -13,6 +16,7 @@ export default function Register() {
             </form>
             <button className="cursor-pointer my-3 border p-4">Skapa konto</button>
 
+            <Link to="/login" className="text-purple-900">Har redan en konto?</Link>
         </section>
     );
 }
