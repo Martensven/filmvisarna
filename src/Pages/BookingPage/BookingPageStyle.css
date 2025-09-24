@@ -4,7 +4,7 @@
   padding: 0;
   box-sizing: border-box;
   min-height: 100svh;
-  width: 100svw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +21,7 @@
 
 .container_content {
     border: none;
-    color: rgb(228, 225, 225);
+    color: #e4e1e1;
     border-radius: 5px;
     background-color: #817e7e50;
     box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.253);
