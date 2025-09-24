@@ -33,6 +33,26 @@ export default function MyPage() {
                 </section>
                 )}
             </section>
+            <br />
+            <section>
+                <h2 className="text-lg sm:text-xl font-semibold">Tidigare bokningar</h2>
+                <br />
+                <p className="text-base sm:text-lg font-semibold">Film 1</p>
+                <p className="text-sm sm:text-base md:text-lg">Datum: 00-00-0000</p>
+                <p className="text-sm sm:text-base md:text-lg mb-1">lorem ipsum dolor sit amet.</p>
+                <p className="border-b border-gray-700 pb-4 last:border-none last:pb-0"></p>
+                <p className="text-base sm:text-lg font-semibold">Film 2</p>
+                <p className="text-sm sm:text-base md:text-lg">Datum: 00-00-0000</p>
+                <p className="text-sm sm:text-base md:text-lg mb-1">lorem ipsum dolor sit amet.</p>
+                <p className="border-b border-gray-700 pb-4 last:border-none last:pb-0"></p>
+                <p className="text-base sm:text-lg font-semibold">Film 3</p>
+                <p className="text-sm sm:text-base md:text-lg">Datum: 00-00-0000</p>
+                <p className="text-sm sm:text-base md:text-lg mb-1">lorem ipsum dolor sit amet.</p>
+                <p className="border-b border-gray-700 pb-4 last:border-none last:pb-0"></p>
+                <p className="text-base sm:text-lg font-semibold">Film 4</p>
+                <p className="text-sm sm:text-base md:text-lg">Datum: 00-00-0000</p>
+                <p className="text-sm sm:text-base md:text-lg mb-1">lorem ipsum dolor sit amet.</p>
+            </section>
         </main>
 
     );
