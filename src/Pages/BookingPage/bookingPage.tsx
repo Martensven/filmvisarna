@@ -29,7 +29,7 @@ export default function BookingPage() {
           {/*----------Container for chosing how many seats and what date----------*/}
           <section className="flex flex-col justify-center items-center container_box h-36 w-screen mt-1 sm:h-46 md:w-80 md:h-65 md:m-4 md:flex md:justify-center md:items-center lg:h-80">
             {/*----------Container for chosing the amount of people that need tickets----------*/}
-            <article className="flex flex-col items-center w-screen h-34 md:w-screen md:h-65">
+            <article className="flex flex-col items-center w-screen h-34 md:w-auto md:h-65">
               <section className="flex flex-col justify-center w-auto md:flex-col md:justify-center md:items-center md:w-72 md:h-40">
                 <h2 className="text-sm md:text-s">DATUM</h2>
 
@@ -51,7 +51,7 @@ export default function BookingPage() {
         </section>
 
         {/*----------Container for a view of the salons----------*/}
-        <section className="flex flex-col justify-center items-center w-screen container_box h-65 sm:mx-2 sm:h-80 md:w-screen md:h-96 lg:w-full">
+        <section className="flex flex-col justify-center items-center w-auto container_box h-65 sm:h-80 md:w-screen md:h-96 lg:w-full">
           <article className="flex flex-col justify-between w-auto h-65 container_box md:h-96 lg:w-6/12 lg:h-4/5 lg:m-1">
             <span>
               VISA SALONG 1/2, "karta" över stolar, interaktiv för val av
