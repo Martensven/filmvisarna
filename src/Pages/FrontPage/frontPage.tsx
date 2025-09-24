@@ -2,12 +2,16 @@ import { Link } from "react-router-dom";
 
 export default function FrontPage() {
     return (
-        <main className="w-screen flex flex-col items-center min-h-screen" >
-            <h1>FrontPage</h1>
+        <main className="w-screen flex flex-col items-center min-h-screen mt-36" >
 
-            <section className="h-96 w-4/5 max-w-screen-lg border border-black my-5 flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory">
+            <section className=" w-4/5 mb-5 max-w-screen-lg border-black flex justify-around items-end flex-nowrap">
+                <p>Filter &darr;</p>
+                <p>Sortera &darr;</p>
+            </section>
+
+            <section className="h-96 w-4/5 max-w-screen-lg border border-black flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory">
                 {Array.from({ length: 10 }).map((_, i) => (
-                    <article key={i + 1} className="min-w-60 h-72 m-2 snap-center">
+                    <article key={i + 1} className="min-w-60 h-72 m-2 snap-center mx-8">
                         <Link to="/movie">
                             <p className="border h-72">Bild {i + 1}</p>
                             <p>Filmnamn {i + 1}</p>
