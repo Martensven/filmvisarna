@@ -11,12 +11,6 @@ export default function Footer() {
             <section className="md:w-1/3 h-full flex justify-center items-center mt-2">
                 <h1 className="text-2xl">Filmvisarna</h1>
             </section>
-            <section className="md:w-1/3 h-full flex flex-col justify-center items-center mt-2">
-                <h1 className="text-2xl mb-2 ">Om oss</h1>
-                <p className="mx-1 mb-5">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque distinctio quam rem minima. Eveniet impedit, ad vero nihil eum, veritatis, voluptate cum est quos odio porro magnam facere iste natus.
-                </p>
-            </section>
         </footer>
     );
 }
