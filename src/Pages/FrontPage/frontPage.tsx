@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import exampleList from "../../../Backend/example.ts"
 
 export default function FrontPage() {
     return (
@@ -10,12 +11,19 @@ export default function FrontPage() {
             </section>
 
             <section className="h-96 w-4/5 max-w-screen-lg border border-black flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory">
-                {Array.from({ length: 10 }).map((_, i) => (
-                    <article key={i + 1} className="min-w-60 h-72 m-2 snap-center mx-8">
-                        <Link to="/movie">
-                            <p className="border h-72">Bild {i + 1}</p>
-                            <p>Filmnamn {i + 1}</p>
-                            <p>Genre {i + 1}</p>
+                {exampleList.map((movie) => (
+                    <article
+                        key={movie.id}
+                        className="min-w-48 h-72 m-2 snap-center mx-20"
+                    >
+                        <Link to={`/movie/${movie.id}`}>
+                            <img
+                                src={movie.image}
+                                alt={movie.movieName}
+                                className="border h-72 object-cover"
+                            />
+                            <p>{movie.movieName}</p>
+                            <p>{movie.genre}</p>
                         </Link>
                     </article>
                 ))}
