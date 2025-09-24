@@ -8,6 +8,8 @@ import Footer from './Components/footer/footer.tsx'
 import MyPage from './Pages/MyPage/myPage.tsx'
 import Login from './Components/login/login.tsx'
 import Register from './Components/register/register.tsx'
+import AboutPage from './Pages/AboutPage/aboutPage.tsx'
+import KioskPage from './Pages/KioskPage/kioskPage.tsx'
 
 function App() {
 
@@ -24,6 +26,8 @@ function App() {
         <Route path='/my-page' element={<MyPage />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/about' element={<AboutPage />} />
+        <Route path='/kiosk' element={<KioskPage />} />
       </Routes>
 
       <Footer></Footer>
