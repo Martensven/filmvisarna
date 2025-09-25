@@ -5,7 +5,7 @@ export default function MovieInformation() {
 
     <main className="w-screen md:flex md:flex-row md:justify-around md:w-screen md:h-100">
       {/*----------Container for movie poster and title, Genre, age and time----------*/}
-      <section className="flex flex-row items-center justify-center container_box h-76  
+      <section className="flex flex-row items-center justify-center container_box h-76 
       md:flex md:w-3/5 md:h-86 md:justify-center md:itmes-center md:m-2 
       lg:w-4/5 lg:h-80">
 
@@ -13,9 +13,9 @@ export default function MovieInformation() {
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Jaws_movie_poster.jpg/640px-Jaws_movie_poster.jpg"
           alt="FILM POSTER"
-          className="w-50 h-60 m-0.5
-           sm:w-70 
-           md:w-2/6 md:h-76 md:m-5 lg:h-100 rounded-sm"
+          className="w-50 h-60 m-1 rounded-sm
+           sm:w-50 h-70 mr-8 
+           md:w-2/6 md:h-76 md:m-5 lg:h-100 "
         />
 
         {/*----------Container movie info ----------*/}
