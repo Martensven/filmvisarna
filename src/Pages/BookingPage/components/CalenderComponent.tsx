@@ -4,9 +4,9 @@ export default function CalenderComponent() {
   return (
     <main className="flex flex-col justify-center items-center">
       {/*----------Containers for calender days----------*/}
-      <h2 className="text-[#e4e1e1] p-1 md:text-s">Dagens datum</h2>
+      <h2 className="text-[#e4e1e1] p-1 md:text-s">Dagens visningar</h2>
       <section
-        className="flex flex-row m-1 container_content w-86 h-auto overflow-x-auto overflow-y-hidden
+        className="flex flex-row m-1 container_content w-86 h-auto mb-10 overflow-x-auto overflow-y-hidden
              md:w-4/5 md:h-34"
       >
         <ul className="container_box calenderDatesContainer md:w-20 md:h-32 md:text-xs">
@@ -27,7 +27,7 @@ export default function CalenderComponent() {
         </ul>
       </section>
 
-      <h2 className="text-[#e4e1e1] p-1 md:text-s">Andra tider</h2>
+      <h2 className="text-[#e4e1e1] p-1 md:text-s">Andra visningar</h2>
       <section
         className="flex flex-row m-1 container_content w-86 h-auto overflow-x-auto overflow-y-hidden
              md:w-4/5 md:h-34"
