@@ -10,8 +10,8 @@ export type KioskItem = {
 };
 
 const kiosklist: KioskItem[] = [
-  { id: 1, name: "Cola", price: 25, category: "drink", size: "50cl", image: "" },
-  { id: 2, name: "Fanta", price: 25, category: "drink", size: "50cl", image: "" },
+  { id: 1, name: "Cola", price: 25, category: "drink", size: "50cl", image: "../public/images/kiosk/cocacola.png" },
+  { id: 2, name: "Fanta", price: 25, category: "drink", size: "50cl", image: "../public/images/kiosk/fanta-transparent.png" },
   { id: 3, name: "Ramlösa", price: 20, category: "drink", size: "50cl", image: "" },
   { id: 4, name: "Festis", price: 15, category: "drink", size: "200ml", image: "" },
   { id: 5, name: "Popcorn", price: 30, category: "snack", size: "200g", image: "" },
