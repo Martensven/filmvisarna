@@ -9,21 +9,21 @@ export default function CalenderComponent() {
         className="flex flex-row m-1 container_content w-86 h-auto mb-10 overflow-x-auto overflow-y-hidden
              md:w-4/5 md:h-34"
       >
-        <ul className="container_box calenderDatesContainer md:w-20 md:h-32 md:text-xs">
+        <ul className="container_box calenderDatesContainer w-36 md:w-20 md:h-32 md:text-xs">
           <li>Tid: xx:xx</li>
-          <li>Salong: 1</li>
+          <li>Stora Salongen</li>
         </ul>
-        <ul className="container_box calenderDatesContainer md:w-20 md:h-32 md:text-xs">
+        <ul className="container_box calenderDatesContainer w-36 md:w-20 md:h-32 md:text-xs">
           <li>Tid: xx:xx</li>
-          <li>Salong: 1</li>
+          <li>Stora Salongen</li>
         </ul>
-        <ul className="container_box calenderDatesContainer md:w-20 md:h-32 md:text-xs">
+        <ul className="container_box calenderDatesContainer w-36 md:w-20 md:h-32 md:text-xs">
           <li>Tid: xx:xx</li>
-          <li>Salong: 2</li>
+          <li>Lilla Salongen</li>
         </ul>
-        <ul className="container_box calenderDatesContainer md:w-20 md:h-32 md:text-xs">
+        <ul className="container_box calenderDatesContainer w-36 md:w-20 md:h-32 md:text-xs">
           <li>Tid: xx:xx</li>
-          <li>Salong: 2</li>
+          <li>Lilla Salongen</li>
         </ul>
       </section>
 
@@ -36,32 +36,32 @@ export default function CalenderComponent() {
           <ul className="container_box calenderDatesContainer w-36 md:w-20 md:h-32 md:text-xs">
             <li>Datum: xx/xx</li>
             <li>Tid: xx:xx</li>
-            <li>Salong: 1</li>
+            <li>Stora Salongen</li>
           </ul>
           <ul className="container_box calenderDatesContainer w-36 md:w-20 md:h-32 md:text-xs">
             <li>Datum: xx/xx</li>
             <li>Tid: xx:xx</li>
-            <li>Salong: 1</li>
+            <li>Stora Salongen</li>
           </ul>
           <ul className="container_box calenderDatesContainer w-36 md:w-20 md:h-32 md:text-xs">
             <li>Datum: xx/xx</li>
             <li>Tid: xx:xx</li>
-            <li>Salong: 2</li>
+            <li>Stora Salongen</li>
           </ul>
           <ul className="container_box calenderDatesContainer w-36 md:w-20 md:h-32 md:text-xs">
             <li>Datum: xx/xx</li>
             <li>Tid: xx:xx</li>
-            <li>Salong: 2</li>
+            <li>Lilla Salongen</li>
           </ul>
           <ul className="container_box calenderDatesContainer w-36 md:w-20 md:h-32 md:text-xs">
             <li>Datum: xx/xx</li>
             <li>Tid: xx:xx</li>
-            <li>Salong: 1</li>
+            <li>Lilla Salongen</li>
           </ul>
           <ul className="container_box calenderDatesContainer w-36 md:w-20 md:h-32 md:text-xs">
             <li>Datum: xx/xx</li>
             <li>Tid: xx:xx</li>
-            <li>Salong: 1</li>
+            <li>Stora Salongen</li>
           </ul>
         </span>
       </section>
