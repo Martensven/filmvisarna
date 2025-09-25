@@ -1,6 +1,6 @@
 export default function KioskPage() {
   return (
-    <main className="w-screen flex flex-colpx-20">
+    <main className="w-full flex flex-colpx-20">
       <section className="w-full">
         <header className="text-center">
           <h1 className="text-center text-2xl mt-4">Kiosk</h1>
