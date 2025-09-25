@@ -14,3 +14,5 @@ const kiosklist = [
     { id: 11, name: "Sura nappar", price: 20, category: "candy", size: "100g", image: "../public/images/kiosk/suranappar.webp" },
     { id: 12, name: "nappar", price: 20, category: "candy", size: "100g", image: "../public/images/kiosk/nappar.webp" },
 ]
+
+export default kiosklist;
