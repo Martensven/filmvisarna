@@ -38,7 +38,7 @@ const exampleList = [
         genre: "Äventyr",
         releaseYear: 1993,
         age: 11
-    },
+    }
 ]
 
 export default exampleList;
