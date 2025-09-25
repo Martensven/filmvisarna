@@ -4,7 +4,7 @@ export default function MoviePage() {
     return (
         <>
             <main className="w-screen flex flex-col items-center">
-            <h1 className="text-center">Filmsida Wireframe</h1>
+            <h1 className="text-center">Filmsida</h1>
             
             <section className="w-full px-20">
                 <article className="border-2 mt-5 w-full h-120 text-center pt-60">Filmtrailer</article>
