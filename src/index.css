@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 @theme {
   --breakpoint-xs: 30px;
 }
@@ -8,16 +9,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  min-height: 100svh;
-  width: 100svw;
-  text-align: center;
+  min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.container_box {
-  border: solid 1px black;
-  padding: 1px;
-  border-radius: 5px;
+  text-align: center;
+  font-family: monospace;
+  background-color: #292929;
 }

@@ -1,0 +1,16 @@
+
+.container_box {
+  border: none;
+  padding: 1px;
+  border-radius: 5px;
+  background-color: #24252C;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.253);
+}
+
+.container_content {
+    border: none;
+    color: #e4e1e1;
+    border-radius: 5px;
+    background-color: #817e7e50;
+    box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.253);
+}
