@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router'
-import FrontPage from './Pages/FrontPage/frontPage.tsx'
+import FrontPage from './Pages/FrontPage/frontPage.js'
 import BookingPage from './Pages/BookingPage/bookingPage.tsx'
 import MoviePage from './Pages/MoviePage/moviePage.tsx'
 import ThemePage from './Pages/ThemePage/themePage.tsx'

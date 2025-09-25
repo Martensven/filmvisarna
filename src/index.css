@@ -9,16 +9,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  min-height: 100svh;
-  width: 100svw;
+  min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-}
-
-.container_box {
-  border: solid 1px black;
-  padding: 1px;
-  border-radius: 5px;
+  font-family: monospace;
+  background-color: #292929;
 }
