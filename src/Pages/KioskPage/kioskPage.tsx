@@ -3,10 +3,15 @@ import type { KioskItem } from "../../../Backend/kiosk";
 import CategorySection from "./components/categorySection";
 
 export default function KioskPage() {
-
-  const drinks: KioskItem[] = kiosklist.filter((item) => item.category === "drink");
-  const snacks: KioskItem[] = kiosklist.filter((item) => item.category === "snack");
-  const candy: KioskItem[] = kiosklist.filter((item) => item.category === "candy");
+  const drinks: KioskItem[] = kiosklist.filter(
+    (item) => item.category === "drink"
+  );
+  const snacks: KioskItem[] = kiosklist.filter(
+    (item) => item.category === "snack"
+  );
+  const candy: KioskItem[] = kiosklist.filter(
+    (item) => item.category === "candy"
+  );
 
   return (
     <main className="w-screen bg-[#292929] text-white">
@@ -27,7 +32,6 @@ export type CategorySectionProps = {
   items: KioskItem[];
 };
 
-
 // export default function KioskPage() {
 //   return (
 //     <main className="w-full flex flex-colpx-20">
@@ -40,7 +44,7 @@ export type CategorySectionProps = {
 //         <section className="w-full flex flex-wrap justify-center items-center">
 //           <h3 className="w-full text-center text-xl m-4">Dryck:</h3>
 //           <section className="w-full flex flex-wrap justify-center items-center gap-10">
-           
+
 //             <article className="w-48 h-64 border-2 border-gray-300 relative flex items-end justify-center text-center text-white">
 //               <img
 //                 src="image.jpg"
