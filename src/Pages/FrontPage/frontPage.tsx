@@ -110,7 +110,7 @@ export default function FrontPage() {
                         key={movie.id}
                         className="min-w-60 h-72 m-2 snap-center mx-8"
                     >
-                        <Link to={`/movie/${movie.id}`}>
+                        <Link to={`/movie/${movie.id}`} className="flex flex-col items-center gap-2">
                             <img
                                 src={movie.image}
                                 alt={movie.movieName}
