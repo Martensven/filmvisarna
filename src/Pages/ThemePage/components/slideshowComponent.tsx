@@ -38,7 +38,7 @@ export default function Slideshow({ day }: SlideshowProps) {
         setCurrentIndex((prev) => (prev - 1 + movies.length) % movies.length);
     };
 
-    const baseColor = day === "thursday" ? "0, 0, 0" : "25, 60, 184";
+    const baseColor = day === "thursday" ? "0, 0, 0" : "36, 51, 101";
     const textDay = day === "thursday" ? "white" : "#f4c206";
 
     return (
