@@ -141,7 +141,7 @@ const exampleList = [
     },
     {
         id: 6,
-        movieName: 'Jaws',
+        movieName: 'Hajen',
         image: "/images/jaws.webp",
         genre: ["Skräck", "Äventyr", "Thriller"],
         releaseYear: 1975,
@@ -170,7 +170,7 @@ const exampleList = [
     {
         id: 7,
         movieName: 'Körkarlen',
-        image: "/images/körkarlen.webp",
+        image: "/images/körkarlen.jpg",
         genre: ["Drama", "Fantasi", "Skräck"],
         releaseYear: 1921,
         age: 15,
@@ -197,7 +197,7 @@ const exampleList = [
     },
     {
         id: 8,
-        movieName: 'Safety Last!',
+        movieName: 'Upp Genom Luften',
         image: "/images/safetylast.webp",
         genre: ["Komedi", "Romantik"],
         releaseYear: 1923,
@@ -225,7 +225,7 @@ const exampleList = [
     },
     {
         id: 9,
-        movieName: 'City Lights',
+        movieName: 'Stadens Ljus',
         image: "/images/citylights.webp",
         genre: ["Komedi", "Drama", "Romantik"],
         releaseYear: 1931,
