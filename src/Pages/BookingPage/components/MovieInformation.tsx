@@ -21,7 +21,7 @@ export default function MovieInformation() {
         />
 
         {/*----------Container movie info ----------*/}
-        <article className="flex flex-col container_content h-62 ml-2
+        <article className="flex flex-col h-62 ml-1 text-[#e4e1e1]
         sm:
         md:w-2/5 md:m-1 
         lg:flex lg:justify-center lg:items-center lg:m-2">

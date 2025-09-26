@@ -11,11 +11,11 @@ export default function Header() {
     <main>
       <header className="text-center text-white mt-1">
         {/* <h1 className="logo_font text-xl mt-5">FILMVISARNA</h1> */}
-        <div className="flex justify-center items-center ml-5">
+        <div className="flex justify-center items-center ml-5 sm:justify-start sm:m-5 md:justify-start">
           <img
             src={LoggoNR1}
             alt="Filmvisarnas loggo"
-            className="w-56 "
+            className="w-56 sm:w-80"
           />
         </div>
 
