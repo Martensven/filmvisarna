@@ -7,12 +7,24 @@ export default function FrontPage() {
     const [sortOpen, setSortOpen] = useState(false);
 
     const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+    const [selectedAges, setSelectedAges] = useState<number[]>([]);
     const [sortOption, setSortOption] = useState<string>("");
 
-    // Filter based on selected genres
-    const filteredMovies = exampleList.filter((movie: any) => {
-        if (selectedGenres.length === 0) return true; // if no genre is selected then show all movies in.
-        return movie.genre.some((genre: string) => selectedGenres.includes(genre));
+    // Filters movies based on selected genres and ages
+    const filteredMovies = exampleList.filter((movie) => {
+
+        //Genrefilter
+        const genreMatch =
+            selectedGenres.length === 0 ||
+            (Array.isArray(movie.genre)
+                ? movie.genre.some((g) => selectedGenres.includes(g))
+                : selectedGenres.includes(movie.genre));
+
+        //Agefilter
+        const ageMatch =
+            selectedAges.length === 0 || selectedAges.includes(movie.age);
+
+        return genreMatch && ageMatch;
     });
 
     // Sort based on selected option. (A-Z, Z-A, Newest)
@@ -24,7 +36,7 @@ export default function FrontPage() {
         return 0;
     });
 
-    // --- Hantera checkbox ---
+    // Handle genre checkbox
     const handleGenreChange = (genre: string) => {
         setSelectedGenres((prev) =>
             prev.includes(genre)
@@ -32,6 +44,21 @@ export default function FrontPage() {
                 : [...prev, genre] // add if not selected
         );
     };
+
+    // Handle age checkbox
+    const handleAgeChange = (age: number) => {
+        setSelectedAges((prev) =>
+            prev.includes(age) ? prev.filter((a) => a !== age) : [...prev, age]
+        );
+    };
+
+    // Age options for filtering
+    const ageOptions = [
+        { label: "Film utan åldersgräns (Barntillåten)", value: 0 },
+        { label: "7 år (0 år i vuxet sällskap)", value: 7 },
+        { label: "11 år (7 år i vuxet sällskap)", value: 11 },
+        { label: "15 år (11 år i vuxet sällskap)", value: 15 },
+    ];
 
     return (
         <main className="w-screen flex flex-col items-center min-h-screen mt-36 bg-[#292929]">
@@ -48,7 +75,7 @@ export default function FrontPage() {
                         Filter &darr;
                     </button>
                     {filterOpen && (
-                        <div className="absolute mt-2 bg-[#292929] shadow-md rounded p-2">
+                        <div className="absolute mt-2 bg-[#292929] shadow-md rounded p-2 w-76">
                             {["Action", "Drama", "Komedi", "Skräck", "Äventyr", "Thriller", "Mystik"].map((genre) => (
                                 <label key={genre} className="flex items-center gap-2 px-2 py-1">
                                     <input
@@ -57,6 +84,17 @@ export default function FrontPage() {
                                         onChange={() => handleGenreChange(genre)}
                                     />
                                     {genre}
+                                </label>
+                            ))}
+
+                            {ageOptions.map((age) => (
+                                <label key={age.value} className="flex items-center gap-2 px-2 py-1">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedAges.includes(age.value)}
+                                        onChange={() => handleAgeChange(age.value)}
+                                    />
+                                    {age.label}
                                 </label>
                             ))}
                         </div>
@@ -72,7 +110,7 @@ export default function FrontPage() {
                         Sortera &darr;
                     </button>
                     {sortOpen && (
-                        <ul className="absolute mt-2 bg-[#292929] rounded shadow p-2 right-0">
+                        <ul className="absolute mt-2 bg-[#292929] rounded shadow p-2 right-0 w-76">
                             <li
                                 className="px-2 py-1 hover:bg-gray-100 cursor-pointer"
                                 onClick={() => { setSortOption("atoz"); setSortOpen(false); }}
@@ -103,8 +141,13 @@ export default function FrontPage() {
 
             </section>
 
+    {/* HÄR ÄR DEN MÅRTEN, TEMPORÄR LÄNK TILL MINA SIDOR WAAAAAGH */}
+    <Link to={"/my-page"} className="text-white">
+        <button className="bg-gradient-to-b from-blue-200 to-yellow-500 px-3 py-2 text-sm sm:text-base rounded hover:bg-blue-600 transition duration-200">Tryck här om du vill uppnå Gudomlighet</button>
+    </Link>
             {/* Movies container*/}
             <section className="h-96 w-10/12  shadow-md flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
+
                 {sortedMovies.map((movie) => (
                     <article
                         key={movie.id}
