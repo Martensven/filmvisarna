@@ -1,5 +1,4 @@
-import React from "react";
-import Accordion from "./accordion";
+import Accordion from "./Accordion";
 
 const FAQ = () => {
     return <section className="p-4 bg-[#817E7E] rounded-lg">
