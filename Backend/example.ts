@@ -174,7 +174,7 @@ const exampleList = [
         genre: ["Drama", "Fantasi", "Skräck"],
         releaseYear: 1921,
         age: 15,
-        length: 106,
+        length: 107,
         distributor: "Svensk Filmundustri",
         director: "Victor Sjöström",
         actors: ["Victor Sjöström", "Hilda Borgström", "Tore Svennberg"],
@@ -202,7 +202,7 @@ const exampleList = [
         genre: ["Komedi", "Romantik"],
         releaseYear: 1923,
         age: 15,
-        length: 73,
+        length: 74,
         distributor: "Hal Roach Studios",
         director: "Fred C. Newmeyer",
         actors: ["Harold Lloyd", "Mildred Davis", "Bill Strother"],
@@ -223,6 +223,118 @@ const exampleList = [
         ],
         themeDay: "thursday"
     },
+    {
+        id: 9,
+        movieName: 'City Lights',
+        image: "/images/citylights.webp",
+        genre: ["Komedi", "Drama", "Romantik"],
+        releaseYear: 1931,
+        age: 15,
+        length: 87,
+        distributor: "Charles Chaplin Productions",
+        director: "Charles Chaplin",
+        actors: ["Charles Chaplin", "Virginia Cherrill", "Florence Lee"],
+        description: "Med hjälp av en rik och oberäknelig dricksare samlar en daggvåtögd luffare som har förälskat sig i en blind, blomsterflicka ihop pengar för att kunna hjälpa henne medicinskt.",
+        youtubeTrailers: [
+            "U1j1g1g1g1g"
+        ], reviews: [
+            {
+                reviewer: "Filmkritiker 1",
+                comment: "En klassiker inom skräckgenren.",
+                rating: 5
+            },
+            {
+                reviewer: "Filmkritiker 2",
+                comment: "Spännande och välgjord film.",
+                rating: 4
+            }
+        ],
+        themeDay: "thursday"
+    },
+    {
+        id: 10,
+        movieName: 'Änglagård',
+        image: "/images/änglagård.webp",
+        genre: ["Komedi", "Drama"],
+        releaseYear: 1992,
+        age: 15,
+        length: 127,
+        distributor: "Sonet Film",
+        director: "Colin Nutley",
+        actors: ["Helena Bergström", "Rikard Wolff", "Sven Wolter"],
+        description: "En by på landsbygden delas när ett extraordinärt par flyttar in i en herrgård.",
+        youtubeTrailers: [
+            "U1j1g1g1g1g"
+        ], reviews: [
+            {
+                reviewer: "Filmkritiker 1",
+                comment: "En klassiker inom skräckgenren.",
+                rating: 5
+            },
+            {
+                reviewer: "Filmkritiker 2",
+                comment: "Spännande och välgjord film.",
+                rating: 4
+            }
+        ],
+        themeDay: "sunday"
+    },
+    {
+        id: 11,
+        movieName: 'Ondskan',
+        image: "/images/ondskan.webp",
+        genre: ["Drama"],
+        releaseYear: 2003,
+        age: 15,
+        length: 113,
+        distributor: "Columbia TriStar Films AB",
+        director: "Mikael Håfström",
+        actors: ["Andreas Wilson", "Henrik Lundström", "Gustaf Skarsgård"],
+        description: "En tonårspojke som relegerats från skolan för att ha slagits kommer till en internatskola där systematisk mobbning av yngre elever uppmuntras som ett sätt att upprätthålla disciplinen, och bestämmer sig för att slå tillbaka.",
+        youtubeTrailers: [
+            "U1j1g1g1g1g"
+        ], reviews: [
+            {
+                reviewer: "Filmkritiker 1",
+                comment: "En klassiker inom skräckgenren.",
+                rating: 5
+            },
+            {
+                reviewer: "Filmkritiker 2",
+                comment: "Spännande och välgjord film.",
+                rating: 4
+            }
+        ],
+        themeDay: "sunday"
+    },
+    {
+        id: 12,
+        movieName: 'Pippi Långstrump på de sju haven',
+        image: "/images/pippisjuhaven.webp",
+        genre: ["Familj", "Äventyr"],
+        releaseYear: 1970,
+        age: 15,
+        length: 86,
+        distributor: "Svensk Filmundustri",
+        director: "Olle Hellbom",
+        actors: ["Inger Nilsson", "Maria Persson", "Pär Sundberg"],
+        description: "Med hjälp av vännerna Tommy och Annika beger sig Pippi Långstrump till Porto Piluse i södra Stilla havet för att rädda sin pappa som blivit tillfångatagen av hänsynslösa pirater.",
+        youtubeTrailers: [
+            "U1j1g1g1g1g"
+        ], reviews: [
+            {
+                reviewer: "Filmkritiker 1",
+                comment: "En klassiker inom skräckgenren.",
+                rating: 5
+            },
+            {
+                reviewer: "Filmkritiker 2",
+                comment: "Spännande och välgjord film.",
+                rating: 4
+            }
+        ],
+        themeDay: "sunday"
+    }
 ]
 
 export default exampleList;
