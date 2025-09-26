@@ -1,4 +1,4 @@
-  import SeatsTheaters  from "./../../../../Backend/exampleSeatsTheater"
+  import SeatsTheaters from "./../../../../Backend/exampleSeatsTheater"
   import TheaterComponent from "./TheaterComponent"
 
 
