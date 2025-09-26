@@ -1,7 +1,9 @@
 
 import { useState} from "react"
+import { Link } from "react-router";
 
 export default function SeatsTheater() {
+  //Creating useState method to give user a ticket counter. 
 const [countTickets, setCountTickets] = useState<number>(1); //Always a start with 1
 const increment:React.MouseEventHandler<HTMLButtonElement> = () => {setCountTickets(prev => prev + 1);}
 const decrement:React.MouseEventHandler<HTMLButtonElement> = () => {setCountTickets(prev => (prev > 0 ? prev - 1:0));} //decrement but prevents a number under 0
@@ -16,6 +18,7 @@ const decrement:React.MouseEventHandler<HTMLButtonElement> = () => {setCountTick
         <button className="seat_range_buttons w-7 h-7 ml-5 cursor-pointer" onClick={increment} aria-label="Öka biljetter">+</button>
       </section>
       </div>
+
       <button className="main_buttons w-36 m-4 cursor-pointer">
         Välj
       </button>

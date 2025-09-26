@@ -24,3 +24,8 @@
   padding: 1px;
   border-radius: 5px;
 }
+
+.logo_font{
+  /* font-family: "Bitcount Single Ink", system-ui; */
+  font-family: "Tilt Neon", sans-serif;
+}
