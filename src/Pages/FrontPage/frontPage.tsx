@@ -141,8 +141,13 @@ export default function FrontPage() {
 
             </section>
 
+    {/* HÄR ÄR DEN MÅRTEN, TEMPORÄR LÄNK TILL MINA SIDOR WAAAAAGH */}
+    <Link to={"/my-page"} className="text-white">
+        <button className="bg-gradient-to-b from-blue-200 to-yellow-500 px-3 py-2 text-sm sm:text-base rounded hover:bg-blue-600 transition duration-200">Tryck här om du vill uppnå Gudomlighet</button>
+    </Link>
             {/* Movies container*/}
             <section className="h-96 w-10/12  shadow-md flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
+
                 {sortedMovies.map((movie) => (
                     <article
                         key={movie.id}
