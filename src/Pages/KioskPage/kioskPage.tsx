@@ -16,7 +16,7 @@ export default function KioskPage() {
   return (
     <main className="w-screen bg-[#292929] text-white">
       <header className="text-center">
-        <h1 className="text-2xl mt-4">Kiosk</h1>
+        <h1 className="text-2xl">Kiosk</h1>
         <h2 className="text-xl">Vårt utbud i kiosken</h2>
 
         <CategorySection title="Dryck" items={drinks} />
