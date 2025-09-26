@@ -14,7 +14,7 @@ export default function MyPage() {
 
     return (
         // Användar info
-        <main className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 rounded shadow-lg text-white bg-[#24252C]">
+        <main className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 rounded shadow-mg text-white bg-[#24252C]">
             <section className="mb-8">
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">Användarinformation</h2>
             <p className="text-sm sm:text-base md:text-lg">Email: {user.email}</p>
@@ -37,7 +37,7 @@ export default function MyPage() {
             </section>
             <br />
             {/* Tidigare bokningar Accordion Menu */}
-            <section className="w-full h-screen text-black">
+            <section className="w-full h-screen">
                 <section className="p-4">
                 <FAQ/>
                 </section>

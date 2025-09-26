@@ -11,7 +11,7 @@ const Accordion = () => {
             {accordionOpen ? <h2>-</h2> : <h2>+</h2>}
             
         </button>
-        <section className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm  ${
+        <section className={`grid overflow-hidden transition-all duration-300 ease-in-out text-sm  ${
             accordionOpen
              ? 'grid-rows[1fr] opacity-100' 
              : 'grid-rows[0fr] opacity-0'
