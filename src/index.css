@@ -17,6 +17,7 @@
   text-align: center;
   font-family: monospace;
   background-color: #292929;
+  color: white;
 }
 
 .container_box {
@@ -24,3 +25,4 @@
   padding: 1px;
   border-radius: 5px;
 }
+
