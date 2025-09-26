@@ -18,9 +18,3 @@
   font-family: monospace;
   background-color: #292929;
 }
-
-.container_box {
-  border: solid 1px black;
-  padding: 1px;
-  border-radius: 5px;
-}
