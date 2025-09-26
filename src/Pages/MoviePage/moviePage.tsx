@@ -19,14 +19,14 @@ export default function MoviePage() {
                         <article className="text-center text-3xl py-6 px-6 bg-[#24252C]">Den excentriske mångmiljonären John Hammond bjuder in två dinosaurieexperter till sin nöjespark 
                             på en ö utanför Costa Rica. Hammond har lyckats skapa levande dinosaurier genom att klona DNA från förhistoriska insekter.
                             <article className="text-3xl pt-8 space-y-12">
-                                <p className="text-amber-200">"Jakten på den försvunna skatten, Aliens, Hajen och Total Recall var alla väldigt bra.
+                                <p className="text-amber-200 italic">"Jakten på den försvunna skatten, Aliens, Hajen och Total Recall var alla väldigt bra.
                                 Men det var bara uppvärmning till Jurassic Park, som tar hjärnan på en berg-och-dalbana och kittlar nerverna ända
                                 ner till maggropen." - Ben Fenster, Arizona Republic</p>
                                 
-                                <p className="text-amber-200">Jurassic Park är dinosauriekungen av sommarfilmer, en enorm Hollywood-dängare som inte bara har ben, men också tänder."
+                                <p className="text-amber-200 italic">Jurassic Park är dinosauriekungen av sommarfilmer, en enorm Hollywood-dängare som inte bara har ben, men också tänder."
                                     - Jay Carr, Boston Globe</p>
 
-                                <p className="text-amber-200">"Godzilla, släng dig i väggen -- eller låt en av Jurassic Parks velociraptorer göra det åt dig.
+                                <p className="text-amber-200 italic">"Godzilla, släng dig i väggen -- eller låt en av Jurassic Parks velociraptorer göra det åt dig.
                                     Du är gårdagens nyheter, kompis." Judy Gerstel, Detroit Free Press</p>  
                             </article>
                             </article>
