@@ -4,7 +4,7 @@ import TheaterView from "./components/TheaterView";
 import MovieInformation from "./components/MovieInformation";
 import BookingComponent from "./components/BookingComponent";
 
-import { Route, Routes } from "react-router-dom"
+
 
 export default function BookingPage() {
   return (

@@ -1,6 +1,5 @@
 
 import { useState} from "react"
-import { Link } from "react-router";
 
 export default function SeatsTheater() {
   //Creating useState method to give user a ticket counter. 
