@@ -1,3 +1,5 @@
+import FAQ from "../../Components/accordion/FAQ"
+
 export default function MyPage() {
 
     // Mockad data
@@ -12,7 +14,7 @@ export default function MyPage() {
 
     return (
         // Användar info
-        <main className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 rounded shadow-lg">
+        <main className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto p-4 sm:p-6 lg:p-8 rounded shadow-mg text-white bg-[#24252C]">
             <section className="mb-8">
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">Användarinformation</h2>
             <p className="text-sm sm:text-base md:text-lg">Email: {user.email}</p>
@@ -34,24 +36,11 @@ export default function MyPage() {
                 )}
             </section>
             <br />
-            <section>
-                <h2 className="text-lg sm:text-xl font-semibold">Tidigare bokningar</h2>
-                <br />
-                <p className="text-base sm:text-lg font-semibold">Film 1</p>
-                <p className="text-sm sm:text-base md:text-lg">Datum: 00-00-0000</p>
-                <p className="text-sm sm:text-base md:text-lg mb-1">lorem ipsum dolor sit amet.</p>
-                <p className="border-b border-gray-700 pb-4 last:border-none last:pb-0"></p>
-                <p className="text-base sm:text-lg font-semibold">Film 2</p>
-                <p className="text-sm sm:text-base md:text-lg">Datum: 00-00-0000</p>
-                <p className="text-sm sm:text-base md:text-lg mb-1">lorem ipsum dolor sit amet.</p>
-                <p className="border-b border-gray-700 pb-4 last:border-none last:pb-0"></p>
-                <p className="text-base sm:text-lg font-semibold">Film 3</p>
-                <p className="text-sm sm:text-base md:text-lg">Datum: 00-00-0000</p>
-                <p className="text-sm sm:text-base md:text-lg mb-1">lorem ipsum dolor sit amet.</p>
-                <p className="border-b border-gray-700 pb-4 last:border-none last:pb-0"></p>
-                <p className="text-base sm:text-lg font-semibold">Film 4</p>
-                <p className="text-sm sm:text-base md:text-lg">Datum: 00-00-0000</p>
-                <p className="text-sm sm:text-base md:text-lg mb-1">lorem ipsum dolor sit amet.</p>
+            {/* Tidigare bokningar Accordion Menu */}
+            <section className="w-full h-screen">
+                <section className="p-4">
+                <FAQ/>
+                </section>
             </section>
         </main>
 
