@@ -19,3 +19,21 @@
   background-color: #292929;
   color: white;
 }
+
+.animation-slidein {
+  animation: slide-in 1s ease-in-out;
+}
+
+.animation-slideout {
+  animation: slide-out 1s ease-in-out;
+}
+
+@keyframes slide-in {
+  from {transform: translateX(100%);}
+  to {transform: translateX(0);}
+}
+
+@keyframes slide-out {
+  from {transform: translateX(0);}
+  to {transform: translateX(100%);}
+}

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Routes, Route } from 'react-router'
 import FrontPage from './Pages/FrontPage/frontPage.js'
 import BookingPage from './Pages/BookingPage/bookingPage.tsx'
@@ -12,11 +13,20 @@ import AboutPage from './Pages/AboutPage/aboutPage.tsx'
 import KioskPage from './Pages/KioskPage/kioskPage.tsx'
 
 function App() {
+  const [loginPopup, setLoginPopup] = useState<"login" | "register" | null>(null);
+  const [popupSlide, setPopupSlide] = useState(false)
 
+  const handleClosing =  () => {
+    setPopupSlide(true);
+    setTimeout(() => {
+      setLoginPopup(null);
+      setPopupSlide(false);
+    }, 1000)
+  }
 
   return (
     <>
-      <Header></Header>
+      <Header onLoginClick={() => setLoginPopup("login")}></Header>
 
       <Routes>
         <Route path='/' element={<FrontPage />} />
@@ -24,13 +34,27 @@ function App() {
         <Route path='/movie' element={<MoviePage />} />
         <Route path='/theme' element={<ThemePage />} />
         <Route path='/my-page' element={<MyPage />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/kiosk' element={<KioskPage />} />
       </Routes>
 
       <Footer></Footer>
+
+      {loginPopup && (
+        <aside className="fixed inset-0 flex justify-end z-50">
+          <section className={`bg-black flex w-150 h-full shadow-xl p-6 flex-col justify-center ${popupSlide ? "animation-slideout" : "animation-slidein"}`}>
+            {loginPopup === "login" && <Login onSwitchToRegister={() => setLoginPopup("register")}/>}
+            {loginPopup === "register" && <Register onSwitchToLogin={() => setLoginPopup("login")}/>}
+
+            <button
+              onClick={handleClosing}
+              className="self-center w-50 mb-4 border px-2 py-1 rounded cursor-pointer"
+            >
+              Stäng
+            </button>
+          </section>
+        </aside>
+      )}
     </>
   )
 }

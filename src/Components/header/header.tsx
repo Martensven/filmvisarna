@@ -1,7 +1,11 @@
 import { Link } from "react-router";
 import { useState } from "react";
 
-export default function Header() {
+interface HeaderProps {
+  onLoginClick: () => void;
+}
+
+export default function Header({ onLoginClick }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -30,7 +34,7 @@ export default function Header() {
               <li><Link to="/theme">Temadagar</Link></li>
               <li><Link to="/about">Om Oss</Link></li>
               <li><Link to="/kiosk">Kiosk</Link></li>
-              <li><Link to="/login">Logga In</Link></li>
+              <li><button onClick={onLoginClick} className="cursor-pointer">Logga In</button></li>
             </ul>
           </section>
 
@@ -43,7 +47,7 @@ export default function Header() {
               <li><Link to="/theme" onClick={() => setIsOpen(false)}>Temadagar</Link></li>
               <li><Link to="/about" onClick={() => setIsOpen(false)}>Om Oss</Link></li>
               <li><Link to="/kiosk" onClick={() => setIsOpen(false)}>Kiosk</Link></li>
-              <li><Link to="/login" onClick={() => setIsOpen(false)}>Logga In</Link></li>
+              <li><button onClick={onLoginClick}>Logga In</button></li>
             </ul>
           )}
         </nav>
