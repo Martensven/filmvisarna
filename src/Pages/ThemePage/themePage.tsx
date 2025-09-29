@@ -4,7 +4,7 @@ export default function ThemePage() {
 
     return (
         <main className="w-screen">
-            <h1 className="text-5xl shadow-md p-3 my-10 lg:mx-50 xs:mx-auto text-center bg-[#243365] xs:w-10/12 text-center">Temadagar</h1> 
+            <h1 className="text-5xl shadow-md p-3 my-10 mx-auto text-center bg-[#243365] xs:w-10/12 text-center">Temadagar</h1> 
             
             <article className="flex flex-wrap justify-center">
                 <h2 className="text-3xl shadow-md p-4 my-3 bg-black">Tysta Torsdagen</h2>

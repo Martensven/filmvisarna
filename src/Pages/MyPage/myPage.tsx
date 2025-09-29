@@ -1,4 +1,4 @@
-import FAQ from "../../Components/accordion/FAQ"
+import FAQ from "../../Components/accordion/FAQ.tsx";
 
 export default function MyPage() {
 

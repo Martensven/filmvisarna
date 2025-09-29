@@ -4,8 +4,12 @@ import LoggoNR1 from "./../../../public/images/Header-loggo/LoggoNR1.png";
 // import LoggoNR2 from "./../../../public/images/Header-loggo/LoggoNR2.png"
 import "./../../index.css";
 
-export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+interface HeaderProps {
+  onLoginClick: () => void;
+}
+
+export default function Header({ onLoginClick }: HeaderProps) {
+    const [isOpen, setIsOpen] = useState(false);
 
   return (
     <main>
@@ -31,68 +35,26 @@ export default function Header() {
 
             {/* Desktop menu */}
             <ul className="hidden md:flex w-full justify-between items-center text-sm font-medium">
-              <li>
-                <Link to="/">Start</Link>
-              </li>
-              <li>
-                <Link to="/booking">Boka</Link>
-              </li>
-              <li>
-                <Link to="/movie">Filmer</Link>
-              </li>
-              <li>
-                <Link to="/theme">Temadagar</Link>
-              </li>
-              <li>
-                <Link to="/about">Om Oss</Link>
-              </li>
-              <li>
-                <Link to="/kiosk">Kiosk</Link>
-              </li>
-              <li>
-                <Link to="/login">Logga In</Link>
-              </li>
+              <li><Link to="/">Start</Link></li>
+              <li><Link to="/booking">Boka</Link></li>
+              <li><Link to="/movie">Filmer</Link></li>
+              <li><Link to="/theme">Temadagar</Link></li>
+              <li><Link to="/about">Om Oss</Link></li>
+              <li><Link to="/kiosk">Kiosk</Link></li>
+              <li><button onClick={onLoginClick} className="cursor-pointer">Logga In</button></li>
             </ul>
           </section>
 
           {/* Mobile menu  */}
           {isOpen && (
             <ul className="flex flex-col md:hidden px-4 pb-4 space-y-2">
-              <li>
-                <Link to="/" onClick={() => setIsOpen(false)}>
-                  Start
-                </Link>
-              </li>
-              <li>
-                <Link to="/booking" onClick={() => setIsOpen(false)}>
-                  Boka
-                </Link>
-              </li>
-              <li>
-                <Link to="/movie" onClick={() => setIsOpen(false)}>
-                  Filmer
-                </Link>
-              </li>
-              <li>
-                <Link to="/theme" onClick={() => setIsOpen(false)}>
-                  Temadagar
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" onClick={() => setIsOpen(false)}>
-                  Om Oss
-                </Link>
-              </li>
-              <li>
-                <Link to="/kiosk" onClick={() => setIsOpen(false)}>
-                  Kiosk
-                </Link>
-              </li>
-              <li>
-                <Link to="/login" onClick={() => setIsOpen(false)}>
-                  Logga In
-                </Link>
-              </li>
+              <li><Link to="/" onClick={() => setIsOpen(false)}>Start</Link></li>
+              <li><Link to="/booking" onClick={() => setIsOpen(false)}>Boka</Link></li>
+              <li><Link to="/movie" onClick={() => setIsOpen(false)}>Filmer</Link></li>
+              <li><Link to="/theme" onClick={() => setIsOpen(false)}>Temadagar</Link></li>
+              <li><Link to="/about" onClick={() => setIsOpen(false)}>Om Oss</Link></li>
+              <li><Link to="/kiosk" onClick={() => setIsOpen(false)}>Kiosk</Link></li>
+              <li><button onClick={onLoginClick}>Logga In</button></li>
             </ul>
           )}
         </nav>
