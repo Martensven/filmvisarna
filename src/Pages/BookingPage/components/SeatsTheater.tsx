@@ -1,10 +1,13 @@
 import { useState } from "react";
 
+
 export default function SeatsTheater() {
   //Creating useState method to give user a ticket counter.
   const [countAdult, setCountAdult] = useState<number>(1); //Always a start with 1
   const [countSenior, setCountSenior] = useState<number>(1);
   const [countChild, setCountChild] = useState<number>(1);
+
+  const [handle]
 
   //Adult ticket count.
   const incrementAdult: React.MouseEventHandler<HTMLButtonElement> = () => {
