@@ -18,7 +18,7 @@ export default function Login({ onSwitchToRegister }: LoginProps) {
                 <Link to={"/forgot-password"} className="text-xs">Glömt ditt lösenord?</Link>
 
             </form>
-            <button className="cursor-pointer my-3 p-4 border rounded">Logga In</button>
+            <Link to={"/my-page"} className="cursor-pointer my-3 p-4 border rounded">Logga In</Link>
 
             <button onClick={onSwitchToRegister} className="text-purple-900 underline cursor-pointer"> Har inget konto? Skapa här</button>
         </section>

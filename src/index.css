@@ -19,7 +19,6 @@
   color: white;
 }
 
-<<<<<<< HEAD
 .animation-slidein {
   animation: slide-in 1s ease-in-out;
 }
@@ -36,8 +35,4 @@
 @keyframes slide-out {
   from {transform: translateX(0);}
   to {transform: translateX(100%);}
-=======
-p {
-  font-family: "Noto Sans", sans-serif;
->>>>>>> 81b8796795669786e8f520d5b85299a8753394b8
 }
