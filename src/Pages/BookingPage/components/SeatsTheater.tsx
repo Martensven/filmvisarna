@@ -7,7 +7,7 @@ export default function SeatsTheater() {
   const [countSenior, setCountSenior] = useState<number>(1);
   const [countChild, setCountChild] = useState<number>(1);
 
-  const [handle]
+  
 
   //Adult ticket count.
   const incrementAdult: React.MouseEventHandler<HTMLButtonElement> = () => {

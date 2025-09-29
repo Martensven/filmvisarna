@@ -13,7 +13,7 @@ export default function BookingComponent() {
     <main className="flex flex-col justify-center items-center">
       
 
-        <section className="flex flex-row justify-center items-center md:flex md:flex-row justify-between md:mb-10 md:w-96">
+        <section className="flex flex-col justify-center items-center md:flex md:flex-row justify-between md:mb-10 md:w-96">
           <div className="flex flex-col justify-center items-center">
              {!showGuestOrder ? (
                 <button onClick ={() => setShowGuestOrder(true)} className="main_buttons w-36 m-2 h-10 text-sm">Boka som Gäst</button>
@@ -23,7 +23,7 @@ export default function BookingComponent() {
            
            <div>
             {!showUserOrder ? (
-              <button onClick={() => setShowUserOrder(true)} className="main_buttons w-36 m-2 h-10 text-sm">Boka som Gäst</button>
+              <button onClick={() => setShowUserOrder(true)} className="main_buttons w-36 m-2 h-10 text-sm">Boka som Medlem</button>
             ): (<UserOrderComponent />
             )}
            </div>
