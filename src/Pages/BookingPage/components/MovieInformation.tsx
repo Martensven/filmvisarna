@@ -4,7 +4,7 @@ import SeatsTheater from "./SeatsTheater";
 export default function MovieInformation() {
   return (
 
-    <main className="flex flex-col justify-center items-center w-full
+    <main className="flex flex-col justify-center items-center w-full h-auto
     md:flex md:flex-row md:justify-around md:w-screen md:h-100">
       {/*----------Container for movie poster and title, Genre, age and time----------*/}
       <section className="flex flex-row items-center justify-center container_box w-86 h-70 mb-5 
@@ -47,7 +47,7 @@ export default function MovieInformation() {
             <CalenderComponent />
           </section>
 
-          <section className="flex flex-row justify-center w-80 h-28 mt-5 mb-5 container_content md:w-72 md:flex-col md:justify-center md:items-center">
+          <section className="flex flex-row justify-center w-80 h-auto mt-5 mb-5 container_content md:w-72 md:flex-col md:justify-center md:items-center">
             <SeatsTheater />
           </section>
       </section>

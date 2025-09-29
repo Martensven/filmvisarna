@@ -6,6 +6,7 @@ import BookingComponent from "./components/BookingComponent";
 
 
 
+
 export default function BookingPage() {
   return (
     <>

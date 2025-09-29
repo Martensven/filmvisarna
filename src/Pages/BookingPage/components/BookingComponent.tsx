@@ -1,4 +1,4 @@
-import DiscountComponent from "./DiscountComponent";
+
 import UserAsGuest from "./UserAsGuestComponent";
 import UserOrderComponent from "./UserOrderComponent";
 
@@ -11,7 +11,7 @@ export default function BookingComponent() {
 
   return (
     <main className="flex flex-col justify-center items-center">
-      <DiscountComponent />
+      
 
         <section className="flex flex-row justify-center items-center md:flex md:flex-row justify-between md:mb-10 md:w-96">
           <div className="flex flex-col justify-center items-center">
