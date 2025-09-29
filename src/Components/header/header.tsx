@@ -1,5 +1,8 @@
 import { Link } from "react-router";
 import { useState } from "react";
+import LoggoNR1 from "./../../../public/images/Header-loggo/LoggoNR1.png";
+// import LoggoNR2 from "./../../../public/images/Header-loggo/LoggoNR2.png"
+import "./../../index.css";
 
 interface HeaderProps {
   onLoginClick: () => void;
@@ -8,22 +11,26 @@ interface HeaderProps {
 export default function Header({ onLoginClick }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
 
-    return (
-
+  return (
     <main>
-      <header className="text-center text-white mt-4">
-        <h1 className="font-bold text-xl">FILMVISARNA</h1>
+      <header className="text-center text-white mt-1">
+        {/* <h1 className="logo_font text-xl mt-5">FILMVISARNA</h1> */}
+        <div className="flex justify-center items-center ml-5 sm:justify-start sm:m-5 md:justify-start">
+          <img
+            src={LoggoNR1}
+            alt="Filmvisarnas loggo"
+            className="w-56 sm:w-80"
+          />
+        </div>
 
         <nav className="bg-[#243365] text-white mt-6 mx-5 md:mx-20 rounded-md shadow-md">
-          
           <section className="flex items-center justify-between h-12 px-4">
             <button
               className="md:hidden"
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
             >
-              
-              {isOpen ? '✕' : '☰'}
+              {isOpen ? "✕" : "☰"}
             </button>
 
             {/* Desktop menu */}
@@ -38,7 +45,7 @@ export default function Header({ onLoginClick }: HeaderProps) {
             </ul>
           </section>
 
-           {/* Mobile menu  */}
+          {/* Mobile menu  */}
           {isOpen && (
             <ul className="flex flex-col md:hidden px-4 pb-4 space-y-2">
               <li><Link to="/" onClick={() => setIsOpen(false)}>Start</Link></li>
@@ -55,8 +62,3 @@ export default function Header({ onLoginClick }: HeaderProps) {
     </main>
   );
 }
-
-
-
-
-
