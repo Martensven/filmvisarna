@@ -16,12 +16,6 @@
   text-align: center;
   font-family: "Noto Serif", serif;
   background-color: #292929;
-}
-
-.container_box {
-  border: solid 1px black;
-  padding: 1px;
-  border-radius: 5px;
   color: white;
 }
 
