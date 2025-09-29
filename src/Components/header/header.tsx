@@ -8,10 +8,10 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <main>
+    <main className="w-screen">
       <header className="text-center text-white mt-1">
         {/* <h1 className="logo_font text-xl mt-5">FILMVISARNA</h1> */}
-        <div className="flex justify-center items-center ml-5 sm:justify-start sm:m-5 md:justify-start">
+        <div className="flex justify-center items-center sm:justify-start sm:m-5 md:justify-start">
           <img
             src={LoggoNR1}
             alt="Filmvisarnas loggo"
