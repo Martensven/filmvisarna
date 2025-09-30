@@ -34,20 +34,22 @@ export default function SeatsTheater() {
   };
 
   return (
-    <main className="flex flex-col justify-center items-center w-86 h-auto">
-      <div className="flex flex-row justify-between w-72 h-auto">
-        <h2 className="text-[#e4e1e1] text-s m-2 md:text-s">Vuxen 140kr</h2>
-        <section className="flex flex-row justify-content items-center">
+    <main className="flex flex-col justify-center items-center w-86 h-auto md:w-full">
+      <div className="flex flex-row justify-between w-72 h-auto md:w-full md:m-1 md:justify-between">
+        <h2 className="text-[#e4e1e1] text-s m-2 md:text-sm md:m-5">Vuxen 140kr</h2>
+        <section className="flex flex-row justify-content items-center md:mr-2">
           <button
-            className="seat_range_buttons w-7 h-7 mr-5 align cursor-pointer"
+            className="seat_range_buttons w-7 h-7 mr-5 align cursor-pointer 
+            md:w-5 md:h-5 md:mr-3 md:flex md:justify-center md:items-center"
             onClick={decrementAdult}
             aria-label="Minska biljetter"
           >
             -
           </button>
-          <p className="text-m ml-2 mr-2">{countAdult}</p>
+          <p className="text-m ml-2 mr-2 md:text-xs">{countAdult}</p>
           <button
-            className="seat_range_buttons w-7 h-7 ml-5 cursor-pointer"
+            className="seat_range_buttons w-7 h-7 ml-5 cursor-pointer
+            md:w-5 md:h-5 md:ml-3 md:flex md:justify-center md:items-center"
             onClick={incrementAdult}
             aria-label="Öka biljetter"
           >
@@ -56,19 +58,21 @@ export default function SeatsTheater() {
         </section>
       </div>
 
-      <div className="flex flex-row justify-between w-72 h-auto">
-        <h2 className="text-[#e4e1e1] text-s m-2 md:text-s">Senior 120kr</h2>
-        <section className="flex flex-row justify-content items-center">
+      <div className="flex flex-row justify-between w-72 h-auto md:w-full md:m-1 md:justify-between">
+        <h2 className="text-[#e4e1e1] text-s m-2 md:text-sm md:m-5">Senior 120kr</h2>
+        <section className="flex flex-row justify-content items-center md:mr-2">
           <button
-            className="seat_range_buttons w-7 h-7 mr-5 align cursor-pointer"
+            className="seat_range_buttons w-7 h-7 mr-5 align cursor-pointer
+            md:w-5 md:h-5 md:mr-3 md:flex md:justify-center md:items-center"
             onClick={decrementSenior}
             aria-label="Minska biljetter"
           >
             -
           </button>
-          <p className="text-m ml-2 mr-2">{countSenior}</p>
+          <p className="text-m ml-2 mr-2 md:text-xs">{countSenior}</p>
           <button
-            className="seat_range_buttons w-7 h-7 ml-5 cursor-pointer"
+            className="seat_range_buttons w-7 h-7 ml-5 cursor-pointer
+            md:w-5 md:h-5 md:ml-3 md:flex md:justify-center md:items-center"
             onClick={incrementSenior}
             aria-label="Öka biljetter"
           >
@@ -77,19 +81,21 @@ export default function SeatsTheater() {
         </section>
       </div>
 
-      <div className="flex flex-row justify-between w-72 auto">
-        <h2 className="text-[#e4e1e1] text-s m-2 md:text-s">Barn 80kr</h2>
-        <section className="flex flex-row justify-content items-center">
+      <div className="flex flex-row justify-between w-72 auto md:w-full md:m-1 md:justify-between">
+        <h2 className="text-[#e4e1e1] text-s m-2  md:text-sm md:m-5">Barn 80kr</h2>
+        <section className="flex flex-row justify-content items-center md:mr-2">
           <button
-            className="seat_range_buttons w-7 h-7 mr-5 align cursor-pointer"
+            className="seat_range_buttons w-7 h-7 mr-5 align cursor-pointer
+            md:w-5 md:h-5 md:mr-3 md:flex md:justify-center md:items-center"
             onClick={decrementChild}
             aria-label="Minska biljetter"
           >
             -
           </button>
-          <p className="text-m ml-2 mr-2">{countChild}</p>
+          <p className="text-m ml-2 mr-2 md:text-xs">{countChild}</p>
           <button
-            className="seat_range_buttons w-7 h-7 ml-5 cursor-pointer"
+            className="seat_range_buttons w-7 h-7 ml-5 cursor-pointer
+            md:w-5 md:h-5 md:ml-3 md:flex md:justify-center md:items-center"
             onClick={incrementChild}
             aria-label="Öka biljetter"
           >

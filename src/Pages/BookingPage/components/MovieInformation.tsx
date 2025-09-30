@@ -1,56 +1,78 @@
 import CalenderComponent from "./CalenderComponent";
-import SeatsTheater from "./SeatsTheater";
+import TheaterSeats from "./TheaterSeats";
 
 export default function MovieInformation() {
   return (
-
-    <main className="flex flex-col justify-center items-center w-full h-auto
-    md:flex md:flex-row md:justify-around md:w-screen md:h-100">
+    <main
+      className="flex flex-col justify-center items-center w-full h-auto
+                 md:grid md:grid-cols-[2fr_1fr] md:gap-2 md:items-start md:w-full"
+    >
       {/*----------Container for movie poster and title, Genre, age and time----------*/}
-      <section className="flex flex-row items-center justify-center container_box w-86 h-70 mb-5 
-      md:flex md:w-3/5 md:h-86 md:justify-center md:itmes-center md:m-2 
-      lg:w-4/5 lg:h-80">
-
+      <section
+        className="flex flex-row container_box w-11/12 h-auto mb-5
+                   sm:w-4/5 
+                   md:w-100 md:h-auto md:ml-3 
+                   lg:h-80"
+      >
         {/*----------Container for movie poster----------*/}
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Jaws_movie_poster.jpg/640px-Jaws_movie_poster.jpg"
           alt="FILM POSTER"
-          className="flex justify-center items-center w-36 h-auto rounded-md p-1
-           sm:w-50 h-auto
-           md:w-2/6 md:h-auto md:m-5 lg:h-100 "
+          className="flex justify-center items-center w-50 h-auto p-2 rounded-md
+                     sm:w-1/2 sm:mr-2
+                     md:w-5/6 md:h-auto md:m-5 lg:h-100 "
         />
 
         {/*----------Container movie info ----------*/}
-        <article className="flex flex-col h-62 ml-1 text-[#e4e1e1]
-        sm:
-        md:w-2/5 md:m-1 
-        lg:flex lg:justify-center lg:items-center lg:m-2">
-          <h1 className="flex items-center w-44 h-12 text-left pl-2 text-lg
-           md:w-45 md:text-xl lg:m-1">
+        <article
+          className="flex flex-col justify-start W-5/12 h-auto  text-[#e4e1e1]
+                     sm:w-2/6
+                     md:w-3/6 md:h-auto 
+                     lg:flex lg:justify-center lg:items-center lg:m-2"
+        >
+          <h1
+            className="flex w-5/12 h-auto text-left mt-3 text-lg
+                       md:justify-start md:w-full md:text-3xl md:underline md:mt-10 lg:m-1"
+          >
             Jaws
           </h1>
-          <ul className=" w-44 h-25 text-left ml-2 md:w-45 md:text-sm lg:m-1">
-            <li className="text-xs p-0.5">År: 1975</li>
-            <li className="text-xs p-0.5">Genre: Thriller/Horror</li>
-            <li className="text-xs pt-2 antialiased">”När en jättelik vithaj dödligt attackerar simmare vid Amity Islands stränder slår sig sheriff Martin Brody ihop med en marinbiolog och en lokal fiskare för att jaga varelsen.”</li>
-            </ul>
+          <ul className="w-full h-25 text-left md:w-full md:h-auto md:text-md lg:m-1">
+            <li className="text-xs italic md:text-sm">År: 1975</li>
+            <li className="text-xs italic md:text-sm">
+              Genre: Thriller/Horror
+            </li>
+            <li className="w-full h-auto text-xs pt-4 text-center md:text-start md:mt-5 md:text-sm ">
+              ”När en jättelik vithaj dödligt attackerar simmare vid Amity
+              Islands stränder slår sig sheriff Martin Brody ihop med en
+              marinbiolog och en lokal fiskare för att jaga varelsen.”
+            </li>
+          </ul>
         </article>
       </section>
 
-
-      {/*----------Container for chosing date and tickets----------*/}
-      <section className="flex flex-col justify-center items-center container_box w-86 h-auto 
-       sm:h-46
-       md:w-auto md:min-h-86 md:max-h-86 md:m-2 md:flex md:justify-center md:items-center lg:h-80">
-        {/*----------Continer for date and tickets components----------*/}
-          <section className="flex flex-col justify-center w-auto md:flex-col md:justify-center md:items-center md:w-72 md:h-40">
-            <CalenderComponent />
-          </section>
-
-          <section className="flex flex-row justify-center w-80 h-auto mt-5 mb-5 container_content md:w-72 md:flex-col md:justify-center md:items-center">
-            <SeatsTheater />
-          </section>
+      {/*----------Container for choosing date and tickets----------*/}
+      <section
+        className="flex flex-col justify-center items-center w-11/12 p-10
+                   container_box  h-auto 
+                   sm:w-4/5 sm:h-auto
+                   md:w-76 md:h-auto md:m-2 
+                   lg:h-80"
+      >
+        {/*----------Container for date and tickets components----------*/}
+        <section
+          className="flex flex-col justify-center w-11/12
+                     sm:w-4/5 sm:h-auto 
+                     md:flex-col md:justify-center md:items-center md:w-full md:h-auto"
+        >
+          <CalenderComponent />
+        </section>
+        <section
+          className="flex flex-row justify-center w-80 h-auto mt-5 mb-5 container_content
+                     md:w-11/12 md:flex-col md:justify-center md:items-center"
+        >
+          <TheaterSeats />
+        </section>
       </section>
-      </main>
+    </main>
   );
 }

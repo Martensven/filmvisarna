@@ -5,7 +5,7 @@
   export default function TheaterView() {
 
     return(
-        <main>
+        <main className="sm:w-4/5 sm:h-auto md:object-center md:w-11/12 ">
           <section>
           {SeatsTheaters.map(t => (
             <TheaterComponent key={t.id} theaterView={t} />

@@ -29,8 +29,13 @@ export default function TheaterComponent({ theaterView }: PropsTheater) {
     /*----------Container for a view of the salons----------*/
   }
   return (
-    <section className="flex flex-col justify-center items-center w-86  h-auto h-100 mt-5 mb-5  container_box  sm:h-80 md:w-4/5 md:h-96 lg:w-full">
-      <article className="flex flex-col justify-between w-80 h-auto m-3 container_content md:h-96 lg:w-6/12 lg:h-4/5 lg:m-1">
+    <section className="flex flex-col justify-center items-center w-86 h-auto h-100 mt-5 mb-5 container_box
+    sm:w-full sm:h-auto 
+    md:flex md:justify-center md:items-center md:w-full md:mt-1
+    lg:w-full
+    ">
+      <article className="flex flex-col justify-between w-80 h-auto m-3 container_content
+       md:w-4/5 md:h-auto lg:w-6/12 lg:h-4/5 lg:m-1">
         <h2 className="p-3">{theaterView.name}</h2>
         <div>
           {theaterView.seatsPerRow.map((seatCount, rowI) => (

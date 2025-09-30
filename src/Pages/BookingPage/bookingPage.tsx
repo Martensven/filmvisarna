@@ -12,8 +12,8 @@ export default function BookingPage() {
     <>
       {/*----------Container for booking page----------*/}
       <main
-        className="flex flex-col justify-center items-center overscroll-y-auto w-screen min-h-screen bg-[#292929] pt-10 
-      md:grid md:grid-rows-1"
+        className="flex flex-col justify-center items-center overscroll-y-auto w-screen min-h-screen bg-[#292929] pt-10
+        md:grid"
       >
         <MovieInformation />
         <TheaterView />
