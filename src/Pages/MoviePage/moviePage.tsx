@@ -14,11 +14,11 @@ export default function MoviePage() {
                 </section>         
                 <section className="flex flex-col md:flex-row gap-5 mt-5">
                     <section className="flex flex-col gap-5 w-full md:w-2/3">
-                        <article className="text-center text-3xl py-6 px-4 bg-[#24252C] uppercase shadow-md">Titel: Jurassic Park - Genre: Science-fiction, Action - 
+                        <article className="text-center text-3xl py-6 px-4 bg-[#24252C] uppercase shadow-md rounded-md">Titel: Jurassic Park - Genre: Science-fiction, Action - 
                             Utgivningsår: 1993 - Speltid: 122 min - Regissör: Steven Spielberg - Skådespelare: Sam Neill, Laura Dern, Jeff Goldblum m.fl.</article>
-                        <article className="text-center text-3xl py-6 px-6 bg-[#24252C] shadow-md">Den excentriske mångmiljonären John Hammond bjuder in två dinosaurieexperter till sin nöjespark 
+                        <article className="text-center text-3xl py-6 px-6 bg-[#24252C] shadow-md rounded-md">Den excentriske mångmiljonären John Hammond bjuder in två dinosaurieexperter till sin nöjespark 
                             på en ö utanför Costa Rica. Hammond har lyckats skapa levande dinosaurier genom att klona DNA från förhistoriska insekter.
-                            <article className="text-3xl pt-8 space-y-12 shadow-md">
+                            <article className="text-3xl pt-8 space-y-12 shadow-md rounded-md">
                                 <p className="text-amber-200 italic">"Jakten på den försvunna skatten, Aliens, Hajen och Total Recall var alla väldigt bra.
                                 Men det var bara uppvärmning till Jurassic Park, som tar hjärnan på en berg-och-dalbana och kittlar nerverna ända
                                 ner till maggropen." - Ben Fenster, Arizona Republic</p>
