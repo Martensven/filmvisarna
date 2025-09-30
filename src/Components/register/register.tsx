@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function Register({ onSwitchToLogin, onClose }: { onSwitchToLogin: () => void; onClose: (callback?: () => void) => void; }) {
     const navigate = useNavigate();
