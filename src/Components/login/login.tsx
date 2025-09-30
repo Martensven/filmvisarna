@@ -1,26 +1,28 @@
-import { Link } from "react-router";
+import { useNavigate, Link } from "react-router";
 
-interface LoginProps {
-  onSwitchToRegister?: () => void;
-}
+export default function Login({ onSwitchToRegister, onClose,}: { onSwitchToRegister: () => void; onClose: (callback?: () => void) => void}) {
+    const navigate = useNavigate();
 
-export default function Login({ onSwitchToRegister }: LoginProps) {
+    const handleLogin = () => {
+        navigate("/my-page");
+        onClose();
+    };
+
     return (
-        <section className="border rounded p-5 flex flex-col m-5">
+        <section className="rounded p-5 flex flex-col m-5">
             <h1 className="text-4xl">Logga In</h1>
 
             <form className="flex flex-col m-4">
                 <h2 className="my-2">E-Post</h2>
-                <input className="my-1 p-2 border rounded" type="text" placeholder="Din E-Post" />
+                <input className="bg-[#243365] my-1 p-2 rounded text-gray-400" type="text" placeholder="Din E-Post" />
 
                 <h2 className="my-2">Lösenord</h2>
-                <input className="my-1 p-2 border rounded" type="password" placeholder="Ditt Lösenord" />
-                <Link to={"/forgot-password"} className="text-xs">Glömt ditt lösenord?</Link>
-
+                <input className="bg-[#243365] my-1 p-2 rounded text-gray-400" type="password" placeholder="Ditt Lösenord" />
+                <Link to={"/forgot-password"} className="text-xs mt-1">Glömt ditt lösenord?</Link>
             </form>
-            <Link to={"/my-page"} className="cursor-pointer my-3 p-4 border rounded">Logga In</Link>
+            <button onClick={handleLogin} className="bg-[#243365] cursor-pointer my-3 p-4 self-center rounded w-1/2">Logga In</button>
 
-            <button onClick={onSwitchToRegister} className="text-purple-900 underline cursor-pointer"> Har inget konto? Skapa här</button>
+            <button onClick={onSwitchToRegister} className="mt-1 underline cursor-pointer">Har inget konto? Skapa här</button>
         </section>
     );
 }
