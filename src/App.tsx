@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router';
 import FrontPage from './Pages/FrontPage/frontPage.js';
 import BookingPage from './Pages/BookingPage/bookingPage.tsx';
 import MoviePage from './Pages/MoviePage/moviePage.tsx';
-import ThemePage from './Pages/ThemePage/themePage.tsx';
 import Header from './Components/header/header.tsx';
 import Footer from './Components/footer/footer.tsx';
 import MyPage from './Pages/MyPage/myPage.tsx';
@@ -11,6 +10,8 @@ import Login from './Components/login/login.tsx';
 import Register from './Components/register/register.tsx';
 import AboutPage from './Pages/AboutPage/aboutPage.tsx';
 import KioskPage from './Pages/KioskPage/kioskPage.tsx';
+import ThemeSundayPage from './Pages/ThemePage/themeSunPage.tsx';
+import ThemeThursdayPage from './Pages/ThemePage/themeThuPage.tsx';
 
 function App() {
   const [loginPopup, setLoginPopup] = useState<"login" | "register" | null>(null);
@@ -32,7 +33,8 @@ function App() {
         <Route path='/' element={<FrontPage />} />
         <Route path='/booking' element={<BookingPage />} />
         <Route path='/movie' element={<MoviePage />} />
-        <Route path='/theme' element={<ThemePage />} />
+        <Route path='/theme-sunday' element={<ThemeSundayPage />} />
+        <Route path='/theme-thursday' element={<ThemeThursdayPage />} />
         <Route path='/my-page' element={<MyPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/kiosk' element={<KioskPage />} />

@@ -168,13 +168,13 @@ export default function FrontPage() {
 
             {/* Theme days container*/}
             <section className="w-10/12">
-                <Link to="/theme" className="min-h-96 rounded-md shadow-md my-5 justify-center items-center flex md:flex-row flex-col bg-[#24252C] text-white">
-                    <img src="https://via.placeholder.com/150" alt="Placeholder" className="shadow-md m-2 md:w-1/2" />
+                <Link to="/theme-thursday" className="min-h-96 rounded-md shadow-md my-5 justify-center items-center flex md:flex-row flex-col bg-[#24252C] text-white">
+                    <img src="https://via.placeholder.com/150" alt="Tysta Torsagen" className="shadow-md m-2 md:w-1/2" />
                     <p className="md:w-1/2 w-10/12 m-0 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</p>
                 </Link>
 
-                <Link to="/theme" className="min-h-96 shadow-md my-5 justify-center items-center flex md:flex-row flex-col bg-[#24252C] text-white">
-                    <img src="https://via.placeholder.com/150" alt="Placeholder" className="shadow-md m-2 md:w-1/2" />
+                <Link to="/theme-sunday" className="min-h-96 shadow-md my-5 justify-center items-center flex md:flex-row flex-col bg-[#24252C] text-white">
+                    <img src="https://via.placeholder.com/150" alt="Svenska Söndagen" className="shadow-md m-2 md:w-1/2" />
                     <p className="md:w-1/2 w-10/12 m-0 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</p>
                 </Link>
             </section>
