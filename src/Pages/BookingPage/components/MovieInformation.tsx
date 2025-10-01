@@ -2,7 +2,7 @@
 export default function MovieInformation() {
   return (
     <main
-      className="flex flex-col justify-center items-center w-11/12 h-auto
+      className="flex flex-col justify-center items-center w-full h-auto
                    md:w-full md:place-items-center md:place-items-center"
     >
       {/*----------Container for movie poster and title, Genre, age and time----------*/}
@@ -32,7 +32,7 @@ export default function MovieInformation() {
           <h1
             className="flex w-5/12 h-auto text-left mt-3 text-lg underline
                       sm:text-xl sm:m-3 sm:h-auto
-                       md:justify-start md:w-full md:text-lg md:mt-10 md:ml-0
+                       md:justify-start md:w-full md:text-3xl md:mt-10 md:ml-0
                        lg:m-1"
           >
             Jaws

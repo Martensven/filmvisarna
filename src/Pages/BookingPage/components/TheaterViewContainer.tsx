@@ -5,9 +5,10 @@
   export default function TheaterViewContainer() {
 
     return(
-        <main className="w-full object-center
-                        sm:w-4/5 sm:h-auto md:object-center md:w-11/12 ">
-          <section>
+        <main className="w-full
+                        sm:w-11/12 sm:h-auto 
+                        md:w-full md:flex md:justify-center md:items-start ">
+          <section className="w-11/12 flex flex-col justify-start items-start ml-9">
           {SeatsTheaters.map(t => (
             <TheaterView key={t.id} theaterView={t} />
             ))}

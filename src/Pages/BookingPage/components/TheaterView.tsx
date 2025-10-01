@@ -31,7 +31,7 @@ export default function TheaterView({ theaterView }: PropsTheater) {
   return (
     <section className="flex flex-col w-full h-auto jutify-center items-center mt-5 mb-5 container_box
                         sm:w-full sm:h-auto 
-                        md:flex md:justify-center md:items-center md:w-4/6 md:mt-1 md:m-3
+                        md:flex md:justify-center items-center md:w-11/12 md:mt-0 
                         lg:w-full
     ">
       <article className="flex flex-col justify-center w-80 h-auto m-3 container_content

@@ -5,14 +5,15 @@ import AmountTheaterSeats from "./AmountTheaterSeats";
 
 export default function CalenderAndSeats() {
     return(
-        <article className="w-11/12 flex justify-center items-center">
+        <article className="w-full flex justify-center items-center
+                            md:w-1/3 md:flex md:justify-start md:items-start md:mr-7">
             
       {/*----------Parent Container for choosing date and tickets----------*/}
       <section
-        className="flex flex-col justify-start items-start w-11/12
+        className="flex flex-col justify-center items-center w-11/12
                    container_box  h-auto 
-                   sm:w-4/5 sm:h-auto
-                   md:w-76 md:h-auto 
+                   sm:w-11/12 sm:h-auto
+                   md:w-full md:h-auto 
                    lg:h-80"
       >
         {/*----------Child container for date----------*/}

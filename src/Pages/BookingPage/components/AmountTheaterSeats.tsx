@@ -42,7 +42,7 @@ export default function AmountSeatsTheater() {
   
   return (
     <main className="flex flex-col justify-center items-center w-10/12 h-auto
-                     md:w-full">
+                     md:grid md:w-full">
       <div className="flex flex-row justify-between w-72 h-auto md:w-full md:m-1 md:justify-between">
         <h2 className="text-[#e4e1e1] text-s m-2 md:text-sm md:m-5">Vuxen 140kr</h2>
         <section className="flex flex-row items-center md:mr-2">
