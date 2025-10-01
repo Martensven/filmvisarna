@@ -36,7 +36,7 @@ export default function TheaterView({ theaterView }: PropsTheater) {
     ">
       <article className="flex flex-col justify-center w-11/12 h-auto m-3 container_content
                           md:w-11/12 md:h-auto 
-                          lg:w-6/12 lg:h-4/5 lg:m-1">
+                          lg:w-11/12 lg:h-screen lg:mt-20 lg:mb-10">
         <h2 className="p-3">{theaterView.name}</h2>
         <div>
           {theaterView.seatsPerRow.map((seatCount, rowI) => (
