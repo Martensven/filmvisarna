@@ -38,7 +38,6 @@ export default function Header({ onLoginClick }: HeaderProps) {
               <li><Link to="/">Start</Link></li>
               <li><Link to="/booking">Boka</Link></li>
               <li><Link to="/movie">Filmer</Link></li>
-              <li><Link to="/theme">Temadagar</Link></li>
               <li><Link to="/about">Om Oss</Link></li>
               <li><Link to="/kiosk">Kiosk</Link></li>
               <li><button onClick={onLoginClick} className="cursor-pointer">Logga In</button></li>
@@ -51,7 +50,6 @@ export default function Header({ onLoginClick }: HeaderProps) {
               <li><Link to="/" onClick={() => setIsOpen(false)}>Start</Link></li>
               <li><Link to="/booking" onClick={() => setIsOpen(false)}>Boka</Link></li>
               <li><Link to="/movie" onClick={() => setIsOpen(false)}>Filmer</Link></li>
-              <li><Link to="/theme" onClick={() => setIsOpen(false)}>Temadagar</Link></li>
               <li><Link to="/about" onClick={() => setIsOpen(false)}>Om Oss</Link></li>
               <li><Link to="/kiosk" onClick={() => setIsOpen(false)}>Kiosk</Link></li>
               <li><button onClick={onLoginClick}>Logga In</button></li>
