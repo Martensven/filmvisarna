@@ -22,9 +22,7 @@ interface Props {
                               md:w-full md:flex md:flex-col md:justify-start md:items-start md:mr-9
                               lg:h-auto">
             <TheaterView key={theater.id} theaterView={theater} />
-          {SeatsTheaters.map(t => (
-            <TheaterView key={t.id} theaterView={t} />
-            ))}
+          
           </section>
         </main>
    );
