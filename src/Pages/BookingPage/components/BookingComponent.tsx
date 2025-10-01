@@ -1,26 +1,36 @@
-import UserAsGuestComponent from "./UserAsGuestComponent";
+
+import UserAsGuest from "./UserAsGuestComponent";
+import UserOrderComponent from "./UserOrderComponent";
+
+import { useState } from "react"
+
 
 export default function BookingComponent() {
-  return (
-    <main className="bg-[#24252C]">
-      {/*----------container for completing order which leads to an order confirmation and will be saved in my bookings and sent to mail----------*/}
-      <section className="flex flex-col justify-center items-center container_box m-2 w-screen md:w-4/5 md:mb-5">
-        <h1>Färdigställ beställning.</h1>
-        {/*----------Container for chosing age for different ticket prizes----------*/}
-        
-        <span className="w-90 container_box mt-5 md:w-96 p-2">
-          <h2>Biljetter bokade, ordernummer ..... </h2>
-          <p>
-            Orderbekräftelse med ordernummer skickad till din epost och sparad
-            under "mina sidor"
-          </p>
-        </span>
+ const [showGuestOrder, setShowGuestOrder] = useState(false);
+ const [showUserOrder, setShowUserOrder] = useState(false);
 
-        <section className="flex flex-row justify-center items-center container_box w-55 my-5">
-          <button className="container_box w-25 m-3 text-sm">Hem</button>
-          <button className="container_box w-25 m-3 text-sm">Mina Sidor</button>
+  return (
+    <main className="flex flex-col justify-center items-center">
+      
+
+        <section className="flex flex-col justify-center items-center md:flex md:flex-row justify-between md:mb-10 md:w-96">
+          <div className="flex flex-col justify-center items-center">
+             {!showGuestOrder ? (
+                <button onClick ={() => setShowGuestOrder(true)} className="main_buttons w-36 m-2 h-10 text-sm">Boka som Gäst</button>
+            ): (<UserAsGuest />
+            )}
+          </div>
+           
+           <div>
+            {!showUserOrder ? (
+              <button onClick={() => setShowUserOrder(true)} className="main_buttons w-36 m-2 h-10 text-sm">Boka som Medlem</button>
+            ): (<UserOrderComponent />
+            )}
+           </div>
+          
+          
         </section>
-      </section>
-    </main>
+
+</main>
   );
 }

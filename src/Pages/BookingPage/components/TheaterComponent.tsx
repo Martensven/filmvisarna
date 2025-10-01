@@ -29,9 +29,14 @@ export default function TheaterComponent({ theaterView }: PropsTheater) {
     /*----------Container for a view of the salons----------*/
   }
   return (
-    <section className="flex flex-col justify-center items-center w-100 h-100 mt-5 mb-5  container_box h-65 sm:h-80 md:w-4/5 md:h-96 lg:w-full">
-      <article className="flex flex-col justify-between w-96 h-76 m-1 container_content md:h-96 lg:w-6/12 lg:h-4/5 lg:m-1">
-        <h2 className="">{theaterView.name}</h2>
+    <section className="flex flex-col justify-center items-center w-86 h-auto h-100 mt-5 mb-5 container_box
+    sm:w-full sm:h-auto 
+    md:flex md:justify-center md:items-center md:w-full md:mt-1
+    lg:w-full
+    ">
+      <article className="flex flex-col justify-between w-80 h-auto m-3 container_content
+       md:w-4/5 md:h-auto lg:w-6/12 lg:h-4/5 lg:m-1">
+        <h2 className="p-3">{theaterView.name}</h2>
         <div>
           {theaterView.seatsPerRow.map((seatCount, rowI) => (
             <div key={rowI}>
@@ -47,7 +52,7 @@ export default function TheaterComponent({ theaterView }: PropsTheater) {
                       width: 24,
                       height: 24,
                       borderRadius: 4,
-                      backgroundColor: selected ? "white" : "grey",
+                      backgroundColor: selected ? "green" : "#243365",
                       border: "1px solid white",
                       cursor: "pointer",
                     }}
@@ -60,9 +65,14 @@ export default function TheaterComponent({ theaterView }: PropsTheater) {
         </div>
 
         <span>
-          <strong>Valda Stolar</strong> {Array.from(selectedSeat).join(", ")}
+          <strong className="font-medium">Valda Stolar:</strong> {Array.from(selectedSeat).join(", ")}
         </span>
       </article>
+      
+        {/*----------Container for chosing chairs-button----------*/}
+        <section className="flex flex-row justify-end">
+          <button className="main_buttons w-20 h-8 m-5 text-sm">Välj</button>
+        </section>
     </section>
   );
 }

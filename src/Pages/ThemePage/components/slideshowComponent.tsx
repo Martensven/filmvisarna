@@ -46,15 +46,15 @@ export default function Slideshow({ day }: SlideshowProps) {
             backgroundColor: baseColor,
             backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 72%, transparent), url(${currentMovie.image})`,
         }}
-        className="bg-contain bg-no-repeat bg-right lg: lg:h-72 lg:w-3/8 flex flex-col justify-center shadow-md"
+        className="bg-contain bg-no-repeat bg-right lg:h-72 lg:w-3/8 flex flex-col justify-center shadow-md"
         >
-            <article style={{color: textDay}} className="text-start textDay mx-10">
-                <h1 className="my-2 text-xl">{currentMovie.movieName} ({currentMovie.releaseYear})</h1>
-                <h2 className="my-2 text-sm">{currentMovie.genre.join(", ")}</h2>
-                <h2 className="my-2 text-sm">Filmens Längd: {currentMovie.length} min</h2>
+            <article style={{color: textDay}} className="text-start textDay lg:mx-10 xs:mx-4">
+                <h1 className="my-2 lg:text-xl xs:text-sm">{currentMovie.movieName} ({currentMovie.releaseYear})</h1>
+                <h2 className="my-2 lg:text-sm xs:text-xs">{currentMovie.genre.join(", ")}</h2>
+                <h2 className="my-2 lg:text-sm xs:text-xs">Filmens Längd: {currentMovie.length} min</h2>
                 <p className="overflow-y-auto w-2/3 text-sm line-clamp-4">{currentMovie.description}</p>
 
-                <article className="mt-4 flex gap-4">
+                <article className="mt-4 flex gap-4 py-2">
                     <button onClick={prevSlide} className="cursor-pointer">&#10216; Föregående</button>
                     <button onClick={nextSlide} className="cursor-pointer">Nästa &#10217;</button>
                 </article>
