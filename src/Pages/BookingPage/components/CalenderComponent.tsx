@@ -105,7 +105,7 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           <li className="pt-3 text-sm font-bold">Lilla Salongen</li>
         </ul>
         <ul
-          onClick={() => onSelectTheater("Lilla Salongen")}
+          onClick={() => onSelectTheater("Stora Salongen")}
           className="container_box calenderDatesContainer w-24 
                         sm:w-32
                         md:w-20 md:h-32 md:text-xs"
