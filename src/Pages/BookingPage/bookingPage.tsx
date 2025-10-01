@@ -27,11 +27,7 @@ export default function BookingPage() {
 
           {/* Theater view based on selected showing */}
           {selectedTheater && <TheaterViewContainer selectTheater={selectedTheater} />}
-        <div className: "md:flex-row md:justify-center md:items-start md:w-full
-                        lg:w-10/12 lg:flex lg:justify-center lg:items-start ">
           
-          <CalenderAndSeats />
-          <TheaterViewContainer />
         </div>
 
         <CheckoutComponent />
