@@ -24,7 +24,7 @@ export default function BookingPage() {
           <CalenderAndSeats onSelectTheater={setSelectedTheater} />
 
           {/* Theater view based on selected showing */}
-          {selectedTheater && <TheaterViewContainer selectedTheater={selectedTheater} />}
+          {selectedTheater && <TheaterViewContainer selectTheater={selectedTheater} />}
         </div>
 
         <CheckoutComponent />
