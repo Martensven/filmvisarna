@@ -10,16 +10,16 @@ export default function MovieInformation() {
         className="flex flex-col justify-center items-center container_box w-11/12 h-auto mb-5
                    sm:flex-row sm:w-11/12
                    md:w-11/12 md:h-auto md:ml-3 
-                   lg:h-80"
+                   lg:h-80 lg:w-10/12 lg:flex lg:items-start justify-start"
       >
         {/*----------Container for movie poster----------*/}
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Jaws_movie_poster.jpg/640px-Jaws_movie_poster.jpg"
           alt="FILM POSTER"
-          className="flex justify-center items-center w-6/12 h-auto mt-3 rounded-md
+          className="flex justify-center items-center w-5/12 h-auto mt-3 rounded-md
                      sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-2
-                     md:w-2/6 md:h-auto md:m-1 
-                     lg:h-100 "
+                     md:w-2/7 md:h-auto md:m-1 md:p-2
+                     lg:w-2/12 lg:ml-10 "
         />
 
         {/*----------Container movie info ----------*/}
@@ -27,7 +27,7 @@ export default function MovieInformation() {
           className="flex flex-col justify-start w-11/12 h-auto pl-2 text-[#e4e1e1]
                     sm:w-6/12 sm:h-auto
                      md:w-3/6 md:h-auto 
-                     lg:flex lg:justify-center lg:items-center lg:m-2"
+                     lg:flex lg:justify-center lg:items-center lg:m-2 lg:w-4/12"
         >
           <h1
             className="flex w-5/12 h-auto text-left mt-3 text-lg underline

@@ -41,10 +41,9 @@ export default function AmountSeatsTheater() {
 
   
   return (
-    <main className="flex flex-col justify-center items-center w-10/12 h-auto
-                     md:grid md:w-full">
-      <div className="flex flex-row justify-between w-72 h-auto md:w-full md:m-1 md:justify-between">
-        <h2 className="text-[#e4e1e1] text-s m-2 md:text-sm md:m-5">Vuxen 140kr</h2>
+    <main className="flex flex-col justify-center items-center w-11/12 h-auto">
+      <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 md:w-full md:m-1 md:justify-between">
+        <h2 className="text-[#e4e1e1] text-sm m-1 md:text-sm md:m-5">Vuxen 140kr</h2>
         <section className="flex flex-row items-center md:mr-2">
           <button
             className="seat_range_buttons w-7 h-7 mr-5 align cursor-pointer 
@@ -66,7 +65,7 @@ export default function AmountSeatsTheater() {
         </section>
       </div>
 
-      <div className="flex flex-row justify-between w-72 h-auto md:w-full md:m-1 md:justify-between">
+      <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 md:w-full md:m-1 md:justify-between">
         <h2 className="text-[#e4e1e1] text-s m-2 md:text-sm md:m-5">Senior 120kr</h2>
         <section className="flex flex-row justify-content items-center md:mr-2">
           <button
@@ -89,7 +88,7 @@ export default function AmountSeatsTheater() {
         </section>
       </div>
 
-      <div className="flex flex-row justify-between w-72 auto md:w-full md:m-1 md:justify-between">
+      <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 md:w-full md:m-1 md:justify-between">
         <h2 className="text-[#e4e1e1] text-s m-2  md:text-sm md:m-5">Barn 80kr</h2>
         <section className="flex flex-row justify-content items-center md:mr-2">
           <button
@@ -112,7 +111,7 @@ export default function AmountSeatsTheater() {
         </section>
       </div>
 
-      <button className="main_buttons w-36 m-4 cursor-pointer">Välj</button>
+      <button className="main_buttons w-36 m-4 cursor-pointer md:w-6/12 md:object-center">Välj</button>
     </main>
   );
 }

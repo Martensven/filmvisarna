@@ -16,10 +16,11 @@ export default function BookingPage() {
         <MovieInformation />
 
         <div className="flex flex-col w-full h-auto justify-center items-center
-                        md:flex-row md:justify-center md:items-start md:w-full ">
-          <TheaterViewContainer />
-          <CalenderAndSeats />
+                        md:flex-row md:justify-center md:items-start md:w-full
+                        lg:w-10/12 lg:flex lg:justify-center lg:items-start ">
           
+          <CalenderAndSeats />
+          <TheaterViewContainer />
         </div>
 
         <CheckoutComponent />
