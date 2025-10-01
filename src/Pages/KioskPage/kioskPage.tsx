@@ -16,8 +16,9 @@ export default function KioskPage() {
   return (
     <main className="w-screen bg-[#292929] text-white">
       <header className="text-center">
-        <h1 className="text-2xl">Kiosk</h1>
-        <h2 className="text-xl">Vårt utbud i kiosken</h2>
+        <h1 className="text-3xl shadow-md p-3 my-10 lg:mx-auto xs:mx-auto text-center bg-[#243365] xs:w-10/12 text-center">
+          Utbud i kiosken
+        </h1>
 
         <CategorySection title="Dryck" items={drinks} />
         <CategorySection title="Snacks" items={snacks} />
@@ -31,4 +32,3 @@ export type CategorySectionProps = {
   title: string;
   items: KioskItem[];
 };
-

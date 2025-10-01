@@ -1,22 +1,25 @@
-import { useState } from "react";
-
+import { useSeats } from "./context/SeatsContext";
 
 export default function AmountSeatsTheater() {
-  //Creating useState method to give user a ticket counter.
-  const [countAdult, setCountAdult] = useState<number>(0); //Always a start with 0
-  const [countSenior, setCountSenior] = useState<number>(0);
-  const [countChild, setCountChild] = useState<number>(0);
+  const {
+    countAdult,
+    setCountAdult,
+    countSenior,
+    setCountSenior,
+    countChild,
+    setCountChild,
+    totalTickets,
+    totalPrice,
+    adultPrice,
+    seniorPrice,
+    childPrice,
+  } = useSeats();
 
-  const adultPrice = 140;
-  const seniorPrice = 120;
-  const childPrice = 80;
 
+  //Total price for each ticket type
   const adultTotalPrice = countAdult * adultPrice;
   const seniorTotalPrice = countSenior * seniorPrice;
   const childTotalPrice = countChild * childPrice;
-
-  const totalTickets = countAdult + countSenior + countChild;
-  const totalPrice = countAdult * adultPrice + countSenior * seniorPrice + countChild * childPrice;
 
   //Adult ticket count.
   const incrementAdult: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -43,17 +46,10 @@ export default function AmountSeatsTheater() {
   };
 
 
-  //Function for chosing amount of seats.
-
-
-  //Function for navigate to theater view
-
-
   return (
-    <main className="flex flex-col justify-center items-center w-10/12 h-auto
-                     md:grid md:w-full">
-      <div className="flex flex-row justify-between w-72 h-auto md:w-full md:m-1 md:justify-between">
-        <h2 className="text-[#e4e1e1] text-s m-2 md:text-sm md:m-5">Vuxen 140kr</h2>
+    <main className="flex flex-col justify-center items-center w-11/12 h-auto">
+      <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 md:w-full md:m-1 md:justify-between">
+        <h2 className="text-[#e4e1e1] text-sm m-1 md:text-sm md:m-5">Vuxen 140kr</h2>
         <section className="flex flex-row items-center md:mr-2">
           <button
             className="seat_range_buttons w-7 h-7 mr-5 align cursor-pointer 
@@ -75,7 +71,7 @@ export default function AmountSeatsTheater() {
         </section>
       </div>
 
-      <div className="flex flex-row justify-between w-72 h-auto md:w-full md:m-1 md:justify-between">
+      <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 md:w-full md:m-1 md:justify-between">
         <h2 className="text-[#e4e1e1] text-s m-2 md:text-sm md:m-5">Senior 120kr</h2>
         <section className="flex flex-row justify-content items-center md:mr-2">
           <button
@@ -98,7 +94,7 @@ export default function AmountSeatsTheater() {
         </section>
       </div>
 
-      <div className="flex flex-row justify-between w-72 auto md:w-full md:m-1 md:justify-between">
+      <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 md:w-full md:m-1 md:justify-between">
         <h2 className="text-[#e4e1e1] text-s m-2  md:text-sm md:m-5">Barn 80kr</h2>
         <section className="flex flex-row justify-content items-center md:mr-2">
           <button
@@ -151,3 +147,6 @@ export default function AmountSeatsTheater() {
     </main>
   );
 }
+
+
+

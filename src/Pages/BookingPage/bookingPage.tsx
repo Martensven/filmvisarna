@@ -5,6 +5,7 @@ import TheaterViewContainer from "./components/TheaterViewContainer";
 import MovieInformation from "./components/MovieInformation";
 import CalenderAndSeats from "./components/CalenderAndSeats";
 import CheckoutComponent from "./components/CheckoutComponent";
+import { SeatsProvider } from "./components/context/SeatsContext";
 
 
 export default function BookingPage() {
@@ -12,6 +13,7 @@ export default function BookingPage() {
 
   return (
     <>
+      <SeatsProvider>
       {/*----------Container for booking page----------*/}
       <main
         className="w-screen min-h-screen flex flex-col justify-center items-center overscroll-y-auto bg-[#292929] pt-10"
@@ -25,10 +27,16 @@ export default function BookingPage() {
 
           {/* Theater view based on selected showing */}
           {selectedTheater && <TheaterViewContainer selectTheater={selectedTheater} />}
+        <div className: "md:flex-row md:justify-center md:items-start md:w-full
+                        lg:w-10/12 lg:flex lg:justify-center lg:items-start ">
+          
+          <CalenderAndSeats />
+          <TheaterViewContainer />
         </div>
 
         <CheckoutComponent />
       </main>
+      </SeatsProvider>
     </>
   );
 }

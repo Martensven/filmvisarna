@@ -41,12 +41,12 @@ function App() {
       </Routes>
 
       <Footer></Footer>
- 
+
       {loginPopup && (
         <section onClick={handleClosing} className="fixed inset-0 flex justify-end z-50">
           <aside onClick={(e) => e.stopPropagation()} className={`popup-background flex w-150 h-full shadow-xl p-6 flex-col justify-center ${popupSlide ? "animation-slideout" : "animation-slidein"}`}>
-            {loginPopup === "login" && <Login onSwitchToRegister={() => setLoginPopup("register")} onClose={handleClosing}/>}
-            {loginPopup === "register" && <Register onSwitchToLogin={() => setLoginPopup("login")} onClose={handleClosing}/>}
+            {loginPopup === "login" && <Login onSwitchToRegister={() => setLoginPopup("register")} onClose={handleClosing} />}
+            {loginPopup === "register" && <Register onSwitchToLogin={() => setLoginPopup("login")} onClose={handleClosing} />}
 
             <button
               onClick={handleClosing}
