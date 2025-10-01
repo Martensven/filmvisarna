@@ -1,3 +1,4 @@
+import cinemapic from "../../../Components/booking/cinemapic.jpg"
 //Components contains movie box, like poster, year, time and about the movie.
 export default function MovieInformation() {
   return (
@@ -10,7 +11,7 @@ export default function MovieInformation() {
         className="flex flex-col justify-center items-center container_box w-11/12 h-auto mb-5
                    sm:flex-row sm:w-11/12
                    md:w-11/12 md:h-auto md:ml-3 
-                   lg:h-80 lg:w-10/12 lg:flex lg:items-start justify-start"
+                   lg:h-auto lg:w-10/12 lg:flex lg:items-start justify-start"
       >
         {/*----------Container for movie poster----------*/}
         <img
@@ -19,7 +20,7 @@ export default function MovieInformation() {
           className="flex justify-center items-center w-5/12 h-auto mt-3 rounded-md
                      sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-2
                      md:w-2/7 md:h-auto md:m-1 md:p-2
-                     lg:w-2/12 lg:ml-10 "
+                     lg:w-2/10 lg:ml-10 lg:h-auto"
         />
 
         {/*----------Container movie info ----------*/}
@@ -54,8 +55,11 @@ export default function MovieInformation() {
             </li>
           </ul>
         </article>
+        <img src={cinemapic} alt="Cinema overview pic for fill" className="invisible w-0 [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
+                                                                        sm:invisble w-0
+                                                                        md:invisible w-0 
+                                                                        lg:visible lg:ml-10 lg:mt-12 lg:w-4/12"/>
       </section>
-
     </main>
   );
 }
