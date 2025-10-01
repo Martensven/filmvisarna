@@ -9,7 +9,7 @@ import CheckoutComponent from "./components/CheckoutComponent";
 
 export default function BookingPage() {
   const [selectedTheater, setSelectedTheater] = useState<string | null>(null);
-  
+
   return (
     <>
       {/*----------Container for booking page----------*/}
@@ -20,9 +20,11 @@ export default function BookingPage() {
 
         <div className="flex flex-col w-full h-auto justify-center items-center
                         md:flex-row md:justify-center md:items-start md:w-full ">
-          <TheaterViewContainer />
-          <CalenderAndSeats />
-          
+
+          <CalenderAndSeats onSelectTheater={setSelectedTheater} />
+
+          {/* Theater view based on selected showing */}
+          {selectedTheater && <TheaterViewContainer selectedTheater={selectedTheater} />}
         </div>
 
         <CheckoutComponent />
