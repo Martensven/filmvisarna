@@ -43,14 +43,14 @@ export default function TheaterView(
     /*----------Container for a view of the salons----------*/
   }
   return (
-    <section className="flex flex-col justify-center items-center w-11/12 h-auto h-100 mt-5 mb-5 container_box
+    <section className="flex flex-col w-full h-auto jutify-center items-center mt-5 mb-5 container_box
                         sm:w-full sm:h-auto 
-                        md:flex md:justify-center md:items-center md:w-4/6 md:mt-1 md:m-3
+                        md:flex md:justify-center items-center md:w-11/12 md:mt-0 
                         lg:w-full
     ">
-      <article className="flex flex-col justify-between w-80 h-auto m-3 container_content
-                          md:w-4/5 md:h-auto 
-                          lg:w-6/12 lg:h-4/5 lg:m-1">
+      <article className="flex flex-col justify-center w-11/12 h-auto m-3 container_content
+                          md:w-11/12 md:h-auto 
+                          lg:w-11/12 lg:h-screen lg:mt-20 lg:mb-10">
         <h2 className="p-3">{theaterView.name}</h2>
         <div>
           {theaterView.seatsPerRow.map((seatCount, rowI) => (
