@@ -3,7 +3,11 @@ import AmountTheaterSeats from "./AmountTheaterSeats";
 
 //Component for the calender with viewtimes and selecting seats
 
-export default function CalenderAndSeats() {
+interface Props {
+  onSelectTheater: (theater: string) => void;
+}
+
+export default function CalenderAndSeats({ onSelectTheater }: Props) {
     return(
         <article className="w-full flex justify-center items-center
                             md:w-6/12 md:flex md:justify-start md:items-start md:ml-10
@@ -25,7 +29,7 @@ export default function CalenderAndSeats() {
                      lg:pb-0"
         >
         {/*----------Getting the Calender component for all the dates and views----------*/}
-          <CalenderComponent />
+          <CalenderComponent onSelectTheater={onSelectTheater} />
         </article>
         
         {/*----------Child container for selecting seats----------*/}

@@ -2,7 +2,15 @@
   import TheaterView from "./TheaterView"
 //Component for the view of  theater.
 
-  export default function TheaterViewContainer() {
+interface Props {
+  selectTheater: string;
+}
+
+  export default function TheaterViewContainer( { selectTheater }: Props) {
+    const theater = SeatsTheaters.find(t => t.name === selectTheater);
+    if (!theater) {
+      return ;
+    }
 
     return(
         <main className="w-full flex flex-col justify-center items-center
@@ -13,6 +21,7 @@
                               sm:w-full
                               md:w-full md:flex md:flex-col md:justify-start md:items-start md:mr-9
                               lg:h-auto">
+            <TheaterView key={theater.id} theaterView={theater} />
           {SeatsTheaters.map(t => (
             <TheaterView key={t.id} theaterView={t} />
             ))}

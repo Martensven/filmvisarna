@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./BookingPageStyle.css";
 import "../../index.css";
 import TheaterViewContainer from "./components/TheaterViewContainer";
@@ -8,6 +9,7 @@ import { SeatsProvider } from "./components/context/SeatsContext";
 
 
 export default function BookingPage() {
+  const [selectedTheater, setSelectedTheater] = useState<string | null>(null);
 
   return (
     <>
@@ -19,7 +21,13 @@ export default function BookingPage() {
         <MovieInformation />
 
         <div className="flex flex-col w-full h-auto justify-center items-center
-                        md:flex-row md:justify-center md:items-start md:w-full
+                        md:flex-row md:justify-center md:items-start md:w-full ">
+
+          <CalenderAndSeats onSelectTheater={setSelectedTheater} />
+
+          {/* Theater view based on selected showing */}
+          {selectedTheater && <TheaterViewContainer selectTheater={selectedTheater} />}
+        <div className: "md:flex-row md:justify-center md:items-start md:w-full
                         lg:w-10/12 lg:flex lg:justify-center lg:items-start ">
           
           <CalenderAndSeats />
