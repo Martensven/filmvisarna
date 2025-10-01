@@ -1,6 +1,6 @@
 
 import { Link } from "react-router";
-
+//This child component is for the user checkout that's included in CheckoutComponent.
 
 
 export default function UserOrderComponent(){

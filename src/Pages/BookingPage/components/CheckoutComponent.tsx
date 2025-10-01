@@ -1,11 +1,11 @@
 
 import UserAsGuest from "./UserAsGuestComponent";
 import UserOrderComponent from "./UserOrderComponent";
-
 import { useState } from "react"
 
+//Booking component itself, when chosing date and time plus seats. This component will show when going to "checkout"
 
-export default function BookingComponent() {
+export default function CheckoutComponent() {
  const [showGuestOrder, setShowGuestOrder] = useState(false);
  const [showUserOrder, setShowUserOrder] = useState(false);
 

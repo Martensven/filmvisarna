@@ -1,7 +1,6 @@
 import "../BookingPageStyle.css";
-
+//Component contains todays showing and other dates. This ones are going to be clickable
 export default function CalenderComponent() {
-//
 
   return (
     <main className="h-auto flex flex-col justify-center items-center md:w-11/12">

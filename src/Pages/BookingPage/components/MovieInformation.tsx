@@ -1,4 +1,4 @@
-
+//Components contains movie box, like poster, year, time and about the movie.
 export default function MovieInformation() {
   return (
     <main

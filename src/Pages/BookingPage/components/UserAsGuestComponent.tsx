@@ -1,5 +1,5 @@
 
-
+//This child component is for the guest checkout that's included in CheckoutComponent.
 export default function UserAsGuest() {
   return (
     <main className="container_box w-86 h-auto p-3 m-3">

@@ -1,9 +1,10 @@
 import "./BookingPageStyle.css";
 import "../../index.css";
-import TheaterView from "./components/TheaterView";
+import TheaterViewContainer from "./components/TheaterViewContainer";
 import MovieInformation from "./components/MovieInformation";
-import BookingComponent from "./components/BookingComponent";
 import CalenderAndSeats from "./components/CalenderAndSeats";
+import CheckoutComponent from "./components/CheckoutComponent";
+
 
 export default function BookingPage() {
   return (
@@ -17,10 +18,9 @@ export default function BookingPage() {
         <div className="flex flex-col w-screen h-auto
                         md:grid-cols-[2fr_1fr] md:gap-8">
           <CalenderAndSeats />
-          <TheaterView />
+          <TheaterViewContainer />
         </div>
-
-        <BookingComponent />
+        <CheckoutComponent />
       </main>
     </>
   );
