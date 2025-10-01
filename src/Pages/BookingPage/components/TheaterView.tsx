@@ -1,17 +1,31 @@
 import { useState } from "react";
+import { useAmountSeats } from "./hooks/useAmountSeats";
+import { useSeats } from "./context/SeatsContext";
+
+
+
 //Provides the function for theater overview with chairs that can be clicked and chosen.
 interface Theater {
   id: string;
   name: string;
   seatsPerRow: number[];
 }
-interface PropsTheater {
+
+interface TheaterViewProps {
   theaterView: Theater;
 }
 
-export default function TheaterView({ theaterView }: PropsTheater) {
+export default function TheaterView(
+  { theaterView }: TheaterViewProps
+) {
+
+  //State for selected seats using a Set to avoid duplicates.
   const [selectedSeat, setSelectedSeat] = useState<Set<string>>(new Set());
 
+  //Getting total tickets from useSeats
+  const { totalTickets } = useSeats();
+
+  //Function for toggling the seats when clicked.
   const toggle = (rowI: number, seatI: number) => {
     const key = `${rowI}-${seatI}`;
     setSelectedSeat((prev) => {
@@ -69,11 +83,16 @@ export default function TheaterView({ theaterView }: PropsTheater) {
           <strong className="font-medium">Valda Stolar:</strong> {Array.from(selectedSeat).join(", ")}
         </span>
       </article>
-      
-        {/*----------Container for chosing chairs-button----------*/}
-        <section className="flex flex-row justify-end">
-          <button className="main_buttons w-20 h-8 m-5 text-sm">Välj</button>
-        </section>
+
+      {/*----------Container for chosing chairs-button----------*/}
+      <section className="flex flex-row justify-end">
+        <button className="main_buttons w-20 h-8 m-5 text-sm">Välj</button>
+
+      </section>
+      <p className="mb-2">Antal platser: {totalTickets}</p>
     </section>
   );
 }
+
+
+
