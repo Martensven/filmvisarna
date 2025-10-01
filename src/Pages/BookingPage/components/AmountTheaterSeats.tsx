@@ -1,22 +1,25 @@
-import { useState } from "react";
-
+import { useSeats } from "./context/SeatsContext";
 
 export default function AmountSeatsTheater() {
-  //Creating useState method to give user a ticket counter.
-  const [countAdult, setCountAdult] = useState<number>(0); //Always a start with 0
-  const [countSenior, setCountSenior] = useState<number>(0);
-  const [countChild, setCountChild] = useState<number>(0);
+  const {
+    countAdult,
+    setCountAdult,
+    countSenior,
+    setCountSenior,
+    countChild,
+    setCountChild,
+    totalTickets,
+    totalPrice,
+    adultPrice,
+    seniorPrice,
+    childPrice,
+  } = useSeats();
 
-  const adultPrice = 140;
-  const seniorPrice = 120;
-  const childPrice = 80;
 
+  //Total price for each ticket type
   const adultTotalPrice = countAdult * adultPrice;
   const seniorTotalPrice = countSenior * seniorPrice;
   const childTotalPrice = countChild * childPrice;
-
-  const totalTickets = countAdult + countSenior + countChild;
-  const totalPrice = countAdult * adultPrice + countSenior * seniorPrice + countChild * childPrice;
 
   //Adult ticket count.
   const incrementAdult: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -41,12 +44,6 @@ export default function AmountSeatsTheater() {
   const decrementChild: React.MouseEventHandler<HTMLButtonElement> = () => {
     setCountChild((prev) => (prev > 0 ? prev - 1 : 0));
   };
-
-
-  //Function for chosing amount of seats.
-
-
-  //Function for navigate to theater view
 
 
   return (
@@ -150,3 +147,6 @@ export default function AmountSeatsTheater() {
     </main>
   );
 }
+
+
+
