@@ -3,11 +3,20 @@ import { useState } from "react";
 
 export default function AmountSeatsTheater() {
   //Creating useState method to give user a ticket counter.
-  const [countAdult, setCountAdult] = useState<number>(1); //Always a start with 1
-  const [countSenior, setCountSenior] = useState<number>(1);
-  const [countChild, setCountChild] = useState<number>(1);
+  const [countAdult, setCountAdult] = useState<number>(0); //Always a start with 0
+  const [countSenior, setCountSenior] = useState<number>(0);
+  const [countChild, setCountChild] = useState<number>(0);
 
-  
+  const adultPrice = 140;
+  const seniorPrice = 120;
+  const childPrice = 80;
+
+  const adultTotalPrice = countAdult * adultPrice;
+  const seniorTotalPrice = countSenior * seniorPrice;
+  const childTotalPrice = countChild * childPrice;
+
+  const totalTickets = countAdult + countSenior + countChild;
+  const totalPrice = countAdult * adultPrice + countSenior * seniorPrice + countChild * childPrice;
 
   //Adult ticket count.
   const incrementAdult: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -39,7 +48,7 @@ export default function AmountSeatsTheater() {
 
   //Function for navigate to theater view
 
-  
+
   return (
     <main className="flex flex-col justify-center items-center w-11/12 h-auto">
       <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 md:w-full md:m-1 md:justify-between">
@@ -109,9 +118,35 @@ export default function AmountSeatsTheater() {
             +
           </button>
         </section>
+
+
       </div>
 
-      <button className="main_buttons w-36 m-4 cursor-pointer md:w-6/12 md:object-center">Välj</button>
+      <section className="flex flex-row justify-between w-72 h-auto border-t mt-2 border-gray-400">
+        <h2 className="text-[#e4e1e1] text-s m-2  md:text-sm md:m-5">Antal biljetter:</h2>
+        <p className="text-[#e4e1e1] text-s m-2  md:text-sm md:m-5">{totalTickets} </p>
+      </section>
+
+      <section className="flex flex-col justify-between w-72 h-auto border-t mt-2 border-gray-400">
+        <span className="flex justify-between space m-2">
+          <h2>barn:</h2>
+          <p>{childTotalPrice} kr</p>
+        </span>
+        <span className="flex justify-between space m-2">
+          <h2>senior:</h2>
+          <p>{seniorTotalPrice} kr</p>
+        </span>
+        <span className="flex justify-between space m-2">
+          <h2>vuxen:</h2>
+          <p>{adultTotalPrice} kr</p>
+        </span>
+      </section>
+      <section className="flex flex-row justify-between w-72 h-auto border-t mt-2 border-gray-400">
+        <h2 className="text-[#e4e1e1] text-s m-2  md:text-sm md:m-5">Totalt:</h2>
+        <p className="text-[#e4e1e1] text-s m-2  md:text-sm md:m-5">{totalPrice} kr</p>
+      </section>
+
+      <button className="main_buttons w-36 m-4 cursor-pointer">Välj</button>
     </main>
   );
 }
