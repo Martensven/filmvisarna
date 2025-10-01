@@ -5,7 +5,8 @@
   export default function TheaterViewContainer() {
 
     return(
-        <main className="sm:w-4/5 sm:h-auto md:object-center md:w-11/12 ">
+        <main className="w-full object-center
+                        sm:w-4/5 sm:h-auto md:object-center md:w-11/12 ">
           <section>
           {SeatsTheaters.map(t => (
             <TheaterView key={t.id} theaterView={t} />

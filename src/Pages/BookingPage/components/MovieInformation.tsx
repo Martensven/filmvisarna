@@ -2,13 +2,13 @@
 export default function MovieInformation() {
   return (
     <main
-      className="flex flex-col justify-around items-center w-full h-auto
+      className="flex flex-col justify-center items-center w-11/12 h-auto
                    md:w-full md:place-items-center md:place-items-center"
     >
       {/*----------Container for movie poster and title, Genre, age and time----------*/}
       <section
-        className="flex flex-row container_box w-11/12 h-auto mb-5
-                   sm:w-11/12
+        className="flex flex-col justify-center items-center container_box w-11/12 h-auto mb-5
+                   sm:flex-row sm:w-11/12
                    md:w-11/12 md:h-auto md:ml-3 
                    lg:h-80"
       >
@@ -16,15 +16,15 @@ export default function MovieInformation() {
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Jaws_movie_poster.jpg/640px-Jaws_movie_poster.jpg"
           alt="FILM POSTER"
-          className="flex justify-center items-center w-6/12 h-auto p-2 rounded-md
-                     sm:w-2/5 sm:mr-2
-                     md:w-3/6 md:h-auto md:m-1 
+          className="flex justify-center items-center w-6/12 h-auto mt-3 rounded-md
+                     sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-2
+                     md:w-2/6 md:h-auto md:m-1 
                      lg:h-100 "
         />
 
         {/*----------Container movie info ----------*/}
         <article
-          className="flex flex-col justify-start  w-6/12 h-auto text-[#e4e1e1]
+          className="flex flex-col justify-start w-11/12 h-auto pl-2 text-[#e4e1e1]
                     sm:w-6/12 sm:h-auto
                      md:w-3/6 md:h-auto 
                      lg:flex lg:justify-center lg:items-center lg:m-2"
@@ -37,7 +37,7 @@ export default function MovieInformation() {
           >
             Jaws
           </h1>
-          <ul className="w-full h-full text-left
+          <ul className="w-full h-full text-left mb-3 
                         sm:text-lg sm:ml-3 sm:h-auto
                         md:w-full md:h-full md:text-md md:ml-0 
                         lg:m-1">
@@ -45,9 +45,9 @@ export default function MovieInformation() {
             <li className="text-xs italic md:text-sm">
               Genre: Thriller/Horror
             </li>
-            <li className="text-xs pt-4 text-center w-full h-full
+            <li className="text-xs pt-4 text-left w-full h-full
                           sm:text-base sm:text-start sm:w-full sm:h-auto sm:pt-2 sm:mt-10
-                          md:text-start md:mt-5 md:text-xs md:w-11/12">
+                          md:text-start md:mt-5 md:text-sm md:w-11/12">
               ”När en jättelik vithaj dödligt attackerar simmare vid Amity
               Islands stränder slår sig sheriff Martin Brody ihop med en
               marinbiolog och en lokal fiskare för att jaga varelsen.”
