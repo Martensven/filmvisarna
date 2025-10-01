@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./BookingPageStyle.css";
 import "../../index.css";
 import TheaterViewContainer from "./components/TheaterViewContainer";
@@ -7,6 +8,8 @@ import CheckoutComponent from "./components/CheckoutComponent";
 
 
 export default function BookingPage() {
+  const [selectedTheater, setSelectedTheater] = useState<string | null>(null);
+  
   return (
     <>
       {/*----------Container for booking page----------*/}
