@@ -8,7 +8,7 @@ import CheckoutComponent from "./components/CheckoutComponent";
 import { SeatsProvider } from "./components/context/SeatsContext";
 
 
-export default function BookingPage() {
+export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
   const [selectedTheater, setSelectedTheater] = useState<string | null>(null);
 
   return (
@@ -31,7 +31,7 @@ export default function BookingPage() {
           
         </div>
 
-        <CheckoutComponent />
+        <CheckoutComponent isLoggedIn={isLoggedIn} />
       </main>
       </SeatsProvider>
     </>
