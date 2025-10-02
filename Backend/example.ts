@@ -108,7 +108,7 @@ const exampleList = [
             },
             {
                 reviewer: "Filmkritiker 2",
-                comment: "Fantastiska prestationer av skådespelarna.",
+                comment: "Charmig och kreativ, med en humor som gör spökjakt till ren underhållning.",
                 rating: 4
             }
         ],
@@ -164,7 +164,7 @@ const exampleList = [
             },
             {
                 reviewer: "Filmkritiker 2",
-                comment: "Spännande och välgjord film.",
+                comment: "En nervkittlande thriller som förvandlar havet till en plats av ren skräck.",
                 rating: 4
             }
         ],
@@ -187,12 +187,12 @@ const exampleList = [
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
-                comment: "Otroligt välgjord film.",
+                comment: "Otroligt välgjord film som skrämmer och berör.",
                 rating: 5
             },
             {
                 reviewer: "Filmkritiker 2",
-                comment: "Spännande och välgjord film.",
+                comment: "En poetisk och mörk berättelse som fångar livets och dödens skörhet.",
                 rating: 4
             }
         ],
@@ -243,12 +243,12 @@ const exampleList = [
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
-                comment: "En klassiker.",
+                comment: "Chaplins mästerverk där humor och hjärta möts i perfekt balans.",
                 rating: 5
             },
             {
                 reviewer: "Filmkritiker 2",
-                comment: "Spännande och välgjord film.",
+                comment: "En härlig romans mellan komedi och drama.",
                 rating: 4
             }
         ],
@@ -271,12 +271,12 @@ const exampleList = [
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
-                comment: "En klassiker inom skräckgenren.",
+                comment: "En varm och humoristisk berättelse om kulturkrockar och familjeband.",
                 rating: 5
             },
             {
                 reviewer: "Filmkritiker 2",
-                comment: "Spännande och välgjord film.",
+                comment: "Skådespelarensemblen är otroliga tillsammans.",
                 rating: 4
             }
         ],
@@ -299,12 +299,12 @@ const exampleList = [
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
-                comment: "En klassiker inom skräckgenren.",
+                comment: "En rå och gripande skildring av maktmissbruk och kampen för frihet.",
                 rating: 5
             },
             {
                 reviewer: "Filmkritiker 2",
-                comment: "Spännande och välgjord film.",
+                comment: "Riktigt fängslande film om att slå sig fri från översittare av alla slag.",
                 rating: 4
             }
         ],
@@ -327,12 +327,12 @@ const exampleList = [
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
-                comment: "En klassiker inom skräckgenren.",
+                comment: "Äventyr och fantasi i en barnfilm som sprakar av lekfull energi.",
                 rating: 5
             },
             {
                 reviewer: "Filmkritiker 2",
-                comment: "Spännande och välgjord film.",
+                comment: "Genomgott samarbete med tyska filmindustrin för att ge oss denna klassiker.",
                 rating: 4
             }
         ],
