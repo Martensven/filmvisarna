@@ -53,7 +53,7 @@ export default function TheaterView(
     ">
       <article className="flex flex-col justify-center w-11/12 h-auto m-3 container_content
                           md:w-11/12 md:h-auto 
-                          lg:w-11/12 lg:h-screen lg:mt-20 lg:mb-10">
+                          lg:w-8/12 lg:h-auto lg:mt-20 lg:mb-10 lg:p-5 lg:scale-125">
         <h2 className="p-3">{theaterView.name}</h2>
         <div>
           {theaterView.seatsPerRow.map((seatCount, rowI) => (

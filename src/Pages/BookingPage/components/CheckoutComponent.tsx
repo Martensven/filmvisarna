@@ -10,27 +10,27 @@ export default function CheckoutComponent() {
   const [showUserOrder, setShowUserOrder] = useState(false);
 
   return (
-    <main className="flex flex-col justify-center items-center">
+    <main className="flex flex-col justify-center items-center mt-10">
+      
 
+        <section className="flex flex-col justify-center items-center md:flex md:flex-row justify-between md:mb-10 md:w-96">
+          <div className="flex flex-col justify-center items-center">
+             {!showGuestOrder ? (
+                <button onClick ={() => setShowGuestOrder(true)} className="main_buttons w-36 m-2 h-10 text-sm">Boka som Gäst</button>
+            ): (<UserAsGuest />
+            )}
+          </div>
+           
+           <div>
+            {!showUserOrder ? (
+              <button onClick={() => setShowUserOrder(true)} className="main_buttons w-36 m-2 h-10 text-sm">Boka som Medlem</button>
+            ): (<UserOrderComponent />
+            )}
+           </div>
+          
+          
+        </section>
 
-      <section className="flex flex-col justify-center items-center md:flex md:flex-row justify-between md:mb-10 md:w-96">
-        <div className="flex flex-col justify-center items-center">
-          {!showGuestOrder ? (
-            <button onClick={() => setShowGuestOrder(true)} className="main_buttons w-36 m-2 h-10 text-sm">Boka som Gäst</button>
-          ) : (<UserAsGuest />
-          )}
-        </div>
-
-        <div>
-          {!showUserOrder ? (
-            <button onClick={() => setShowUserOrder(true)} className="main_buttons w-36 m-2 h-10 text-sm">Boka som Medlem</button>
-          ) : (<UserOrderComponent />
-          )}
-        </div>
-
-
-      </section>
-
-    </main>
+</main>
   );
 }
