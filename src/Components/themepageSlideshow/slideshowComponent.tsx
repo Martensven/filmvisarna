@@ -1,5 +1,5 @@
 import { useState } from "react";
-import exampleList from "../../../../Backend/example";
+import exampleList from "../../../Backend/example";
 
 type movieTheme = {
     id: number;
@@ -46,7 +46,7 @@ export default function Slideshow({ day }: SlideshowProps) {
             backgroundColor: baseColor,
             backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 72%, transparent), url(${currentMovie.image})`,
         }}
-        className="bg-contain bg-no-repeat bg-right lg:h-72 lg:w-3/8 flex flex-col justify-center shadow-md"
+        className="bg-contain bg-no-repeat bg-right lg:h-72 lg:w-3/8 flex flex-col justify-center rounded-md shadow-md"
         >
             <article style={{color: textDay}} className="text-start textDay lg:mx-10 xs:mx-4">
                 <h1 className="my-2 lg:text-xl xs:text-sm">{currentMovie.movieName} ({currentMovie.releaseYear})</h1>
