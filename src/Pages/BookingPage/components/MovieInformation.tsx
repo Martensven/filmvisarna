@@ -1,6 +1,12 @@
 import cinemapic from "../../../Components/booking/cinemapic.jpg"
+import exampleList from "../../../../Backend/example"
+import { useState, useEffect } from "react";
+
+
 //Components contains movie box, like poster, year, time and about the movie.
 export default function MovieInformation() {
+  
+
   return (
     <main
       className="flex flex-col justify-center items-center w-full h-auto
@@ -15,7 +21,7 @@ export default function MovieInformation() {
       >
         {/*----------Container for movie poster----------*/}
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Jaws_movie_poster.jpg/640px-Jaws_movie_poster.jpg"
+          src="{}"
           alt="FILM POSTER"
           className="flex justify-center items-center w-5/12 h-auto mt-3 rounded-md
                      sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-2
@@ -46,6 +52,7 @@ export default function MovieInformation() {
             <li className="text-xs italic md:text-sm">
               Genre: Thriller/Horror
             </li>
+            <li className="text-xs italic md:text-sm"> </li>
             <li className="text-xs pt-4 text-left w-full h-full
                           sm:text-base sm:text-start sm:w-full sm:h-auto sm:pt-2 sm:mt-10
                           md:text-start md:mt-5 md:text-sm md:w-11/12">
