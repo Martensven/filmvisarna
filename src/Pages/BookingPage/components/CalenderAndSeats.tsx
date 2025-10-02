@@ -15,7 +15,7 @@ export default function CalenderAndSeats({ onSelectTheater }: Props) {
             
       {/*----------Parent Container for choosing date and tickets----------*/}
       <section
-        className="flex flex-col justify-center items-center w-full
+        className="flex flex-col justify-center items-center w-11/12
                    container_box  h-auto 
                    sm:w-11/12 sm:h-auto
                    md:w-11/12 md:h-auto
@@ -36,7 +36,7 @@ export default function CalenderAndSeats({ onSelectTheater }: Props) {
         <article
           className="flex flex-row justify-center items-center w-11/12 h-auto mt-5 mb-5 container_content
                     sm:w-11/12
-                    md:w-11/12 md:flex-col md:justify-center md:items-center md:pb-2
+                    md:w-9/12 md:flex-col md:justify-center md:items-center md:pb-2
                     lg:pb-0 lg:mt-4 lg:w-4/12"
         >
 

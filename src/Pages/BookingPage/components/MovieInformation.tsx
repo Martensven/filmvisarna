@@ -8,7 +8,7 @@ export default function MovieInformation() {
     >
       {/*----------Container for movie poster and title, Genre, age and time----------*/}
       <section
-        className="flex flex-col justify-center items-center container_box w-full h-auto mb-5
+        className="flex flex-col justify-center items-center container_box w-11/12 h-auto mb-5
                    sm:flex-row sm:w-11/12
                    md:w-11/12 md:h-auto 
                    lg:h-auto lg:w-11/12 lg:flex lg:items-start justify-start"
@@ -56,9 +56,9 @@ export default function MovieInformation() {
           </ul>
         </article>
         <img src={cinemapic} alt="Cinema overview pic for fill" className="invisible w-0 rounded-md [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
-                                                                        sm:invisble w-0
-                                                                        md:visible md:w-2/6 md:p-4 md:pb-40
-                                                                        lg:visible lg:ml-20 lg:mt-12 lg:w-4/12 md:rounded-md md:shadow-md"/>
+                                                                          sm:invisble w-0
+                                                                          md:visible md:w-2/6 md:p-4 md:pb-40
+                                                                          lg:visible lg:ml-20 lg:mt-12 lg:w-4/12 md:rounded-md md:shadow-md"/>
       </section>
     </main>
   );
