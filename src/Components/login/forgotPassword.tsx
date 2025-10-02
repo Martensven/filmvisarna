@@ -28,7 +28,7 @@ export default function ForgotPassword({ onSwitchToLogin }: { onSwitchToLogin: (
               placeholder="Din E-Post"
               required
             />
-            <button type="submit" className="cursor-pointer mt-3 p-2 bg-[#243365] rounded-md shadow-md">
+            <button type="submit" className="cursor-pointer mt-4 mb-3 p-2 bg-[#243365] md:w-2/3 self-center rounded-md shadow-md">
               Skicka återställningslänk
             </button>
           </form>
