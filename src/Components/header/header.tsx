@@ -41,7 +41,7 @@ export default function Header({ onLoginClick }: HeaderProps) {
 
                         {/* Desktop menu */}
                         <ul className="desktopNav hidden md:flex w-full justify-between items-center text-sm font-medium">
-                            <li><Link to="/">Start</Link></li>
+                            <li><Link to="/"></Link></li>
                             <li><Link to="/booking">Boka</Link></li>
                             <li><Link to="/movie">Filmer</Link></li>
                             <li><Link to="/about">Om Oss</Link></li>
