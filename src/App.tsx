@@ -18,6 +18,7 @@ import ForgotPassword from './Components/login/forgotPassword.tsx';
 function App() {
   const [loginPopup, setLoginPopup] = useState<"login" | "register" | "forgot-password" | null>(null);
   const [popupSlide, setPopupSlide] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleClosing = () => {
     setPopupSlide(true);
@@ -29,11 +30,10 @@ function App() {
 
   return (
     <>
-      <Header onLoginClick={() => setLoginPopup("login")}></Header>
-
+ <Header onLoginClick={() => setLoginPopup("login")} isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />
       <Routes>
         <Route path='/' element={<FrontPage />} />
-        <Route path='/booking/:id' element={<BookingPage />} />
+        <Route path='/booking/:id' element={<BookingPage isLoggedIn={isLoggedIn} />} />
         <Route path='/movie' element={<MoviePage />} />
         <Route path='/theme-sunday' element={<ThemeSundayPage />} />
         <Route path='/theme-thursday' element={<ThemeThursdayPage />} />
@@ -48,7 +48,7 @@ function App() {
       {loginPopup && (
         <section onClick={handleClosing} className="fixed inset-0 flex justify-end z-50">
           <aside onClick={(e) => e.stopPropagation()} className={`popup-background flex w-150 h-full shadow-xl p-6 flex-col justify-center ${popupSlide ? "animation-slideout" : "animation-slidein"}`}>
-            {loginPopup === "login" && (<Login onSwitchToRegister={() => setLoginPopup("register")} onSwitchToForgot={() => setLoginPopup("forgot-password")} onClose={handleClosing} />)}
+            {loginPopup === "login" && (<Login onSwitchToRegister={() => setLoginPopup("register")} onSwitchToForgot={() => setLoginPopup("forgot-password")} onClose={handleClosing} onLoginSuccess={() => setIsLoggedIn(true)} />)}
             {loginPopup === "register" && (<Register onSwitchToLogin={() => setLoginPopup("login")} onClose={handleClosing} />)}
             {loginPopup === "forgot-password" && (<ForgotPassword onSwitchToLogin={() => setLoginPopup("login")} />)}
 

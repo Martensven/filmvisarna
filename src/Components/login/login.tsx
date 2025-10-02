@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 
-export default function Login({ onSwitchToRegister, onSwitchToForgot, onClose}: { onSwitchToRegister: () => void; onSwitchToForgot: () => void; onClose: (callback?: () => void) => void}) {
+export default function Login({ onSwitchToRegister, onSwitchToForgot, onClose, onLoginSuccess,}: { onSwitchToRegister: () => void; onSwitchToForgot: () => void; onClose: (callback?: () => void) => void; onLoginSuccess?: () => void; }) {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
@@ -24,6 +24,7 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, onClose}: 
         setError(null);
         console.log("Login successful:", { email });
 
+        onLoginSuccess && onLoginSuccess();
         navigate("/my-page");
         onClose();
     };

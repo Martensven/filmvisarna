@@ -7,6 +7,8 @@ import "./../../index.css";
 
 interface HeaderProps {
     onLoginClick: () => void;
+    isLoggedIn: boolean;
+    onLogout: () => void;
 }
 
 export default function Header({ onLoginClick }: HeaderProps) {
