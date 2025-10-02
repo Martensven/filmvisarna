@@ -13,7 +13,7 @@ const exampleList = [
         description: "En cynisk amerikansk expatriat i Casablanca måste välja mellan sin kärlek till en kvinna och att hjälpa hennes och hennes motståndsledare make att fly från nazisterna.",
         youtubeTrailers: [
             "BkL9l7qovsE"
-  
+
         ], reviews: [
 
             {
@@ -41,10 +41,10 @@ const exampleList = [
         director: "Orson Welles",
         actors: ["Orson Welles", "Joseph Cotten", "Dorothy Comingore"],
         description: "En undersökning av livet och arvet efter en publiceringsmagnat avslöjar komplexiteten",
+
         youtubeTrailers: [
             "8dxh3lwdOFw"
-
-        ], reviews: [
+       ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
                 comment: "En djupgående och tankeväckande film.",
