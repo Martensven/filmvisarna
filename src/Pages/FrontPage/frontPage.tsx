@@ -63,7 +63,10 @@ export default function FrontPage() {
     ];
 
     return (
-        <main className="w-screen flex flex-col items-center min-h-screen mt-36 bg-[#292929]">
+        <main className="w-screen flex flex-col items-center min-h-screen mt-16 bg-[#292929]">
+
+            <h1 className="text-center text-lg mb-4 w-10/12">Välkommen till Filmvisarna!</h1>
+            <p className="text-center text-lg mb-16 w-10/12">Välj en film för att läsa mer eller boka ditt nästa biobesök!</p>
 
             {/* Filter & Sort */}
             <section className="w-10/12 mb-5  rounded-md shadow-md flex justify-around items-start relative bg-[#24252C] text-white">
@@ -155,7 +158,7 @@ export default function FrontPage() {
                         key={movie.id}
                         className="min-w-60 h-80 m-2 snap-center mx-8"
                     >
-                        <Link to={`/movie/${movie.id}`} className="flex flex-col items-center gap-2 p-5">
+                        <Link to={`/movies/${movie.id}`} className="flex flex-col items-center gap-2 p-5">
                             <img
                                 src={movie.image}
                                 alt={movie.movieName}

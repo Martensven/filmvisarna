@@ -1,4 +1,4 @@
-import kiosklist from "../../../Backend/kiosk";
+  import kiosklist from "../../../Backend/kiosk";
 import type { KioskItem } from "../../../Backend/kiosk";
 import CategorySection from "./components/categorySection";
 

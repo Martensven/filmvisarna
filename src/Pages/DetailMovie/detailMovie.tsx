@@ -14,7 +14,7 @@ export default function DetailMovie() {
             <section className="w-full px-4 sm:px-10 md:px-20">
                 <section className="mt-5 w-full aspect-video bg-[#24252C]">
                     <iframe className="w-full h-full"
-                        src={`https://www.youtube.com/embed/${movie.trailer}`}
+                        src={`https://www.youtube.com/embed/${movie.youtubeTrailers}`}
                         title={movie.movieName + " Trailer"}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     ></iframe>
@@ -22,7 +22,7 @@ export default function DetailMovie() {
                 <section className="flex flex-col md:flex-row gap-5 mt-5">
                     <section className="flex flex-col gap-5 w-full md:w-2/3">
                         <article className="text-center text-3xl py-6 px-4 bg-[#24252C] shadow-md rounded-md">
-                            Titel: {movie.movieName} - Genre: {movie.genre} - 
+                            Titel: {movie.movieName} - Genre: {movie.genre.join(", ")} - 
                             Utgivningsår: {movie.releaseYear} - Speltid: {movie.length} min - 
                             Regissör: {movie.director} - Skådespelare: {movie.actors.join(", ")}
                         </article>
@@ -40,7 +40,7 @@ export default function DetailMovie() {
                     </section>
                     <img src={movie.image} alt="Movie poster" className="w-full md:w-1/3 object-cover"/>
                 </section>
-                <Link to={"/booking"}>
+                <Link to={"/booking/" + `${movie.id}`}>
                     <button className="bg-[#243365] text-white cursor-pointer py-4 px-4 rounded-md text-2xl mt-20 mb-20 mx-auto w-1/5 sm:w-1/3 md:w-1/2 lg:w-1/5 h-20 min-h-10 min-w-30 text-center flex items-center justify-center">
                         Boka Biljetter
                     </button>

@@ -3,7 +3,7 @@ const exampleList = [
         id: 1,
         movieName: 'Casablanca',
         image: "/images/Casablanca.jpg",
-        genre: ["Drama", " Romantik"],
+        genre: ["Drama", "Romantik"],
         releaseYear: 1942,
         age: 15,
         length: 102,
@@ -11,7 +11,7 @@ const exampleList = [
         director: "Michael Curtiz",
         actors: ["Humphrey Bogart", "Ingrid Bergman", "Paul Henreid"],
         description: "En cynisk amerikansk expatriat i Casablanca måste välja mellan sin kärlek till en kvinna och att hjälpa hennes och hennes motståndsledare make att fly från nazisterna.",
-        trailer: [
+        youtubeTrailers: [
             "BkL9l7qovsE"
 
         ], reviews: [
@@ -33,7 +33,7 @@ const exampleList = [
         id: 2,
         movieName: 'Citizen Kane',
         image: "/images/Citizen-kane.jpg",
-        genre: ["Drama", " Mystik"],
+        genre: ["Drama", "Mystik"],
         releaseYear: 1941,
         age: 15,
         length: 119,
@@ -41,10 +41,10 @@ const exampleList = [
         director: "Orson Welles",
         actors: ["Orson Welles", "Joseph Cotten", "Dorothy Comingore"],
         description: "En undersökning av livet och arvet efter en publiceringsmagnat avslöjar komplexiteten",
-        trailer: [
-            "8dxh3lwdOFw"],
 
-        reviews: [
+        youtubeTrailers: [
+            "8dxh3lwdOFw"
+       ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
                 comment: "En djupgående och tankeväckande film.",
@@ -71,7 +71,7 @@ const exampleList = [
         actors: ["Bruce Willis", "Alan Rickman", "Bonnie Bedelia"],
         description: "En polisman måste rädda gisslan i en skyskrapa som har tagits över av terrorister.",
         youtubeTrailers: [
-            "Q0m1g1g1g1g"
+            "jaJuwKCmJbY"
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
@@ -99,7 +99,7 @@ const exampleList = [
         actors: ["Bill Murray", "Dan Aykroyd", "Sigourney Weaver"],
         description: "Ett team av parapsykologer startar en spökjakt i New York City.",
         youtubeTrailers: [
-            "K1j1g1g1g1g"
+            "6hDkhw5Wkas"
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
@@ -118,7 +118,7 @@ const exampleList = [
         id: 5,
         movieName: 'Jurassic Park',
         image: "/images/Jurassic-park.webp",
-        genre: "Äventyr",
+        genre: ["Äventyr"],
         releaseYear: 1993,
         age: 11,
         length: 127,
@@ -127,7 +127,7 @@ const exampleList = [
         actors: ["Sam Neill", "Laura Dern", "Jeff Goldblum"],
         description: "En nöjespark med klonade dinosaurier går fruktansvärt fel när säkerhetssystemen slås ut.",
         youtubeTrailers: [
-            "jNQXAC9IVRw"
+            "QWBKEmWWL38"
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
@@ -146,7 +146,7 @@ const exampleList = [
         id: 6,
         movieName: 'Hajen',
         image: "/images/jaws.webp",
-        genre: ["Skräck", " Äventyr", " Thriller"],
+        genre: ["Skräck", "Äventyr", "Thriller"],
         releaseYear: 1975,
         age: 15,
         length: 124,
@@ -183,11 +183,11 @@ const exampleList = [
         actors: ["Victor Sjöström", "Hilda Borgström", "Tore Svennberg"],
         description: "På nyårsafton tvingar föraren av en spöklik vagn en berusad man att reflektera över sitt själviska, bortkastade liv.",
         youtubeTrailers: [
-            "U1j1g1g1g1g"
+            "DUX2w7TFNHQ"
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
-                comment: "En klassiker inom skräckgenren.",
+                comment: "Otroligt välgjord film.",
                 rating: 5
             },
             {
@@ -211,16 +211,16 @@ const exampleList = [
         actors: ["Harold Lloyd", "Mildred Davis", "Bill Strother"],
         description: "En pojke lämnar sin lilla landsortsstad och beger sig till storstaden för att få ett jobb. Så fort han slår igenom kommer hans käresta att gifta sig med honom. Hans entusiasm för att ta sig fram leder till några intressanta äventyr.",
         youtubeTrailers: [
-            "U1j1g1g1g1g"
+            "v2DhYh2WQTo"
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
-                comment: "En klassiker inom skräckgenren.",
+                comment: "En genomrolig klassiker!",
                 rating: 5
             },
             {
                 reviewer: "Filmkritiker 2",
-                comment: "Spännande och välgjord film.",
+                comment: "Lyteskomiken är på toppnivå",
                 rating: 4
             }
         ],
@@ -239,11 +239,11 @@ const exampleList = [
         actors: ["Charles Chaplin", "Virginia Cherrill", "Florence Lee"],
         description: "Med hjälp av en rik och oberäknelig dricksare samlar en daggvåtögd luffare som har förälskat sig i en blind, blomsterflicka ihop pengar för att kunna hjälpa henne medicinskt.",
         youtubeTrailers: [
-            "U1j1g1g1g1g"
+            "7vl7F8S4cpQ"
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
-                comment: "En klassiker inom skräckgenren.",
+                comment: "En klassiker.",
                 rating: 5
             },
             {
@@ -267,7 +267,7 @@ const exampleList = [
         actors: ["Helena Bergström", "Rikard Wolff", "Sven Wolter"],
         description: "En by på landsbygden delas när ett extraordinärt par flyttar in i en herrgård.",
         youtubeTrailers: [
-            "U1j1g1g1g1g"
+            "LLRmBWP2ob4"
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
@@ -295,7 +295,7 @@ const exampleList = [
         actors: ["Andreas Wilson", "Henrik Lundström", "Gustaf Skarsgård"],
         description: "En tonårspojke som relegerats från skolan för att ha slagits kommer till en internatskola där systematisk mobbning av yngre elever uppmuntras som ett sätt att upprätthålla disciplinen, och bestämmer sig för att slå tillbaka.",
         youtubeTrailers: [
-            "U1j1g1g1g1g"
+            "DtvHsZ_mpR8"
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
@@ -323,7 +323,7 @@ const exampleList = [
         actors: ["Inger Nilsson", "Maria Persson", "Pär Sundberg"],
         description: "Med hjälp av vännerna Tommy och Annika beger sig Pippi Långstrump till Porto Piluse i södra Stilla havet för att rädda sin pappa som blivit tillfångatagen av hänsynslösa pirater.",
         youtubeTrailers: [
-            "U1j1g1g1g1g"
+            "ehpty5pH5sI"
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
