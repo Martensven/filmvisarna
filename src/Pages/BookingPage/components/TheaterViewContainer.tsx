@@ -15,11 +15,11 @@ interface Props {
     return(
         <main className="w-full flex flex-col justify-center items-center
                         sm:w-11/12 sm:h-auto 
-                        md:w-11/12 md:flex md:justify-center md:items-start
-                        lg:h-auto lg:mt-5 ">
+                        md:w-full md:flex md:justify-center md:items-center md:mt-5
+                        lg:w-11/12 lg:h-auto lg:mt-5 ">
           <section className="w-11/12 
                               sm:w-full
-                              md:w-full md:flex md:flex-col md:justify-start md:items-start md:mr-9
+                              md:w-full md:flex md:flex-col md:justify-center md:items-center
                               lg:h-auto">
             <TheaterView key={theater.id} theaterView={theater} />
           
