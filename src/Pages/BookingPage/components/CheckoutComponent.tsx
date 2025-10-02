@@ -10,7 +10,7 @@ export default function CheckoutComponent() {
  const [showUserOrder, setShowUserOrder] = useState(false);
 
   return (
-    <main className="flex flex-col justify-center items-center">
+    <main className="flex flex-col justify-center items-center mt-10">
       
 
         <section className="flex flex-col justify-center items-center md:flex md:flex-row justify-between md:mb-10 md:w-96">

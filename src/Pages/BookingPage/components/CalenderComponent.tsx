@@ -15,32 +15,32 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
                     lg:p-5">Dagens visningar</h2>
       <section
         className="flex flex-row container_content w-11/12 mb-1 overflow-x-auto overflow-y-hidden
-         md:w-full md:place-items-center lg:h-auto"
+         md:w-11/12 md:place-items-center lg:h-auto"
       >
         <ul
           onClick={() => onSelectTheater("Stora Salongen")}
-          className="container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs"
+          className="container_box calenderDatesContainer w-36 md:w-2/5 md:h-30 md:text-xs"
         >
           <li className="pt-3 pb-3 text-lg font-bold">12:00</li>
           <li className="pb-1 text-sm md:text-md">Stora Salongen</li>
         </ul>
         <ul
           onClick={() => onSelectTheater("Stora Salongen")}
-          className="container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs"
+          className="container_box calenderDatesContainer w-36 md:w-2/5 md:h-30 md:text-xs"
         >
           <li className="pt-3 pb-3 text-lg font-bold">14:00</li>
           <li className="pb-1 text-sm">Stora Salongen</li>
         </ul>
         <ul
           onClick={() => onSelectTheater("Lilla Salongen")}
-          className="container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs"
+          className="container_box calenderDatesContainer w-36 md:w-2/5 md:h-30 md:text-xs"
         >
           <li className="pt-3 pb-3 text-lg font-bold">18:00</li>
           <li className="pb-1 text-sm">Lilla Salongen</li>
         </ul>
         <ul
           onClick={() => onSelectTheater("Lilla Salongen")}
-          className="container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs"
+          className="container_box calenderDatesContainer w-36 md:w-2/5 md:h-30 md:text-xs"
         >
           <li className="pt-3 pb-3 text-lg font-bold">20:00</li>
 
@@ -55,14 +55,14 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
       <section
         className="flex flex-row m-1 container_content w-11/12 h-auto overflow-x-auto overflow-y-hidden
         sm:w-11/12
-        md:w-full md:h-auto
+        md:w-11/12 md:h-auto
         lg:h-auto lg:w-full lg:overflow-x-auto lg:overflow-y-hidden"
       >
         <ul
           onClick={() => onSelectTheater("Stora Salongen")}
           className="container_box calenderDatesContainer w-24 
                           sm:w-32
-                          md:w-20 md:h-32 md:text-xs
+                          md:w-3/5 md:h-32 md:text-xs
                           lg:w-30"
         >
           <li className="pt-1 pb-2 text-md font-bold">Torsdag 02/10</li>
@@ -73,7 +73,7 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           onClick={() => onSelectTheater("Stora Salongen")}
           className="container_box calenderDatesContainer w-24 
                         sm:w-32
-                        md:w-20 md:h-32 md:text-xs
+                        md:w-3/5 md:h-32 md:text-xs
                         lg:w-30"
         >
           <li className="pt-1 pb-2 text-md font-bold">Torsdag 02/10</li>
@@ -84,7 +84,7 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           onClick={() => onSelectTheater("Stora Salongen")}
           className="container_box calenderDatesContainer w-24 
                         sm:w-32  
-                        md:w-20 md:h-32 md:text-xs
+                        md:w-3/5 md:h-32 md:text-xs
                         lg:w-30"
         >
           <li className="pt-1 pb-2 text-md font-bold">Söndag 05/10</li>
@@ -95,7 +95,7 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           onClick={() => onSelectTheater("Lilla Salongen")}
           className="container_box calenderDatesContainer w-24 
                         sm:w-32
-                        md:w-20 md:h-32 md:text-xs
+                        md:w-3/5 md:h-32 md:text-xs
                         lg:w-30"
         >
           <li className="pt-1 pb-2 text-md font-bold">Söndag 05/10 </li>
@@ -106,7 +106,7 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           onClick={() => onSelectTheater("Lilla Salongen")}
           className="container_box calenderDatesContainer w-24 
                         sm:w-32
-                        md:w-20 md:h-32 md:text-xs
+                        md:w-3/5 md:h-32 md:text-xs
                         lg:w-30"
         >
           <li className="pt-1 pb-2 text-md font-bold">Onsdag 08/10</li>
@@ -117,7 +117,7 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           onClick={() => onSelectTheater("Stora Salongen")}
           className="container_box calenderDatesContainer w-24 
                         sm:w-32
-                        md:w-20 md:h-32 md:text-xs
+                        md:w-3/5 md:h-32 md:text-xs
                         lg:w-30"
         >
           <li className="pt-1 pb-2 text-md font-bold">Onsdag 08/10</li>
