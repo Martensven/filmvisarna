@@ -45,7 +45,7 @@ const exampleList = [
         actors: ["Orson Welles", "Joseph Cotten", "Dorothy Comingore"],
         description: "En undersökning av livet och arvet efter en publiceringsmagnat avslöjar komplexiteten",
         trailer: [
-            "8dxh3lwdOFw"
+            "8dxh3lwdOFw"],
 
         youtubeTrailers: [
             "YQe3yXg-s1c"
