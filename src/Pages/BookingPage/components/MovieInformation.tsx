@@ -1,11 +1,10 @@
 import cinemapic from "../../../Components/booking/cinemapic.jpg"
 import exampleList from "../../../../Backend/example"
-import { useState, useEffect } from "react";
+
 
 
 //Components contains movie box, like poster, year, time and about the movie.
 export default function MovieInformation() {
-  
 
   return (
     <main
