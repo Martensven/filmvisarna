@@ -1,12 +1,21 @@
 
 import cinemapic from "../../../Components/booking/cinemapic.jpg"
-import exampleList from "../../../../Backend/example"
+import exampleList from "./../../../../Backend/example"
+import { useParams } from "react-router-dom";
 
 
 
 //Components contains movie box, like poster, year, time and about the movie.
 export default function MovieInformation() {
+  const { id } = useParams();
+  const movieId = Number(id);
 
+  const movie = exampleList.find((m) => m.id === movieId);
+  if(!movie) {
+    return <p>Ingen film hittades</p>
+  }
+
+  
   return (
     <main
       className="flex flex-col justify-center items-center w-full h-auto
@@ -21,8 +30,8 @@ export default function MovieInformation() {
       >
         {/*----------Container for movie poster----------*/}
         <img
-          src="{}"
-          alt="FILM POSTER"
+          src={movie.image}
+          alt={movie.movieName}
           className="flex justify-center items-center w-5/12 h-auto mt-3 rounded-md
                      sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-2
                      md:w-2/7 md:h-auto md:m-1 md:p-2
@@ -42,23 +51,21 @@ export default function MovieInformation() {
                        md:justify-start md:w-full md:text-3xl md:mt-10 md:ml-0
                        lg:m-1"
           >
-            Jaws
+            {movie.movieName}
           </h1>
           <ul className="w-full h-full text-left mb-3 
                         sm:text-lg sm:ml-3 sm:h-auto
                         md:w-full md:h-full md:text-md md:ml-0 
                         lg:m-1">
-            <li className="text-xs italic md:text-sm">År: 1975</li>
+            <li className="text-xs italic md:text-sm">{movie.releaseYear}</li>
             <li className="text-xs italic md:text-sm">
-              Genre: Thriller/Horror
+              {movie.genre}
             </li>
             <li className="text-xs italic md:text-sm"> </li>
             <li className="text-xs pt-4 text-left w-full h-full
                           sm:text-base sm:text-start sm:w-full sm:h-auto sm:pt-2 sm:mt-10
                           md:text-start md:mt-5 md:text-sm md:w-11/12">
-              ”När en jättelik vithaj dödligt attackerar simmare vid Amity
-              Islands stränder slår sig sheriff Martin Brody ihop med en
-              marinbiolog och en lokal fiskare för att jaga varelsen.”
+              {movie.description}
             </li>
           </ul>
         </article>
