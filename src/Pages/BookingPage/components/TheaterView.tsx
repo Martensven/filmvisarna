@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAmountSeats } from "./hooks/useAmountSeats";
 import { useSeats } from "./context/SeatsContext";
 
 

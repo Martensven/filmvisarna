@@ -143,8 +143,6 @@ export default function AmountSeatsTheater() {
         <h2 className="text-[#e4e1e1] text-s m-2  md:text-sm md:m-5">Totalt:</h2>
         <p className="text-[#e4e1e1] text-s m-2  md:text-sm md:m-5">{totalPrice} kr</p>
       </section>
-
-      <button className="main_buttons w-36 m-4 cursor-pointer">Välj</button>
     </main>
   );
 }
