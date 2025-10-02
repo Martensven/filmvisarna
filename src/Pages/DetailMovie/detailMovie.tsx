@@ -14,7 +14,7 @@ export default function DetailMovie() {
             <section className="w-full px-4 sm:px-10 md:px-20">
                 <section className="mt-5 w-full aspect-video bg-[#24252C]">
                     <iframe className="w-full h-full"
-                        src={`https://www.youtube.com/embed/${movie.trailer}`}
+                        src={`https://www.youtube.com/embed/${movie.youtubeTrailers}`}
                         title={movie.movieName + " Trailer"}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     ></iframe>
