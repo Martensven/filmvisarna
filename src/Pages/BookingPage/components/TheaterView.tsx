@@ -92,7 +92,7 @@ export default function TheaterView(
         <button className="main_buttons w-20 h-8 m-5 text-sm">Välj</button>
 
       </section>
-      <p className="mb-2">Antal platser: {totalTickets}</p>
+      <p className="mb-2">Antal platser valda: {selectedSeat.size} / {totalTickets}</p>
     </section>
   );
 }
