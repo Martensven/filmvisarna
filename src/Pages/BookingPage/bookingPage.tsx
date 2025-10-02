@@ -21,7 +21,8 @@ export default function BookingPage() {
         <MovieInformation />
 
         <div className="flex flex-col w-full h-auto justify-center items-center
-                        md:flex-row md:justify-center md:items-start md:w-full ">
+                        md:flex-col md:justify-center md:items-center md:w-full 
+                        lg:flex lg:flex-col">
 
           <CalenderAndSeats onSelectTheater={setSelectedTheater} />
 
