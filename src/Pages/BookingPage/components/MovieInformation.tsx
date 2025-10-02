@@ -59,7 +59,7 @@ export default function MovieInformation() {
                         lg:m-1">
             <li className="text-xs italic md:text-sm">{movie.releaseYear}</li>
             <li className="text-xs italic md:text-sm">
-              {movie.genre}
+              {movie.genre.join(", ")}
             </li>
             <li className="text-xs italic md:text-sm"> </li>
             <li className="text-xs pt-4 text-left w-full h-full

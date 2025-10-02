@@ -8,6 +8,7 @@ interface Theater {
   id: string;
   name: string;
   seatsPerRow: number[];
+  Funktionhinderanpassade: { row:number; seat:number }[];
 }
 
 interface TheaterViewProps {
@@ -60,6 +61,8 @@ export default function TheaterView(
               {Array.from({ length: seatCount }).map((_, seatI) => {
                 const key = `${rowI}-${seatI}`;
                 const selected = selectedSeat.has(key);
+                const isAccesible = theaterView.Funktionhinderanpassade?.some(
+                  (s) => s.row === rowI && s.seat === seatI)
 
                 return (
                   <button
@@ -69,11 +72,11 @@ export default function TheaterView(
                       width: 24,
                       height: 24,
                       borderRadius: 4,
-                      backgroundColor: selected ? "green" : "#243365",
+                      backgroundColor: selected ? "green" : isAccesible ? "#dede39" : "#243365",
                       border: "1px solid white",
                       cursor: "pointer",
                     }}
-                    title={`Rad ${rowI + 1}, stol ${seatI + 1}`}
+                    title={`Rad ${rowI + 1}, stol ${seatI + 1} ${isAccesible ? "(Funktionshinderanpassade)" : ""}`}
                   />
                 );
               })}
