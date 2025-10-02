@@ -1,3 +1,4 @@
+
 import cinemapic from "../../../Components/booking/cinemapic.jpg"
 import exampleList from "../../../../Backend/example"
 

@@ -32,7 +32,7 @@ export default function MoviePage() {
                             </article>
                             </article>
                     </section>
-                    <img src="/public/images/Jurassic-park.webp" alt="Movie poster" className="w-full md:w-1/3 object-cover"/>
+                    <img src="/public/images/Jurassic-park.webp" alt="Filmaffisch" className="w-full md:w-1/3 min-w-xl object-cover"/>
                 </section>
                 <Link to={"/booking"}>
                 <button className="bg-[#243365] text-white cursor-pointer py-4 px-4 rounded-md text-2xl mt-20 mb-20 mx-auto w-1/5 sm:w-1/3 md:w-1/2 lg:w-1/5 h-20 min-h-10 min-w-30 text-center flex items-center justify-center">Boka Biljetter</button>
