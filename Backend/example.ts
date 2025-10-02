@@ -3,7 +3,7 @@ const exampleList = [
         id: 1,
         movieName: 'Casablanca',
         image: "/images/Casablanca.jpg",
-        genre: ["Drama", "Romantik"],
+        genre: ["Drama", " Romantik"],
         releaseYear: 1942,
         age: 15,
         length: 102,
@@ -11,9 +11,14 @@ const exampleList = [
         director: "Michael Curtiz",
         actors: ["Humphrey Bogart", "Ingrid Bergman", "Paul Henreid"],
         description: "En cynisk amerikansk expatriat i Casablanca måste välja mellan sin kärlek till en kvinna och att hjälpa hennes och hennes motståndsledare make att fly från nazisterna.",
+        trailer: [
+            "BkL9l7qovsE"
+        ], "reviews": [
+
         youtubeTrailers: [
             "BkL9l7qovsE?si=58LHTwj1JmjxJ4gr"
         ], reviews: [
+
             {
                 reviewer: "Filmkritiker 1",
                 comment: "En tidlös klassiker som fortfarande håller.",
@@ -31,7 +36,7 @@ const exampleList = [
         id: 2,
         movieName: 'Citizen Kane',
         image: "/images/Citizen-kane.jpg",
-        genre: ["Drama", "Mystik"],
+        genre: ["Drama", " Mystik"],
         releaseYear: 1941,
         age: 15,
         length: 119,
@@ -39,8 +44,12 @@ const exampleList = [
         director: "Orson Welles",
         actors: ["Orson Welles", "Joseph Cotten", "Dorothy Comingore"],
         description: "En undersökning av livet och arvet efter en publiceringsmagnat avslöjar komplexiteten",
+        trailer: [
+            "8dxh3lwdOFw"
+
         youtubeTrailers: [
             "YQe3yXg-s1c"
+
         ], "reviews": [
             {
                 reviewer: "Filmkritiker 1",
@@ -143,7 +152,7 @@ const exampleList = [
         id: 6,
         movieName: 'Hajen',
         image: "/images/jaws.webp",
-        genre: ["Skräck", "Äventyr", "Thriller"],
+        genre: ["Skräck", " Äventyr", " Thriller"],
         releaseYear: 1975,
         age: 15,
         length: 124,
