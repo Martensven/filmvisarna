@@ -14,6 +14,11 @@ const exampleList = [
         trailer: [
             "BkL9l7qovsE"
         ], "reviews": [
+
+        youtubeTrailers: [
+            "BkL9l7qovsE?si=58LHTwj1JmjxJ4gr"
+        ], reviews: [
+
             {
                 reviewer: "Filmkritiker 1",
                 comment: "En tidlös klassiker som fortfarande håller.",
@@ -41,6 +46,10 @@ const exampleList = [
         description: "En undersökning av livet och arvet efter en publiceringsmagnat avslöjar komplexiteten",
         trailer: [
             "8dxh3lwdOFw"
+
+        youtubeTrailers: [
+            "YQe3yXg-s1c"
+
         ], "reviews": [
             {
                 reviewer: "Filmkritiker 1",
@@ -67,9 +76,9 @@ const exampleList = [
         director: "John McTiernan",
         actors: ["Bruce Willis", "Alan Rickman", "Bonnie Bedelia"],
         description: "En polisman måste rädda gisslan i en skyskrapa som har tagits över av terrorister.",
-        "youtubeTrailers": [
+        youtubeTrailers: [
             "Q0m1g1g1g1g"
-        ], "reviews": [
+        ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
                 comment: "En actionfylld klassiker som fortfarande imponerar.",
@@ -95,9 +104,9 @@ const exampleList = [
         director: "Ivan Reitman",
         actors: ["Bill Murray", "Dan Aykroyd", "Sigourney Weaver"],
         description: "Ett team av parapsykologer startar en spökjakt i New York City.",
-        "youtubeTrailers": [
+        youtubeTrailers: [
             "K1j1g1g1g1g"
-        ], "reviews": [
+        ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
                 comment: "En rolig och underhållande film.",
@@ -152,7 +161,7 @@ const exampleList = [
         actors: ["Roy Scheider", "Robert Shaw", "Richard Dreyfuss"],
         description: "En stor vit haj terroriserar en strandstad, och en grupp män måste stoppa den.",
         youtubeTrailers: [
-            "U1j1g1g1g1g"
+            "U1fu_sA7XhE?si=_tqf-M55BQYc8IHN"
         ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
