@@ -13,7 +13,7 @@ const exampleList = [
         description: "En cynisk amerikansk expatriat i Casablanca måste välja mellan sin kärlek till en kvinna och att hjälpa hennes och hennes motståndsledare make att fly från nazisterna.",
         trailer: [
             "BkL9l7qovsE"
-        ], "reviews": [
+        ],
 
         youtubeTrailers: [
             "BkL9l7qovsE?si=58LHTwj1JmjxJ4gr"
@@ -50,7 +50,7 @@ const exampleList = [
         youtubeTrailers: [
             "YQe3yXg-s1c"
 
-        ], "reviews": [
+        ], reviews: [
             {
                 reviewer: "Filmkritiker 1",
                 comment: "En djupgående och tankeväckande film.",
