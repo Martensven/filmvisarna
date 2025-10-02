@@ -118,7 +118,7 @@ const exampleList = [
         id: 5,
         movieName: 'Jurassic Park',
         image: "/images/Jurassic-park.webp",
-        genre: "Äventyr",
+        genre: ["Äventyr"],
         releaseYear: 1993,
         age: 11,
         length: 127,
