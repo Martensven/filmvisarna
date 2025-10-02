@@ -22,7 +22,7 @@ export default function DetailMovie() {
                 <section className="flex flex-col md:flex-row gap-5 mt-5">
                     <section className="flex flex-col gap-5 w-full md:w-2/3">
                         <article className="text-center text-3xl py-6 px-4 bg-[#24252C] shadow-md rounded-md">
-                            Titel: {movie.movieName} - Genre: {movie.genre} - 
+                            Titel: {movie.movieName} - Genre: {movie.genre.join(", ")} - 
                             Utgivningsår: {movie.releaseYear} - Speltid: {movie.length} min - 
                             Regissör: {movie.director} - Skådespelare: {movie.actors.join(", ")}
                         </article>
