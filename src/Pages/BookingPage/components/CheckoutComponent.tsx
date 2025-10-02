@@ -6,8 +6,8 @@ import { useState } from "react"
 //Booking component itself, when chosing date and time plus seats. This component will show when going to "checkout"
 
 export default function CheckoutComponent() {
- const [showGuestOrder, setShowGuestOrder] = useState(false);
- const [showUserOrder, setShowUserOrder] = useState(false);
+  const [showGuestOrder, setShowGuestOrder] = useState(false);
+  const [showUserOrder, setShowUserOrder] = useState(false);
 
   return (
     <main className="flex flex-col justify-center items-center mt-10">

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import exampleList from "../../../Backend/example.ts";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
+import "../BookingPage/BookingPageStyle.css";
 
 export default function FrontPage() {
     const [filterOpen, setFilterOpen] = useState(false);
@@ -142,10 +143,10 @@ export default function FrontPage() {
 
             </section>
 
-            {/* HÄR ÄR DEN MÅRTEN, TEMPORÄR LÄNK TILL MINA SIDOR WAAAAAGH */}
+            {/* HÄR ÄR DEN MÅRTEN, TEMPORÄR LÄNK TILL MINA SIDOR WAAAAAGH
             <Link to={"/my-page"} className="text-white">
                 <button className="bg-gradient-to-b from-blue-200 to-yellow-500 px-3 py-2 text-sm sm:text-base rounded hover:bg-blue-600 transition duration-200">Tryck här om du vill uppnå Gudomlighet</button>
-            </Link>
+            </Link> */}
             {/* Movies container*/}
             <section className="h-96 w-10/12 rounded-md shadow-md flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
 
@@ -169,15 +170,32 @@ export default function FrontPage() {
 
             {/* Theme days container*/}
             <section className="w-10/12">
-                <Link to="/theme-thursday" className="min-h-96 rounded-md shadow-md my-5 justify-center items-center flex md:flex-row flex-col bg-[#24252C] text-white">
-                    <Slideshow day="thursday" />
-                    <p className="md:w-1/2 w-10/12 m-0 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</p>
-                </Link>
+                <article className="min-h-96 rounded-md shadow-md my-10 justify-center items-center flex flex-col bg-[#24252C] text-white">
+                    <section className="lg:flex-row flex flex-col justify-center items-center">
+                        <Slideshow day="thursday" />
+                        <p className="md:w-1/2 w-10/12 m-2 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</p>
+                    </section>
 
-                <Link to="/theme-sunday" className="min-h-96 shadow-md my-5 justify-center items-center flex md:flex-row flex-col bg-[#24252C] text-white">
-                    <Slideshow day="sunday" />
-                    <p className="md:w-1/2 w-10/12 m-0 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</p>
-                </Link>
+                    <Link to="/theme-thursday" className="">
+                        <button className="main_buttons p-1 px-2 mb-3 mt-5">
+                            Läs mer
+                        </button>
+                    </Link>
+                </article>
+
+                <article className="min-h-96 rounded-md shadow-md my-5 justify-center items-center flex  flex-col bg-[#24252C] text-white">
+                    <section className="lg:flex-row flex flex-col justify-center items-center">
+                        <Slideshow day="sunday" />
+                        <p className="md:w-1/2 w-10/12 m-2 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</p>
+                    </section>
+
+                    <Link to="/theme-sunday" className="">
+                        <button className="main_buttons p-1 px-2 mb-3 mt-5">
+                            Läs mer
+                        </button>
+                    </Link>
+                </article>
+
             </section>
 
         </main>
