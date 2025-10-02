@@ -1,3 +1,4 @@
+
 import cinemapic from "../../../Components/booking/cinemapic.jpg"
 //Components contains movie box, like poster, year, time and about the movie.
 export default function MovieInformation() {

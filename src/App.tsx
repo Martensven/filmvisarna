@@ -12,6 +12,7 @@ import AboutPage from './Pages/AboutPage/aboutPage.tsx';
 import KioskPage from './Pages/KioskPage/kioskPage.tsx';
 import ThemeSundayPage from './Pages/ThemePage/themeSunPage.tsx';
 import ThemeThursdayPage from './Pages/ThemePage/themeThuPage.tsx';
+import DetailMovie from './Pages/DetailMovie/detailMovie.tsx';
 import ForgotPassword from './Components/login/forgotPassword.tsx';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path='/my-page' element={<MyPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/kiosk' element={<KioskPage />} />
+        <Route path='/movies/:id' element={<DetailMovie />} />
       </Routes>
 
       <Footer></Footer>
