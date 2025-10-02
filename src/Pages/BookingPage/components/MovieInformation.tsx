@@ -56,8 +56,8 @@ export default function MovieInformation() {
           </ul>
         </article>
         <img src={cinemapic} alt="Cinema overview pic for fill" className="invisible w-0 rounded-md [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
-                                                                        sm:invisble w-0
-                                                                        md:invisible w-0 
+                                                                        sm:invisble 
+                                                                        md:invisible  
                                                                         lg:visible lg:ml-10 lg:mt-12 lg:w-4/12"/>
       </section>
     </main>
