@@ -51,8 +51,6 @@ export default function Header({ onLoginClick }: HeaderProps) {
                     {/* Mobile menu  */}
                     {isOpen && (
                         <ul className="flex flex-col md:hidden px-4 pb-4 space-y-2">
-                            <li><Link to="/booking" onClick={() => setIsOpen(false)}>Boka</Link></li>
-                            <li><Link to="/movie" onClick={() => setIsOpen(false)}>Filmer</Link></li>
                             <li><Link to="/about" onClick={() => setIsOpen(false)}>Om Oss</Link></li>
                             <li><Link to="/kiosk" onClick={() => setIsOpen(false)}>Kiosk</Link></li>
                             <li><button onClick={onLoginClick}>Logga In</button></li>
