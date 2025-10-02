@@ -31,9 +31,12 @@ export default function TheaterView(
     setSelectedSeat((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(key)) {
-        newSet.delete(key);
+        newSet.delete(key); // Deselect the seat if already selected
       } else {
-        newSet.add(key);
+        if (newSet.size >= totalTickets) {
+          return prev; // Do not add more seats if limit is reached
+        }
+        newSet.add(key); // Add the seat if not already selected
       }
       return newSet;
     });
