@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import exampleList from "../../../Backend/example.ts"
+import exampleList from "../../../Backend/example.ts";
+import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
+import "../BookingPage/BookingPageStyle.css";
 
 export default function FrontPage() {
     const [filterOpen, setFilterOpen] = useState(false);
@@ -141,23 +143,23 @@ export default function FrontPage() {
 
             </section>
 
-    {/* HÄR ÄR DEN MÅRTEN, TEMPORÄR LÄNK TILL MINA SIDOR WAAAAAGH */}
-    <Link to={"/my-page"} className="text-white">
-        <button className="bg-gradient-to-b from-blue-200 to-yellow-500 px-3 py-2 text-sm sm:text-base rounded hover:bg-blue-600 transition duration-200">Tryck här om du vill uppnå Gudomlighet</button>
-    </Link>
+            {/* HÄR ÄR DEN MÅRTEN, TEMPORÄR LÄNK TILL MINA SIDOR WAAAAAGH
+            <Link to={"/my-page"} className="text-white">
+                <button className="bg-gradient-to-b from-blue-200 to-yellow-500 px-3 py-2 text-sm sm:text-base rounded hover:bg-blue-600 transition duration-200">Tryck här om du vill uppnå Gudomlighet</button>
+            </Link> */}
             {/* Movies container*/}
-            <section className="h-96 w-10/12  shadow-md flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
+            <section className="h-96 w-10/12 rounded-md shadow-md flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
 
                 {sortedMovies.map((movie) => (
                     <article
                         key={movie.id}
-                        className="min-w-60 h-72 m-2 snap-center mx-8"
+                        className="min-w-60 h-80 m-2 snap-center mx-8"
                     >
-                        <Link to={`/movie/${movie.id}`} className="flex flex-col items-center gap-2">
+                        <Link to={`/movie/${movie.id}`} className="flex flex-col items-center gap-2 p-5">
                             <img
                                 src={movie.image}
                                 alt={movie.movieName}
-                                className="shadow-md h-72 object-cover"
+                                className="shadow-md h-60 object-cover rounded-md"
                             />
                             <p>{movie.movieName}</p>
                             <p>{Array.isArray(movie.genre) ? movie.genre.join(", ") : movie.genre}</p>
@@ -167,10 +169,34 @@ export default function FrontPage() {
             </section>
 
             {/* Theme days container*/}
-            <Link to="/theme" className="h-72 shadow-md my-5 w-10/12  justify-center flex flex-col bg-[#24252C] text-white">
-                <img src="https://via.placeholder.com/150" alt="Placeholder" className="shadow-md h-64 m-2" />
-                <article>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</article>
-            </Link>
+            <section className="w-10/12">
+                <article className="min-h-96 rounded-md shadow-md my-10 justify-center items-center flex flex-col bg-[#24252C] text-white">
+                    <section className="lg:flex-row flex flex-col justify-center items-center">
+                        <Slideshow day="thursday" />
+                        <p className="md:w-1/2 w-10/12 m-2 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</p>
+                    </section>
+
+                    <Link to="/theme-thursday" className="">
+                        <button className="main_buttons p-1 px-2 mb-3 mt-5">
+                            Läs mer
+                        </button>
+                    </Link>
+                </article>
+
+                <article className="min-h-96 rounded-md shadow-md my-5 justify-center items-center flex  flex-col bg-[#24252C] text-white">
+                    <section className="lg:flex-row flex flex-col justify-center items-center">
+                        <Slideshow day="sunday" />
+                        <p className="md:w-1/2 w-10/12 m-2 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</p>
+                    </section>
+
+                    <Link to="/theme-sunday" className="">
+                        <button className="main_buttons p-1 px-2 mb-3 mt-5">
+                            Läs mer
+                        </button>
+                    </Link>
+                </article>
+
+            </section>
 
         </main>
     );

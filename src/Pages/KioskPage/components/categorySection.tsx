@@ -18,7 +18,7 @@ export default function CategorySection({
               alt={item.name}
               className="absolute inset-0 w-full h-full object-cover hover:rotate-10 transition-all duration-300"
             />
-            <section className="relative bg-[#243365]/80 w-full p-2">
+            <section className="relative bg-[#243365]/80 w-full p-2 rounded-md backdrop-blur-sm">
                 <h3 className="text-lg font-semibold">{item.name}</h3>
                 <p className="text-sm">{item.size}</p>
                 <p className="text-sm">{item.price}kr</p>

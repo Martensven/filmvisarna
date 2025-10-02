@@ -9,12 +9,51 @@
   padding: 0;
   box-sizing: border-box;
   min-height: 100svh;
-  width: 100svw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  font-family: monospace;
+  font-family: "Noto Serif", serif;
   background-color: #292929;
   color: white;
+}
+
+.animation-slidein {
+  animation: slide-in 1s ease-in-out;
+}
+
+.animation-slideout {
+  animation: slide-out 1s ease-in-out;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.popup-background {
+  background-color: rgba(41, 41, 41, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.popup-background:hover {
+  background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.tenor.com%2F6aWBg0rV1EYAAAAi%2Ftoothless-dancing.gif&f=1&nofb=1&ipt=9421cb7e06523915cc6ea2c86042939e72eb6539590452589e1562a78530f89c);
+  background-repeat: no-repeat;
+  background-position: 65px 570px;
 }

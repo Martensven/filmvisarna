@@ -1,88 +1,66 @@
 
-
+import cinemapic from "../../../Components/booking/cinemapic.jpg"
+//Components contains movie box, like poster, year, time and about the movie.
 export default function MovieInformation() {
   return (
-
-    <main className="flex flex-col justify-center items-center w-full 
-    md:flex md:flex-row md:justify-around md:w-screen md:h-100">
+    <main
+      className="flex flex-col justify-center items-center w-full h-auto
+                   md:w-full md:place-items-center md:place-items-center"
+    >
       {/*----------Container for movie poster and title, Genre, age and time----------*/}
-      <section className="flex flex-row items-center justify-center container_box h-80 
-      md:flex md:w-3/5 md:h-86 md:justify-center md:itmes-center md:m-2 
-      lg:w-4/5 lg:h-80">
-
+      <section
+        className="flex flex-col justify-center items-center container_box w-11/12 h-auto mb-5
+                   sm:flex-row sm:w-11/12
+                   md:w-11/12 md:h-auto 
+                   lg:h-auto lg:w-11/12 lg:flex lg:items-start justify-start"
+      >
         {/*----------Container for movie poster----------*/}
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Jaws_movie_poster.jpg/640px-Jaws_movie_poster.jpg"
           alt="FILM POSTER"
-          className="w-40 h-auto rounded-sm
-           sm:w-50 h-auto mr-1
-           md:w-2/6 md:h-auto md:m-5 lg:h-100 "
+          className="flex justify-center items-center w-5/12 h-auto mt-3 rounded-md
+                     sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-2
+                     md:w-2/7 md:h-auto md:m-1 md:p-2
+                     lg:w-2/10 lg:ml-10 lg:h-auto"
         />
 
         {/*----------Container movie info ----------*/}
-        <article className="flex flex-col container_content h-auto ml-1
-        sm:
-        md:w-2/5 md:m-1 
-        lg:flex lg:justify-center lg:items-center lg:m-2">
-          <h1 className="flex items-center w-44 h-15 text-left pl-6
-           md:w-45 md:text-xl lg:m-1">
+        <article
+          className="flex flex-col justify-start w-11/12 h-auto pl-2 text-[#e4e1e1]
+                    sm:w-6/12 sm:h-auto
+                     md:w-3/6 md:h-auto 
+                     lg:flex lg:justify-center lg:items-center lg:m-2 lg:w-4/12"
+        >
+          <h1
+            className="flex w-5/12 h-auto text-left mt-3 text-lg underline
+                      sm:text-xl sm:m-3 sm:h-auto
+                       md:justify-start md:w-full md:text-3xl md:mt-10 md:ml-0
+                       lg:m-1"
+          >
             Jaws
           </h1>
-          <ul className=" w-44 h-25 text-left ml-2 md:w-45 md:text-sm lg:m-1">
-            <li className="p-1">År:</li>
-            <li className="p-1">Genre:</li>
-            <li className="p-1">Handling:</li>
-            </ul>
+          <ul className="w-full h-full text-left mb-3 
+                        sm:text-lg sm:ml-3 sm:h-auto
+                        md:w-full md:h-full md:text-md md:ml-0 
+                        lg:m-1">
+            <li className="text-xs italic md:text-sm">År: 1975</li>
+            <li className="text-xs italic md:text-sm">
+              Genre: Thriller/Horror
+            </li>
+            <li className="text-xs pt-4 text-left w-full h-full
+                          sm:text-base sm:text-start sm:w-full sm:h-auto sm:pt-2 sm:mt-10
+                          md:text-start md:mt-5 md:text-sm md:w-11/12">
+              ”När en jättelik vithaj dödligt attackerar simmare vid Amity
+              Islands stränder slår sig sheriff Martin Brody ihop med en
+              marinbiolog och en lokal fiskare för att jaga varelsen.”
+            </li>
+          </ul>
         </article>
+        <img src={cinemapic} alt="Cinema overview pic for fill" className="invisible w-0 rounded-md [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
+                                                                          sm:invisble w-0
+                                                                          md:visible md:w-2/6 md:p-4 md:pb-40
+                                                                          lg:visible lg:ml-20 lg:mt-12 lg:w-4/12 md:rounded-md md:shadow-md"/>
       </section>
-      {/*----------Container for chosing date and tickets----------*/}
-      <section className="flex flex-col justify-center items-center container_box h-36 w-screen
-       sm:h-46
-       md:w-auto md:min-h-86 md:max-h-86 md:m-2 md:flex md:justify-center md:items-center lg:h-80">
-        {/*----------Container for chosing the amount of people that need tickets----------*/}
-        <article className="flex flex-col items-center w-screen h-34 md:w-auto md:h-65">
-          <section className="flex flex-col justify-center w-auto md:flex-col md:justify-center md:items-center md:w-72 md:h-40">
-            <h2 className="text-[#e4e1e1] text-sm md:text-s">DATUM</h2>
-
-            {/*----------Containers for calender days----------*/}
-            <section className="flex flex-row m-1 container_content w-screen h-15 overflow-x-auto overflow-y-hidden
-             md:w-4/5 md:h-34">
-              <span className="flex flex-row ">
-                <ul className="container_box w-full md:w-20 md:h-32 md:text-xs">
-                  <li>Datum: 00/0 XXXXX</li>
-                  <li>Tid: 15:00</li>
-                  <li>Salong: 1</li>
-                </ul>
-                <ul className="container_box w-full md:w-20 md:h-32 md:text-xs">
-                  <li>Datum: 00/0 XXXXX</li>
-                  <li>Tid: 15:00</li>
-                  <li>Salong: 1</li>
-                </ul>
-                <ul className="container_box w-full md:w-20 md:h-32 md:text-xs">
-                  <li>Datum: 00/0 XXXXX</li>
-                  <li>Tid: 15:00</li>
-                  <li>Salong: 1</li>
-                </ul>
-                <ul className="container_box w-full md:w-20 md:h-32 md:text-xs">
-                  <li>Datum: 00/0 XXXXX</li>
-                  <li>Tid: 15:00</li>
-                  <li>Salong: 1</li>
-                </ul>
-                  <ul className="container_box w-full md:w-20 md:h-32 md:text-xs">
-                  <li>Datum: 00/0 XXXXX</li>
-                  <li>Tid: 15:00</li>
-                  <li>Salong: 1</li>
-                </ul>
-              </span>
-            </section>
-          </section>
-
-          <section className="flex flex-row justify-center w-40 md:w-72 md:flex-col md:justify-center md:items-center">
-            <h2 className="text-[#e4e1e1] text-sm md:text-s">ANTAL STOLAR</h2>
-            <select className="md:w-20 md:h-5"></select>
-          </section>
-        </article>
-      </section>
-      </main>
+    </main>
   );
 }
