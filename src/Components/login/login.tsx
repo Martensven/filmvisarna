@@ -11,7 +11,7 @@ export default function Login({ onSwitchToRegister, onSwitchToForgot, onClose}: 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if(!email || !password) {
+        if(!email.includes("@") || !password) {
             setError("Din e-postadress eller lösenord är felaktigt");
             return;
         }
