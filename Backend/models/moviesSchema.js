@@ -9,33 +9,12 @@ const moviesSchema = new mongoose.Schema({
     length: { type: Number },
     description: { type: String },
     youtubeTrailers: { type: String },
-    genres: [{
-        genreId: { type: mongoose.Schema.Types.ObjectId, ref: 'Genres', required: true },
-        title: { type: String },
-        desc: { type: String }
-    }],
-    actors: [{
-        actorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Actors', required: true},
-        name: { type: String }
-    }],
-    directors: [{
-        directorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Directors', required: true},
-        name: { type, String }
-    }],
-    distributors: [{
-        distributorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Distributors', required: true},
-        name: { type: String }
-    }],
-    reviews: [{
-        reviewId: { type: mongoose.Schema.Types.ObjectId, ref: 'Reviews', required: true},
-        author: { type: String },
-        review: { type: String },
-        publisher: { type: String }
-    }],
-    themes: [{
-        themeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Themes', required: true},
-        weekday: { type: String }
-    }]
+    genres: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Genres' }],
+    actors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Actors' }],
+    directors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Directors' }],
+    distributors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Distributors' }],
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reviews' }],
+    themes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Themes' }]
 });
  
 export const Movies = mongoose.model('Movies', moviesSchema);
