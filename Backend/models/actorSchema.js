@@ -6,4 +6,4 @@ const actorSchema = new mongoose.Schema({
 
 })
 
-export const actor = mongoose.model("Actor", actorSchema)
+export const Actors = mongoose.model("Actors", actorSchema)
