@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const auditoriumSchema = new mongoose.Schema({
     auditoriumId: { type: Number },
-    name: { type: String },
-    seatsPerRow: { type: [Number] }
-});
- 
-export const Auditorum = mongoose.model('Auditorium', auditoriumSchema);
+    name: { type: String, required: true, unique: true },
+    seats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Seat' }],
+})
+
+export const Auditorium = mongoose.model('Auditorium', auditoriumSchema);
