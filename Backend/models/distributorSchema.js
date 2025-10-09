@@ -5,4 +5,4 @@ const distributorSchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
 });
  
-export const Distributor = mongoose.model('Distributor', distributorSchema);
+export const Distributors = mongoose.model('Distributors', distributorSchema);

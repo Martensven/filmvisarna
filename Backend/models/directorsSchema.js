@@ -6,4 +6,4 @@ const directorsSchema = new mongoose.Schema({
 
 })
 
-export const directors = mongoose.model("Directors", directorsSchema)
+export const Directors = mongoose.model("Directors", directorsSchema)
