@@ -5,4 +5,4 @@ const genresSchema = new mongoose.Schema({
     desc: { type: String/Text, required: true}
 },)
 
-export const genres = mongoose.model('genres', genresSchema)
+export const Genres = mongoose.model('Genres', genresSchema)
