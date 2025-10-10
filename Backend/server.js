@@ -1,14 +1,17 @@
 import mongoose from 'mongoose';
 import TicketTypesRoute from './routes/ticketTypesRoute.js';
 import express from 'express';
+import dotenv from 'dotenv';
 
 const PORT = 4321;
 const app = express();
 
+dotenv.config();
+
 app.use(express.json());
 app.use(TicketTypesRoute);
 
-mongoose.connect('mongodb+srv://team1_db_user:3c7RZVYQWsC3c77v@filmvisarna.j3jjzrr.mongodb.net/CinemaDB')
+mongoose.connect(process.env.DB_CONNECT)
     .then(() => {
         app.listen(PORT, () => {
             console.log('Connected to MongoDB');
