@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const moviesSchema = new mongoose.Schema({
-    movieId: { type: Number },
     title: { type: String },
     imageSrc: { type: String },
     releaseYear: { type: Number },
