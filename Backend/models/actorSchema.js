@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const actorSchema = new mongoose.Schema({
-    actorId : {type: Number},
     name: {type: String, required: true},
 
 })
