@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import TicketTypesRoute from './routes/ticketTypesRoute.js';
 import express from 'express';
 import dotenv from 'dotenv';
+import  Directors from './routes/directorsRoutes.js';
 
 const PORT = 4321;
 const app = express();
@@ -10,6 +11,7 @@ dotenv.config();
 
 app.use(express.json());
 app.use(TicketTypesRoute);
+app.use(Directors);
 
 mongoose.connect(process.env.DB_CONNECT)
     .then(() => {
