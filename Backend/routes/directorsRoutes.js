@@ -37,6 +37,18 @@ router.get("/api/directors/:id", async (req, res) => {
     }
 })
 
+router.put("/api/directors/:id", async (req, res) => {
+  try{
+    const directors = await Directors.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+    if(!directors){
+      res.status(404).json({ message: "No director with that name."})
+    }
+    res.status(200).json(directors);
+  } catch {
+    res.status(500).json({ message: error.message });
+  }
+})
+
 router.delete("/api/directors/:id", async (req, res) => {
   try {
     const directors = await Directors.findByIdAndDelete(req.params.id);
