@@ -39,4 +39,20 @@ router.post("/api/actors", async (req, res) => {
   }
 });
 
+// Update actor by id
+router.put("/api/actors/:id", async (req, res) => {
+    try {
+        // Validating with the schema. Returning the updated document with "new: true"
+        // Without new: true, the old document would be returned
+        // runValidators: true makes sure the updated document is validated against the schema
+        const actor = await Actors.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!actor) {
+            return res.status(404).json({ message: "Actor not found" });
+        }
+        res.status(200).json(actor);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+})
+
 export default router;
