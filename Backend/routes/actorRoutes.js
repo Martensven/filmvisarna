@@ -55,4 +55,18 @@ router.put("/api/actors/:id", async (req, res) => {
     }
 })
 
+// Delete actor by id
+router.delete("/api/actors/:id", async (req, res) => {
+    try {
+        // Using params to get id from url. Find and delete the actor by the id
+        const actor = await Actors.findByIdAndDelete(req.params.id);
+        if (!actor) {
+            return res.status(404).json({ message: "Actor not found" });
+        }
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 export default router;
