@@ -20,7 +20,7 @@ router.get('/api/theme', async (req, res) => {
         const theme = await Themes.find()
         .populate('movies');
 
-        res.json(theme);
+        res.status(200).json(theme);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -36,7 +36,7 @@ router.get('/api/theme/:id', async (req, res) => {
             return res.status(404).json({ message: 'Theme not found' });
         }
 
-        res.json(theme);
+        res.status(200).json(theme);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -51,7 +51,7 @@ router.put('/api/theme/:id', async (req, res) => {
             return res.status(404).json({ message: 'Theme not found' });
         }
 
-        res.json(updatedTheme);
+        res.status(200).json(updatedTheme);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -66,7 +66,7 @@ router.delete('/api/theme/:id', async (req, res) => {
             return res.status(404).json({ message: 'Theme not found' });
         }
 
-        res.json(deleteTheme);
+        res.status(204).json(deleteTheme);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

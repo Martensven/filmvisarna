@@ -25,7 +25,7 @@ router.get('/api/movie', async (req, res) => {
         .populate('reviews')
         .populate('themes');
 
-        res.json(movies);
+        res.status(200).json(movies);
    } catch (error) {
     res.status(500).json({ message: error.message });
    }
@@ -46,7 +46,7 @@ router.get('/api/movie/:id', async (req, res) => {
             return res.status(404).json({ message: 'Movie not found' });
         }
 
-        res.json(movie);
+        res.status(200).json(movie);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -61,7 +61,7 @@ router.put('/api/movie/:id', async (req, res) => {
             return res.status(404).json({ message: "Movie not found" });
         }
 
-        res.json(updatedMovie);
+        res.status(200).json(updatedMovie);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -76,7 +76,7 @@ router.delete('/api/movie/:id', async (req, res) => {
             return res.status(404).json({ message: "Movie not found" });
         }
 
-        res.json({ message: "Movie deleted successfully" });
+        res.status(204).json({ message: "Movie deleted successfully" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
