@@ -11,7 +11,7 @@ dotenv.config();
 app.use(express.json());
 app.use(TicketTypesRoute);
 
-mongoose.connect(process.env.DB_CONNECT)
+mongoose.connect(process.env.DB_CONNECT) // connect to database
     .then(() => {
         app.listen(PORT, () => {
             console.log('Connected to MongoDB');
