@@ -52,7 +52,7 @@ router.put("/api/bookings/:id", async (req, res) => {
     try {
         const booking = await Booking.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!booking) {
-            return res.status(404).json({ error: "Booking not found" });
+            return res.status(404).json({ error: "Booking succesfully deleted" });
         }
         res.status(200).json(booking);
     } catch (error) {
@@ -66,7 +66,7 @@ router.delete("/api/bookings/:id", async (req, res) => {
     try {
         const booking = await Booking.findByIdAndDelete(req.params.id);
         if (!booking) {
-            return res.status(404).json({ error: "Booking not found" });
+            return res.status(404).json({ error: "Booking succesfully deleted" });
         }
         res.status(204).json();
     } catch (error) {
@@ -75,6 +75,3 @@ router.delete("/api/bookings/:id", async (req, res) => {
 });
 
 export default router;
-
-
-
