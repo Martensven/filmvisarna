@@ -1,8 +1,12 @@
 import mongoose from 'mongoose';
-import TicketTypes from './routes/ticketTypesRoute.js';
 import express from 'express';
 import dotenv from 'dotenv';
+import MoviesRoute from './routes/moviesRoute.js';
+import ThemeRoute from './routes/themeRoute.js';
+import ReviewRoute from './routes/reviewRoute.js';
+import TicketTypes from './routes/ticketTypesRoute.js';
 import Directors from './routes/directorsRoutes.js';
+import Actors from './routes/actorRoutes.js'
 import Screening from './routes/screeningRoutes.js';
 import Bookings from './routes/bookingRoute.js';
 import Genres from './routes/genresRoutes.js';
@@ -17,8 +21,12 @@ const app = express();
 dotenv.config();
 
 app.use(express.json());
+app.use(MoviesRoute);
+app.use(ThemeRoute);
+app.use(ReviewRoute);
 app.use(TicketTypes);
 app.use(Directors);
+app.use(Actors);
 app.use(Screening);
 app.use(Bookings);
 app.use(Genres);

@@ -35,10 +35,9 @@ router.post("/api/screening", async (req, res) => {
 
 router.put("/api/screening", async (req, res) => {
     try{
-        const screening = 
+    } catch (error) {
+
     }
 })
-
-
 
 export default router

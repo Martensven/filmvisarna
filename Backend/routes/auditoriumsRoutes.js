@@ -71,5 +71,4 @@ router.delete("/api/auditoriums/:id", async (req, res) => {
     }
 });
 
-
 export default router;
