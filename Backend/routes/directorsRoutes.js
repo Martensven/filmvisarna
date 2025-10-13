@@ -55,7 +55,7 @@ router.delete("/api/directors/:id", async (req, res) => {
     if(!directors){
        return res.status(404).json({ message: 'Director not found' });
     }
-    res.status(200).json(directors);
+    res.status(204).json(directors);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
