@@ -16,6 +16,7 @@ const moviesSchema = new mongoose.Schema({
     themes: { type: mongoose.Schema.Types.ObjectId, ref: 'Themes', required: true }
 });
 
+// Link movie to the respective theme 
 moviesSchema.post('save', async function (doc) {
   const Theme = mongoose.model('Themes');
   try {
@@ -26,6 +27,24 @@ moviesSchema.post('save', async function (doc) {
     }
   } catch (error) {
     console.error('Error linking movie to theme:', err);
+  }
+});
+
+// Delete linked movie from it's respective theme when movie is removed
+moviesSchema.pre('findOneAndDelete', async function (next) {
+  try {
+    const movie = await this.model.findOne(this.getQuery());
+    if (!movie) return next();
+
+    const Theme = mongoose.model('Themes');
+    await Theme.findByIdAndUpdate(movie.themes, {
+      $pull: { movies: movie._id }
+    });
+
+    next();
+  } catch (error) {
+    console.error('Error removing movie from theme:', error);
+    next(error);
   }
 });
  

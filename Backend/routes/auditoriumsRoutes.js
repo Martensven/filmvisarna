@@ -6,7 +6,7 @@ const router = express.Router();
 // Get all auditoriums
 router.get("/api/auditoriums", async (req, res) => {
   try {
-    const auditoriums = await Auditorium.find().populate;
+    const auditoriums = await Auditorium.find().populate('seats');
     res.status(200).json(auditoriums);
   } catch (error) {
     res.status(500).json({ message: error.message });

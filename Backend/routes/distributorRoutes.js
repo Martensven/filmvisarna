@@ -1,4 +1,4 @@
-import { Distributors } from "../models/distributorSchema";
+import { Distributors } from "../models/distributorSchema.js";
 import express from 'express';
 
 const router = express.Router();
