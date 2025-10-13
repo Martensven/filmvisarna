@@ -6,7 +6,9 @@ const router = express();
 //Getting all screenings
 router.get("/api/screening", async (req, res) => {
     try{
-        const screening = await Screening.find();
+        const screening = await Screening.find()
+        .populate("Auditorium")
+        .populate("movie");
         res.status(200).json(screening);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -16,7 +18,9 @@ router.get("/api/screening", async (req, res) => {
 //Getting screenings by ID
 router.get("/api/screening/:id", async (req, res) => {
     try{
-        const screening = await Screening.findById(req.params.id);
+        const screening = await Screening.findById(req.params.id)
+        .populate("Auditorium")
+        .populate("movie");
         res.status(200).json(screening);
     } catch (error) {
         res.status(500).json({message: error.message})
