@@ -1,4 +1,4 @@
-import { Movies } from "../models/moviesSchema";
+import { Movies } from "../models/moviesSchema.js";
 import express from "express";
 
 const router = express.Router();

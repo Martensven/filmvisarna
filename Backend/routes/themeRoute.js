@@ -1,4 +1,4 @@
-import { Themes } from "../models/themeSchema";
+import { Themes } from "../models/themeSchema.js";
 import express from 'express';
 
 const router = express.Router();
