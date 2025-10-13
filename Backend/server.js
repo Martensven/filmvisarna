@@ -6,6 +6,7 @@ import Directors from './routes/directorsRoutes.js';
 import Screening from './routes/screeningRoutes.js';
 import Bookings from './routes/bookingRoute.js';
 import Genres from './routes/genresRoutes.js';
+import Auditorium from "./routes/auditoriumsRoutes.js"
 
 const PORT = 4321;
 const app = express();
@@ -18,6 +19,7 @@ app.use(Directors);
 app.use(Screening);
 app.use(Bookings);
 app.use(Genres);
+app.use(Auditorium)
 
 mongoose.connect(process.env.DB_CONNECT) // connect to database
     .then(() => {
