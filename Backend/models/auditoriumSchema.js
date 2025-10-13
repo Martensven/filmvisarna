@@ -5,4 +5,4 @@ const auditoriumSchema = new mongoose.Schema({
     seats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Seat' }],
 })
 
-export const Auditorium = mongoose.model('Auditorium', auditoriumSchema);
+export const Auditoriums = mongoose.model('Auditorium', auditoriumSchema);
