@@ -23,21 +23,42 @@ router.get("/api/screening/:id", async (req, res) => {
     }
 })
 
+//Creating a new screening
 router.post("/api/screening", async (req, res) => {
     try{
         const screening = new Screening(req.body);
         await screening.save();
         res.status(201).json(screening);
-    } catch {
+    } catch (error){
         res.status(400).json({ message: error.message });
+    }
+
+    console.log(Screening)
+})
+
+//Changing a allready existing screening
+router.put("/api/screening/:id", async (req, res) => {
+    try{
+        const screening = await Screening.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
+        if(!screening){
+            return res.status(404).json({message: "Can't find any screenings"})
+        }
+        res.status(204).json(screening)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
 })
 
-router.put("/api/screening", async (req, res) => {
-    try{
+router.delete("/api/screening/:id", async (req, res) => {
+    try {
+        const screening = await Screening.findOneAndDelete(req.params.id);
+        if(!screening) {
+            return res.status(404).json({message: "No screening found to delete"})
+        }
+        res.status(204).json(screening)
     } catch (error) {
-
-    }
+        res.status(500).json({ message: error.message })
+    } 
 })
 
 export default router

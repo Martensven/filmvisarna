@@ -10,9 +10,9 @@ import Actors from './routes/actorRoutes.js'
 import Screening from './routes/screeningRoutes.js';
 import Bookings from './routes/bookingRoute.js';
 import Genres from './routes/genresRoutes.js';
+import Auditorium from "./routes/auditoriumsRoutes.js"
 import Distributors from './routes/distributorRoutes.js';
 import User from './routes/userRoutes.js';
-import Auditorium from './routes/auditoriumsRoutes.js';
 
 
 const PORT = 4321;
