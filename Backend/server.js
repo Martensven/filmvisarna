@@ -4,6 +4,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import Directors from './routes/directorsRoutes.js';
 import Bookings from './routes/bookingRoute.js';
+import Genres from './routes/genresRoutes.js';
 
 const PORT = 4321;
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(TicketTypes);
 app.use(Directors);
 app.use(Bookings);
+app.use(Genres);
 
 mongoose.connect(process.env.DB_CONNECT) // connect to database
     .then(() => {
