@@ -75,6 +75,3 @@ router.delete("/api/bookings/:id", async (req, res) => {
 });
 
 export default router;
-
-
-
