@@ -8,6 +8,8 @@ import Bookings from './routes/bookingRoute.js';
 import Genres from './routes/genresRoutes.js';
 import Distributors from './routes/distributorRoutes.js';
 import User from './routes/userRoutes.js';
+import Auditorium from './routes/auditoriumsRoutes.js';
+
 
 const PORT = 4321;
 const app = express();
@@ -22,6 +24,8 @@ app.use(Bookings);
 app.use(Genres);
 app.use(Distributors);
 app.use(User);
+app.use(Auditorium);
+
 
 mongoose.connect(process.env.DB_CONNECT) // connect to database
     .then(() => {
