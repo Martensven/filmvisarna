@@ -12,7 +12,7 @@ router.get("/api/screening", async (req, res) => {
     }
 })
 
-router.get("/api/screening/auditorium:id", async (req, res) => {
+router.get("/api/screening/auditorium/:id", async (req, res) => {
     try{
         const auditoriumById = await Screening.find();
         res.status(201).json(auditoriumById);
