@@ -6,14 +6,10 @@ import Directors from './routes/directorsRoutes.js';
 import Screening from './routes/screeningRoutes.js';
 import Bookings from './routes/bookingRoute.js';
 import Genres from './routes/genresRoutes.js';
-<<<<<<< HEAD
 import Auditorium from "./routes/auditoriumsRoutes.js"
-=======
 import Distributors from './routes/distributorRoutes.js';
 import User from './routes/userRoutes.js';
-import Auditorium from './routes/auditoriumsRoutes.js';
 
->>>>>>> ee31401d73ad3959416548c4a737d9584fe00405
 
 const PORT = 4321;
 const app = express();
@@ -26,14 +22,10 @@ app.use(Directors);
 app.use(Screening);
 app.use(Bookings);
 app.use(Genres);
-<<<<<<< HEAD
-app.use(Auditorium)
-=======
 app.use(Distributors);
 app.use(User);
 app.use(Auditorium);
 
->>>>>>> ee31401d73ad3959416548c4a737d9584fe00405
 
 mongoose.connect(process.env.DB_CONNECT) // connect to database
     .then(() => {

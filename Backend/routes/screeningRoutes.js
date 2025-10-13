@@ -23,6 +23,7 @@ router.get("/api/screening/:id", async (req, res) => {
     }
 })
 
+//Creating a new screening
 router.post("/api/screening", async (req, res) => {
     try{
         const screening = new Screening(req.body);
@@ -33,9 +34,28 @@ router.post("/api/screening", async (req, res) => {
     }
 })
 
-router.put("/api/screening", async (req, res) => {
+//Changing a allready existing screening
+router.put("/api/screening/:id", async (req, res) => {
     try{
-        const screening = 
+        const screening = await Screening.findByIdAndUpdate(req.body.id, req.params, {new: true, runValidators: true});
+        if(!screening){
+            return res.status(404).json({message: "Can't find any screenings"})
+        }
+        res.status(204).json(screening)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
+router.delete("/api/screening/:id", async (req, res) => {
+    try {
+        const screening = await Screening.findOneAndDelete(req.params.id);
+        if(!screening) {
+            return res.status(404).json({message: "No screening found to delete"})
+        }
+        res.status(204).json(screening)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
 })
 
