@@ -1,10 +1,16 @@
 import { User } from '../models/userSchema.js';
 import express from 'express';
+import { dataValidation } from '..middleware/dataValidation.js';
 
 const router = express.Router();
 
 // post a new user
-router.post('/api/users', async (req, res) => {
+router.post('/api/users', 
+    dataValidation(
+        ['name', 'email', 'password'],
+        { name: 'string', email: 'string', password: 'string' }
+    ),
+    async (req, res) => {
     try { const user = new User(req.body); // request from body has to match schema
         await user.save();
         res.status(201).json(user);
