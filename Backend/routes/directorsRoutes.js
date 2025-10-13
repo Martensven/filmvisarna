@@ -43,7 +43,8 @@ router.put("/api/directors/:id", async (req, res) => {
     if(!directors){
       res.status(404).json({ message: "No director with that name."})
     }
-    res.status(200).json(directors);
+    res.status(204).json(directors);
+    
   } catch {
     res.status(500).json({ message: error.message });
   }

@@ -29,15 +29,17 @@ router.post("/api/screening", async (req, res) => {
         const screening = new Screening(req.body);
         await screening.save();
         res.status(201).json(screening);
-    } catch {
+    } catch (error){
         res.status(400).json({ message: error.message });
     }
+
+    console.log(Screening)
 })
 
 //Changing a allready existing screening
 router.put("/api/screening/:id", async (req, res) => {
     try{
-        const screening = await Screening.findByIdAndUpdate(req.body.id, req.params, {new: true, runValidators: true});
+        const screening = await Screening.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
         if(!screening){
             return res.status(404).json({message: "Can't find any screenings"})
         }
