@@ -1,4 +1,5 @@
 import { Auditorium } from "../models/auditoriumSchema.js";
+import { Seat } from "../models/seatSchema.js";
 import express from "express";
 
 const router = express.Router();
@@ -29,12 +30,42 @@ router.get("/api/auditoriums/:id", async (req, res) => {
 // ------ Admin routes --------
 
 // create a new auditorium
+
 router.post("/api/auditoriums", async (req, res) => {
   try {
-    // the body from the request needs to match the schema
-    const auditorium = new Auditorium(req.body);
-    // Saving the newly added auditorium to the database
+    // Expecting the body from the request to have "name" and "rows"
+    // "rows" is an array of objects with "rowNumber", "seats" and "accessibleSeats"
+    const { name, rows } = req.body;
+
+    // Create and save the auditorium first without seats
+    // Using the Auditorium model schema
+    // name comes from the body of the request
+    const auditorium = new Auditorium({ name });
     await auditorium.save();
+
+    // Loop through each row in "rows" from the body of the request
+    // Create seats using the Seat model schema
+    // Each seat gets a rowNumber, seatNumber, auditoriumId and accessible (true/false)
+    // auditoriumId is the id of the auditorium we created above
+    // accessible is true if the seatNumber is in the accessibleSeats array for that row
+    for (const row of rows) {
+      for (let seatNumber = 0; seatNumber < row.seats; seatNumber++) {
+        const seat = new Seat({
+          rowNumber: row.rowNumber,
+          seatNumber,
+          auditoriumId: auditorium._id,
+          accessible: row.accessibleSeats.includes(seatNumber)
+        });
+        // Save each seat to the database
+        await seat.save();
+        // Add the seat to the auditorium's seats array
+        auditorium.seats.push(seat._id);
+      }
+    }
+
+    // Save the auditorium again with the seats
+    await auditorium.save();
+
     res.status(201).json(auditorium);
   } catch (error) {
     res.status(400).json({ message: error.message });
