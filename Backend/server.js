@@ -12,6 +12,7 @@ dotenv.config();
 app.use(express.json());
 app.use(TicketTypesRoute);
 app.use(Directors);
+app.use();
 
 mongoose.connect(process.env.DB_CONNECT)
     .then(() => {
