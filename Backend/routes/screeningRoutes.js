@@ -62,9 +62,7 @@ router.delete("/api/screening/:id", async (req, res) => {
         res.status(204).json(screening)
     } catch (error) {
         res.status(500).json({ message: error.message })
-    }
+    } 
 })
-
-
 
 export default router
