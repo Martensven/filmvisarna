@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import TicketTypesRoute from './routes/ticketTypesRoute.js';
+import MoviesRoute from './routes/moviesRoute.js';
+import ThemeRoute from './routes/themeRoute.js';
 import express from 'express';
 import dotenv from 'dotenv';
 
@@ -10,6 +12,8 @@ dotenv.config();
 
 app.use(express.json());
 app.use(TicketTypesRoute);
+app.use(MoviesRoute);
+app.use(ThemeRoute);
 
 mongoose.connect(process.env.DB_CONNECT)
     .then(() => {
