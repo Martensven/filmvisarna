@@ -5,7 +5,9 @@ import Movie from "./../routes/moviesRoute"
 
 const testdataScreening = async() => {
     try{
-
+        const screening = new Screening({
+            
+        })
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
