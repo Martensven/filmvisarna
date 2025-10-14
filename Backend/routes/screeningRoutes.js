@@ -7,8 +7,7 @@ const router = express();
 router.get("/api/screening", async (req, res) => {
     try{
         const screening = await Screening.find()
-        .populate("Auditorium")
-        .populate("movie");
+        .populate("auditorium")
         res.status(200).json(screening);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -19,8 +18,7 @@ router.get("/api/screening", async (req, res) => {
 router.get("/api/screening/:id", async (req, res) => {
     try{
         const screening = await Screening.findById(req.params.id)
-        .populate("Auditorium")
-        .populate("movie");
+        .populate("auditorium")
         res.status(200).json(screening);
     } catch (error) {
         res.status(500).json({message: error.message})
