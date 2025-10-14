@@ -1,12 +1,12 @@
 import { User } from '../models/userSchema.js';
 import express from 'express';
-import { dataValidation } from '../middleware/dataValidation.js';
+import { validateData } from './../middleware/dataValidation.js';
 
 const router = express.Router();
 
 // post a new user
 router.post('/api/users', 
-    dataValidation(
+    validateData(
         ['name', 'email', 'password'],
         { name: 'string', email: 'string', password: 'string' }
     ),
