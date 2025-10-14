@@ -48,15 +48,14 @@ function App() {
       {loginPopup && (
         <section onClick={handleClosing} className="fixed inset-0 flex justify-end z-50">
           <aside onClick={(e) => e.stopPropagation()} className={`popup-background flex w-150 h-full shadow-xl p-6 flex-col justify-center ${popupSlide ? "animation-slideout" : "animation-slidein"}`}>
+            <button
+              onClick={handleClosing}
+              className="self-center rounded-md shadow-md cursor-pointer">
+              [X]
+            </button>
             {loginPopup === "login" && (<Login onSwitchToRegister={() => setLoginPopup("register")} onSwitchToForgot={() => setLoginPopup("forgot-password")} onClose={handleClosing} onLoginSuccess={() => setIsLoggedIn(true)} />)}
             {loginPopup === "register" && (<Register onSwitchToLogin={() => setLoginPopup("login")} onClose={handleClosing} />)}
             {loginPopup === "forgot-password" && (<ForgotPassword onSwitchToLogin={() => setLoginPopup("login")} />)}
-
-            <button
-              onClick={handleClosing}
-              className="bg-[#243365] self-center w-50 mb-4 p-3 rounded-md shadow-md cursor-pointer">
-              Stäng
-            </button>
           </aside>
         </section>
       )}
