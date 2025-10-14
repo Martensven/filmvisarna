@@ -13,6 +13,7 @@ import Distributors from './routes/distributorRoutes.js';
 import User from './routes/userRoutes.js';
 import Auditorium from './routes/auditoriumsRoutes.js';
 import Actors from './routes/actorRoutes.js';
+import Kiosk from './routes/kioskRoutes.js';
 
 
 const PORT = 4321;
@@ -33,7 +34,7 @@ app.use(Distributors);
 app.use(User);
 app.use(Auditorium);
 app.use(Actors);
-
+app.use(Kiosk);
 
 mongoose.connect(process.env.DB_CONNECT) // connect to database
     .then(() => {
