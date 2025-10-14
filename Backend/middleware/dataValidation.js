@@ -1,4 +1,4 @@
-export const validateData = (requiredFields = [], typeChecks = {}, source = 'body') => {
+export const dataValidation = (requiredFields = [], typeChecks = {}, source = 'body') => {
   return (req, res, next) => {
     const data = req[source];
     if (!data) {

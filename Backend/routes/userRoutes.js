@@ -1,6 +1,6 @@
 import { User } from '../models/userSchema.js';
 import express from 'express';
-import { dataValidation } from '..middleware/dataValidation.js';
+import { dataValidation } from '../middleware/dataValidation.js';
 
 const router = express.Router();
 
