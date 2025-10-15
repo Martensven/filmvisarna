@@ -7,8 +7,15 @@ const router = express.Router();
 // post a new user
 router.post('/api/users', 
     validateData(
-        ['name', 'email', 'password'],
-        { name: 'string', email: 'string', password: 'string' }
+        ['email', 'password', 'firstName', 'lastName', 'phoneNumber'],
+        { email: 'string', password: 'string', firstName: 'string', lastName: 'string', phoneNumber: 'number' },
+        'body',
+        {
+            firstName: /^[A-Za-zÅÄÖåäö\s-]+$/,
+            lastName: /^[A-Za-zÅÄÖåäö\s-]+$/,
+            password: (val) =>
+            val.length < 8 ? 'Lösenordet måste vara minst 8 tecken' : null
+        }
     ),
     async (req, res) => {
     try { const user = new User(req.body); // request from body has to match schema
