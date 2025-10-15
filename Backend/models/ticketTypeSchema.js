@@ -5,4 +5,4 @@ const ticketTypeSchema = new mongoose.Schema({
     price: { type: Number, required: true }
 });
 
-export const TicketType = mongoose.model('TicketType', ticketTypeSchema);
+export const TicketType = mongoose.model('Ticket', ticketTypeSchema);
