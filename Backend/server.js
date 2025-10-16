@@ -20,7 +20,7 @@ import Kiosk from './routes/kioskRoutes.js';
 const PORT = 4321;
 const app = express();
 const Socketserver = http.createServer(app);
-const io = new Server({ Socketserver }) // Websocket for real time booking
+const io = new Server({ Socketserver }) // Websocket for realtime booking
 
 dotenv.config();
 
@@ -38,6 +38,15 @@ app.use(User);
 app.use(Auditorium);
 app.use(Actors);
 app.use(Kiosk);
+
+io.on("connected", () => {
+    console.log("Client connected");
+
+    Socket.on("disconnect", () => {
+        console.log("Client disconnected");
+        
+    })
+});
 
 mongoose.connect(process.env.DB_CONNECT) // connect to database
     .then(() => {
