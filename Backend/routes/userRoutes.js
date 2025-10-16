@@ -1,6 +1,7 @@
 import { User } from '../models/userSchema.js';
 import express from 'express';
 import { validateData } from './../middleware/dataValidation.js';
+import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
@@ -13,16 +14,35 @@ router.post('/api/users',
         {
             firstName: /^[A-Za-zÅÄÖåäö\s-]+$/,
             lastName: /^[A-Za-zÅÄÖåäö\s-]+$/,
+            email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
             password: (val) =>
             val.length < 8 ? 'Lösenordet måste vara minst 8 tecken' : null
         }
     ),
     async (req, res) => {
-    try { const user = new User(req.body); // request from body has to match schema
-        await user.save();
-        res.status(201).json(user);
+    try {
+      // Hashes the passwords in our system
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+
+      const user = new User({
+        ...req.body,
+        password: hashedPassword
+      });
+
+      await user.save();
+      res.status(201).json({ 
+        message: 'User created successfully',
+        user: { 
+          id: user._id, 
+          email: user.email, 
+          firstName: user.firstName, 
+          lastName: user.lastName, 
+          phoneNumber: user.phoneNumber 
+        }
+      });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+      res.status(400).json({ message: error.message });
     }
 });
 
