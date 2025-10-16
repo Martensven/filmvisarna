@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import express from 'express';
+import { server } from "socket.io"
 import dotenv from 'dotenv';
 import MoviesRoute from './routes/moviesRoute.js';
 import ThemeRoute from './routes/themeRoute.js';
@@ -18,6 +19,8 @@ import Kiosk from './routes/kioskRoutes.js';
 
 const PORT = 4321;
 const app = express();
+const Socketserver = http.createServer(app);
+const io = new Server({ Socketserver }) // Websocket for real time booking
 
 dotenv.config();
 
