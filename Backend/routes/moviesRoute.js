@@ -3,6 +3,34 @@ import express from "express";
 
 const router = express.Router();
 
+// POST Route, /api/movie
+router.post('/api/movie', async (req, res) => {
+    try {
+        const movies = new Movies(req.body);
+        await movies.save();
+        res.status(201).json(movies);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// GET All Route, /api/movie
+router.get('/api/movie', async (req, res) => {
+    try {
+        const movies = await Movies.find()
+        .populate('genres')
+        .populate('actors')
+        .populate('directors')
+        .populate('distributors')
+        .populate('reviews')
+        .populate('themes');
+
+        res.status(200).json(movies);
+   } catch (error) {
+    res.status(500).json({ message: error.message });
+   }
+});
+
 // GET Filter Route, /api/movie/filter
 router.get('/api/movie/filter', async (req, res) => {
     try {
@@ -55,34 +83,6 @@ router.get('/api/movie/filter', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
-
-// POST Route, /api/movie
-router.post('/api/movie', async (req, res) => {
-    try {
-        const movies = new Movies(req.body);
-        await movies.save();
-        res.status(201).json(movies);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
-
-// GET All Route, /api/movie
-router.get('/api/movie', async (req, res) => {
-    try {
-        const movies = await Movies.find()
-        .populate('genres')
-        .populate('actors')
-        .populate('directors')
-        .populate('distributors')
-        .populate('reviews')
-        .populate('themes');
-
-        res.status(200).json(movies);
-   } catch (error) {
-    res.status(500).json({ message: error.message });
-   }
 });
 
 // GET ID Route, /api/movie/:id
