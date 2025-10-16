@@ -12,9 +12,9 @@ router.get('/api/movie/filter', async (req, res) => {
         if (title) filter.title = { $regex: title, $options: 'i' };
         // Filter by release year range
         if (minYear || maxYear) {
-            filter.year = {};
-            if (minYear) filter.year.$gte = parseInt(minYear);
-            if (maxYear) filter.year.$lte = parseInt(maxYear);
+            filter.releaseYear = {};
+            if (minYear) filter.releaseYear.$gte = parseInt(minYear);
+            if (maxYear) filter.releaseYear.$lte = parseInt(maxYear);
         }
         // Genre-filtering
         if (genre) {
