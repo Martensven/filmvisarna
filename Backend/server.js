@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import express from 'express';
-import { server } from "socket.io"
+import { Server } from "socket.io"
+import http from "http"
 import dotenv from 'dotenv';
 import MoviesRoute from './routes/moviesRoute.js';
 import ThemeRoute from './routes/themeRoute.js';
@@ -40,10 +41,10 @@ app.use(Actors);
 app.use(Kiosk);
 
 io.on("connected", () => {
-    console.log("Client connected");
+    console.log("Client connected", socket.id);
 
-    Socket.on("disconnect", () => {
-        console.log("Client disconnected");
+    socket.on("disconnect", () => {
+        console.log("Client disconnected", socket.id);
         
     })
 });

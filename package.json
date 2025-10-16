@@ -17,6 +17,7 @@
     "react-router": "^7.9.1",
     "react-router-dom": "^7.9.2",
     "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
