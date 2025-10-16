@@ -8,13 +8,13 @@ router.post("/api/bookings", async (req, res) => {
     try {
         const newBooking = await Booking.create(req.body);
 
-        const populatedBooking = await Booking.findById(newBooking._id)
-            .populate("user_id", "firstName lastName email")
-            .populate("screening_id", "movieTitle auditoriumName date time")
-            .populate("seat_id")
-            .populate("ticketType_id", "ticketTypes");
+        const bookings = await Booking.findById(newBooking._id)
+            .populate("userInfo.user_id", "firstName lastName email")
+            .populate("screeningInfo.screening_id", "movieTitle auditoriumName date time")
+            .populate("seats.seat_id")
+            .populate("tickets.ticket_id", "ticketName price quantity");
 
-        res.status(201).json(populatedBooking);
+        res.status(201).json(bookings);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Failed to create booking" });
@@ -25,10 +25,10 @@ router.post("/api/bookings", async (req, res) => {
 router.get("/api/bookings", async (req, res) => {
     try {
         const bookings = await Booking.find()
-            .populate("user_id", "firstName lastName email")
-            .populate("screening_id", "movieTitle auditoriumName date time")
-            .populate("seat_id")
-            .populate("ticketType_id", "ticketTypes");
+            .populate("userInfo.user_id", "firstName lastName email")
+            .populate("screeningInfo.screening_id", "movieTitle auditoriumName date time")
+            .populate("seats.seat_id")
+            .populate("tickets.ticket_id", "ticketName price quantity");
 
         res.status(200).json(bookings);
     } catch (error) {
@@ -40,10 +40,10 @@ router.get("/api/bookings", async (req, res) => {
 router.get("/api/bookings/:id", async (req, res) => {
     try {
         const booking = await Booking.findById(req.params.id)
-            .populate("user_id", "firstName lastName email")
-            .populate("screening_id", "movieTitle auditoriumName date time")
-            .populate("seat_id")
-            .populate("ticketType_id", "ticketTypes");
+            .populate("userInfo.user_id", "firstName lastName email")
+            .populate("screeningInfo.screening_id", "movieTitle auditoriumName date time")
+            .populate("seats.seat_id")
+            .populate("tickets.ticket_id", "ticketName price quantity");
 
         if (!booking) {
             return res.status(404).json({ error: "Booking not found" });
@@ -59,10 +59,10 @@ router.get("/api/bookings/:id", async (req, res) => {
 router.get("/api/bookings/user/:user_id", async (req, res) => {
     try {
         const bookings = await Booking.find({ user_id: req.params.user_id })
-            .populate("user_id", "firstName lastName email")
-            .populate("screening_id", "movieTitle auditoriumName date time")
-            .populate("seat_id")
-            .populate("ticketType_id", "ticketTypes");
+            .populate("userInfo.user_id", "firstName lastName email")
+            .populate("screeningInfo.screening_id", "movieTitle auditoriumName date time")
+            .populate("seats.seat_id")
+            .populate("tickets.ticket_id", "ticketName price quantity");
 
         res.status(200).json(bookings);
     } catch (error) {
@@ -76,10 +76,10 @@ router.put("/api/bookings/:id", async (req, res) => {
         const booking = await Booking.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
         })
-            .populate("user_id", "firstName lastName email")
-            .populate("screening_id", "movieTitle auditoriumName date time")
-            .populate("seat_id")
-            .populate("ticketType_id", "ticketTypes");
+            .populate("userInfo.user_id", "firstName lastName email")
+            .populate("screeningInfo.screening_id", "movieTitle auditoriumName date time")
+            .populate("seats.seat_id")
+            .populate("tickets.ticket_id", "ticketName price quantity");
 
         if (!booking) {
             return res.status(404).json({ error: "Booking not found" });
