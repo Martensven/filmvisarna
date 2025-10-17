@@ -14,6 +14,8 @@ export default function sendMail({ to, subject, text, html, attachments = [] }) 
     // Sending mail including from our team mail and fields and subjects
     teamClient.sendMail({
         from: info.email,
-        subject: to, subject, text, html, attachments
+        to,
+        subject, 
+        text, html, attachments
     });
 }
