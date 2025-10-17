@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSeats } from "./context/SeatsContext";
+// import { io } from "socket.io-client";  //Used for socket.io 
 
 
 
@@ -14,6 +15,8 @@ interface Theater {
 interface TheaterViewProps {
   theaterView: Theater;
 }
+// const socket = io("http://localhost:4321"); // Varible declared after the localhost we running on. 
+//Shall be used in useEffect for fetch API
 
 export default function TheaterView(
   { theaterView }: TheaterViewProps

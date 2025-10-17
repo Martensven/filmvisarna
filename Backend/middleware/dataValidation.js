@@ -20,10 +20,14 @@ export const validateData = (requiredFields = [], typeChecks = {}, source = 'bod
         let value = data[field];
 
         // Allow numbers to be sent as strings (e.g "27")
-        if (type === 'number' && typeof value === 'string' && !isNaN(value)) {
-          value = Number(value);
-          data[field] = value;
-        }
+        if (type === 'number' && typeof value === 'string') {
+            if (value.trim() === '' || /\s/.test(value)) {
+              errors.push(`${field} får inte vara tomt eller innehålla mellanslag`);
+              } else if (!isNaN(value)) {
+                value = Number(value);
+                data[field] = value;
+              }
+            }
 
         if (typeof value !== type) {
           errors.push(`${field} must be a ${type}`);
@@ -44,6 +48,15 @@ export const validateData = (requiredFields = [], typeChecks = {}, source = 'bod
         }
       }
     }
+    // Rejects just spaces in the input fields
+    for (const [key, value] of Object.entries(data)) {
+  if (
+    (typeof value === 'string' && /\s/.test(value)) || // string has space
+    (typeof value === 'number' && /\s/.test(String(value))) // number was maybe sent with spaces
+  ) {
+    errors.push(`${key} får inte innehålla mellanslag`);
+  }
+}
 
     // If there are errors, return all of them
     if (errors.length > 0) {
