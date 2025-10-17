@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer"
 import info from "./team1-gmail.json" with {type: "json" }
 
+
 export default function sendMail({ to, subject, text, html, attachments = [] }) {
     //Creating our teams client using the info from our team1-gmail.json info
     const teamClient = nodemailer.createTransport({
@@ -11,6 +12,7 @@ export default function sendMail({ to, subject, text, html, attachments = [] }) 
         }
     });
 
+
     // Sending mail including from our team mail and fields and subjects
     teamClient.sendMail({
         from: info.email,
@@ -18,4 +20,5 @@ export default function sendMail({ to, subject, text, html, attachments = [] }) 
         subject, 
         text, html, attachments
     });
+
 }
