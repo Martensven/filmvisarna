@@ -34,7 +34,7 @@ router.get('/api/movie', async (req, res) => {
 // GET Filter Route, /api/movie/filter
 router.get('/api/movie/filter', async (req, res) => {
     try {
-        const { title, minYear, maxYear, genre, actor, director, distributor, theme, ageLimit } = req.query;
+        const { title, minYear, maxYear, genre, actor, director, distributor, theme, ageLimit, sort } = req.query;
         let filter = {};
         // Search by title (case-insensitive)
         if (title) filter.title = { $regex: title, $options: 'i' };
@@ -66,6 +66,9 @@ router.get('/api/movie/filter', async (req, res) => {
         }
         // Age limit filtering
         if (ageLimit) filter.age = { $lte: parseInt(ageLimit) };
+
+        // Sorting
+        let sortOption = sort === 'asc' ? { releaseYear: 1 } : sort === 'desc' ? { releaseYear: -1 } : {};
 
         // Fetch and populate related fields
         const movies = await Movies.find(filter)
