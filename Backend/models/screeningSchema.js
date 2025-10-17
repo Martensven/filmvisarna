@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
 
 const screeningSchema = new mongoose.Schema({
-    auditorium: { type: mongoose.Schema.Types.ObjectId, ref:"Auditorium" },
-    movie: { type: mongoose.Schema.Types.ObjectId, ref:"Movies" },
-    screeningtimes: [{type: Date}]
+  movie: { type: mongoose.Schema.Types.ObjectId, ref: "Movies", required: true },
+  auditorium: { type: mongoose.Schema.Types.ObjectId, ref: "Auditorium", required: true },
+  date: { type: String, required: true },
+  time: { type: String, required: true },
+  bookedSeats: [{ type: mongoose.Schema.Types.ObjectId, ref: "Seat" }],
+  screeningtimes: [{type: Date}]
 });
- 
-export const Screening = mongoose.model('Screening', screeningSchema);
+
+export const Screening = mongoose.model("Screening", screeningSchema);
