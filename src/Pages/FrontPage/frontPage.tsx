@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import exampleList from "../../../Backend/example.ts";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
 import "../BookingPage/BookingPageStyle.css";
 
@@ -9,6 +8,8 @@ export default function FrontPage() {
     const [sortOpen, setSortOpen] = useState(false);
 
     const [movies, setMovies] = useState<any[]>([]); // State to hold fetched movies
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
     const [selectedAges, setSelectedAges] = useState<number[]>([]);
@@ -17,16 +18,34 @@ export default function FrontPage() {
     // fetch movies from backend
     const fetchMovies = async () => {
         try {
-            const response = await fetch("http://localhost:4321/api/movies");
-            const data = await response.json();
-            // Set the fetched movies to state
-            setMovies(data);
-            console.log(data);
+            const response = await fetch("/api/movie", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
 
-        } catch (error) {
+            if (!response.ok) {
+                throw new Error(`Serverfel: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+            setMovies(data);
+
+            const movies = data;
+
+        } catch (error: any) {
             console.error("Error fetching movies:", error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
         }
     };
+
+    useEffect(() => {
+        fetchMovies();
+    }, []);
 
     // Filters movies based on selected genres and ages
     const filteredMovies = movies.filter((movie) => {
@@ -35,7 +54,7 @@ export default function FrontPage() {
         const genreMatch =
             selectedGenres.length === 0 ||
             (Array.isArray(movie.genre)
-                ? movie.genre.some((g) => selectedGenres.includes(g))
+                ? movie.genre.some((g: any) => selectedGenres.includes(g))
                 : selectedGenres.includes(movie.genre));
 
         //Agefilter
