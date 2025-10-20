@@ -43,7 +43,6 @@ export default function Register({ onSwitchToLogin, onClose }: { onSwitchToLogin
     console.log("Registered User:", {firstName, lastName, email, password});
     navigate("/my-page");
     onClose();
-    };
 
     return (
         <section className="rounded p-5 mx-7 flex flex-col">

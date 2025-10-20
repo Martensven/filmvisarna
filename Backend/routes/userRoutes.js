@@ -38,7 +38,7 @@ router.post(
         password: hashedPassword,
       });
 
-      console.log("Mejl har skickats iväg");
+     
 
       await user.save();
       res.status(201).json({
@@ -64,9 +64,10 @@ router.post(
         <p> Vi hoppas att du ska finna mycket nöje med vårt utbud av gamla goda klassiker mellan tidigt 1900tal och senare 2000tal.</p>
         <p>Ytterligare information om ditt konto eller behov av lösenords-återställning finns att hämta hos oss vår kundservice.</p>
         <p>Med vänliga hälsningar 
-        Filmvisarna</p>`,
+        Filmvisarna</p>`
       });
-      
+       console.log("Mejl har skickats iväg");
+
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
