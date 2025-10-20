@@ -30,7 +30,7 @@ function App() {
 
   return (
     <>
- <Header onLoginClick={() => setLoginPopup("login")} isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />
+      <Header onLoginClick={() => setLoginPopup("login")} isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />
       <Routes>
         <Route path='/' element={<FrontPage />} />
         <Route path='/booking/:id' element={<BookingPage isLoggedIn={isLoggedIn} />} />
