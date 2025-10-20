@@ -1,5 +1,6 @@
 import express from "express";
 import { Booking } from "../models/bookingSchema.js";
+import sendMail from "../nodemailer/sendMail.js";
 import { Seat } from "../models/seatSchema.js";
 import { TicketType } from "../models/ticketTypeSchema.js";
 import { Screening } from "../models/screeningSchema.js";
@@ -87,8 +88,30 @@ router.post("/api/bookings", async (req, res) => {
       .populate("seats.seat_id")
       .populate("tickets.ticket_id", "ticketName price quantity");
 
-    res.status(201).json(populatedBooking);
+        //Creating booking conformation mail function - Sara
+        const userBooking = newBooking.userInfo.user_id;
+        const order = newBooking.screeningInfo.screening_id;
 
+        if(!user?.email){
+            console.warn("Ingen epostadress hittades, inget mejl skickats");
+            res.status(201).json(newBooking);
+        }
+        await sendMail({
+            to: user.email,
+            subject: "Din bokningsbekräftelse",
+            text: `Order ${order._id}`,
+            html:`<p>Tack för din beställning!</p>
+            <p>Här är din beställningsbekfräftelse:</p>
+            <p><strong>${newBooking.screeningInfo.screening_id.movieTitle}</strong></p>
+            <p>Salong: <strong>${newBooking.screeningInfo.screening_id.auditoriumName}</p>
+            <p>Visning: <strong>${new Date(newBooking.screeningInfo.screening_id.date).toLocaleDateString()} 
+            klockan: <strong>${new Date(newBooking.screeningInfo.screening_id.time).toLocaleTimeString()}</strong></p>
+            <p>Stolsnummer: <strong> ${newBooking.seats.seat_id} </strong></p>
+            <p>Antal biljetter: ${newBooking.tickets.ticket_id.quantity}</p>
+            <p>Totalt pris: <strong> ${newBooking.tickets.ticket_id.price}</strong></p>`
+        });
+    res.status(201).json(populatedBooking);
+        console.log("Mejl har skickats iväg");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
