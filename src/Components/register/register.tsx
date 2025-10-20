@@ -78,3 +78,4 @@ export default function Register({ onSwitchToLogin, onClose }: { onSwitchToLogin
         </section>
     );
 }
+
