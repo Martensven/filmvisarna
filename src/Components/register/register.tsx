@@ -77,4 +77,4 @@ export default function Register({ onSwitchToLogin, onClose }: { onSwitchToLogin
             <button onClick={onSwitchToLogin} className="my-3 underline cursor-pointer">Har du redan ett konto? Logga in här </button>
         </section>
     );
-}
+}}

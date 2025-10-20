@@ -18,7 +18,7 @@ router.post('/api/theme', async (req, res) => {
 router.get('/api/theme', async (req, res) => {
     try {
         const theme = await Themes.find()
-        .populate('movies');
+        .populate({path: "movies", populate: {path: "genres"}});
 
         res.status(200).json(theme);
     } catch (error) {
@@ -30,7 +30,7 @@ router.get('/api/theme', async (req, res) => {
 router.get('/api/theme/:id', async (req, res) => {
     try {
         const theme = await Themes.findById(req.params.id)
-        .populate('movies');
+        .populate({path: "movies", populate: {path: "genres"}});
 
         if (!theme) {
             return res.status(404).json({ message: 'Theme not found' });
