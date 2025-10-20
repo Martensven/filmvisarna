@@ -1,14 +1,45 @@
+
 import "../BookingPageStyle.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //Component contains todays showing and other dates. This ones are going to be clickable
 
 interface Props {
+  movieId: string;
   onSelectTheater: (theater: string) => void;
 }
+interface screening {
+  movie: { title: string };
+  _id: string;
+  auditorium: { name: string };
+  date: string;
+  time: string;
+}
 
-export default function CalenderComponent({ onSelectTheater }: Props) {
+export default function CalenderComponent({ movieId, onSelectTheater }: Props) {
   // State for active calender date with border when clicked
   const [active, setActive] = useState<number | null>(null);
+  const [screenings, setScreenings] = useState<screening[]>([]);
+
+  useEffect(() => {
+    const fetchScreening = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:4321/api/screenings/movie/${movieId}`
+        );
+        if (!response.ok) throw new Error("Kunde inte hämta data");
+        const data = await response.json();
+        setScreenings(data);
+      } catch (err) {
+        console.error("Kan inte hämta localhost 4321", err);
+      }
+    };
+    fetchScreening();
+  }, [movieId]);
+
+  const today = new Date().toISOString().split("T")[0];
+  const todaysScreening = screenings.filter((s) => s.date === today);
+  const otherDaysScreenings = screenings.filter((s) => s.date !== today);
+
   return (
     <main className="h-auto flex flex-col justify-center items-center md:w-11/12">
       {/*----------Containers for calender days----------*/}
@@ -17,42 +48,28 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
         className="flex flex-row container_content w-11/12 mb-1 overflow-x-auto overflow-y-hidden
          md:w-full md:place-items-center lg:h-auto"
       >
-        <ul
-          // Setting active state to mark selected calender date and onSelectTheater to get the selected theater
-          // This will be used dynamically later on
-          onClick={() => { setActive(1); onSelectTheater("Stora Salongen")}}
-          className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
+        {todaysScreening.length > 0 ? (
+          todaysScreening.map((screening, i) => (
+            <ul
+              // Setting active state to mark selected calender date and onSelectTheater to get the selected theater
+              // This will be used dynamically later on
+              key={screening._id}
+              onClick={() => {
+                setActive(i);
+                onSelectTheater("Stora Salongen");
+              }}
+              className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
           ${active === 1 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          
-          <li className="pt-3 pb-3 text-lg font-bold">12:00</li>
-          <li className="pb-1 text-sm md:text-md">Stora Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(2); onSelectTheater("Stora Salongen")}}
-          className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
-          ${active === 2 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-3 pb-3 text-lg font-bold">14:00</li>
-          <li className="pb-1 text-sm">Stora Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(3); onSelectTheater("Lilla Salongen")}}
-          className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
-          ${active === 3 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-3 pb-3 text-lg font-bold">18:00</li>
-          <li className="pb-1 text-sm">Lilla Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(4); onSelectTheater("Lilla Salongen")}}
-          className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
-          ${active === 4 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-3 pb-3 text-lg font-bold">20:00</li>
-
-          <li className="pb-1 text-sm">Lilla Salongen</li>
-        </ul>
+            >
+              <li className="pt-3 pb-3 text-lg font-bold">{screening.time}</li>
+              <li className="pb-1 text-sm md:text-md">
+                {screening.auditorium.name}
+              </li>
+            </ul>
+          ))
+        ) : (
+          <p>Ingen visning idag</p>
+        )}
       </section>
 
       {/* Other dates */}
@@ -65,7 +82,10 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
         lg:h-auto"
       >
         <ul
-          onClick={() => { setActive(5); onSelectTheater("Stora Salongen")}}
+          onClick={() => {
+            setActive(5);
+            onSelectTheater("Stora Salongen");
+          }}
           className={`container_box calenderDatesContainer w-24 
                           sm:w-32
                           md:w-20 md:h-32 md:text-xs
@@ -77,7 +97,10 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           <li className="pt-3 text-sm font-bold">Stora Salongen</li>
         </ul>
         <ul
-          onClick={() => { setActive(6); onSelectTheater("Stora Salongen")}}
+          onClick={() => {
+            setActive(6);
+            onSelectTheater("Stora Salongen");
+          }}
           className={`container_box calenderDatesContainer w-24 
                         sm:w-32
                         md:w-20 md:h-32 md:text-xs
@@ -89,7 +112,10 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           <li className="pt-3 text-sm font-bold">Stora Salongen</li>
         </ul>
         <ul
-          onClick={() => { setActive(7); onSelectTheater("Stora Salongen")}}
+          onClick={() => {
+            setActive(7);
+            onSelectTheater("Stora Salongen");
+          }}
           className={`container_box calenderDatesContainer w-24 
                         sm:w-32  
                         md:w-20 md:h-32 md:text-xs
@@ -101,7 +127,10 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           <li className="pt-3 text-sm font-bold">Stora Salongen</li>
         </ul>
         <ul
-          onClick={() => { setActive(8); onSelectTheater("Lilla Salongen")}}
+          onClick={() => {
+            setActive(8);
+            onSelectTheater("Lilla Salongen");
+          }}
           className={`container_box calenderDatesContainer w-24 
                         sm:w-32
                         md:w-20 md:h-32 md:text-xs
@@ -113,7 +142,10 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           <li className="pt-3 text-sm font-bold">Lilla Salongen</li>
         </ul>
         <ul
-          onClick={() => { setActive(9); onSelectTheater("Lilla Salongen")}}
+          onClick={() => {
+            setActive(9);
+            onSelectTheater("Lilla Salongen");
+          }}
           className={`container_box calenderDatesContainer w-24 
                         sm:w-32
                         md:w-20 md:h-32 md:text-xs
@@ -125,7 +157,10 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           <li className="pt-3 text-sm font-bold">Lilla Salongen</li>
         </ul>
         <ul
-          onClick={() => { setActive(10); onSelectTheater("Stora Salongen")}}
+          onClick={() => {
+            setActive(10);
+            onSelectTheater("Stora Salongen");
+          }}
           className={`container_box calenderDatesContainer w-24 
                         sm:w-32
                         md:w-20 md:h-32 md:text-xs
@@ -136,7 +171,6 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           <li className="text-md">18:00</li>
           <li className="pt-3 text-sm font-bold">Stora Salongen</li>
         </ul>
-
       </section>
     </main>
   );

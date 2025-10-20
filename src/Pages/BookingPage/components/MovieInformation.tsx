@@ -18,42 +18,42 @@ export default function MovieInformation() {
   
   return (
     <main
-      className="flex flex-col justify-center items-center w-full h-auto
+      className="movieInfoContainer flex flex-col justify-center items-center w-full h-auto
                    md:w-full md:place-items-center md:place-items-center"
     >
       {/*----------Container for movie poster and title, Genre, age and time----------*/}
       <section
-        className="flex flex-col justify-center items-center container_box w-11/12 h-auto mb-5
+        className="movieBoxContainer flex flex-col justify-center items-center container_box w-11/12 h-auto mb-5
                    sm:flex-row sm:w-11/12
                    md:w-11/12 md:h-auto 
-                   lg:h-auto lg:w-11/12 lg:flex lg:items-start justify-start"
+                   lg:h-96 lg:w-11/12 lg:flex lg:items-center justify-start"
       >
         {/*----------Container for movie poster----------*/}
         <img
           src={movie.image}
           alt={movie.movieName}
-          className="flex justify-center items-center w-5/12 h-auto mt-3 rounded-md
+          className="moviePoster flex justify-center items-center w-5/12 h-auto mt-3 rounded-md
                      sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-2
                      md:w-2/7 md:h-auto md:m-1 md:p-2
-                     lg:w-2/10 lg:ml-10 lg:h-auto"
+                     lg:w-62 lg:h-auto lg:m-0 lg:ml-20"
         />
 
         {/*----------Container movie info ----------*/}
         <article
-          className="flex flex-col justify-start w-11/12 h-auto pl-2 text-[#e4e1e1]
+          className="boxForDesc flex flex-col justify-start w-11/12 h-auto pl-2 text-[#e4e1e1]
                     sm:w-6/12 sm:h-auto
                      md:w-3/6 md:h-auto 
                      lg:flex lg:justify-center lg:items-center lg:m-2 lg:w-4/12"
         >
           <h1
-            className="flex w-5/12 h-auto text-left mt-3 text-lg underline
+            className="movieTitle flex w-5/12 h-auto text-left mt-3 text-lg underline
                       sm:text-xl sm:m-3 sm:h-auto
                        md:justify-start md:w-full md:text-3xl md:mt-10 md:ml-0
                        lg:m-1"
           >
             {movie.movieName}
           </h1>
-          <ul className="w-full h-full text-left mb-3 
+          <ul className="movieDesc w-full h-full text-left mb-3 
                         sm:text-lg sm:ml-3 sm:h-auto
                         md:w-full md:h-full md:text-md md:ml-0 
                         lg:m-1">
@@ -72,7 +72,7 @@ export default function MovieInformation() {
         <img src={cinemapic} alt="Cinema overview pic for fill" className="invisible w-0 rounded-md [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
                                                                           sm:invisble w-0
                                                                           md:visible md:w-2/6 md:p-4 md:pb-40
-                                                                          lg:visible lg:ml-20 lg:mt-12 lg:w-4/12 md:rounded-md md:shadow-md"/>
+                                                                          lg:visible lg:ml-40 lg:mt-1 lg:p-0 lg:w-3/10 md:rounded-md md:shadow-md"/>
       </section>
     </main>
   );
