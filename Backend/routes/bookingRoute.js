@@ -1,10 +1,10 @@
 import express from "express";
 import { Booking } from "../models/bookingSchema.js";
-import sendMail from "../nodemailer/sendMail.js";
 import { Seat } from "../models/seatSchema.js";
 import { TicketType } from "../models/ticketTypeSchema.js";
 import { Screening } from "../models/screeningSchema.js";
 import { User } from "../models/userSchema.js";
+import sendMail from "../nodemailer/sendMail.js";
 
 const router = express.Router();
 
@@ -88,33 +88,52 @@ router.post("/api/bookings", async (req, res) => {
       .populate("seats.seat_id")
       .populate("tickets.ticket_id", "ticketName price quantity");
 
-        //Creating booking conformation mail function - Sara
-        const userBooking = newBooking.userInfo.user_id;
-        const order = newBooking.screeningInfo.screening_id;
-
-        if(!user?.email){
-            console.warn("Ingen epostadress hittades, inget mejl skickats");
-            res.status(201).json(newBooking);
-        }
-        await sendMail({
-            to: user.email,
-            subject: "Din bokningsbekräftelse",
-            text: `Order ${order._id}`,
-            html:`<p>Tack för din beställning!</p>
-            <p>Här är din beställningsbekfräftelse:</p>
-            <p><strong>${newBooking.screeningInfo.screening_id.movieTitle}</strong></p>
-            <p>Salong: <strong>${newBooking.screeningInfo.screening_id.auditoriumName}</p>
-            <p>Visning: <strong>${new Date(newBooking.screeningInfo.screening_id.date).toLocaleDateString()} 
-            klockan: <strong>${new Date(newBooking.screeningInfo.screening_id.time).toLocaleTimeString()}</strong></p>
-            <p>Stolsnummer: <strong> ${newBooking.seats.seat_id} </strong></p>
-            <p>Antal biljetter: ${newBooking.tickets.ticket_id.quantity}</p>
-            <p>Totalt pris: <strong> ${newBooking.tickets.ticket_id.price}</strong></p>`
-        });
     res.status(201).json(populatedBooking);
-        console.log("Mejl har skickats iväg");
+
+    // Creating booking confirmation sent to mail - Sara
+    // Getting the information from schema and routes to use the values in the mail for automatically making it refer to user. 
+    const userMailConfirm = populatedBooking.userInfo;
+    const screeningInformation = populatedBooking.screeningInfo;
+    const seatInfo = populatedBooking.seats || [];
+    const ticketInfo = populatedBooking.tickets || [];
+
+    if(!userMailConfirm?.email) {
+        console.warn("Ingen epostadress hittades, inget mejl har skickats")
+    } else {
+        //Maping through the seat list to return data
+        const seatListInformation = seatInfo.map(s => s.seatNumber).join(", ");
+        const ticketListInformation = ticketInfo.map(t => `${t.ticket_id?.ticketName} (${t.quantity} st x ${t.pricePerTicket} kr)`).join("<br>");
+        // Due to date and time being Strings in schema, I needed to fetch data as this to make the date and ptime be shown in mail. 
+        const formateDate = screeningInformation.date;
+        const formanteTime = screeningInformation.time;
+
+        // Sending the mail 
+        await sendMail({
+        to: userMailConfirm.email,
+        subject: "Filmvisarna - Bokningsbekräftelse",
+        text: "Tack för din bokning hos Filmvisarna",
+        html: `
+        <h2>Hej ${userMailConfirm.firstName}!<h2>
+        <hr>
+        <p>Tack för din bokning med ordernummer: ${newBooking._id}</p>
+        
+
+        <p>Din bokning gäller: <strong>${screeningInformation.movieTitle}</strong>.</p>
+        <p><strong>Datum och tid:</strong> ${formateDate}, klockan ${formanteTime}.</p>
+
+        <p><strong>Salong:</strong> ${screeningInformation.auditoriumName}.</p>
+        <p><strong>Platser:</strong> Stol ${seatListInformation}.</p>
+        <p><strong>Biljetter:</strong> ${ticketListInformation}.</p>
+        <hr>
+        <p><strong>Totalsumma:</strong> ${populatedBooking.totalPrice} kr.</p>
+     
+        <p>Biljetterna hämtas ut i kassan. Glöm inte att besöka vår kiosk inför filmvisningen.`
+    });
+    console.log("Orderbekräftelse har skickats iväg som mejl till", userMailConfirm.email);
+    }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "Kunde inte skapa bokning" });
   }
 });
 

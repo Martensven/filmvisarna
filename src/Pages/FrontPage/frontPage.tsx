@@ -8,12 +8,28 @@ export default function FrontPage() {
     const [filterOpen, setFilterOpen] = useState(false);
     const [sortOpen, setSortOpen] = useState(false);
 
+    const [movies, setMovies] = useState<any[]>([]); // State to hold fetched movies
+
     const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
     const [selectedAges, setSelectedAges] = useState<number[]>([]);
     const [sortOption, setSortOption] = useState<string>("");
 
+    // fetch movies from backend
+    const fetchMovies = async () => {
+        try {
+            const response = await fetch("http://localhost:4321/api/movies");
+            const data = await response.json();
+            // Set the fetched movies to state
+            setMovies(data);
+            console.log(data);
+
+        } catch (error) {
+            console.error("Error fetching movies:", error);
+        }
+    };
+
     // Filters movies based on selected genres and ages
-    const filteredMovies = exampleList.filter((movie) => {
+    const filteredMovies = movies.filter((movie) => {
 
         //Genrefilter
         const genreMatch =
@@ -146,10 +162,6 @@ export default function FrontPage() {
 
             </section>
 
-            {/* HÄR ÄR DEN MÅRTEN, TEMPORÄR LÄNK TILL MINA SIDOR WAAAAAGH
-            <Link to={"/my-page"} className="text-white">
-                <button className="bg-gradient-to-b from-blue-200 to-yellow-500 px-3 py-2 text-sm sm:text-base rounded hover:bg-blue-600 transition duration-200">Tryck här om du vill uppnå Gudomlighet</button>
-            </Link> */}
             {/* Movies container*/}
             <section className="h-96 w-10/12 rounded-md shadow-md flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
 

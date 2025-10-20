@@ -28,8 +28,7 @@ export default async function sendMail({ to, subject, text, html, attachments = 
     return result;
 
     } catch (error) {
-    console.error("Fel vid sändning av mejl", err);
-    throw err;
+    console.error("Fel vid sändning av mejl", error);
+    throw error;
     }
-   
 }
