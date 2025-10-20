@@ -91,7 +91,7 @@ router.post("/api/bookings", async (req, res) => {
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Kunde inte skapa bokning" });
+    res.status(500).json({ error: error.message });
   }
 });
 

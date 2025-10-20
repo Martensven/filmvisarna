@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer"
-import info from "./team1-gmail.json" with {type: "json" }
+//import info from "./team1-gmail.json" with {type: "json" }
 
 
 export default function sendMail({ to, subject, text, html, attachments = [] }) {
