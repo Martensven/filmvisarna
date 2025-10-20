@@ -1,5 +1,5 @@
   import kiosklist from "../../../Backend/kiosk";
-import type { KioskItem } from "../../../Backend/kiosk";
+import type { KioskItem } from "../../types/kiosk";
 import CategorySection from "./components/categorySection";
 import { useEffect, useState } from "react";
 
