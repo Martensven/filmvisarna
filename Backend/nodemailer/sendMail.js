@@ -1,8 +1,10 @@
 import nodemailer from "nodemailer"
 import info from "./team1-gmail.json" with {type: "json" }
 
-export default function sendMail({ to, subject, text, html, attachments = [] }) {
+
+export default async function sendMail({ to, subject, text, html, attachments = [] }) {
     //Creating our teams client using the info from our team1-gmail.json info
+    try{
     const teamClient = nodemailer.createTransport({
         service: "Gmail",
         auth:{
@@ -10,12 +12,23 @@ export default function sendMail({ to, subject, text, html, attachments = [] }) 
             pass: info.appPassword
         }
     });
-
     // Sending mail including from our team mail and fields and subjects
-    teamClient.sendMail({
+    const mailOp = {
         from: info.email,
         to,
         subject, 
-        text, html, attachments
-    });
+        text, 
+        html, 
+        attachments
+    };
+
+    
+    const result = await teamClient.sendMail(mailOp);
+    console.log(result.response);
+    return result;
+
+    } catch (error) {
+    console.error("Fel vid sändning av mejl", error);
+    throw error;
+    }
 }
