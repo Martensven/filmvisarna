@@ -65,7 +65,7 @@ export default function MovieInformation() {
         <img
           src={movieInfo.imageSrc}
           alt={movieInfo.title}
-          className="moviePoster flex justify-center items-center w-5/12 h-auto mt-3 rounded-md shadow-lg shadow-blue-800/30
+          className="moviePoster flex justify-center items-center w-5/12 h-auto mt-3 rounded-md shadow-xl/30
                      sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-0 
                      md:w-2/8 md:h-auto md:m-1 md:p-0 
                      lg:w-56 lg:h-auto lg:m-0 lg:ml-20"
