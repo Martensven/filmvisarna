@@ -24,7 +24,7 @@ export default function CalenderComponent({ movieId, onSelectTheater }: Props) {
     const fetchScreening = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4321/api/screenings/movie/${movieId}`
+          "api/movie/:id"
         );
         if (!response.ok) throw new Error("Kunde inte hämta data");
         const data = await response.json();
@@ -38,7 +38,7 @@ export default function CalenderComponent({ movieId, onSelectTheater }: Props) {
 
   const today = new Date().toISOString().split("T")[0];
   const todaysScreening = screenings.filter((s) => s.date === today);
-  const otherScreeningDays = screenings.filter((s) => s.date !== today);
+  // const otherScreeningDays = screenings.filter((s) => s.date !== today);
 
   return (
     <main className="h-auto flex flex-col justify-center items-center md:w-11/12">

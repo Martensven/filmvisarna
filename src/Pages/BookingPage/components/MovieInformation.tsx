@@ -1,21 +1,55 @@
-
-import cinemapic from "../../../Components/booking/cinemapic.jpg"
-import exampleList from "./../../../../Backend/example"
+import { useEffect, useState } from "react";
+import cinemapic from "../../../Components/booking/cinemapic.jpg";
 import { useParams } from "react-router-dom";
 
-
-
+interface FetchedMovieInfo {
+  _id: string;
+  imageSrc: string;
+  title: string;
+  releaseYear: number;
+  genre: string[];
+  description: string;
+}
 //Components contains movie box, like poster, year, time and about the movie.
 export default function MovieInformation() {
-  const { id } = useParams();
-  const movieId = Number(id);
+  const { id } = useParams(); //Movie id with url params
+  const [movieInfo, setMovieInfo] = useState<FetchedMovieInfo | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const movie = exampleList.find((m) => m.id === movieId);
-  if(!movie) {
-    return <p>Ingen film hittades</p>
+  useEffect(() => {
+    const fetchMovieInfo = async () => {
+      try {
+        const response = await fetch(`/api/movie/${id}`, {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`Kan inte hämta data, (${response.status})`);
+        }
+
+        const data = await response.json();
+        console.log("Hämtad data: ", data);
+        setMovieInfo(data);
+      } catch (error) {
+        console.error("Error: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMovieInfo();
+  }, [id]);
+
+  if(loading){
+    return <p>Laddar data</p>
   }
 
-  
+  if(!movieInfo) {
+    return <p>Ingen filmdata kunde hämtas</p>
+  }
+
+
   return (
     <main
       className="movieInfoContainer flex flex-col justify-center items-center w-full h-auto
@@ -30,8 +64,8 @@ export default function MovieInformation() {
       >
         {/*----------Container for movie poster----------*/}
         <img
-          src={movie.image}
-          alt={movie.movieName}
+          src={movieInfo.imageSrc}
+          alt={movieInfo.title}
           className="moviePoster flex justify-center items-center w-5/12 h-auto mt-3 rounded-md
                      sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-2
                      md:w-2/7 md:h-auto md:m-1 md:p-2
@@ -51,28 +85,36 @@ export default function MovieInformation() {
                        md:justify-start md:w-full md:text-3xl md:mt-10 md:ml-0
                        lg:m-1"
           >
-            {movie.movieName}
+            {movieInfo.title}
           </h1>
-          <ul className="movieDesc w-full h-full text-left mb-3 
+          <ul
+            className="movieDesc w-full h-full text-left mb-3 
                         sm:text-lg sm:ml-3 sm:h-auto
                         md:w-full md:h-full md:text-md md:ml-0 
-                        lg:m-1">
-            <li className="text-xs italic md:text-sm">{movie.releaseYear}</li>
+                        lg:m-1"
+          >
             <li className="text-xs italic md:text-sm">
-              {movie.genre.join(", ")}
+              {movieInfo.releaseYear}
             </li>
+            <li className="text-xs italic md:text-sm">{movieInfo.genre}</li>
             <li className="text-xs italic md:text-sm"> </li>
-            <li className="text-xs pt-4 text-left w-full h-full
+            <li
+              className="text-xs pt-4 text-left w-full h-full
                           sm:text-base sm:text-start sm:w-full sm:h-auto sm:pt-2 sm:mt-10
-                          md:text-start md:mt-5 md:text-sm md:w-11/12">
-              {movie.description}
+                          md:text-start md:mt-5 md:text-sm md:w-11/12"
+            >
+              {movieInfo.description}
             </li>
           </ul>
         </article>
-        <img src={cinemapic} alt="Cinema overview pic for fill" className="invisible w-0 rounded-md [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
+        <img
+          src={cinemapic}
+          alt="Cinema overview pic for fill"
+          className="invisible w-0 rounded-md [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
                                                                           sm:invisble w-0
                                                                           md:visible md:w-2/6 md:p-4 md:pb-40
-                                                                          lg:visible lg:ml-40 lg:mt-1 lg:p-0 lg:w-3/10 md:rounded-md md:shadow-md"/>
+                                                                          lg:visible lg:ml-40 lg:mt-1 lg:p-0 lg:w-3/10 md:rounded-md md:shadow-md"
+        />
       </section>
     </main>
   );
