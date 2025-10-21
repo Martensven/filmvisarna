@@ -1,42 +1,39 @@
-  import kiosklist from "../../../Backend/kiosk";
+import { useEffect, useState } from "react";
 import type { KioskItem } from "../../types/kiosk";
 import CategorySection from "./components/categorySection";
-import { useEffect, useState } from "react";
-
-
 
 export default function KioskPage() {
+  const [items, setItems] = useState<KioskItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-const [items, setItems] = useState([]);
+  useEffect(() => {
+    fetch(`/api/kiosk`)
+      .then((response) => {
+        if (!response.ok) throw new Error("Nätverksfel");
+        return response.json();
+      })
+      .then((data) => setItems(data))
+      .catch((error) => console.error("Fel vid hämtning av kioskdata:", error))
+      .finally(() => setLoading(false));
+  }, []);
 
-useEffect(() => {
-  fetch("http://localhost:4321/api/kiosk")
-    .then((response) => response.json())
-    .then((data) => setItems(data))
-    .catch((error) => console.error("Fel vid hämtning av kioskdata:", error));
-}, []);
+  if (loading) return <p className="text-center text-white">Laddar...</p>;
 
-
-  // const drinks: KioskItem[] = kiosklist.filter(
-  //   (item) => item.category === "drink"
-  // );
-  // const snacks: KioskItem[] = kiosklist.filter(
-  //   (item) => item.category === "snack"
-  // );
-  // const candy: KioskItem[] = kiosklist.filter(
-  //   (item) => item.category === "candy"
-  // );
+  
+  const drinks = items.filter((item) => item.category === "drink");
+  const snacks = items.filter((item) => item.category === "snack");
+  const candy = items.filter((item) => item.category === "candy");
 
   return (
     <main className="w-screen bg-[#292929] text-white">
       <header className="text-center">
-        <h1 className="text-3xl shadow-md p-3 my-10 lg:mx-auto xs:mx-auto text-center bg-[#243365] xs:w-10/12 text-center">
+        <h1 className="text-3xl shadow-md p-3 my-10 mx-auto bg-[#243365] w-10/12">
           Utbud i kiosken
         </h1>
 
-        <CategorySection title="Alla produkter" items={items} />
-        {/* <CategorySection title="Snacks" items={snacks} />
-        <CategorySection title="Godis" items={candy} /> */}
+        <CategorySection title="Drycker" items={drinks} />
+        <CategorySection title="Snacks" items={snacks} />
+        <CategorySection title="Godis" items={candy} />
       </header>
     </main>
   );
