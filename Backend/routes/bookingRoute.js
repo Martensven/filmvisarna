@@ -16,7 +16,7 @@ router.post("/api/bookings", async (req, res) => {
 
     // To check if user is logged in or guest
     const user = user_id ? await User.findById(user_id) : null;
-  
+
     // Get screening of movie
     const screening = await Screening.findById(screening_id).populate("auditorium movie");
 
@@ -81,7 +81,6 @@ router.post("/api/bookings", async (req, res) => {
     // Save the booking to the database
     await newBooking.save();
 
-
     // Return the booking with population
     const populatedBooking = await Booking.findById(newBooking._id)
       .populate("userInfo.user_id", "firstName lastName email")
@@ -132,10 +131,6 @@ router.post("/api/bookings", async (req, res) => {
     });
     console.log("Orderbekräftelse har skickats iväg som mejl till", userMailConfirm.email);
     }
-
- 
-
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Kunde inte skapa bokning" });

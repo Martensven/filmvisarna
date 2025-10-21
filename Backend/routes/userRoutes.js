@@ -38,7 +38,7 @@ router.post(
         password: hashedPassword,
       });
 
-     
+
 
       await user.save();
       res.status(201).json({
@@ -66,7 +66,7 @@ router.post(
         <p>Med vänliga hälsningar 
         Filmvisarna</p>`
       });
-       console.log("Mejl har skickats iväg");
+      console.log("Mejl har skickats iväg");
 
     } catch (error) {
       res.status(400).json({ message: error.message });
