@@ -30,7 +30,7 @@ function App() {
 
   return (
     <>
- <Header onLoginClick={() => setLoginPopup("login")} isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />
+      <Header onLoginClick={() => setLoginPopup("login")} isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />
       <Routes>
         <Route path='/' element={<FrontPage />} />
         <Route path='/booking/:id' element={<BookingPage isLoggedIn={isLoggedIn} />} />
@@ -40,7 +40,7 @@ function App() {
         <Route path='/my-page' element={<MyPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/kiosk' element={<KioskPage />} />
-        <Route path='/movies/:id' element={<DetailMovie />} />
+        <Route path='/movie/:id' element={<DetailMovie />} />
       </Routes>
 
       <Footer></Footer>

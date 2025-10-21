@@ -7,7 +7,7 @@ export default function FrontPage() {
     const [filterOpen, setFilterOpen] = useState(false);
     const [sortOpen, setSortOpen] = useState(false);
 
-    const [movies, setMovies] = useState<any[]>([]); // State to hold fetched movies
+    const [movie, setMovie] = useState<any[]>([]); // State to hold fetched movies
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -31,9 +31,9 @@ export default function FrontPage() {
 
             const data = await response.json();
             console.log(data);
-            setMovies(data);
+            setMovie(data);
 
-            const movies = data;
+
 
         } catch (error: any) {
             console.error("Error fetching movies:", error);
@@ -48,7 +48,7 @@ export default function FrontPage() {
     }, []);
 
     // Filters movies based on selected genres and ages
-    const filteredMovies = movies.filter((movie) => {
+    const filteredMovies = movie.filter((movie) => {
 
         //Genrefilter
         const genreMatch =
@@ -183,23 +183,31 @@ export default function FrontPage() {
 
             {/* Movies container*/}
             <section className="h-96 w-10/12 rounded-md shadow-md flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
+                {sortedMovies.length === 0 ? (
+                    <p className="m-auto">Inga filmer hittades.</p>
+                ) : (
+                    sortedMovies.map((movie) => (
+                        <article
+                            key={movie._id}
+                            className="min-w-60 h-80 m-2 snap-center mx-8"
+                        >
+                            <Link to={`/movie/${movie._id}`} className="flex flex-col items-center gap-2 p-5">
+                                <img
+                                    src={movie.imageSrc}
+                                    alt={movie.title}
+                                    className="shadow-md h-60 object-cover rounded-md"
+                                />
+                                <p>{movie.title}</p>
 
-                {sortedMovies.map((movie) => (
-                    <article
-                        key={movie.id}
-                        className="min-w-60 h-80 m-2 snap-center mx-8"
-                    >
-                        <Link to={`/movies/${movie.id}`} className="flex flex-col items-center gap-2 p-5">
-                            <img
-                                src={movie.image}
-                                alt={movie.movieName}
-                                className="shadow-md h-60 object-cover rounded-md"
-                            />
-                            <p>{movie.movieName}</p>
-                            <p>{Array.isArray(movie.genre) ? movie.genre.join(", ") : movie.genre}</p>
-                        </Link>
-                    </article>
-                ))}
+                                <p>
+                                    {Array.isArray(movie.genres)
+                                        ? movie.genres.map((genre: { title: string }) => genre.title).join(", ")
+                                        : movie.genres.title}
+                                </p>
+                            </Link>
+                        </article>
+                    ))
+                )}
             </section>
 
             {/* Theme days container*/}
