@@ -38,7 +38,7 @@ export default function CalenderComponent({ movieId, onSelectTheater }: Props) {
 
   const today = new Date().toISOString().split("T")[0];
   const todaysScreening = screenings.filter((s) => s.date === today);
-  const otherDaysScreenings = screenings.filter((s) => s.date !== today);
+  const otherScreeningDays = screenings.filter((s) => s.date !== today);
 
   return (
     <main className="h-auto flex flex-col justify-center items-center md:w-11/12">
@@ -49,13 +49,13 @@ export default function CalenderComponent({ movieId, onSelectTheater }: Props) {
          md:w-full md:place-items-center lg:h-auto"
       >
         {todaysScreening.length > 0 ? (
-          todaysScreening.map((screening, i) => (
+          todaysScreening.map((screening) => (
             <ul
               // Setting active state to mark selected calender date and onSelectTheater to get the selected theater
               // This will be used dynamically later on
               key={screening._id}
               onClick={() => {
-                setActive(i);
+                setActive(1);
                 onSelectTheater("Stora Salongen");
               }}
               className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
