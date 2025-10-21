@@ -49,7 +49,6 @@ export default function MovieInformation() {
     return <p>Ingen filmdata kunde hämtas</p>
   }
 
-
   return (
     <main
       className="movieInfoContainer flex flex-col justify-center items-center w-full h-auto
@@ -66,10 +65,10 @@ export default function MovieInformation() {
         <img
           src={movieInfo.imageSrc}
           alt={movieInfo.title}
-          className="moviePoster flex justify-center items-center w-5/12 h-auto mt-3 rounded-md
-                     sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-2
-                     md:w-2/7 md:h-auto md:m-1 md:p-2
-                     lg:w-62 lg:h-auto lg:m-0 lg:ml-20"
+          className="moviePoster flex justify-center items-center w-5/12 h-auto mt-3 rounded-md shadow-lg shadow-blue-800/30
+                     sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-0 
+                     md:w-2/8 md:h-auto md:m-1 md:p-0 
+                     lg:w-56 lg:h-auto lg:m-0 lg:ml-20"
         />
 
         {/*----------Container movie info ----------*/}
@@ -77,13 +76,13 @@ export default function MovieInformation() {
           className="boxForDesc flex flex-col justify-start w-11/12 h-auto pl-2 text-[#e4e1e1]
                     sm:w-6/12 sm:h-auto
                      md:w-3/6 md:h-auto 
-                     lg:flex lg:justify-center lg:items-center lg:m-2 lg:w-4/12"
+                     lg:flex lg:justify-center lg:items-start lg:ml-8 lg:w-4/12"
         >
           <h1
             className="movieTitle flex w-5/12 h-auto text-left mt-3 text-lg underline
                       sm:text-xl sm:m-3 sm:h-auto
                        md:justify-start md:w-full md:text-3xl md:mt-10 md:ml-0
-                       lg:m-1"
+                       lg:m-0 lg:justify-start lg:items-canter"
           >
             {movieInfo.title}
           </h1>

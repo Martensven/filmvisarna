@@ -1,4 +1,5 @@
 
+import { useParams } from "react-router";
 import "../BookingPageStyle.css";
 import { useState, useEffect } from "react";
 //Component contains todays showing and other dates. This ones are going to be clickable
@@ -15,26 +16,44 @@ interface screening {
   time: string;
 }
 
-export default function CalenderComponent({ movieId, onSelectTheater }: Props) {
+export default function CalenderComponent({ onSelectTheater }: Props) {
   // State for active calender date with border when clicked
   const [active, setActive] = useState<number | null>(null);
   const [screenings, setScreenings] = useState<screening[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
 
   useEffect(() => {
-    const fetchScreening = async () => {
-      try {
-        const response = await fetch(
-          "api/movie/:id"
-        );
-        if (!response.ok) throw new Error("Kunde inte hämta data");
-        const data = await response.json();
-        setScreenings(data);
-      } catch (err) {
-        console.error("Kan inte hämta localhost 4321", err);
-      }
-    };
-    fetchScreening();
-  }, [movieId]);
+    const fetchScreeningTimes = async () => {
+      try{
+      const response = await fetch(`/api/screenings/movie/${id}`, {
+      method: "GET",
+      headers: {
+        "content-type" : "application/json"
+      },
+    });
+    if(!response.ok) {
+      throw new Error(`Kan inte hämta data: ${response.status}`)
+    }
+    const data = await response.json();
+    console.log("Hämtad data: ", data);
+    setScreenings(data);
+    } catch (error) {
+      console.error("Error: ", error);
+    } finally {
+      setLoading(false);
+    }
+    }
+    fetchScreeningTimes();
+  }, [id]);
+
+  if(loading) {
+    return <p>Laddar data</p>
+  }
+
+  if(!screenings) {
+    return <p>Ingen filmdata hämtad</p>
+  }
 
   const today = new Date().toISOString().split("T")[0];
   const todaysScreening = screenings.filter((s) => s.date === today);
@@ -81,7 +100,7 @@ export default function CalenderComponent({ movieId, onSelectTheater }: Props) {
         md:w-full md:h-auto
         lg:h-auto"
       >
-      g
+      
         <ul
           onClick={() => {
             setActive(5);
