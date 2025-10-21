@@ -40,7 +40,7 @@ function App() {
         <Route path='/my-page' element={<MyPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/kiosk' element={<KioskPage />} />
-        <Route path='/movies/:id' element={<DetailMovie />} />
+        <Route path='/movie/:id' element={<DetailMovie />} />
       </Routes>
 
       <Footer></Footer>
