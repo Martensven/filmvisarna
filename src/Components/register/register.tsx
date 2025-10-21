@@ -38,12 +38,12 @@ export default function Register({ onSwitchToLogin, onClose }: { onSwitchToLogin
             setError(newErrors);
             return;
         }
+        
+        setError([]);
+        console.log("Registered User:", { firstName, lastName, email, password });
+        navigate("/my-page");
+        onClose();
     }
-
-    setError([]);
-    console.log("Registered User:", { firstName, lastName, email, password });
-    navigate("/my-page");
-    onClose();
 
     return (
         <section className="rounded p-5 mx-7 flex flex-col">
@@ -78,5 +78,4 @@ export default function Register({ onSwitchToLogin, onClose }: { onSwitchToLogin
             <button onClick={onSwitchToLogin} className="my-3 underline cursor-pointer">Har du redan ett konto? Logga in här </button>
         </section>
     );
-
 };
