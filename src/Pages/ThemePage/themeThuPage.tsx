@@ -11,11 +11,28 @@ type Theme = {
 export default function ThemeThursdayPage() {
     const [thuTheme, setThuTheme] = useState<Theme>();
 
+    const fetchThuTheme = async () =>  {
+        try {
+            const response = await fetch('/api/theme/68ecd482dcb8359901cf375f', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error(`Serverfel: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+            setThuTheme(data);
+        } catch (error:any) {
+            console.error('Error fetching theme:', error);
+        }
+    };
+
     useEffect(() => {
-        fetch("/api/theme/68ecd482dcb8359901cf375f")
-        .then((res) => res.json())
-        .then(data => setThuTheme(data))
-        .catch((error) => console.error("Error fetching tema", error));
+        fetchThuTheme();
     }, []);
 
     return (

@@ -22,23 +22,42 @@ interface SlideshowProps {
 export default function Slideshow({ day }: SlideshowProps) {
     const [movies, setMovies] = useState<movieTheme[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const themeMap: Record<SlideshowProps["day"], string> = {
-        thursday: "68ecd482dcb8359901cf375f",
-        sunday: "68ecd4f7dcb8359901cf3761",
+    
+    const fetchTheme = async () => {
+        try {
+            const themeMap: Record<SlideshowProps["day"], string> = {
+                thursday: "68ecd482dcb8359901cf375f",
+                sunday: "68ecd4f7dcb8359901cf3761",
+            };
+
+            const themeId = themeMap[day];
+            const response = await fetch(`/api/theme/${themeId}`, {
+                method: 'GET',
+                headers: {
+                        "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Serverfel: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("Fetched theme data:", data);
+            
+            if (Array.isArray(data)) {
+                setMovies(data);
+            } else if (data.movies && Array.isArray(data.movies)) {
+                setMovies(data.movies);
+            }
+        } catch (error) {
+            console.error("Error fetching theme:", error);
+        }
     };
 
-    const themeId = themeMap[day];
-
     useEffect(() => {
-        fetch(`/api/theme/${themeId}`)
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data)
-            if (Array.isArray(data)) setMovies(data);
-            else if (data.movies && Array.isArray(data.movies)) setMovies(data.movies);
-        })
-        .catch((err) => console.error(err));
-    }, [themeId]);
+        fetchTheme();
+    }, []);
 
     if (movies.length === 0) {
         return <p>No movies available for {day}</p>

@@ -11,11 +11,28 @@ type Theme = {
 export default function ThemeSundayPage() {
     const [sunTheme, setSunTheme] = useState<Theme>();
 
+    const fetchSunTheme = async () =>  {
+        try {
+            const response = await fetch('/api/theme/68ecd4f7dcb8359901cf3761', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error(`Serverfel: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+            setSunTheme(data);
+        } catch (error:any) {
+            console.error('Error fetching theme:', error);
+        }
+    };
+
     useEffect(() => {
-        fetch("/api/theme/68ecd4f7dcb8359901cf3761")
-        .then((res) => res.json())
-        .then(data => setSunTheme(data))
-        .catch((error) => console.error("Error fetching tema", error));
+        fetchSunTheme();
     }, []);
 
     return (
