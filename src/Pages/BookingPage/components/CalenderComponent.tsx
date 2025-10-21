@@ -81,6 +81,7 @@ export default function CalenderComponent({ movieId, onSelectTheater }: Props) {
         md:w-full md:h-auto
         lg:h-auto"
       >
+      
         <ul
           onClick={() => {
             setActive(5);
