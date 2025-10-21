@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import exampleList from "../../../Backend/example.ts";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
 import "../BookingPage/BookingPageStyle.css";
 
@@ -8,7 +7,9 @@ export default function FrontPage() {
     const [filterOpen, setFilterOpen] = useState(false);
     const [sortOpen, setSortOpen] = useState(false);
 
-    const [movies, setMovies] = useState<any[]>([]); // State to hold fetched movies
+    const [movie, setMovie] = useState<any[]>([]); // State to hold fetched movies
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
     const [selectedAges, setSelectedAges] = useState<number[]>([]);
@@ -17,25 +18,43 @@ export default function FrontPage() {
     // fetch movies from backend
     const fetchMovies = async () => {
         try {
-            const response = await fetch("http://localhost:4321/api/movies");
-            const data = await response.json();
-            // Set the fetched movies to state
-            setMovies(data);
-            console.log(data);
+            const response = await fetch("/api/movie", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
 
-        } catch (error) {
+            if (!response.ok) {
+                throw new Error(`Serverfel: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data);
+            setMovie(data);
+
+
+
+        } catch (error: any) {
             console.error("Error fetching movies:", error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
+    useEffect(() => {
+        fetchMovies();
+    }, []);
+
     // Filters movies based on selected genres and ages
-    const filteredMovies = movies.filter((movie) => {
+    const filteredMovies = movie.filter((movie) => {
 
         //Genrefilter
         const genreMatch =
             selectedGenres.length === 0 ||
             (Array.isArray(movie.genre)
-                ? movie.genre.some((g) => selectedGenres.includes(g))
+                ? movie.genre.some((g: any) => selectedGenres.includes(g))
                 : selectedGenres.includes(movie.genre));
 
         //Agefilter
@@ -164,23 +183,31 @@ export default function FrontPage() {
 
             {/* Movies container*/}
             <section className="h-96 w-10/12 rounded-md shadow-md flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
+                {sortedMovies.length === 0 ? (
+                    <p className="m-auto">Inga filmer hittades.</p>
+                ) : (
+                    sortedMovies.map((movie) => (
+                        <article
+                            key={movie._id}
+                            className="min-w-60 h-80 m-2 snap-center mx-8"
+                        >
+                            <Link to={`/movie/${movie._id}`} className="flex flex-col items-center gap-2 p-5">
+                                <img
+                                    src={movie.imageSrc}
+                                    alt={movie.title}
+                                    className="shadow-md h-60 object-cover rounded-md"
+                                />
+                                <p>{movie.title}</p>
 
-                {sortedMovies.map((movie) => (
-                    <article
-                        key={movie.id}
-                        className="min-w-60 h-80 m-2 snap-center mx-8"
-                    >
-                        <Link to={`/movies/${movie.id}`} className="flex flex-col items-center gap-2 p-5">
-                            <img
-                                src={movie.image}
-                                alt={movie.movieName}
-                                className="shadow-md h-60 object-cover rounded-md"
-                            />
-                            <p>{movie.movieName}</p>
-                            <p>{Array.isArray(movie.genre) ? movie.genre.join(", ") : movie.genre}</p>
-                        </Link>
-                    </article>
-                ))}
+                                <p>
+                                    {Array.isArray(movie.genres)
+                                        ? movie.genres.map((genre: { title: string }) => genre.title).join(", ")
+                                        : movie.genres.title}
+                                </p>
+                            </Link>
+                        </article>
+                    ))
+                )}
             </section>
 
             {/* Theme days container*/}
