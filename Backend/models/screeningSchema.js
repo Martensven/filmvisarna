@@ -5,8 +5,11 @@ const screeningSchema = new mongoose.Schema({
   auditorium: { type: mongoose.Schema.Types.ObjectId, ref: "Auditorium", required: true },
   date: { type: String, required: true },
   time: { type: String, required: true },
+  showTime: {type: Date, required: true},
   bookedSeats: [{ type: mongoose.Schema.Types.ObjectId, ref: "Seat" }],
-  screeningtimes: [{type: Date}]
 });
+
+//Prevent doublets of screenings 
+screeningSchema.index({auditorium: 1, showTime: 1}, {unique: true});
 
 export const Screening = mongoose.model("Screening", screeningSchema);
