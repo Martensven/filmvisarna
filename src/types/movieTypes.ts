@@ -36,5 +36,4 @@ export interface MovieInput {
     directors: string[];
     distributors: string[];
     themes: string;
-    scheduleType: "smallTheater" | "bigTheater";
 }

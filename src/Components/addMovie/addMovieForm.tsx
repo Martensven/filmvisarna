@@ -28,7 +28,6 @@ export default function AddMovieForm() {
     directors: [],
     distributors: [],
     themes: "",
-    scheduleType: "smallTheater",
   });
 
   // States for each type of data
@@ -110,7 +109,7 @@ export default function AddMovieForm() {
     setMessage("");
 
     try {
-      const response = await fetch("/api/movies", {
+      const response = await fetch("/api/movie", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -125,6 +124,7 @@ export default function AddMovieForm() {
         );
       }
       setMessage("Filmen har lagts till framgångsrikt!");
+
       // Reset form after successful submission
       setFormData({
         title: "",
@@ -139,7 +139,6 @@ export default function AddMovieForm() {
         directors: [],
         distributors: [],
         themes: "",
-        scheduleType: "smallTheater",
       });
     } catch (error: any) {
       console.log("Fel vid tilläggning av film", +error);
@@ -148,7 +147,7 @@ export default function AddMovieForm() {
   };
 
   return (
-<div className="w-full p-4 bg-[#1f1f1f]">
+    <div className="w-full p-4 bg-[#1f1f1f]">
       <h2 className="text-2xl font-bold mb-6">Lägg till ny film</h2>
       {loading ? (
         <p className="text-white">Laddar...</p>
@@ -221,6 +220,9 @@ export default function AddMovieForm() {
           <Select
             isMulti
             options={genres.map((g) => ({ value: g._id, label: g.title }))}
+            value={genres
+              .filter((g) => formData.genres.includes(g._id))
+              .map((g) => ({ value: g._id, label: g.title }))}
             className="text-black"
             onChange={(selected) =>
               setFormData((prev) => ({
@@ -229,11 +231,15 @@ export default function AddMovieForm() {
               }))
             }
           />
+
           <label>Skådespelare:</label>
           {/* We are using react-select to use multi-select to be able to select multiple actors */}
           <Select
             isMulti
             options={actors.map((a) => ({ value: a._id, label: a.name }))}
+            value={actors
+              .filter((a) => formData.actors.includes(a._id))
+              .map((a) => ({ value: a._id, label: a.name }))}
             className="text-black"
             onChange={(selected) =>
               setFormData((prev) => ({
@@ -242,11 +248,15 @@ export default function AddMovieForm() {
               }))
             }
           />
+
           <label>Regissörer:</label>
           {/* We are using react-select to use multi-select to be able to select multiple directors */}
           <Select
             isMulti
             options={directors.map((d) => ({ value: d._id, label: d.name }))}
+            value={directors
+              .filter((d) => formData.directors.includes(d._id))
+              .map((d) => ({ value: d._id, label: d.name }))}
             className="text-black"
             onChange={(selected) =>
               setFormData((prev) => ({
@@ -260,6 +270,9 @@ export default function AddMovieForm() {
           <Select
             isMulti
             options={distributors.map((d) => ({ value: d._id, label: d.name }))}
+            value={distributors
+              .filter((d) => formData.distributors.includes(d._id))
+              .map((d) => ({ value: d._id, label: d.name }))}
             className="text-black"
             onChange={(selected) =>
               setFormData((prev) => ({
@@ -271,6 +284,11 @@ export default function AddMovieForm() {
           <label>Tema:</label>
           <Select
             options={themes.map((t) => ({ value: t._id, label: t.themeDesc }))}
+            value={
+              themes
+                .filter((t) => t._id === formData.themes)
+                .map((t) => ({ value: t._id, label: t.themeDesc }))[0] || null
+            }
             className="text-black"
             onChange={(selected) =>
               setFormData((prev) => ({
@@ -279,19 +297,6 @@ export default function AddMovieForm() {
               }))
             }
           />
-          <label>Schema Typ:</label>
-          <select
-            name="scheduleType"
-            value={formData.scheduleType}
-            onChange={handleChange}
-            required
-            className="border p-2 rounded text-black bg-white mb-4"
-          >
-            
-            <option value="">Välj Schema Typ</option>
-            <option value="smallTheater">Lilla salongen</option>
-            <option value="bigTheater">Stora salongen</option>
-          </select>
 
           <button
             type="submit"
@@ -299,6 +304,9 @@ export default function AddMovieForm() {
           >
             Lägg till film
           </button>
+          {message && (
+            <p className="mt-2 text-green-400 font-semibold">{message}</p>
+          )}
         </form>
       )}
     </div>
