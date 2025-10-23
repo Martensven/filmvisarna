@@ -16,7 +16,10 @@ interface Props {
 const fetchTheater = async () => {
   if (!selectTheaterId) return;
   try {
-    const response = await fetch(`/api/auditoriums/${selectTheaterId}`);
+    const response = await fetch(`/api/auditoriums/${selectTheaterId}`, {
+      method: "GET",
+      headers: {"Content-Type": "application/json"}
+    });
     const data = await response.json();
     console.log("Fetched data:", data); // <---- add this line
     setTheater(data);
