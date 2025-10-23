@@ -22,7 +22,7 @@ export default function Header({ onLoginClick }: HeaderProps) {
                     <img
                         src={LoggoNR1}
                         alt="Filmvisarnas loggo"
-                        className="w-56 sm:w-80"
+                        className="w-60 sm:w-76  md:w-86 md:ml-8 lg:w-96 lg:ml-8"
                     />
                 </div>
 

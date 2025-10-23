@@ -1,16 +1,26 @@
 import express from "express";
+import schedule, { getNextDate } from "../schedule.js";
 import { Screening } from "../models/screeningSchema.js";
+import { Movies } from "../models/moviesSchema.js";
+import { Auditorium } from "../models/auditoriumSchema.js";
 
 const router = express.Router();
 
-// Route to Create a new screening
+// Week-number function for schedule use. 
+function getWeekNumber(date) {
+  const temp = new Date(date);
+  temp.setHours(0, 0, 0, 0);
+  temp.setDate(temp.getDate() + 4 - (temp.getDay() || 7));
+  const yearStart = new Date(temp.getFullYear(), 0, 1);
+  const weekNo = Math.ceil((((temp - yearStart) / 86400000) + 1) / 7);
+  return weekNo;
+}
+
+// Create a new screening
 router.post("/api/screening", async (req, res) => {
   try {
-    // destructure request body to get necessary fields, expecting movie, auditorium, date, time
     const { movie, auditorium, date, time } = req.body;
 
-    // Create a new screening document with request data and empty bookedSeats array
-    // Using Screening model to create a new document
     const newScreening = new Screening({
       movie,
       auditorium,
@@ -21,16 +31,9 @@ router.post("/api/screening", async (req, res) => {
 
     const saved = await newScreening.save();
 
-    // Return a success response with created screening details
     res.status(201).json({
       message: "Visning skapad",
-      screening: {
-        id: saved._id,
-        movie: movie.title,
-        auditorium: auditorium.name,
-        date,
-        time
-      }
+      screening: saved
     });
   } catch (error) {
     console.error("Något gick fel vid skapande av visning:", error);
@@ -38,73 +41,134 @@ router.post("/api/screening", async (req, res) => {
   }
 });
 
-//Getting all screenings
-router.get("/api/screening", async (req, res) => {
-    try{
-        const screening = await Screening.find()
-        .populate("auditorium")
-        .populate('movie', 'title');
-        res.status(200).json(screening);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-})
+// Generate a schedule for movies 
+router.post("/api/screening/generateSchedule", async (req, res) => {
+  try {
+    const movies = await Movies.find();
+    const auditoriums = await Auditorium.find();
+    const createdScreeningTimes = [];
 
-//Getting screenings by ID
-router.get("/api/screening/:id", async (req, res) => {
-    try{
-        const screening = await Screening.findById(req.params.id)
-        .populate("auditorium")
-        .populate('movie', 'title');
-        res.status(200).json(screening);
-    } catch (error) {
-        res.status(500).json({message: error.message})
+    if (!movies.length || !auditoriums.length) {
+      return res.status(400).json({ message: "Ingen salong eller film hittades" });
     }
+
+    for (const movie of movies) {
+      const type = movie.scheduleType; 
+      const times = schedule.generateNextShowtimes(type);
+      const auditorium = auditoriums.find(a =>
+        a.name.toLowerCase().includes(type.includes("small") ? "lilla" : "stora")
+      );
+      if(!type) {
+        console.warn(`Filmen med titel ${movie.title} saknar schematyp.`)
+        continue;
+      }
+      if (!auditorium) continue;
+      
+      for (const showScreening of times) {
+        const weekNumber = getWeekNumber(showScreening.date);
+
+        // Checks if the auditorium already has a booked screening
+        const existingScreening = await Screening.findOne({
+          auditorium: auditorium._id,
+          date: showScreening.date
+        });
+
+        if (existingScreening) {
+          console.log(`${auditorium.name} är redan bokad för ${showScreening.date}`);
+          continue;
+        }
+
+        // Creates a new screening
+        const screening = new Screening({
+          movie: movie._id,
+          auditorium: auditorium._id,
+          date: showScreening.date,
+          time: showScreening.time,
+          weekNumber,
+          bookedSeats: []
+        });
+
+        await screening.save();
+        createdScreeningTimes.push(screening);
+      }
+    }
+
+    res.status(201).json({
+      message: "Schema genererat!",
+      createdCount: createdScreeningTimes.length,
+      screenings: createdScreeningTimes
+    });
+  } catch (error) {
+    console.error("Kunde inte köra schemagenerering:", error);
+    res.status(500).json({ error: "Kunde inte skapa visning" });
+  }
 });
 
-//Changing a allready existing screening
+// GET all screenings
+router.get("/api/screening", async (req, res) => {
+  try {
+    const screening = await Screening.find()
+      .populate("auditorium")
+      .populate("movie", "title");
+    res.status(200).json(screening);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// GET a screening by id
+router.get("/api/screening/:id", async (req, res) => {
+  try {
+    const screening = await Screening.findById(req.params.id)
+      .populate("auditorium")
+      .populate("movie", "title");
+    if (!screening) return res.status(404).json({ message: "Ingen visning hittades" });
+    res.status(200).json(screening);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// PUT existing screening
 router.put("/api/screening/:id", async (req, res) => {
-    try{
-        const screening = await Screening.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
-        if(!screening){
-            return res.status(404).json({message: "Can't find any screenings"})
-        }
-        res.status(204).json(screening)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-})
+  try {
+    const screening = await Screening.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+    if (!screening) return res.status(404).json({ message: "Ingen visning hittades" });
+    res.status(200).json(screening);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-// Deleting a screening by ID
+// DELETE screening by id
 router.delete("/api/screening/:id", async (req, res) => {
-    try {
-        const screening = await Screening.findOneAndDelete(req.params.id);
-        if(!screening) {
-            return res.status(404).json({message: "No screening found to delete"})
-        }
-        res.status(204).json(screening)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    } 
-})
+  try {
+    const screening = await Screening.findByIdAndDelete(req.params.id);
+    if (!screening)
+      return res.status(404).json({ message: "Ingen visning hittades att ta bort" });
+    res.status(200).json({ message: "Visning raderad" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-// Get all screenings for a specific movie by movie ID
+/** GETS all screenings for one movie using ID */
 router.get("/api/screenings/movie/:movieId", async (req, res) => {
   try {
-    const movieId = req.params.movieId;
-
-    // Get screenings for the specified movie ID
-    const screenings = await Screening.find({ movie: movieId })
+    const screenings = await Screening.find({ movie: req.params.movieId })
       .populate("movie", "title imageSrc")
       .populate("auditorium", "name");
 
-    if (!screenings || screenings.length === 0) {
+    if (!screenings.length) {
       return res.status(404).json({ message: "Inga visningar hittades för denna film" });
     }
 
     res.json(screenings);
   } catch (error) {
-    console.error("Fel vid hämtning av visningar för film:", error);
+    console.error("Fel vid hämtning av visningar:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
