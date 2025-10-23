@@ -34,7 +34,7 @@ export interface MovieInput {
     genres: string[];
     actors: string[]; 
     directors: string[];
-    distributor: string[];
+    distributors: string[];
     themes: string;
     scheduleType: "smallTheater" | "bigTheater";
 }

@@ -16,7 +16,7 @@ import DetailMovie from "./Pages/DetailMovie/detailMovie.tsx";
 import ForgotPassword from "./Components/login/forgotPassword.tsx";
 import AdminPage from "./Pages/AdminPage/adminPage.tsx";
 import SalesPage from "./Pages/AdminPage/salesPage.tsx";
-import AddMoviePage from "./Pages/AdminPage/addMoviePage.tsx";
+import AdminAddMoviePage from "./Pages/AdminPage/adminAddMovie.tsx";
 import AdminStart from "./Pages/AdminPage/adminStart.tsx";
 
 function App() {
@@ -66,7 +66,7 @@ function App() {
         <Route path="/admin" element={<AdminPage />}>
           <Route index element={<AdminStart />} />
           <Route path="sales" element={<SalesPage />} />
-          <Route path="add-movie" element={<AddMoviePage />} />
+          <Route path="add-movie" element={<AdminAddMoviePage />} />
         </Route>
       </Routes>
       {/* Making sure Header and Footer are not shown on admin pages */}
