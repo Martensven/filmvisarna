@@ -124,4 +124,34 @@ router.delete("/api/users/:id", async (req, res) => {
   }
 });
 
+// Login
+router.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) return res.status(401).json({ message: "Invalid email or password" });
+
+  const valid = await bcrypt.compare(password, user.password);
+  if (!valid) return res.status(401).json({ message: "Invalid email or password" });
+
+  req.session.userId = user._id;
+  req.session.userEmail = user.email;
+  res.json({ message: "Logged in", user: { email: user.email, firstName: user.firstName } });
+});
+
+// Log out
+router.post("/api/logout", (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.status(500).json({ message: "Logout failed" });
+    res.clearCookie('connect.sid');
+    res.json({ message: "Logged out" });
+  });
+});
+
+// Check current session
+router.get("/api/me", (req, res) => {
+  if (!req.session.userId) return res.status(401).json({ message: "Not logged in" });
+  res.json({ userId: req.session.userId, email: req.session.userEmail });
+});
+
 export default router;
