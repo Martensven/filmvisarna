@@ -2,6 +2,7 @@ import FAQ from "./components/PrevBookings.tsx";
 import FetchBookings from "./components/fetchBookings.tsx";
 import FetchUserInfo from "./components/fetchUserInfo.tsx";
 
+
 export default function MyPage() {
 
 
