@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
 import "../BookingPage/BookingPageStyle.css";
@@ -43,31 +43,62 @@ export default function FrontPage() {
         }
     };
 
+    const filterMovies = async () => {
+        try {
+            setLoading(true);
+
+            //create query parameters based on selected filters
+            const params = new URLSearchParams();
+
+            if (selectedGenres.length > 0) {
+                selectedGenres.forEach((genre) => params.append("genre", genre));
+            }
+
+            if (selectedAges.length > 0) {
+                selectedAges.forEach((age) => params.append("ageLimit", age.toString()));
+            }
+
+            const queryString = params.toString();
+            const url = queryString ? `/api/movie/filter?${queryString}` : "/api/movie/filter";
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Serverfel: ${response.status}`);
+            }
+
+            const data = await response.json();
+            setMovie(data);
+            setError(null);
+        } catch (error: any) {
+            console.error("Error fetching filtered movies:", error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         fetchMovies();
     }, []);
-
-    // Filters movies based on selected genres and ages
-    const filteredMovies = movie.filter((movie) => {
-
-        //Genrefilter
-        const genreMatch =
-            selectedGenres.length === 0 ||
-            (Array.isArray(movie.genre)
-                ? movie.genre.some((g: any) => selectedGenres.includes(g))
-                : selectedGenres.includes(movie.genre));
-
-        //Agefilter
-        const ageMatch =
-            selectedAges.length === 0 || selectedAges.includes(movie.age);
-
-        return genreMatch && ageMatch;
-    });
+    
+    useEffect(() => {
+        if (selectedGenres.length === 0 && selectedAges.length === 0) {
+            fetchMovies();
+        } else {
+            filterMovies();
+        }
+    }, [selectedGenres, selectedAges]);
 
     // Sort based on selected option. (A-Z, Z-A, Newest)
-    const sortedMovies = [...filteredMovies].sort((a, b) => {
-        if (sortOption === "atoz") return a.movieName.localeCompare(b.movieName);
-        if (sortOption === "ztoa") return b.movieName.localeCompare(a.movieName);
+    const sortedMovies = [...movie].sort((a, b) => {
+        if (sortOption === "atoz") return a.title.localeCompare(b.title);
+        if (sortOption === "ztoa") return b.title.localeCompare(a.title);
         if (sortOption === "newest") return b.releaseYear - a.releaseYear;
         if (sortOption === "oldest") return a.releaseYear - b.releaseYear;
         return 0;

@@ -5,17 +5,24 @@ import { useState, useEffect } from "react";
 
 interface Props {
   // movieId: string;
-  onSelectTheater: (theater: string) => void;
+  onSelectTheaterId: (theaterId: string) => void;
+  onSelectShowing: (showing: string) => void;
 }
 interface screening {
-  movie: { title: string };
+  movie: {
+    _id: string; 
+    title: string; 
+  };
   _id: string;
-  auditorium: { name: string };
+  auditorium: { 
+    _id: string;
+    name: string; 
+  };
   date: string;
   time: string;
 }
 
-export default function CalenderComponent({ onSelectTheater }: Props) {
+export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }: Props) {
   // State for active calender date with border when clicked
   const [active, setActive] = useState<string | null>(null);
   const [screenings, setScreenings] = useState<screening[]>([]);
@@ -35,7 +42,7 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
           throw new Error(`Kan inte hämta data: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Hämtad data: ", data);
+        console.log("Hämtad screening data: ", data);
         setScreenings(data);
       } catch (error) {
         console.error("Error: ", error);
@@ -84,7 +91,8 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
               key={screening._id}
               onClick={() => {
                 setActive(screening._id);
-                onSelectTheater("Stora Salongen");
+                onSelectTheaterId(screening.auditorium._id);
+                onSelectShowing(screening.movie._id);
               }}
               className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
           ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
@@ -125,7 +133,8 @@ export default function CalenderComponent({ onSelectTheater }: Props) {
                   <ul
                     onClick={() => {
                       setActive(screening._id);
-                      onSelectTheater("Stora Salongen");
+                      onSelectTheaterId(screening.auditorium._id);
+                      onSelectShowing(screening.movie._id);
                     }}
                     className={`container_box calenderDatesContainer w-24 
                           sm:w-32

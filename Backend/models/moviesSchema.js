@@ -14,12 +14,6 @@ const moviesSchema = new mongoose.Schema({
     distributors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Distributors', required: true }],
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reviews', required: true }],
     themes: { type: mongoose.Schema.Types.ObjectId, ref: 'Themes', required: true },
-    //For admin purpose (place specific schedule for a specific movie)
-    scheduleType: {
-      type: String,
-      enum: ["smallTheater", "bigTheater"],
-      required: true
-    }
 });
 
 // Link movie to the respective theme 

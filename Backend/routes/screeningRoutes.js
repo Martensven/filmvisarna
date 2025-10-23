@@ -1,38 +1,49 @@
 import express from "express";
-import schedule, { getNextDate } from "../schedule.js";
 import { Screening } from "../models/screeningSchema.js";
-import { Movies } from "../models/moviesSchema.js";
-import { Auditorium } from "../models/auditoriumSchema.js";
+import { generateAndSave } from "./../generateScreeningTimes.js"
 
 const router = express.Router();
 
-// Week-number function for schedule use. 
-function getWeekNumber(date) {
-  const temp = new Date(date);
-  temp.setHours(0, 0, 0, 0);
-  temp.setDate(temp.getDate() + 4 - (temp.getDay() || 7));
-  const yearStart = new Date(temp.getFullYear(), 0, 1);
-  const weekNo = Math.ceil((((temp - yearStart) / 86400000) + 1) / 7);
-  return weekNo;
-}
 
-// Create a new screening
+// Create a new screening both manually or automatically
 router.post("/api/screening", async (req, res) => {
   try {
-    const { movie, auditorium, date, time } = req.body;
+    //Create a automatically generated screening
+    const { movie, auditorium, date, time, scheduleType, generate } = req.body;
+
+    if(generate === true) {
+      if(!movie) {
+        return res.status(400).json({error: "Movie ID krävs för att generera visningsdagar och tider"});
+      }
+      const createdScreening = await generateAndSave(movie);
+      return res.status(201).json({
+        message: `${createdScreening.length} sparades automatiskt`,
+        screenings:createdScreening,
+      })
+    }
+
+    //Create a manually screening with scheduleType
+    if(!movie || !auditorium || !date || !time || !scheduleType) {
+      return res.status(400).json({
+        error: "Alla nämnda fält måste fyllas i (movie, auditorium, date, time och scheduleType"
+      });
+    }
+    const showTime = new Date(`${date}T${time}:00`)
 
     const newScreening = new Screening({
       movie,
       auditorium,
       date,
       time,
-      bookedSeats: []
+      showTime,
+      bookedSeats: [],
+      scheduleType,
     });
 
     const saved = await newScreening.save();
 
     res.status(201).json({
-      message: "Visning skapad",
+      message: "Visning skapad manuellt",
       screening: saved
     });
   } catch (error) {
@@ -41,68 +52,6 @@ router.post("/api/screening", async (req, res) => {
   }
 });
 
-// Generate a schedule for movies 
-router.post("/api/screening/generateSchedule", async (req, res) => {
-  try {
-    const movies = await Movies.find();
-    const auditoriums = await Auditorium.find();
-    const createdScreeningTimes = [];
-
-    if (!movies.length || !auditoriums.length) {
-      return res.status(400).json({ message: "Ingen salong eller film hittades" });
-    }
-
-    for (const movie of movies) {
-      const type = movie.scheduleType; 
-      const times = schedule.generateNextShowtimes(type);
-      const auditorium = auditoriums.find(a =>
-        a.name.toLowerCase().includes(type.includes("small") ? "lilla" : "stora")
-      );
-      if(!type) {
-        console.warn(`Filmen med titel ${movie.title} saknar schematyp.`)
-        continue;
-      }
-      if (!auditorium) continue;
-      
-      for (const showScreening of times) {
-        const weekNumber = getWeekNumber(showScreening.date);
-
-        // Checks if the auditorium already has a booked screening
-        const existingScreening = await Screening.findOne({
-          auditorium: auditorium._id,
-          date: showScreening.date
-        });
-
-        if (existingScreening) {
-          console.log(`${auditorium.name} är redan bokad för ${showScreening.date}`);
-          continue;
-        }
-
-        // Creates a new screening
-        const screening = new Screening({
-          movie: movie._id,
-          auditorium: auditorium._id,
-          date: showScreening.date,
-          time: showScreening.time,
-          weekNumber,
-          bookedSeats: []
-        });
-
-        await screening.save();
-        createdScreeningTimes.push(screening);
-      }
-    }
-
-    res.status(201).json({
-      message: "Schema genererat!",
-      createdCount: createdScreeningTimes.length,
-      screenings: createdScreeningTimes
-    });
-  } catch (error) {
-    console.error("Kunde inte köra schemagenerering:", error);
-    res.status(500).json({ error: "Kunde inte skapa visning" });
-  }
-});
 
 // GET all screenings
 router.get("/api/screening", async (req, res) => {

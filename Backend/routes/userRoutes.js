@@ -126,6 +126,15 @@ router.delete("/api/users/:id", async (req, res) => {
 
 // Login
 router.post("/api/login", async (req, res) => {
+  if (req.session.userId) {
+    return res.status(200).json({
+      message: "Already logged in",
+      user: {
+        email: req.session.userEmail,
+      },
+    });
+  }
+  
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -141,6 +150,12 @@ router.post("/api/login", async (req, res) => {
 
 // Log out
 router.post("/api/logout", (req, res) => {
+  if (!req.session.userId) {
+    return res.status(400).json({
+      message: "There is no user to log out",
+    });
+  }
+
   req.session.destroy(err => {
     if (err) return res.status(500).json({ message: "Logout failed" });
     res.clearCookie('connect.sid');
