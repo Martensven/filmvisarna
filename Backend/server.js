@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import { Server } from "socket.io"
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import http from "http"
 import dotenv from 'dotenv';
 import MoviesRoute from './routes/moviesRoute.js';
@@ -24,6 +26,22 @@ const Socketserver = http.createServer(app);
 const io = new Server({ Socketserver }) // Websocket for realtime booking
 
 dotenv.config();
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'veryhushhushsecret',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.DB_CONNECT,
+    collectionName: 'sessions',
+    ttl: 60 * 60 * 2, // 2 hours
+  }),
+  cookie: {
+    httpOnly: true,
+    secure: false, // true if using HTTPS
+    maxAge: 1000 * 60 * 60 * 2, // 2 hours
+  }
+}));
 
 app.use(express.json());
 app.use(MoviesRoute);

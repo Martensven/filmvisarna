@@ -83,11 +83,11 @@ router.post("/api/bookings", async (req, res) => {
       // if user is logged in, reference their userId. If not, store as null and use guest info.
       userInfo: user
         ? {
-            user_id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-          }
+          user_id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+        }
         : undefined,
       // screening info is auto-filled from the screening document
       screeningInfo: {
@@ -214,7 +214,7 @@ router.get("/api/bookings/:id", async (req, res) => {
 // Get bookings by user ID
 router.get("/api/bookings/user/:user_id", async (req, res) => {
   try {
-    const bookings = await Booking.find({ user_id: req.params.user_id })
+    const bookings = await Booking.find({ user_id: req.params.userInfo_id })
       .populate("userInfo.user_id", "firstName lastName email")
       .populate(
         "screeningInfo.screening_id",
@@ -228,6 +228,7 @@ router.get("/api/bookings/user/:user_id", async (req, res) => {
     res.status(500).json({ error: "Failed to retrieve bookings" });
   }
 });
+
 
 // Update booking by ID
 router.put("/api/bookings/:id", async (req, res) => {
