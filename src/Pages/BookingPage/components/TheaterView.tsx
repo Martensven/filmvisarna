@@ -1,85 +1,160 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSeats } from "./context/SeatsContext";
-// import { io } from "socket.io-client";  //Used for socket.io 
-
-
-
-//Provides the function for theater overview with chairs that can be clicked and chosen.
-interface Theater {
-  id: string;
-  name: string;
-  seatsPerRow: number[];
-  Funktionhinderanpassade: { row:number; seat:number }[];
-}
+import type { Theater, Seat } from "../../../Interfaces/type.ts"; // Theater interface
+import { sockets } from "./context/sockets.tsx"; // Socket.IO connection
 
 interface TheaterViewProps {
   theaterView: Theater;
+  selectShowing: string | null;
 }
-// const socket = io("http://localhost:4321"); // Varible declared after the localhost we running on. 
-//Shall be used in useEffect for fetch API
 
-export default function TheaterView(
-  { theaterView }: TheaterViewProps
-) {
+interface Auditorium {
+  _id: string;
+  name: string;
+}
 
-  //State for selected seats using a Set to avoid duplicates.
+interface Movie {
+  _id: string;
+  title: string;
+  imageSrc: string;
+}
+
+export interface Showing {
+  _id: string;
+  auditorium: Auditorium;
+  bookedSeats: string[];
+  date: string;
+  movie: Movie;
+  scheduleType: "smallTheater" | "bigTheater";
+  showTime: string;
+  time: string;
+}
+
+export default function TheaterView({ theaterView, selectShowing }: TheaterViewProps) {
   const [selectedSeat, setSelectedSeat] = useState<Set<string>>(new Set());
-
-  //Getting total tickets from useSeats
+  const [liveBookedSeats, setLiveBookedSeats] = useState<Set<string>>(new Set());
   const { totalTickets } = useSeats();
 
-  //Function for toggling the seats when clicked.
-  const toggle = (rowI: number, seatI: number) => {
-    const key = `${rowI}-${seatI}`;
+  // Fetch initial showing data (including booked seats)
+  const fetchShowing = async () => {
+    if (!selectShowing) return;
+    try {
+      const response = await fetch(`/api/screenings/movie/${selectShowing}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data: Showing = await response.json();
+      setLiveBookedSeats(new Set(data.bookedSeats));
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchShowing();
+  }, [selectShowing]);
+
+  // Socket.IO live updates
+  useEffect(() => {
+    if (!selectShowing) return;
+
+    // Join a room for this showing
+    sockets.emit("joinShowingRoom", selectShowing);
+
+    // Listen for live seat updates
+    sockets.on("seatBooked", (seatKey: string) => {
+      setLiveBookedSeats((prev) => new Set(prev).add(seatKey));
+    });
+
+    sockets.on("seatReleased", (seatKey: string) => {
+      setLiveBookedSeats((prev) => {
+        const newSet = new Set(prev);
+        newSet.delete(seatKey);
+        return newSet;
+      });
+    });
+
+    // Clean up on unmount
+    return () => {
+      sockets.off("seatBooked");
+      sockets.off("seatReleased");
+    };
+  }, [selectShowing]);
+
+  // Toggle seat selection locally
+  const toggle = (rowNumber: number, seatNumber: number) => {
+    const key = `${rowNumber}-${seatNumber}`;
+
+    // Do nothing if the seat is already booked by someone else
+    if (liveBookedSeats.has(key)) return;
+
     setSelectedSeat((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(key)) {
-        newSet.delete(key); // Deselect the seat if already selected
+        newSet.delete(key);
+        // notify server that user released seat
+        sockets.emit("releaseSeat", { showingId: selectShowing, seatKey: key });
       } else {
-        if (newSet.size >= totalTickets) {
-          return prev; // Do not add more seats if limit is reached
-        }
-        newSet.add(key); // Add the seat if not already selected
+        if (newSet.size >= totalTickets) return prev;
+        newSet.add(key);
+        // notify server that user selected seat
+        sockets.emit("bookSeat", { showingId: selectShowing, seatKey: key });
       }
       return newSet;
     });
   };
 
-  {
-    /*----------Container for a view of the salons----------*/
-  }
+  // Group seats by row
+  const rows = theaterView.seats.reduce((acc: Seat[][], seat) => {
+    if (!acc[seat.rowNumber]) acc[seat.rowNumber] = [];
+    acc[seat.rowNumber].push(seat);
+    return acc;
+  }, []);
+
+  // ---------------- Render ----------------
   return (
-    <section className="flex flex-col w-full h-auto jutify-center items-center mt-5 mb-5 container_box
+    <section className="flex flex-col w-full h-auto justify-center items-center mt-5 mb-5 container_box
                         sm:w-full sm:h-auto 
                         md:flex md:justify-center items-center md:w-11/12 md:mt-0 
-                        lg:w-full
-    ">
+                        lg:w-full">
       <article className="flex flex-col justify-center w-11/12 h-auto m-3 container_content
                           md:w-11/12 md:h-auto 
                           lg:w-8/12 lg:h-auto lg:mt-20 lg:mb-10 lg:p-5 lg:scale-125">
         <h2 className="p-3">{theaterView.name}</h2>
+
+        {/* Seats Grid */}
         <div>
-          {theaterView.seatsPerRow.map((seatCount, rowI) => (
-            <div key={rowI}>
-              {Array.from({ length: seatCount }).map((_, seatI) => {
-                const key = `${rowI}-${seatI}`;
+          {rows.map((rowSeats, rowI) => (
+            <div key={rowI} className="flex mb-1">
+              {rowSeats.map((seat) => {
+                const key = `${seat.rowNumber}-${seat.seatNumber}`;
                 const selected = selectedSeat.has(key);
-                const isAccesible = theaterView.Funktionhinderanpassade?.some(
-                  (s) => s.row === rowI && s.seat === seatI)
+                const booked = liveBookedSeats.has(key);
+                const isAccessible = seat.accessible;
 
                 return (
                   <button
-                    key={seatI}
-                    onClick={() => toggle(rowI, seatI)}
+                    key={seat._id}
+                    onClick={() => toggle(seat.rowNumber, seat.seatNumber)}
                     style={{
                       width: 24,
                       height: 24,
                       borderRadius: 4,
-                      backgroundColor: selected ? "green" : isAccesible ? "#dede39" : "#243365",
+                      backgroundColor: booked
+                        ? "#d9534f" // red = booked by others
+                        : selected
+                        ? "green"
+                        : isAccessible
+                        ? "#dede39"
+                        : "#243365",
                       border: "1px solid white",
-                      cursor: "pointer",
+                      cursor: booked ? "not-allowed" : "pointer",
+                      marginRight: 2,
                     }}
-                    title={`Rad ${rowI + 1}, stol ${seatI + 1} ${isAccesible ? "(Funktionshinderanpassade)" : ""}`}
+                    title={`Rad ${seat.rowNumber + 1}, stol ${seat.seatNumber + 1} ${
+                      isAccessible ? "(Funktionshinderanpassade)" : ""
+                    } ${booked ? "(Upptagen)" : ""}`}
+                    disabled={booked}
                   />
                 );
               })}
@@ -87,20 +162,26 @@ export default function TheaterView(
           ))}
         </div>
 
+        {/* Selected Seats */}
         <span>
-          <strong className="font-medium">Valda Stolar:</strong> {Array.from(selectedSeat).join(", ")}
+          <strong>Valda Stolar:</strong>{" "}
+          {Array.from(selectedSeat)
+            .map((key) => {
+              const [row, seat] = key.split("-").map(Number);
+              return `Rad ${row + 1}, Stol ${seat + 1}`;
+            })
+            .join(", ")}
         </span>
       </article>
 
-      {/*----------Container for chosing chairs-button----------*/}
+      {/* Choose Seats Button */}
       <section className="flex flex-row justify-end">
         <button className="main_buttons w-20 h-8 m-5 text-sm">Välj</button>
-
       </section>
-      <p className="mb-2">Antal platser valda: {selectedSeat.size} / {totalTickets}</p>
+
+      <p className="mb-2">
+        Antal platser valda: {selectedSeat.size} / {totalTickets}
+      </p>
     </section>
   );
 }
-
-
-

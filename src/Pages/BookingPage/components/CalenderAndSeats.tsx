@@ -1,16 +1,16 @@
 import CalenderComponent from "./CalenderComponent";
 import AmountTheaterSeats from "./AmountTheaterSeats";
-import TheaterViewContainer from "./TheaterViewContainer";
-import { useState } from "react"
+//import TheaterViewContainer from "./TheaterViewContainer";
+//import { useState } from "react"
 
 //Component for the calender with viewtimes and selecting seats
 
 interface Props {
-
-  onSelectTheater: (theater: string) => void;
+  onSelectTheaterId: (theaterId: string) => void;
+  onSelectShowing: (showing: string) => void;
 }
 
-export default function CalenderAndSeats({ onSelectTheater }: Props) {
+export default function CalenderAndSeats({ onSelectTheaterId, onSelectShowing }: Props) {
 
   
     return(
@@ -34,7 +34,7 @@ export default function CalenderAndSeats({ onSelectTheater }: Props) {
                      lg:place-content-start lg:w-5/12 lg:p-1"
         >
         {/*----------Getting the Calender component for all the dates and views----------*/}
-          <CalenderComponent onSelectTheater={onSelectTheater} />
+          <CalenderComponent onSelectTheaterId={onSelectTheaterId} onSelectShowing={onSelectShowing} />
         </article>
         
         {/*----------Child container for selecting seats----------*/}
