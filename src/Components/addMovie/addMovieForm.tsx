@@ -129,10 +129,11 @@ export default function AddMovieForm() {
     };
 
     return (
-        <div className="">
+        <div className="mx-auto p-4 border bg-[#1f1f1f] ">
             <h2>Lägg till en ny film</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3 p-4 border">
                 <input
+                    className="border p-2 rounded text-black"
                     type="text"
                     name="title"
                     placeholder="Titel"
@@ -141,6 +142,7 @@ export default function AddMovieForm() {
                     required
                 />
                 <input
+                    className="border p-2 rounded text-black"
                     type="text"
                     name="imageSrc"
                     placeholder="Bild URL"
@@ -149,6 +151,7 @@ export default function AddMovieForm() {
                     required
                 />
                 <input
+                    className="border p-2 rounded text-black"
                     type="number"
                     name="releaseYear"
                     placeholder="Utgivningsår"
@@ -158,6 +161,7 @@ export default function AddMovieForm() {
                 />
 
                 <input
+                    className="border p-2 rounded text-black"
                     type="number"
                     name="age"
                     placeholder="Åldersgräns"
@@ -167,6 +171,7 @@ export default function AddMovieForm() {
                 />
 
                 <input
+                    className="border p-2 rounded text-black"
                     type="number"
                     name="length"
                     placeholder="Längd (minuter)"
@@ -176,6 +181,7 @@ export default function AddMovieForm() {
                 />
 
                 <textarea
+                    className="border p-2 rounded text-black"
                     name="description"
                     placeholder="Beskrivning"
                     value={formData.description}
@@ -184,6 +190,7 @@ export default function AddMovieForm() {
                 />
 
                 <input
+                    className="border p-2 rounded text-black"
                     type="text"
                     name="youtubeTrailers"
                     placeholder="YouTube Trailer URL"
