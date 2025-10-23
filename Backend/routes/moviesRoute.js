@@ -1,4 +1,5 @@
 import { Movies } from "../models/moviesSchema.js";
+import { Genres } from "../models/genresSchema.js";
 import express from "express";
 
 const router = express.Router();
@@ -46,24 +47,12 @@ router.get('/api/movie/filter', async (req, res) => {
         }
         // Genre-filtering
         if (genre) {
-            filter.genres = { $in: Array.isArray(genre) ? genre : [genre] };
+            const genreArray = Array.isArray(genre) ? genre : [genre];
+            const genreDocs = await Genres.find({ title: { $in: genreArray } });
+            const genreIds = genreDocs.map(g => g._id);
+            filter.genres = { $in: genreIds };
         }
-        // Actor-filtering
-        if (actor) {
-            filter.actors = { $in: Array.isArray(actor) ? actor : [actor] };
-        }
-        // Director-filtering
-        if (director) {
-            filter.directors = { $in: Array.isArray(director) ? director : [director] };
-        }
-        // Distributor-filtering
-        if (distributor) {
-            filter.distributors = { $in: Array.isArray(distributor) ? distributor : [distributor] };
-        }
-        // Theme-filtering
-        if (theme) {
-            filter.themes = theme;
-        }
+        
         // Age limit filtering
         if (ageLimit) filter.age = { $lte: parseInt(ageLimit) };
 
@@ -77,7 +66,8 @@ router.get('/api/movie/filter', async (req, res) => {
         .populate('directors')
         .populate('distributors')
         .populate('reviews')
-        .populate('themes');
+        .populate('themes')
+        .sort(sortOption);
 
         if (movies.length === 0) {
             return res.status(404).json({ message: 'No movies found matching the criteria' });
