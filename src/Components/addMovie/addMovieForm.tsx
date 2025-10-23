@@ -10,6 +10,7 @@ import type {
   Distributor,
   Theme,
   MovieInput,
+  Review,
 } from "../../types/movieTypes";
 
 export default function AddMovieForm() {
@@ -28,6 +29,7 @@ export default function AddMovieForm() {
     directors: [],
     distributors: [],
     themes: "",
+    reviews: [],
   });
 
   // States for each type of data
@@ -36,6 +38,7 @@ export default function AddMovieForm() {
   const [directors, setDirectors] = useState<Director[]>([]);
   const [distributors, setDistributors] = useState<Distributor[]>([]);
   const [themes, setThemes] = useState<Theme[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   const [loading, setLoading] = useState(true);
   // Message to display feedback to the user
@@ -45,21 +48,29 @@ export default function AddMovieForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [genresRes, actorsRes, directorsRes, distributorsRes, themesRes] =
-          await Promise.all([
-            fetch("/api/genres"),
-            fetch("/api/actors"),
-            fetch("/api/directors"),
-            fetch("/api/distributors"),
-            fetch("/api/theme"),
-          ]);
+        const [
+          genresRes,
+          actorsRes,
+          directorsRes,
+          distributorsRes,
+          themesRes,
+          reviewsRes,
+        ] = await Promise.all([
+          fetch("/api/genres"),
+          fetch("/api/actors"),
+          fetch("/api/directors"),
+          fetch("/api/distributors"),
+          fetch("/api/theme"),
+          fetch("/api/review"),
+        ]);
         // Check if all responses are ok
         if (
           !genresRes.ok ||
           !actorsRes.ok ||
           !directorsRes.ok ||
           !distributorsRes.ok ||
-          !themesRes.ok
+          !themesRes.ok ||
+          !reviewsRes.ok
         ) {
           throw new Error("Misslyckades med att hämta data");
         }
@@ -70,12 +81,14 @@ export default function AddMovieForm() {
           directorsData,
           distributorsData,
           themesData,
+          reviewsData,
         ] = await Promise.all([
           genresRes.json(),
           actorsRes.json(),
           directorsRes.json(),
           distributorsRes.json(),
           themesRes.json(),
+          reviewsRes.json(),
         ]);
         // Set the fetched data to states
         setGenres(genresData);
@@ -83,6 +96,7 @@ export default function AddMovieForm() {
         setDirectors(directorsData);
         setDistributors(distributorsData);
         setThemes(themesData);
+        setReviews(reviewsData);
       } catch (error: any) {
         setMessage(error.message);
       } finally {
@@ -281,6 +295,29 @@ export default function AddMovieForm() {
               }))
             }
           />
+
+          <label>Recensioner:</label>
+          <Select
+            isMulti
+            options={reviews.map((r) => ({
+              value: r._id,
+              label: r.review.slice(0, 50) + "...",
+            }))}
+            value={reviews
+              .filter((r) => formData.reviews?.includes(r._id))
+              .map((r) => ({
+                value: r._id,
+                label: r.review.slice(0, 50) + "...",
+              }))}
+            className="text-black"
+            onChange={(selected) =>
+              setFormData((prev) => ({
+                ...prev,
+                reviews: selected.map((s) => s.value),
+              }))
+            }
+          />
+
           <label>Tema:</label>
           <Select
             options={themes.map((t) => ({ value: t._id, label: t.themeDesc }))}
