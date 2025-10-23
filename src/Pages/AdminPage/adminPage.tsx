@@ -1,8 +1,8 @@
-import { BsGraphUpArrow } from 'react-icons/bs';
-import { MdMovieEdit } from 'react-icons/md';
-import { FaUsersCog } from 'react-icons/fa';
-import { Link } from 'react-router';
-import { Outlet } from 'react-router-dom';
+import { BsGraphUpArrow } from "react-icons/bs";
+import { MdMovieEdit } from "react-icons/md";
+import { FaUsersCog } from "react-icons/fa";
+import { Link } from "react-router";
+import { Outlet } from "react-router-dom";
 
 export default function AdminPage() {
   return (
@@ -43,7 +43,7 @@ export default function AdminPage() {
         </div>
       </nav>
 
-      <main className="w-10/12 mx-auto my-8 min-h-[80vh]">
+      <main className="w-full max-w-screen-md mx-auto my-8 min-h-[80vh]">
         <Outlet />
       </main>
     </div>
