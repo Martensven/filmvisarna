@@ -18,12 +18,10 @@ export default function AdminPage() {
             px-2 sm:px-4
           "
         >
-          {/* Titel */}
           <h1 className="text-lg sm:text-xl font-bold mb-3 sm:mb-0">
             Admin Filmvisarna
           </h1>
 
-          {/* Kontroller */}
           <div
             className="
               flex flex-wrap gap-6 sm:gap-10
