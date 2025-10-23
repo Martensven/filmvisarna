@@ -22,7 +22,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
 
         <div className="flex flex-col w-full h-auto justify-center items-center
                         md:flex-col md:justify-center md:items-center md:w-full 
-                        lg:flex lg:flex-col">
+                        lg:flex lg:flex-row">
 
           <CalenderAndSeats onSelectTheater={setSelectedTheater} />
 

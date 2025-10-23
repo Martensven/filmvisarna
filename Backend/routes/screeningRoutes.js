@@ -1,36 +1,50 @@
 import express from "express";
 import { Screening } from "../models/screeningSchema.js";
+import { generateAndSave } from "./../generateScreeningTimes.js"
 
 const router = express.Router();
 
-// Route to Create a new screening
+
+// Create a new screening both manually or automatically
 router.post("/api/screening", async (req, res) => {
   try {
-    // destructure request body to get necessary fields, expecting movie, auditorium, date, time
-    const { movie, auditorium, date, time } = req.body;
+    //Create a automatically generated screening
+    const { movie, auditorium, date, time, scheduleType, generate } = req.body;
 
-    // Create a new screening document with request data and empty bookedSeats array
-    // Using Screening model to create a new document
+    if(generate === true) {
+      if(!movie) {
+        return res.status(400).json({error: "Movie ID krävs för att generera visningsdagar och tider"});
+      }
+      const createdScreening = await generateAndSave(movie);
+      return res.status(201).json({
+        message: `${createdScreening.length} sparades automatiskt`,
+        screenings:createdScreening,
+      })
+    }
+
+    //Create a manually screening with scheduleType
+    if(!movie || !auditorium || !date || !time || !scheduleType) {
+      return res.status(400).json({
+        error: "Alla nämnda fält måste fyllas i (movie, auditorium, date, time och scheduleType"
+      });
+    }
+    const showTime = new Date(`${date}T${time}:00`)
+
     const newScreening = new Screening({
       movie,
       auditorium,
       date,
       time,
-      bookedSeats: []
+      showTime,
+      bookedSeats: [],
+      scheduleType,
     });
 
     const saved = await newScreening.save();
 
-    // Return a success response with created screening details
     res.status(201).json({
-      message: "Visning skapad",
-      screening: {
-        id: saved._id,
-        movie: movie.title,
-        auditorium: auditorium.name,
-        date,
-        time
-      }
+      message: "Visning skapad manuellt",
+      screening: saved
     });
   } catch (error) {
     console.error("Något gick fel vid skapande av visning:", error);
@@ -38,73 +52,72 @@ router.post("/api/screening", async (req, res) => {
   }
 });
 
-//Getting all screenings
-router.get("/api/screening", async (req, res) => {
-    try{
-        const screening = await Screening.find()
-        .populate("auditorium")
-        .populate('movie', 'title');
-        res.status(200).json(screening);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-})
 
-//Getting screenings by ID
-router.get("/api/screening/:id", async (req, res) => {
-    try{
-        const screening = await Screening.findById(req.params.id)
-        .populate("auditorium")
-        .populate('movie', 'title');
-        res.status(200).json(screening);
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
+// GET all screenings
+router.get("/api/screening", async (req, res) => {
+  try {
+    const screening = await Screening.find()
+      .populate("auditorium")
+      .populate("movie", "title");
+    res.status(200).json(screening);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
-//Changing a allready existing screening
+// GET a screening by id
+router.get("/api/screening/:id", async (req, res) => {
+  try {
+    const screening = await Screening.findById(req.params.id)
+      .populate("auditorium")
+      .populate("movie", "title");
+    if (!screening) return res.status(404).json({ message: "Ingen visning hittades" });
+    res.status(200).json(screening);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// PUT existing screening
 router.put("/api/screening/:id", async (req, res) => {
-    try{
-        const screening = await Screening.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
-        if(!screening){
-            return res.status(404).json({message: "Can't find any screenings"})
-        }
-        res.status(204).json(screening)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-})
+  try {
+    const screening = await Screening.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+    if (!screening) return res.status(404).json({ message: "Ingen visning hittades" });
+    res.status(200).json(screening);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-// Deleting a screening by ID
+// DELETE screening by id
 router.delete("/api/screening/:id", async (req, res) => {
-    try {
-        const screening = await Screening.findOneAndDelete(req.params.id);
-        if(!screening) {
-            return res.status(404).json({message: "No screening found to delete"})
-        }
-        res.status(204).json(screening)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    } 
-})
+  try {
+    const screening = await Screening.findByIdAndDelete(req.params.id);
+    if (!screening)
+      return res.status(404).json({ message: "Ingen visning hittades att ta bort" });
+    res.status(200).json({ message: "Visning raderad" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-// Get all screenings for a specific movie by movie ID
+/** GETS all screenings for one movie using ID */
 router.get("/api/screenings/movie/:movieId", async (req, res) => {
   try {
-    const movieId = req.params.movieId;
-
-    // Get screenings for the specified movie ID
-    const screenings = await Screening.find({ movie: movieId })
+    const screenings = await Screening.find({ movie: req.params.movieId })
       .populate("movie", "title imageSrc")
       .populate("auditorium", "name");
 
-    if (!screenings || screenings.length === 0) {
+    if (!screenings.length) {
       return res.status(404).json({ message: "Inga visningar hittades för denna film" });
     }
 
     res.json(screenings);
   } catch (error) {
-    console.error("Fel vid hämtning av visningar för film:", error);
+    console.error("Fel vid hämtning av visningar:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
