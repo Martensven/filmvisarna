@@ -16,6 +16,7 @@ import DetailMovie from "./Pages/DetailMovie/detailMovie.tsx";
 import ForgotPassword from "./Components/login/forgotPassword.tsx";
 import AdminPage from "./Pages/AdminPage/adminPage.tsx";
 import SalesPage from "./Pages/AdminPage/salesPage.tsx";
+import AddMoviePage from "./Pages/AdminPage/addMoviePage.tsx";
 import AdminStart from "./Pages/AdminPage/adminStart.tsx";
 
 function App() {
@@ -35,9 +36,9 @@ function App() {
 
   return (
     <>
-      {/* <Header onLoginClick={() => setLoginPopup("login")} isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} /> */}
 
-      {/* Visa Header + Footer för allt UTOM admin */}
+      {/* Making sure Header and Footer are not shown on admin pages */}
+      {/* We later also needs to secure the routes with admin role */}
       {!window.location.pathname.startsWith("/admin") && (
         <>
           <Header
@@ -61,12 +62,14 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/kiosk" element={<KioskPage />} />
         <Route path="/movie/:id" element={<DetailMovie />} />
+        {/* Adminpages uses nested routes */}
         <Route path="/admin" element={<AdminPage />}>
           <Route index element={<AdminStart />} />
           <Route path="sales" element={<SalesPage />} />
+          <Route path="add-movie" element={<AddMoviePage />} />
         </Route>
       </Routes>
-
+      {/* Making sure Header and Footer are not shown on admin pages */}
       {!window.location.pathname.startsWith("/admin") && (
       <>
         <Footer />

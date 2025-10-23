@@ -16,6 +16,7 @@ import User from './routes/userRoutes.js';
 import Auditorium from './routes/auditoriumsRoutes.js';
 import Actors from './routes/actorRoutes.js';
 import Kiosk from './routes/kioskRoutes.js';
+import AdminSales from './routes/adminRoutes.js';
 
 
 const PORT = 4321;
@@ -39,6 +40,7 @@ app.use(User);
 app.use(Auditorium);
 app.use(Actors);
 app.use(Kiosk);
+app.use(AdminSales);
 
 io.on("connected", () => {
     console.log("Client connected", socket.id);

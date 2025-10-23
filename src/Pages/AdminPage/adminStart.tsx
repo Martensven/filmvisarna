@@ -2,7 +2,7 @@ import LoggoNR1 from "./../../../public/images/Header-loggo/LoggoNR1.png";
 
 
 export default function AdminStart() {
-  return <main className="text-white">
+  return <main className="text-white h-screen">
 <img
         src={LoggoNR1}
         alt="Filmvisarnas loggo"
