@@ -1,5 +1,5 @@
 
-import { ThemeDay } from "./models/themeDaySchema";
+import { ThemeDay } from "./models/themeDaySchema.js";
 
 function getNextDate(dayName, time) {
   const days = [

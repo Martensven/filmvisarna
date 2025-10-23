@@ -28,7 +28,7 @@ router.post("/api/screening", async (req, res) => {
         error: "Alla nämnda fält måste fyllas i (movie, auditorium, date, time och scheduleType"
       });
     }
-    const showtimes = new Date(`${date}T ${time}:00`)
+    const showTime = new Date(`${date}T${time}:00`)
 
     const newScreening = new Screening({
       movie,

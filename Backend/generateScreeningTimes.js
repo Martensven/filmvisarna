@@ -8,11 +8,11 @@ import { ThemeDay } from "./models/themeDaySchema.js";
 //Create a function that generates screening and saving them to the database. 
 export const generateAndSave = async (movieId) => {
   try {
-    const showtimes = schedule.generateNextShowtimes(); //Declare showtimes after the function from schedule file. 
+    const showtimes = await schedule.generateNextShowtimes(); //Declare showtimes after the function from schedule file. 
 
     //Finding the auditoriums from our models
-    const smallTheater = await Auditorium.findOne({ name: "Lilla salongen" });
-    const bigTheater = await Auditorium.findOne({ name: "Stora salongen" });
+    const smallTheater = await Auditorium.findOne({ name: "Lilla Salongen" });
+    const bigTheater = await Auditorium.findOne({ name: "Stora Salongen" });
 
     if (!smallTheater || !bigTheater) {
       throw new Error(
