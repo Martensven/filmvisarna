@@ -37,7 +37,7 @@ function App() {
         <Route path='/movie' element={<MoviePage />} />
         <Route path='/theme-sunday' element={<ThemeSundayPage />} />
         <Route path='/theme-thursday' element={<ThemeThursdayPage />} />
-        <Route path='/my-page' element={<MyPage />} />
+        <Route path='/my-page/:userId' element={<MyPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/kiosk' element={<KioskPage />} />
         <Route path='/movie/:id' element={<DetailMovie />} />
