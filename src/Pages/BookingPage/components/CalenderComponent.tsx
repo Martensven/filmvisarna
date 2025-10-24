@@ -92,7 +92,7 @@ export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }
               onClick={() => {
                 setActive(screening._id);
                 onSelectTheaterId(screening.auditorium._id);
-                onSelectShowing(screening.movie._id);
+                onSelectShowing(screening._id);
               }}
               className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
           ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
@@ -134,7 +134,7 @@ export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }
                     onClick={() => {
                       setActive(screening._id);
                       onSelectTheaterId(screening.auditorium._id);
-                      onSelectShowing(screening.movie._id);
+                      onSelectShowing(screening._id);
                     }}
                     className={`container_box calenderDatesContainer w-24 
                           sm:w-32
