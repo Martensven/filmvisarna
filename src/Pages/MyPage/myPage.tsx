@@ -1,4 +1,4 @@
-import FAQ from "./components/PrevBookings.tsx";
+import FAQ from "./components/prevBookings.tsx";
 import FetchBookings from "./components/fetchBookings.tsx";
 import FetchUserInfo from "./components/fetchUserInfo.tsx";
 

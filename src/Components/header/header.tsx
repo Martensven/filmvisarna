@@ -1,9 +1,8 @@
 import { Link } from "react-router";
 import { useState } from "react";
 import LoggoNR1 from "./../../../public/images/Header-loggo/LoggoNR1.png";
-// import LoggoNR2 from "./../../../public/images/Header-loggo/LoggoNR2.png"
+import { useAuth } from "../../context/authContext"; // ✅ Import AuthContext
 import "./../../index.css";
-
 
 interface HeaderProps {
     onLoginClick: () => void;
@@ -11,18 +10,23 @@ interface HeaderProps {
     onLogout: () => void;
 }
 
-export default function Header({ onLoginClick }: HeaderProps) {
+export default function Header({ onLoginClick, isLoggedIn, onLogout }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const { user, logout } = useAuth(); // ✅ Kopplar in auth
+
+    const handleLogout = async () => {
+        await logout();
+        setIsOpen(false);
+    };
 
     return (
         <main className="w-screen">
             <header className="text-center text-white mt-1">
-                {/* <h1 className="logo_font text-xl mt-5">FILMVISARNA</h1> */}
                 <div className="flex justify-center items-center sm:justify-start sm:m-5 md:justify-start">
                     <img
                         src={LoggoNR1}
                         alt="Filmvisarnas loggo"
-                        className="w-60 sm:w-76  md:w-86 md:ml-8 lg:w-96 lg:ml-8"
+                        className="w-60 sm:w-76 md:w-86 md:ml-8 lg:w-96 lg:ml-8"
                     />
                 </div>
 
@@ -41,21 +45,58 @@ export default function Header({ onLoginClick }: HeaderProps) {
                             {isOpen ? "✕" : "☰"}
                         </button>
 
-                        {/* Desktop menu */}
+                        {/* ✅ Desktop menu */}
                         <ul className="desktopNav hidden md:flex w-full justify-between items-center text-sm font-medium">
-                            <li><Link to="/"></Link></li>
                             <li><Link to="/about">Om Oss</Link></li>
                             <li><Link to="/kiosk">Kiosk</Link></li>
-                            <li><button onClick={onLoginClick} className="cursor-pointer">Logga In</button></li>
+
+                            {user && (
+                                <li>
+                                    <Link to="/my-page" className="cursor-pointer hover:underline">
+                                        Mina Sidor
+                                    </Link>
+                                </li>
+                            )}
+
+                            <li>
+                                {user ? (
+                                    <button onClick={handleLogout} className="cursor-pointer text-red-300 hover:text-red-400">
+                                        Logga Ut
+                                    </button>
+                                ) : (
+                                    <button onClick={onLoginClick} className="cursor-pointer">
+                                        Logga In
+                                    </button>
+                                )}
+                            </li>
                         </ul>
                     </section>
 
-                    {/* Mobile menu  */}
+                    {/* ✅ Mobile menu */}
                     {isOpen && (
                         <ul className="flex flex-col md:hidden px-4 pb-4 space-y-2">
                             <li><Link to="/about" onClick={() => setIsOpen(false)}>Om Oss</Link></li>
                             <li><Link to="/kiosk" onClick={() => setIsOpen(false)}>Kiosk</Link></li>
-                            <li><button onClick={onLoginClick}>Logga In</button></li>
+
+                            {user && (
+                                <li>
+                                    <Link to="/my-page" onClick={() => setIsOpen(false)} className="hover:underline">
+                                        Mina Sidor
+                                    </Link>
+                                </li>
+                            )}
+
+                            <li>
+                                {user ? (
+                                    <button onClick={handleLogout} className="text-red-300 hover:text-red-400">
+                                        Logga Ut
+                                    </button>
+                                ) : (
+                                    <button onClick={onLoginClick}>
+                                        Logga In
+                                    </button>
+                                )}
+                            </li>
                         </ul>
                     )}
                 </nav>
