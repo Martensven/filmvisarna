@@ -34,10 +34,10 @@ export default function AdminPage() {
             <Link to="sales" className="hover:text-gray-300 transition">
               <BsGraphUpArrow size={24} />
             </Link>
-            <button className="hover:text-gray-300 transition">
+            <Link to="users"className="hover:text-gray-300 transition">
               <FaUsersCog size={24} />
-            </button>
-          </div>
+            </Link>
+                      </div>
         </div>
       </nav>
 
