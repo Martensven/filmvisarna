@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useAuth } from "../../../context/authContext";
 
 export default function FetchBookings() {
-    const { userId } = useParams();
+
+    const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [bookings, setBookings] = useState<any[]>([]);
 
+    const userId = user?.userId ? user.userId : "";
+    console.log(userId);
+
+
     const fetchUserBookings = async () => {
         try {
-            const response = await fetch(`/api/bookings/user/${userId}`);
+            const response = await fetch(`/api/bookings/user/${userId}`, {});
             if (!response.ok) throw new Error(`Serverfel: ${response.status}`);
 
             const data = await response.json();
-            console.log("Fetched bookings:", data);
             setBookings(data);
         } catch (err: any) {
             console.error("Error fetching bookings:", err);
@@ -24,7 +28,9 @@ export default function FetchBookings() {
     };
 
     useEffect(() => {
-        fetchUserBookings();
+        if (userId) {
+            fetchUserBookings();
+        }
     }, [userId]);
 
     if (loading) return <p className="text-white text-center mt-10">Laddar...</p>;
@@ -38,15 +44,15 @@ export default function FetchBookings() {
             {bookings.map((b: any, index: number) => (
                 <div key={b._id || index} className="border-b border-gray-700 pb-4">
                     {/* Movie Title */}
-                    <p className="font-bold">{b.screeningInfo.movieTitle}</p>
+                    <p className="font-bold">{b.screening_id.movie.title}</p>
 
                     {/* Date & Time */}
                     <p>
-                        Datum: {b.screeningInfo.date} – {b.screeningInfo.time}
+                        {/* Datum: {b.screeningInfo.date} – {b.screeningInfo.time} */}
                     </p>
 
                     {/* Auditorium */}
-                    <p>Salong: {b.screeningInfo.auditoriumName}</p>
+                    {/* <p>Salong: {b.screeningInfo.auditoriumName}</p> */}
 
                     {/* Seats */}
                     <p>

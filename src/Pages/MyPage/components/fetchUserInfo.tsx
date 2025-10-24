@@ -7,8 +7,6 @@ export default function FetchUserInfo() {
     if (loading) return <p className="text-white text-center mt-10">Laddar...</p>;
     if (!user) return <p className="text-white text-center mt-10">Ingen användare inloggad.</p>;
 
-    { console.log(user) }
-
     return (
         <>
             <section className="mb-8 text-center leading-loose w-10/12 flex flex-col items-center justify-center">
