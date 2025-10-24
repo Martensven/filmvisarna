@@ -25,18 +25,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchMe = async () => {
         try {
             const res = await fetch("/api/me", {
+                method: "GET",
                 credentials: "include",
             });
 
-            if (res.ok) {
-                const data = await res.json();
-                setUser(data);
-            } else {
+            if (!res.ok) {
                 setUser(null);
+                setLoading(false);
+                return;
+            }
+
+            const basicData = await res.json();
+
+            const userId = basicData.userId;
+
+            // Gör en andra fetch till /api/users/:id
+            const userDetailsRes = await fetch(`/api/users/${userId}`, {
+                method: "GET",
+                credentials: "include",
+            });
+
+            if (userDetailsRes.ok) {
+                const fullData = await userDetailsRes.json();
+                setUser(fullData); // Spara den mer detaljerade användaren
+                console.log(fullData);
+
+            } else {
+                setUser(basicData); // Fallback till grunddata
             }
         } catch {
             setUser(null);
         }
+
         setLoading(false);
     };
 
