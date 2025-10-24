@@ -34,6 +34,8 @@ function App() {
     }, 900);
   };
 
+
+
   return (
     <>
 
@@ -58,7 +60,7 @@ function App() {
         <Route path="/movie" element={<MoviePage />} />
         <Route path="/theme-sunday" element={<ThemeSundayPage />} />
         <Route path="/theme-thursday" element={<ThemeThursdayPage />} />
-        <Route path="/my-page" element={<MyPage />} />
+        <Route path="/my-page/" element={<MyPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/kiosk" element={<KioskPage />} />
         <Route path="/movie/:id" element={<DetailMovie />} />
@@ -71,10 +73,10 @@ function App() {
       </Routes>
       {/* Making sure Header and Footer are not shown on admin pages */}
       {!window.location.pathname.startsWith("/admin") && (
-      <>
-        <Footer />
-      </>
-    )}
+        <>
+          <Footer />
+        </>
+      )}
 
       {loginPopup && (
         <section
@@ -83,9 +85,8 @@ function App() {
         >
           <aside
             onClick={(e) => e.stopPropagation()}
-            className={`popup-background flex w-150 h-full shadow-xl p-6 flex-col justify-center ${
-              popupSlide ? "animation-slideout" : "animation-slidein"
-            }`}
+            className={`popup-background flex w-150 h-full shadow-xl p-6 flex-col justify-center ${popupSlide ? "animation-slideout" : "animation-slidein"
+              }`}
           >
             <button
               onClick={handleClosing}
@@ -93,20 +94,22 @@ function App() {
             >
               [X]
             </button>
+
             {loginPopup === "login" && (
               <Login
                 onSwitchToRegister={() => setLoginPopup("register")}
                 onSwitchToForgot={() => setLoginPopup("forgot-password")}
                 onClose={handleClosing}
-                onLoginSuccess={() => setIsLoggedIn(true)}
               />
             )}
+
             {loginPopup === "register" && (
               <Register
                 onSwitchToLogin={() => setLoginPopup("login")}
                 onClose={handleClosing}
               />
             )}
+
             {loginPopup === "forgot-password" && (
               <ForgotPassword onSwitchToLogin={() => setLoginPopup("login")} />
             )}
