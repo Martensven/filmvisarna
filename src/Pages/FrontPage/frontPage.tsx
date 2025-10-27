@@ -98,10 +98,12 @@ export default function FrontPage() {
     ];
 
     return (
-        <main className="w-screen flex flex-col items-center min-h-screen mt-16 bg-[#292929]">
+        <main className="w-screen flex flex-col items-center min-h-screen mt-14 bg-[#292929]">
 
             <h1 className="text-center text-lg mb-4 w-10/12">Välkommen till Filmvisarna!</h1>
-            <p className="text-center text-lg mb-16 w-10/12">Välj en film för att läsa mer eller boka ditt nästa biobesök!</p>
+            <p className="text-center text-sm mb-10 w-10/12">Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
+            filmer från 1910 talet fram till början på 2000 talet. Är detta något för dig se då till att se dig runt bland våra filmer
+            och boka en tid som passar dig!</p>
 
             {/* Filter & Sort */}
             <section className="w-10/12 mb-5 rounded-md shadow-md flex justify-around items-start relative bg-[#24252C] text-white">
@@ -186,26 +188,26 @@ export default function FrontPage() {
             </section>
 
             {/* Movies container*/}
-            <section className="h-96 w-10/12 rounded-md shadow-md flex flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
+            <section className="h-80 w-11/12 rounded-md shadow-md flex flex-row flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
                 {sortedMovies.length === 0 ? (
                     <p className="m-auto">Inga filmer hittades.</p>
                 ) : (
                     sortedMovies.map((movie) => (
                         <article
                             key={movie._id}
-                            className="min-w-50 h-80 m-2 snap-center mx-8"
+                            className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3"
                         >
-                            <Link to={`/movie/${movie._id}`} className="flex flex-col items-center gap-2 p-5 ">
+                            <Link to={`/movie/${movie._id}`} className="flex flex-col items-center justify-start w-36 gap-2">
                                 <img
                                     src={movie.imageSrc}
                                     alt={movie.title}
-                                    className="shadow-2xl h-60 object-cover rounded-md 
+                                    className="shadow-2xl w-32 h-auto object-cover rounded-md 
                                     md:transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
                                     lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105"
                                 />
-                                <p>{movie.title}</p>
+                                <p className=" text-sm mx-2 mt-2">{movie.title}</p>
 
-                                <p>
+                                <p className="text-xs ">
                                     {Array.isArray(movie.genres)
                                         ? movie.genres.map((genre: { title: string }) => genre.title).join(", ")
                                         : movie.genres.title}
@@ -217,11 +219,19 @@ export default function FrontPage() {
             </section>
 
             {/* Theme days container*/}
-            <section className="w-10/12">
-                <article className="min-h-96 rounded-md shadow-md my-10 justify-center items-center flex flex-col bg-[#24252C] text-white">
-                    <section className="lg:flex-row flex flex-col justify-center items-center">
+            <section className="w-11/12 mt-2">
+            <h2 className="w-full bg-[#243365] p-1 mt-10 rounded-md shadow-md text-lg">Temadagar</h2>
+                <article className="min-h-96 w-full rounded-md shadow-md my-5 justify-center items-center flex flex-col bg-[#24252C] text-white">
+                    <section className=" flex flex-col justify-center items-center 
+                    sm:flex-col sm:p-5
+                    md:flex-row 
+                    lg:flex-row ">
+                        <h2 className=" text-center text-xl uppercase font-bold my-2">
+                        Tysta Torsdagen</h2>
                         <Slideshow day="thursday" />
-                        <p className="md:w-1/2 w-10/12 m-2 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</p>
+                        <p className="w-10/12 m-2 text-center
+                        sm:w-11/12">Varje Torsdag i vår lilla salong spelas stumfilmer från tidigast 1910-tal. Vill man läsa mer om 
+                        tema dagen så tryck gärna på läs mer knappen nedan för att få mer information om temadagen.</p>
                     </section>
 
                     <Link to="/theme-thursday" className="">
@@ -232,9 +242,15 @@ export default function FrontPage() {
                 </article>
 
                 <article className="min-h-96 rounded-md shadow-md my-5 justify-center items-center flex  flex-col bg-[#24252C] text-white">
-                    <section className="lg:flex-row flex flex-col justify-center items-center">
+                    <section className="flex flex-col justify-center items-center
+                    sm:flex-col sm:p-5
+                    md:flex-row  
+                    lg:flex-row ">
+                         <h2 className="text-center text-xl uppercase font-bold my-2">
+                        Svenska Söndagen</h2>
                         <Slideshow day="sunday" />
-                        <p className="md:w-1/2 w-10/12 m-2 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, expedita necessitatibus itaque laudantium accusamus fugiat repellat excepturi architecto perspiciatis distinctio nulla veniam voluptates fuga ullam nam eum. Voluptatem, blanditiis dolor.</p>
+                        <p className="md:w-1/2 w-10/12 m-2 text-center">Söndagar är till för att uppleva gamla goda svenska klassiker. Visas i vår lilla salong 
+                        under hela Söndagen. Läs mer för för information om vilka filmer som visas.</p>
                     </section>
 
                     <Link to="/theme-sunday" className="">

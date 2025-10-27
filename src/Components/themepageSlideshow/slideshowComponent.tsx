@@ -75,20 +75,33 @@ export default function Slideshow({ day }: SlideshowProps) {
 
     const baseColor = day === "thursday" ? "0, 0, 0" : "36, 51, 101";
     const textDay = day === "thursday" ? "white" : "#f4c206";
+
     return (
         <section style={{
             backgroundColor: baseColor,
-            backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 72%, transparent), url(${currentMovie.imageSrc})`,
+            backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 49%, rgba(0, 0, 0, 0.61) 55%, transparent), url(${currentMovie.imageSrc})`,
         }}
-        className="bg-contain bg-no-repeat bg-right lg:h-72 lg:w-3/8 flex flex-col justify-center rounded-md shadow-md"
+        className="w-11/12 h-60 bg-contain bg-no-repeat bg-right flex flex-col justify-center items-start rounded-md shadow-md
+        sm:w-11/12 sm:shadow-lg 
+        md:shadow-lg
+        lg:shadow-lg lg:h-72 lg:w-3/8 "
         >
-            <article style={{color: textDay}} className="text-start textDay lg:mx-10 xs:mx-4">
-                <h1 className="my-2 lg:text-xl xs:text-sm">{currentMovie.title} ({currentMovie.releaseYear})</h1>
-                <h2 className="my-2 lg:text-sm xs:text-xs">{currentMovie.genres?.map(g => g.title).join(", ")}</h2>
-                <h2 className="my-2 lg:text-sm xs:text-xs">Filmens Längd: {currentMovie.length} min</h2>
-                <p className="overflow-y-auto w-2/3 text-sm line-clamp-4">{currentMovie.description}</p>
+            <article style={{color: textDay}} className="w-8/12 text-start mx-2 textDay 
+            sm:w-8/12 
+            lg:mx-10 ">
+                <h1 className="text-sm my-2
+                 sm:text-lg 
+                 lg:text-xl">
+                    {currentMovie.title} ({currentMovie.releaseYear})</h1>
+                <h2 className="text-xs my-2 
+                lg:text-sm">
+                    {currentMovie.genres?.map(g => g.title).join(", ")}</h2>
+                <h2 className="text-xs my-2 
+                lg:text-sm">
+                    Filmens Längd: {currentMovie.length} min</h2>
+                <p className="overflow-y-auto w-8/12 text-xs line-clamp-4">{currentMovie.description}</p>
 
-                <article className="mt-4 flex gap-4 py-2">
+                <article className="text-sm mt-2 flex gap-3 py-2">
                     <button onClick={prevSlide} className="cursor-pointer">&#10216; Föregående</button>
                     <button onClick={nextSlide} className="cursor-pointer">Nästa &#10217;</button>
                 </article>
