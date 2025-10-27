@@ -189,13 +189,15 @@ export default function FrontPage() {
                     sortedMovies.map((movie) => (
                         <article
                             key={movie._id}
-                            className="min-w-60 h-80 m-2 snap-center mx-8"
+                            className="min-w-50 h-80 m-2 snap-center mx-8"
                         >
-                            <Link to={`/movie/${movie._id}`} className="flex flex-col items-center gap-2 p-5">
+                            <Link to={`/movie/${movie._id}`} className="flex flex-col items-center gap-2 p-5 ">
                                 <img
                                     src={movie.imageSrc}
                                     alt={movie.title}
-                                    className="shadow-md h-60 object-cover rounded-md"
+                                    className="shadow-2xl h-60 object-cover rounded-md 
+                                    md:transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
+                                    lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105"
                                 />
                                 <p>{movie.title}</p>
 
