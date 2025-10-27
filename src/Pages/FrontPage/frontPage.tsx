@@ -104,7 +104,7 @@ export default function FrontPage() {
             <p className="text-center text-lg mb-16 w-10/12">Välj en film för att läsa mer eller boka ditt nästa biobesök!</p>
 
             {/* Filter & Sort */}
-            <section className="w-10/12 mb-5  rounded-md shadow-md flex justify-around items-start relative bg-[#24252C] text-white">
+            <section className="w-10/12 mb-5 rounded-md shadow-md flex justify-around items-start relative bg-[#24252C] text-white">
 
                 {/* Filter */}
                 <nav className="relative">
@@ -115,9 +115,13 @@ export default function FrontPage() {
                         Filter &darr;
                     </button>
                     {filterOpen && (
-                        <div className="absolute mt-2 bg-[#292929] shadow-md rounded p-2 w-76">
+                        <div 
+                        className="flex flex-row flex-wrap justify-between items-center 
+                        absolute -left-8 mt-5 bg-[#292929] shadow-md rounded p-5 w-72">
+
                             {["Action", "Drama", "Komedi", "Skräck", "Äventyr", "Thriller", "Mystik"].map((genre) => (
-                                <label key={genre} className="flex items-center gap-2 px-2 py-1">
+                                <label key={genre} className="flex items-center gap-2 px-2 py-1 mt-1 mb-2 w-30 h-8 text-sm
+                                hover:underline">
                                     <input
                                         type="checkbox"
                                         checked={selectedGenres.includes(genre)}
@@ -128,7 +132,7 @@ export default function FrontPage() {
                             ))}
 
                             {ageOptions.map((age) => (
-                                <label key={age.value} className="flex items-center gap-2 px-2 py-1">
+                                <label key={age.value} className="flex items-center gap-2 px-2 py-1 mt-2 text-sm text-left">
                                     <input
                                         type="checkbox"
                                         checked={selectedAges.includes(age.value)}
@@ -150,7 +154,7 @@ export default function FrontPage() {
                         Sortera &darr;
                     </button>
                     {sortOpen && (
-                        <ul className="absolute mt-2 bg-[#292929] rounded shadow p-2 right-0 w-76">
+                        <ul className="absolute mt-2 bg-[#292929] rounded shadow p-2 -right-9 w-72">
                             <li
                                 className="px-2 py-1 hover:bg-gray-100 cursor-pointer"
                                 onClick={() => { setSortOption("atoz"); setSortOpen(false); }}
