@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
 import "../BookingPage/BookingPageStyle.css";
+import "../../index.css"
 
 export default function FrontPage() {
     const [filterOpen, setFilterOpen] = useState(false);
@@ -188,7 +189,8 @@ export default function FrontPage() {
             </section>
 
             {/* Movies container*/}
-            <section className="h-80 w-11/12 rounded-md shadow-md flex flex-row flex-nowrap overflow-x-auto overflow-y-hidden snap-x snap-mandatory bg-[#24252C] text-white">
+            <section className="h-80 w-11/12 rounded-md shadow-md flex flex-row flex-nowrap overflow-x-auto overflow-y-hidden scrollbar-layout snap-x snap-mandatory bg-[#24252C] text-white
+            md:px-2">
                 {sortedMovies.length === 0 ? (
                     <p className="m-auto">Inga filmer hittades.</p>
                 ) : (
@@ -203,6 +205,7 @@ export default function FrontPage() {
                                     alt={movie.title}
                                     className="shadow-2xl w-32 h-auto object-cover rounded-md 
                                     md:transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
+                                    md:w-40 md:mx-2
                                     lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105"
                                 />
                                 <p className=" text-sm mx-2 mt-2">{movie.title}</p>

@@ -79,7 +79,7 @@ export default function Slideshow({ day }: SlideshowProps) {
     return (
         <section style={{
             backgroundColor: baseColor,
-            backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 49%, rgba(0, 0, 0, 0.61) 55%, transparent), url(${currentMovie.imageSrc})`,
+            backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 60%, rgba(${baseColor}) 40%, transparent), url(${currentMovie.imageSrc})`,
         }}
         className="w-11/12 h-60 bg-contain bg-no-repeat bg-right flex flex-col justify-center items-start rounded-md shadow-md
         sm:w-11/12 sm:shadow-lg 
@@ -87,7 +87,7 @@ export default function Slideshow({ day }: SlideshowProps) {
         lg:shadow-lg lg:h-72 lg:w-3/8 "
         >
             <article style={{color: textDay}} className="w-8/12 text-start mx-2 textDay 
-            sm:w-8/12 
+            sm:w-9/12 
             lg:mx-10 ">
                 <h1 className="text-sm my-2
                  sm:text-lg 
