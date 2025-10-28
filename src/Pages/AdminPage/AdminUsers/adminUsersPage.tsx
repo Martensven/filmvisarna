@@ -16,7 +16,7 @@
 // }
 import { useState } from "react";
 import { FaUsers, FaSearch } from "react-icons/fa";
-import { AdminUsersList } from "./adminUsersList"; // Justera Aökvägen vid behov
+import { AdminUsersList } from "./adminUsersList";
 
 export default function AdminUsersPage() {
   const [showUserList, setShowUserList] = useState(false);

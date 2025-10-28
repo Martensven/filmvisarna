@@ -151,6 +151,25 @@ router.get("/admin/bookings/:userId", async (req, res) => {
   }
 });
 
+// DELETE /api/bookings/:bookingId
+
+router.delete("/api/admin/bookings/:bookingId", async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+
+    const deletedBooking = await Booking.findByIdAndDelete(bookingId);
+
+    if (!deletedBooking) {
+      return res.status(404).json({ message: "Bokning hittades inte" });
+    }
+
+    res.status(200).json({ message: "Bokningen har avbokats" });
+  } catch (error) {
+    console.error("Fel vid borttagning av bokning:", error);
+    res.status(500).json({ message: "Kunde inte ta bort bokningen" });
+  }
+});
+
 
 
 
