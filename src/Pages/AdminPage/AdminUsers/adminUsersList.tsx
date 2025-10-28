@@ -8,6 +8,18 @@ export type User = {
   phoneNumber: number;
 };
 
+export type Booking = {
+    _id: string;
+    screening_id?: {
+        movie?: { title: string };
+        auditorium?: { name: string };
+        date: string;
+        time: string;
+    };
+    totalPrice: number;
+    created_at: string;
+}
+
 export function AdminUsersList() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
