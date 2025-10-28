@@ -5,7 +5,13 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundImg: {
+        "conic-left-right": "conic-gradient(at left center, )"
+      }
+    },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 }

@@ -101,30 +101,40 @@ export default function FrontPage() {
     return (
         <main className="w-screen flex flex-col items-center min-h-screen mt-14 bg-[#292929]">
 
-            <h1 className="text-center text-lg mb-4 w-10/12">Välkommen till Filmvisarna!</h1>
-            <p className="text-center text-sm mb-10 w-10/12">Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
+            <h1 className="text-center text-lg mb-4 w-10/12
+            sm:text-xl
+            md:text-2xl">Välkommen till Filmvisarna!</h1>
+            <p className="text-center text-sm mb-10 w-10/12
+            sm:text-base
+            md:text-base">Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
             filmer från 1910 talet fram till början på 2000 talet. Är detta något för dig se då till att se dig runt bland våra filmer
             och boka en tid som passar dig!</p>
 
             {/* Filter & Sort */}
-            <section className="w-10/12 mb-5 rounded-md shadow-md flex justify-around items-start relative bg-[#24252C] text-white">
+            <section className="w-10/12 mb-5 rounded-md shadow-md flex justify-around items-start relative glass_effect text-white">
 
                 {/* Filter */}
-                <nav className="relative">
+                <nav className="relative ">
                     <button
                         onClick={() => setFilterOpen(!filterOpen)}
-                        className="px-2 py-1"
+                        className="px-2 py-1 cursor-pointer
+                        sm:text-lg 
+                        md:text-lg"
                     >
                         Filter &darr;
                     </button>
                     {filterOpen && (
                         <div 
                         className="flex flex-row flex-wrap justify-between items-center 
-                        absolute -left-8 mt-5 bg-[#292929] shadow-md rounded p-5 w-72">
+                        absolute -left-8 mt-5 bg-[#292929] shadow-md rounded p-5 w-72
+                        sm:w-86 sm:mt-1
+                        ">
 
                             {["Action", "Drama", "Komedi", "Skräck", "Äventyr", "Thriller", "Mystik"].map((genre) => (
                                 <label key={genre} className="flex items-center gap-2 px-2 py-1 mt-1 mb-2 w-30 h-8 text-sm
-                                hover:underline">
+                                hover:underline
+                                sm:text-base
+                                md:text-base">
                                     <input
                                         type="checkbox"
                                         checked={selectedGenres.includes(genre)}
@@ -135,7 +145,9 @@ export default function FrontPage() {
                             ))}
 
                             {ageOptions.map((age) => (
-                                <label key={age.value} className="flex items-center gap-2 px-2 py-1 mt-2 text-sm text-left">
+                                <label key={age.value} className="flex items-center gap-2 px-2 py-1 mt-2 text-sm text-left
+                                sm:text-base
+                                md:text-base">
                                     <input
                                         type="checkbox"
                                         checked={selectedAges.includes(age.value)}
@@ -152,32 +164,34 @@ export default function FrontPage() {
                 <div className="relative">
                     <button
                         onClick={() => setSortOpen(!sortOpen)}
-                        className="px-2 py-1"
+                        className="px-2 py-1 cursor-pointer
+                        sm:text-base
+                        md:text-lg"
                     >
                         Sortera &darr;
                     </button>
                     {sortOpen && (
                         <ul className="absolute mt-2 bg-[#292929] rounded shadow p-2 -right-9 w-72">
                             <li
-                                className="px-2 py-1 hover:bg-gray-100 cursor-pointer"
+                                className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
                                 onClick={() => { setSortOption("atoz"); setSortOpen(false); }}
                             >
                                 A–Ö
                             </li>
                             <li
-                                className="px-2 py-1 hover:bg-gray-100 cursor-pointer"
+                                className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
                                 onClick={() => { setSortOption("ztoa"); setSortOpen(false); }}
                             >
                                 Ö–A
                             </li>
                             <li
-                                className="px-2 py-1 hover:bg-gray-100 cursor-pointer"
+                                className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
                                 onClick={() => { setSortOption("newest"); setSortOpen(false); }}
                             >
                                 Nyast först
                             </li>
                             <li
-                                className="px-2 py-1 hover:bg-gray-100 cursor-pointer"
+                                className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
                                 onClick={() => { setSortOption("oldest"); setSortOpen(false); }}
                             >
                                 Äldst först
@@ -189,28 +203,47 @@ export default function FrontPage() {
             </section>
 
             {/* Movies container*/}
-            <section className="h-80 w-11/12 rounded-md shadow-md flex flex-row flex-nowrap overflow-x-auto overflow-y-hidden scrollbar-layout snap-x snap-mandatory bg-[#24252C] text-white
-            md:px-2">
+            <section className="h-80 w-11/12 rounded-md shadow-md flex flex-row flex-nowrap 
+            overflow-x-auto overflow-y-hidden
+            [&::-webkit-scrollbar]:h-2  
+            [&::-webkit-scrollbar-track]:rounded-full
+            [&::-webkit-scrollbar-track]:bg-[#24252C]
+            [&::-webkit-scrollbar-thumb]:rounded-full
+            [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
+            snap-x snap-mandatory bg-[#24252C] text-white
+
+            sm:h-96 sm:w-11/12 sm:p-2
+            md:px-2 md:h-96 md:w-11/12
+            lg:w-11/12 lg:h-auto">
                 {sortedMovies.length === 0 ? (
                     <p className="m-auto">Inga filmer hittades.</p>
                 ) : (
                     sortedMovies.map((movie) => (
                         <article
                             key={movie._id}
-                            className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3"
+                            className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3
+                            sm:w-auto sm:h-86
+                            lg:w-auto"
                         >
-                            <Link to={`/movie/${movie._id}`} className="flex flex-col items-center justify-start w-36 gap-2">
+                            <Link to={`/movie/${movie._id}`} className="flex flex-col items-center justify-start w-36 gap-2
+                            sm:w-80 sm:h-86 sm:m-2
+                            md:w-full
+                            lg:w-full">
                                 <img
                                     src={movie.imageSrc}
                                     alt={movie.title}
-                                    className="shadow-2xl w-32 h-auto object-cover rounded-md 
-                                    md:transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
-                                    md:w-40 md:mx-2
-                                    lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105"
+                                    className="shadow-2xl w-32 h-auto object-cover rounded-md
+                                    sm:w-66 sm:h-auto sm:mr-2 sm:ml-2
+                                    md:w-80 md:h-auto md:mr-4 md:ml-4 transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
+                                    md:mx-2
+                                    lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105
+                                    lg:w-80 lg:h-auto"
                                 />
-                                <p className=" text-sm mx-2 mt-2">{movie.title}</p>
+                                <p className=" text-sm mx-2 mt-2
+                                sm:text-base">{movie.title}</p>
 
-                                <p className="text-xs ">
+                                <p className="text-xs
+                                sm:text-sm ">
                                     {Array.isArray(movie.genres)
                                         ? movie.genres.map((genre: { title: string }) => genre.title).join(", ")
                                         : movie.genres.title}
@@ -222,42 +255,51 @@ export default function FrontPage() {
             </section>
 
             {/* Theme days container*/}
-            <section className="w-11/12 mt-2">
-            <h2 className="w-full bg-[#243365] p-1 mt-10 rounded-md shadow-md text-lg">Temadagar</h2>
-                <article className="min-h-96 w-full rounded-md shadow-md my-5 justify-center items-center flex flex-col bg-[#24252C] text-white">
+            <section className="flex flex-col justify-center items-center w-11/12 mt-2
+            md:mt-10 md:flex md:flex-col">
+            <h2 className="w-10/12 mt-10 rounded-md shadow-md text-lg glass_effect p-1 justify-center items-center">Temadagar</h2>
+                <article className="min-h-96 w-full rounded-md shadow-md my-5 justify-center items-center flex flex-col bg-[#24252C] text-white
+                ">
+                    <h2 className=" text-center text-xl uppercase font-bold my-2">
+                        Tysta Torsdagen</h2>
                     <section className=" flex flex-col justify-center items-center 
                     sm:flex-col sm:p-5
                     md:flex-row 
-                    lg:flex-row ">
-                        <h2 className=" text-center text-xl uppercase font-bold my-2">
-                        Tysta Torsdagen</h2>
+                    lg:flex-row  ">
                         <Slideshow day="thursday" />
                         <p className="w-10/12 m-2 text-center
-                        sm:w-11/12">Varje Torsdag i vår lilla salong spelas stumfilmer från tidigast 1910-tal. Vill man läsa mer om 
-                        tema dagen så tryck gärna på läs mer knappen nedan för att få mer information om temadagen.</p>
+                            sm:w-11/12
+                            md:w-7/12 md:px-2">
+                            Varje Torsdag i vår lilla salong spelas stumfilmer från tidigast 1910-tal. Vill man läsa mer om 
+                            tema dagen så tryck gärna på läs mer knappen nedan för att få mer information om temadagen.</p>
                     </section>
 
                     <Link to="/theme-thursday" className="">
-                        <button className="main_buttons p-1 px-2 mb-3 mt-5">
+                        <button className="main_buttons p-1 px-2 mb-3 mt-5
+                        sm:w-25 sm:h-10 sm:text-lg sm:mt-2 sm:mb-5">
                             Läs mer
                         </button>
                     </Link>
                 </article>
 
                 <article className="min-h-96 rounded-md shadow-md my-5 justify-center items-center flex  flex-col bg-[#24252C] text-white">
+                    <h2 className="text-center text-xl uppercase font-bold my-2">
+                        Svenska Söndagen</h2>
                     <section className="flex flex-col justify-center items-center
                     sm:flex-col sm:p-5
                     md:flex-row  
-                    lg:flex-row ">
-                         <h2 className="text-center text-xl uppercase font-bold my-2">
-                        Svenska Söndagen</h2>
+                    lg:flex-row lg:w-full">
                         <Slideshow day="sunday" />
-                        <p className="md:w-1/2 w-10/12 m-2 text-center">Söndagar är till för att uppleva gamla goda svenska klassiker. Visas i vår lilla salong 
+                        <p className=" w-10/12 m-2 text-center
+                        sm:w-11/12
+                        md:w-7/12 md:px-2
+                        lg:w-7/12">Söndagar är till för att uppleva gamla goda svenska klassiker. Visas i vår lilla salong 
                         under hela Söndagen. Läs mer för för information om vilka filmer som visas.</p>
                     </section>
 
                     <Link to="/theme-sunday" className="">
-                        <button className="main_buttons p-1 px-2 mb-3 mt-5">
+                        <button className="main_buttons p-1 px-2 mb-3 mt-5
+                        sm:w-25 sm:h-10 sm:text-lg sm:mt-2 sm:mb-5">
                             Läs mer
                         </button>
                     </Link>
