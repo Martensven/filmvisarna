@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 
 export type User = {
   _id: string;
@@ -47,6 +47,8 @@ export function AdminUsersList() {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+
   const fetchUserBookings = async () => {
     if (!selectedUser) return;
     try {
@@ -59,16 +61,41 @@ export function AdminUsersList() {
     } catch (error) {
         console.error("Fel vid hämtning av bokningar:", error);
     }
-
-  }
+};
+  fetchUserBookings();
+}, [selectedUser]);
 
   const handleUserClick = (user: User) => {
     setSelectedUser(user);
+    setCancelMessage("");
     };
 
     const closeModal = () => {
       setSelectedUser(null);
+      setBookings([]);
+      setCancelMessage("");
     }
+
+    const handleCancelBooking = async (bookingId: string) => {
+        const confirmed = window.confirm("Är du säker på att du vill avboka denna bokning?");
+        if (!confirmed) return;
+
+        try {
+            const respone = await fetch(`/api/bookings/${bookingId}`, {
+                method: "DELETE",
+            });
+            if (!respone.ok)
+                throw new Error("Kunde inte ta bort bokningen");
+            setCancelMessage("Bokningen har avbokats.");
+            setBookings(bookings.filter(b => b._id !== bookingId));
+} catch (error) {
+            console.error("Fel vid avbokning av bokning:", error);
+            setCancelMessage("Ett fel uppstod vid avbokning av bokningen.");
+        }
+
+        setTimeout(() => {
+            setCancelMessage("");
+        }, 3000);
 
   if (loading) {
     return <div>Laddar användare...</div>;
