@@ -1,6 +1,8 @@
 import express from "express";
 import { KioskSale } from "../models/kioskSalesSchema.js";
 import { Kiosk } from "../models/kioskSchema.js";
+import { Booking } from "../models/bookingSchema.js";
+
 
 const router = express.Router();
 
@@ -132,6 +134,23 @@ router.delete("/admin/api/users/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+// Get bookings by user ID
+
+router.get("/admin/bookings/:userId", async (req, res) => {
+  try {
+    const bookings = await Booking.find({ user_id: req.params.userId })
+      .populate("screening_id")
+      .populate("seats.seat_id")
+      .populate("tickets.ticket_id");
+
+    res.json(bookings);
+  } catch (error) {
+    console.error("Fel vid hämtning av bokningar:", error);
+    res.status(500).json({ error: "Kunde inte hämta bokningar" });
+  }
+});
+
 
 
 

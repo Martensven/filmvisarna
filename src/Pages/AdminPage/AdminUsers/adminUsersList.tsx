@@ -24,6 +24,8 @@ export function AdminUsersList() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [cancelMessage, setCancelMessage] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -44,6 +46,21 @@ export function AdminUsersList() {
 
     fetchUsers();
   }, []);
+
+  const fetchUserBookings = async () => {
+    if (!selectedUser) return;
+    try {
+        const response = await fetch(`/api/bookings/user/${selectedUser._id}`);
+        if (!response.ok) {
+            throw new Error("Något gick fel vid hämtning av bokningar");
+        }
+        const data: Booking[] = await response.json();
+        setBookings(data);
+    } catch (error) {
+        console.error("Fel vid hämtning av bokningar:", error);
+    }
+
+  }
 
   const handleUserClick = (user: User) => {
     setSelectedUser(user);
