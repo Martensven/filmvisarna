@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Toast from "./toast"; // Justera sökvägen om du har en annan mappstruktur
 
 export type User = {
   _id: string;
@@ -25,28 +26,20 @@ export function AdminUsersList() {
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [cancelMessage, setCancelMessage] = useState("");
-  // State for pagination, we want to show 10 users per page
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
-  // Get the index of the last user on the current page
   const indexOfLastUser = currentPage * usersPerPage;
-  // Get the index of the first user on the current page
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  // Slice the users array to get only the users for the current page
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-  // Calculate the total number of pages
   const totalPages = Math.ceil(users.length / usersPerPage);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await fetch("/api/users");
-        if (!response.ok) {
-          throw new Error("Något gick fel vid hämtning av användare");
-        }
-
+        if (!response.ok) throw new Error("Något gick fel vid hämtning av användare");
         const data: User[] = await response.json();
         setUsers(data);
         setCurrentPage(1);
@@ -56,7 +49,6 @@ export function AdminUsersList() {
         setLoading(false);
       }
     };
-
     fetchUsers();
   }, []);
 
@@ -65,9 +57,7 @@ export function AdminUsersList() {
       if (!selectedUser) return;
       try {
         const response = await fetch(`/api/bookings/user/${selectedUser._id}`);
-        if (!response.ok) {
-          throw new Error("Något gick fel vid hämtning av bokningar");
-        }
+        if (!response.ok) throw new Error("Något gick fel vid hämtning av bokningar");
         const data: Booking[] = await response.json();
         setBookings(data);
       } catch (error) {
@@ -79,36 +69,31 @@ export function AdminUsersList() {
 
   const handleUserClick = (user: User) => {
     setSelectedUser(user);
-    setCancelMessage("");
+    setToastMessage(null); // Rensa tidigare meddelanden
   };
 
   const closeModal = () => {
     setSelectedUser(null);
     setBookings([]);
-    setCancelMessage("");
+    setToastMessage(null); // Rensa tidigare meddelanden
   };
 
   const handleCancelBooking = async (bookingId: string) => {
-    const confirmed = window.confirm(
-      "Är du säker på att du vill avboka denna bokning?"
-    );
+    const confirmed = window.confirm("Är du säker på att du vill avboka denna bokning?");
     if (!confirmed) return;
 
     try {
-      const respone = await fetch(`/api/admin/bookings/${bookingId}`, {
+      const response = await fetch(`/api/admin/bookings/${bookingId}`, {
         method: "DELETE",
       });
-      if (!respone.ok) throw new Error("Kunde inte ta bort bokningen");
-      setCancelMessage("Bokningen har avbokats.");
+      if (!response.ok) throw new Error("Kunde inte ta bort bokningen");
+
+      setToastMessage("Bokningen har avbokats.");
       setBookings(bookings.filter((b) => b._id !== bookingId));
     } catch (error) {
       console.error("Fel vid avbokning av bokning:", error);
-      setCancelMessage("Ett fel uppstod vid avbokning av bokningen.");
+      setToastMessage("Ett fel uppstod vid avbokning av bokningen.");
     }
-
-    setTimeout(() => {
-      setCancelMessage("");
-    }, 3000);
   };
 
   if (loading) {
@@ -142,9 +127,7 @@ export function AdminUsersList() {
           Sida {currentPage} av {totalPages}
         </span>
         <button
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
           className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
         >
@@ -166,15 +149,9 @@ export function AdminUsersList() {
             <h2 className="text-2xl font-semibold mb-2">
               {selectedUser.firstName} {selectedUser.lastName}
             </h2>
-            <p>
-              <strong>Telefon:</strong> {selectedUser.phoneNumber}
-            </p>
-            <p>
-              <strong>Email:</strong> {selectedUser.email}
-            </p>
-            <p>
-              <strong>Användar-ID:</strong> {selectedUser._id}
-            </p>
+            <p><strong>Telefon:</strong> {selectedUser.phoneNumber}</p>
+            <p><strong>Email:</strong> {selectedUser.email}</p>
+            <p><strong>Användar-ID:</strong> {selectedUser._id}</p>
 
             <h3 className="text-xl font-semibold mt-6 mb-2">Bokningar</h3>
             {bookings.length === 0 ? (
@@ -186,23 +163,11 @@ export function AdminUsersList() {
                     key={booking._id}
                     className="border p-4 rounded-md bg-gray-100 text-black"
                   >
-                    <p>
-                      <strong>Film:</strong>{" "}
-                      {booking.screening_id?.movie?.title || "Okänd"}
-                    </p>
-                    <p>
-                      <strong>Datum:</strong> {booking.screening_id?.date}
-                    </p>
-                    <p>
-                      <strong>Tid:</strong> {booking.screening_id?.time}
-                    </p>
-                    <p>
-                      <strong>Salong:</strong>{" "}
-                      {booking.screening_id?.auditorium?.name || "Okänd"}
-                    </p>
-                    <p>
-                      <strong>Totalt pris:</strong> {booking.totalPrice} kr
-                    </p>
+                    <p><strong>Film:</strong> {booking.screening_id?.movie?.title || "Okänd"}</p>
+                    <p><strong>Datum:</strong> {booking.screening_id?.date}</p>
+                    <p><strong>Tid:</strong> {booking.screening_id?.time}</p>
+                    <p><strong>Salong:</strong> {booking.screening_id?.auditorium?.name || "Okänd"}</p>
+                    <p><strong>Totalt pris:</strong> {booking.totalPrice} kr</p>
                     <button
                       onClick={() => handleCancelBooking(booking._id)}
                       className="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
@@ -213,14 +178,12 @@ export function AdminUsersList() {
                 ))}
               </ul>
             )}
-
-            {cancelMessage && (
-              <div className="mt-4 text-green-700 font-semibold">
-                {cancelMessage}
-              </div>
-            )}
           </div>
         </div>
+      )}
+
+      {toastMessage && (
+        <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
       )}
     </div>
   );
