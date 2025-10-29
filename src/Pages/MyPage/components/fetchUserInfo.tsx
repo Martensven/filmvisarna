@@ -20,6 +20,16 @@ export default function FetchUserInfo() {
                 <button className="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600 mb-4">
                     Redigera information
                 </button>
+                {user.role === "admin" && (
+          <a
+            href="/admin"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          >
+            Gå till Adminpanel
+          </a>
+        )}
             </section>
         </>
     );

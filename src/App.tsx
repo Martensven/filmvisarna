@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router";
 import { Navigate } from "react-router-dom";
+import { useAuth } from "./context/authContext";
+
 import FrontPage from "./Pages/FrontPage/frontPage.js";
 import BookingPage from "./Pages/BookingPage/bookingPage.tsx";
 import MoviePage from "./Pages/MoviePage/moviePage.tsx";
@@ -21,11 +23,14 @@ import AdminAddMoviePage from "./Pages/AdminPage/adminAddMovie.tsx";
 import AdminStart from "./Pages/AdminPage/adminStart.tsx";
 
 function App() {
+
   const [loginPopup, setLoginPopup] = useState<
     "login" | "register" | "forgot-password" | null
   >(null);
   const [popupSlide, setPopupSlide] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+const { user, loading } = useAuth();
+
 
   const handleClosing = () => {
     setPopupSlide(true);
@@ -36,6 +41,9 @@ function App() {
   };
 
 
+  if (loading) {
+  return <div className="text-white p-10">Laddar användardata...</div>;
+}
 
   return (
     <>
