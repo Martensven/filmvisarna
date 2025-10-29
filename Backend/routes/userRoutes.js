@@ -33,12 +33,18 @@ router.post(
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
 
+      // const user = new User({
+      //   ...req.body,
+      //   password: hashedPassword,
+      // });
       const user = new User({
-        ...req.body,
+        email: req.body.email,
         password: hashedPassword,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        phoneNumber: req.body.phoneNumber,
+        role: "user", // 👈 hårdkodat
       });
-
-
 
       await user.save();
       res.status(201).json({
@@ -64,10 +70,9 @@ router.post(
         <p> Vi hoppas att du ska finna mycket nöje med vårt utbud av gamla goda klassiker mellan tidigt 1900tal och senare 2000tal.</p>
         <p>Ytterligare information om ditt konto eller behov av lösenords-återställning finns att hämta hos oss vår kundservice.</p>
         <p>Med vänliga hälsningar 
-        Filmvisarna</p>`
+        Filmvisarna</p>`,
       });
       console.log("Mejl har skickats iväg");
-
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -131,21 +136,29 @@ router.post("/api/login", async (req, res) => {
       message: "Already logged in",
       user: {
         email: req.session.userEmail,
+        
       },
     });
   }
-  
+
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-  if (!user) return res.status(401).json({ message: "Invalid email or password" });
+  if (!user)
+    return res.status(401).json({ message: "Invalid email or password" });
 
   const valid = await bcrypt.compare(password, user.password);
-  if (!valid) return res.status(401).json({ message: "Invalid email or password" });
+  if (!valid)
+    return res.status(401).json({ message: "Invalid email or password" });
 
   req.session.userId = user._id;
   req.session.userEmail = user.email;
-  res.json({ message: "Logged in", user: { email: user.email, firstName: user.firstName } });
+  req.session.userRole = user.role;
+
+  res.json({
+    message: "Logged in",
+    user: { email: user.email, firstName: user.firstName, role: user.role, },
+  });
 });
 
 // Log out
@@ -156,17 +169,33 @@ router.post("/api/logout", (req, res) => {
     });
   }
 
-  req.session.destroy(err => {
+  req.session.destroy((err) => {
     if (err) return res.status(500).json({ message: "Logout failed" });
-    res.clearCookie('connect.sid');
+    res.clearCookie("connect.sid");
     res.json({ message: "Logged out" });
   });
 });
 
+// // Check current session
+// router.get("/api/me", (req, res) => {
+//   if (!req.session.userId)
+//     return res.status(401).json({ message: "Not logged in" });
+//   res.json({ userId: req.session.userId, email: req.session.userEmail });
+// });
+
 // Check current session
-router.get("/api/me", (req, res) => {
+router.get("/api/me", async (req, res) => {
   if (!req.session.userId) return res.status(401).json({ message: "Not logged in" });
-  res.json({ userId: req.session.userId, email: req.session.userEmail });
+
+  const user = await User.findById(req.session.userId);
+  if (!user) return res.status(404).json({ message: "User not found" });
+
+  res.json({
+    userId: user._id,
+    email: user.email,
+    role: user.role,
+  });
 });
+
 
 export default router;

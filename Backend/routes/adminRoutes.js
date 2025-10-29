@@ -1,10 +1,13 @@
-import express from "express";
+import express, { Router } from "express";
 import { KioskSale } from "../models/kioskSalesSchema.js";
 import { Kiosk } from "../models/kioskSchema.js";
 import { Booking } from "../models/bookingSchema.js";
+import { isAdmin } from "../middleware/isAdmin.js";
 
 
 const router = express.Router();
+// Middleware to check if user is admin for all admin routes
+router.use(isAdmin);
 
 // Admin route, get sales from kiosk
 router.get("/api/sales/compare", async (req, res) => {
