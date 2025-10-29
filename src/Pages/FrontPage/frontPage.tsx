@@ -292,8 +292,8 @@ export default function FrontPage() {
                         Svenska Söndagen</h2>
                     <section className="flex flex-col justify-center items-center
                     sm:flex-col sm:p-5
-                    md:flex-row  
-                    lg:flex-row lg:w-full">
+                    md:flex-row-reverse  
+                    lg:flex-row-reverse lg:w-full">
                         <Slideshow day="sunday" />
                         <p className=" w-10/12 m-2 text-center
                         sm:w-11/12
