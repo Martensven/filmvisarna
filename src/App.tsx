@@ -19,6 +19,8 @@ import SalesPage from "./Pages/AdminPage/salesPage.tsx";
 import AdminAddMoviePage from "./Pages/AdminPage/adminAddMovie.tsx";
 import AdminStart from "./Pages/AdminPage/adminStart.tsx";
 import AdminUsersPage from "./Pages/AdminPage/AdminUsers/adminUsersPage.tsx";
+import AdminUserCard from "./Pages/AdminPage/AdminUsers/adminUserCard.tsx";
+
 
 function App() {
   const [loginPopup, setLoginPopup] = useState<
@@ -71,6 +73,7 @@ function App() {
           <Route path="sales" element={<SalesPage />} />
           <Route path="add-movie" element={<AdminAddMoviePage />} />
           <Route path="users" element={<AdminUsersPage />} />
+          <Route path="user-card" element={<AdminUserCard />} />
         </Route>
       </Routes>
       {/* Making sure Header and Footer are not shown on admin pages */}
