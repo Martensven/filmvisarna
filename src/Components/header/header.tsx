@@ -32,7 +32,7 @@ export default function Header({ onLoginClick }: HeaderProps) {
                     />
                 </div>
 
-                <nav className="w-11/12 flex justify-center items-center bg-[#243365] text-white mt-5 rounded-md shadow-md">
+                <nav className="w-11/12 flex flex-col justify-center items-center bg-[#243365] text-white mt-5 rounded-md shadow-md">
                     <section className="flex items-center justify-between w-11/12 h-12 px-4">
 
                         <Link to="/" onClick={() => setIsOpen(false)}>
