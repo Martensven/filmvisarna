@@ -157,24 +157,35 @@ router.get("/api/bookings/:id", async (req, res) => {
 });
 
 // Get bookings by user ID
-router.get("/api/bookings/user/:user_id", async (req, res) => {
+router.get("/api/bookings/user/:id", async (req, res) => {
   try {
-    const bookings = await Booking.find({ user_id: req.params.user_id })
+    const { id } = req.params;
+    const { type } = req.query; // "past" eller "upcoming"
+
+    const bookings = await Booking.find({ user_id: id })
       .populate("user_id", "firstName lastName email")
       .populate({
         path: "screening_id",
-        populate: [
-          { path: "movie", select: "title posterUrl" },
-          { path: "auditorium", select: "name" }
-        ],
-        select: "movie date time auditorium"
+        populate: { path: "movie auditorium" },
       })
       .populate("seats.seat_id")
       .populate("tickets.ticket_id");
 
-    res.status(200).json(bookings);
+    const now = new Date();
+    const parseBookingDate = (b) =>
+      new Date(`${b.screening_id.date} ${b.screening_id.time}`);
+
+    let filtered = bookings;
+
+    if (type === "upcoming") {
+      filtered = bookings.filter((b) => parseBookingDate(b) >= now);
+    } else if (type === "past") {
+      filtered = bookings.filter((b) => parseBookingDate(b) < now);
+    }
+
+    res.status(200).json(filtered);
   } catch (error) {
-    res.status(500).json({ errorMsg: "Failed to retrieve bookings", error });
+    res.status(500).json({ errorMSG: "Failed to retrieve bookings for user", error });
   }
 });
 
