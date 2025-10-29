@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router";
+import { Navigate } from "react-router-dom";
 import FrontPage from "./Pages/FrontPage/frontPage.js";
 import BookingPage from "./Pages/BookingPage/bookingPage.tsx";
 import MoviePage from "./Pages/MoviePage/moviePage.tsx";
@@ -65,7 +66,7 @@ function App() {
         <Route path="/kiosk" element={<KioskPage />} />
         <Route path="/movie/:id" element={<DetailMovie />} />
         {/* Adminpages uses nested routes */}
-        <Route path="/admin" element={<AdminPage />}>
+        <Route path="/admin" element={ user?.role === "admin" ? (<AdminPage />) : (<Navigate to="/" replace />) }>
           <Route index element={<AdminStart />} />
           <Route path="sales" element={<SalesPage />} />
           <Route path="add-movie" element={<AdminAddMoviePage />} />
