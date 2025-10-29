@@ -17,6 +17,7 @@
   font-family: "Noto Serif", serif;
   background-color: #292929;
   color: white;
+  overflow-x: hidden;
 }
 
 .animation-slidein {

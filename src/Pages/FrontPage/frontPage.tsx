@@ -221,14 +221,12 @@ export default function FrontPage() {
                     sortedMovies.map((movie) => (
                         <article
                             key={movie._id}
-                            className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3
-                            sm:w-auto sm:h-86
-                            lg:w-auto"
+                            className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3"
                         >
                             <Link to={`/movie/${movie._id}`} className="flex flex-col items-center justify-start w-36 gap-2
                             sm:w-80 sm:h-86 sm:m-2
-                            md:w-full
-                            lg:w-full">
+                            md:w-50
+                            lg:w-50">
                                 <img
                                     src={movie.imageSrc}
                                     alt={movie.title}
