@@ -203,7 +203,7 @@ export default function FrontPage() {
             </section>
 
             {/* Movies container*/}
-            <section className="h-80 w-11/12 rounded-md shadow-md flex flex-row flex-nowrap 
+            <section className="h-80 w-11/12 rounded-md shadow-md flex flex-row
             overflow-x-auto overflow-y-hidden
             [&::-webkit-scrollbar]:h-2  
             [&::-webkit-scrollbar-track]:rounded-full
@@ -214,19 +214,21 @@ export default function FrontPage() {
 
             sm:h-96 sm:w-11/12 sm:p-2
             md:px-2 md:h-96 md:w-11/12
-            lg:w-11/12 lg:h-auto">
+            lg:w-11/12 lg:h-100">
                 {sortedMovies.length === 0 ? (
                     <p className="m-auto">Inga filmer hittades.</p>
                 ) : (
                     sortedMovies.map((movie) => (
                         <article
                             key={movie._id}
-                            className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3"
+                            className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3
+                            md:min-w-42
+                            lg:min-w-46"
                         >
                             <Link to={`/movie/${movie._id}`} className="flex flex-col items-center justify-start w-36 gap-2
                             sm:w-80 sm:h-86 sm:m-2
-                            md:w-50
-                            lg:w-50">
+                            md:w-full
+                            lg:w-50 lg:m-1">
                                 <img
                                     src={movie.imageSrc}
                                     alt={movie.title}
@@ -235,13 +237,16 @@ export default function FrontPage() {
                                     md:w-80 md:h-auto md:mr-4 md:ml-4 transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
                                     md:mx-2
                                     lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105
-                                    lg:w-80 lg:h-auto"
+                                    lg:w-50 lg:mx-1 "
                                 />
                                 <p className=" text-sm mx-2 mt-2
-                                sm:text-base">{movie.title}</p>
+                                sm:text-base
+                                lg:m-0 lg:text-base">{movie.title}</p>
 
                                 <p className="text-xs
-                                sm:text-sm ">
+                                sm:text-sm 
+                                md:
+                                lg:underline">
                                     {Array.isArray(movie.genres)
                                         ? movie.genres.map((genre: { title: string }) => genre.title).join(", ")
                                         : movie.genres.title}
@@ -258,7 +263,8 @@ export default function FrontPage() {
             <h2 className="w-10/12 mt-10 rounded-md shadow-md text-lg glass_effect p-1 justify-center items-center">Temadagar</h2>
                 <article className="min-h-96 w-full rounded-md shadow-md my-5 justify-center items-center flex flex-col bg-[#24252C] text-white
                 ">
-                    <h2 className=" text-center text-xl uppercase font-bold my-2">
+                    <h2 className=" text-center text-xl uppercase font-bold my-2
+                    lg:mt-5 lg:underline">
                         Tysta Torsdagen</h2>
                     <section className=" flex flex-col justify-center items-center 
                     sm:flex-col sm:p-5
@@ -281,7 +287,8 @@ export default function FrontPage() {
                 </article>
 
                 <article className="min-h-96 rounded-md shadow-md my-5 justify-center items-center flex  flex-col bg-[#24252C] text-white">
-                    <h2 className="text-center text-xl uppercase font-bold my-2">
+                    <h2 className="text-center text-xl uppercase font-bold my-2
+                    lg:mt-5 lg:underline">
                         Svenska Söndagen</h2>
                     <section className="flex flex-col justify-center items-center
                     sm:flex-col sm:p-5
