@@ -10,7 +10,7 @@ interface HeaderProps {
     onLogout: () => void;
 }
 
-export default function Header({ onLoginClick, isLoggedIn, onLogout }: HeaderProps) {
+export default function Header({ onLoginClick }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { user, logout } = useAuth(); // ✅ Kopplar in auth
 
@@ -28,7 +28,7 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout }: HeaderPro
                 md:justify-start md:items-start
                 lg:justify-start lg:items-start">
                     <img
-                        src={`${LoggoPic}`}
+                        src={`${LoggoNR1}`}
                         alt="Filmvisarnas loggo"
                         className="w-56 m-5 rounded-sm
                         sm:w-74 
@@ -52,27 +52,20 @@ export default function Header({ onLoginClick, isLoggedIn, onLogout }: HeaderPro
                             {isOpen ? "✕" : "☰"}
                         </button>
 
-                        {/* Desktop menu */}
-                        <ul className="desktopNav hidden w-full justify-around items-center text-sm font-medium
-                        md:flex md:text-base">
-                            <li className="md:hover:scale-105 lg:hover:scale-110"><Link to="/"></Link></li>
-                            <li className="md:hover:scale-105 lg:hover:scale-110"><Link className="" to="/about">Om Oss</Link></li>
-                            <li className="md:hover:scale-105 lg:hover:scale-110"><Link to="/kiosk">Kiosk</Link></li>
-                            <li className="md:hover:scale-105 lg:hover:scale-110"><button onClick={onLoginClick} className="cursor-pointer">Logga In</button></li>
                         {/* ✅ Desktop menu */}
                         <ul className="desktopNav hidden md:flex w-full justify-between items-center text-sm font-medium">
-                            <li><Link to="/about">Om Oss</Link></li>
-                            <li><Link to="/kiosk">Kiosk</Link></li>
+                            <li className="md:hover:scale-105 lg:hover:scale-110"><Link to="/about">Om Oss</Link></li>
+                            <li className="md:hover:scale-105 lg:hover:scale-110"><Link to="/kiosk">Kiosk</Link></li>
 
                             {user && (
-                                <li>
+                                <li className="md:hover:scale-105 lg:hover:scale-110">
                                     <Link to="/my-page" className="cursor-pointer hover:underline">
                                         Mina Sidor
                                     </Link>
                                 </li>
                             )}
 
-                            <li>
+                            <li className="md:hover:scale-105 lg:hover:scale-110">
                                 {user ? (
                                     <button onClick={handleLogout} className="cursor-pointer text-red-300 hover:text-red-400">
                                         Logga Ut
