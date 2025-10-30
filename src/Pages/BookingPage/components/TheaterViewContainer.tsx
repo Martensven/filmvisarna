@@ -53,8 +53,8 @@ export default function TheaterViewContainer({ selectTheaterId, selectShowing }:
     fetchShowing();
   }, [selectShowing]);
 
-  if (!theater) return <p>Laddar salong...</p>;
-  if (!currentShowing) return <p>Laddar föreställning...</p>;
+  if (!theater) return null;
+  if (!currentShowing) return null;
 
   return (
     <main className="w-full flex flex-col justify-center items-center sm:w-11/12 sm:h-auto md:w-full md:flex md:justify-center md:items-center md:mt-5 lg:w-11/12 lg:h-auto lg:mt-5">

@@ -18,36 +18,40 @@ export default function TheaterView({ selectShowing}: Props) {
   useEffect(() => {
     if (!selectShowing || !selectShowing.auditorium?._id) return;
     
+    // Reset current seat state when switching screenings
     setSelectedSeat(new Set());
     setBookedSeats(selectShowing.bookedSeats || []);
     setPendingSeats(selectShowing.pendingSeats || []);
 
+    // Fetch seat layout
     const fetchSeats = async () => {
       try {
-        const res = await fetch(`/api/auditoriums/${selectShowing.auditorium._id}/seats`);
+        const res = await fetch(`/api/auditoriums/${selectShowing.auditorium._id}/seats`, {
+          method: "GET",
+          headers: {"Content-Type": "application/json"}
+        });
         const data = await res.json();
         setSeats(data);
       } catch (err) {
         console.error("Failed to load seats:", err);
-      }
-    };
-
+      }};
     fetchSeats();
-
-    // Socket.IO setup
-    sockets.emit("join_showing", selectShowing._id);
-
-    sockets.on("seat_update", (data: { bookedSeats: string[]; pendingSeats: string[] }) => {
-      setBookedSeats(data.bookedSeats);
-      setPendingSeats(data.pendingSeats);
-    });
     
-    return () => {
-      sockets.emit("leave_showing", selectShowing._id);
-      sockets.off("seat_update");
-    };
-  }, [selectShowing?._id, selectShowing?.auditorium?._id]);
+    // --- SOCKET SETUP ---
+    sockets.emit("joinScreening", selectShowing._id);
 
+    // Listen for live updates from other users
+    const handleSeatUpdate = (data: { bookedSeats?: string[]; pendingSeats?: string[] }) => {
+      console.log("Incoming seat update:", data); 
+      if (data.bookedSeats) setBookedSeats(data.bookedSeats);
+      if (data.pendingSeats) setPendingSeats(data.pendingSeats);
+    };
+    
+    sockets.on("seatUpdate", handleSeatUpdate);
+    return () => {
+      sockets.emit("leaveScreening", selectShowing._id); 
+      sockets.off("seatUpdate", handleSeatUpdate);
+    };}, [selectShowing?._id, selectShowing?.auditorium?._id]);
   
   if (!selectShowing) return <p>Laddar föreställning...</p>;
   if (!seats.length) return <p>Laddar platser...</p>;
@@ -64,27 +68,25 @@ export default function TheaterView({ selectShowing}: Props) {
     if (!selectShowing) return;
     const seat = seats.find(s => s.rowNumber === row && s.seatNumber === seatNumber);
     if (!seat) return;
-    const seatKey = seat._id;
-    
+    const seatId = seat._id;
+
     // Prevent interaction with booked or pending
-    if (bookedSeats.includes(seatKey) || pendingSeats.includes(seatKey)) return;
-    
-    setSelectedSeat((prev) => {
+    if (bookedSeats.includes(seatId) || pendingSeats.includes(seatId)) return;
+
+    setSelectedSeat(prev => {
       const newSet = new Set(prev);
-      if (newSet.has(seatKey)) {
-        newSet.delete(seatKey);
-        sockets.emit("seat_unselect", { showingId: selectShowing._id, seatKey });
+      if (newSet.has(seatId)) {
+        newSet.delete(seatId);
+        sockets.emit("seatUnselect", { screeningId: selectShowing._id, seatId });
       } else {
         if (newSet.size >= totalTickets) return prev;
-        newSet.add(seatKey);
-        sockets.emit("seat_select", { showingId: selectShowing._id, seatKey });
+        newSet.add(seatId);
+        sockets.emit("seatSelect", { screeningId: selectShowing._id, seatId });
       }
-      return newSet;
+    return newSet;
     });
   };
   
-  console.log("this is bookedSeats:", bookedSeats);
-  console.log("seat._id type:", typeof seats[0]?._id, seats[0]?._id);
   return (
     <section className="flex flex-col items-center w-full mt-5 mb-5">
       <article className="flex flex-col items-center w-11/12 md:w-8/12 lg:w-6/12">
@@ -98,15 +100,15 @@ export default function TheaterView({ selectShowing}: Props) {
             <div key={rowI} className="flex mb-1">
               {rowSeats.map((seat) => {
                 const seatKey = seat._id; // use MongoDB seat ID
-                const isBooked = bookedSeats.includes(seat._id);
-                const isPending = pendingSeats.includes(seat._id);
+                const isBooked = bookedSeats.includes(seatKey);
+                const isPending = pendingSeats.includes(seatKey);
                 const isSelected = selectedSeat.has(seatKey);
                 const isAccessible = seat.accessible;
 
                 let color = "#243365";
                 if (isBooked) color = "#d9534f"; 
-                else if (isPending) color = "#f0ad4e"; 
                 else if (isSelected) color = "#5cb85c"; 
+                else if (isPending) color = "#f0ad4e"; 
                 else if (isAccessible) color = "#dede39"; 
 
                 return (
@@ -124,7 +126,7 @@ export default function TheaterView({ selectShowing}: Props) {
                     }}
                     title={`Rad ${seat.rowNumber + 1}, Stol ${seat.seatNumber + 1} ${
                       isAccessible ? "(Tillgänglighetsanpassad)" : ""
-                    } ${isBooked ? "(Upptagen)" : isPending ? "(Väntar...)" : ""}`}
+                    } ${isBooked ? "(Upptagen)" : isPending ? "(Håller på att bli bokat)" : ""}`}
                   />
                 );
               })}
@@ -136,11 +138,13 @@ export default function TheaterView({ selectShowing}: Props) {
         <div className="mt-3 text-center">
           <strong>Valda stolar:</strong>{" "}
           {Array.from(selectedSeat)
-            .map((key) => {
-              const [r, s] = key.split("-").map(Number);
-              return `Rad ${r + 1}, Stol ${s + 1}`;
-            })
-            .join(", ") || "Inga"}
+          .map((seatId) => {
+            const seat = seats.find((s) => s._id === seatId);
+            if (!seat) return null;
+            return `Rad ${seat.rowNumber + 1}, Stol ${seat.seatNumber + 1}`;
+          })
+          .filter(Boolean)
+          .join(", ") || "Inga"}
         </div>
 
         <p className="mt-3">
