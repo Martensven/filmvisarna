@@ -89,13 +89,20 @@ export default function TheaterView({ selectShowing}: Props) {
   
   return (
     <section className="flex flex-col items-center w-11/12 glass_effect mt-5 mb-5
-    lg:w-11/12 lg:h-100 lg:flex lg:justify-center lg:items-center">
+    lg:w-11/12 lg:h-200 lg:flex lg:justify-center lg:items-center lg:mt-0">
       <article className="flex flex-col items-center w-11/12 
       md:w-8/12 
-      lg:w-6/12">
-        <h2 className="p-3">{selectShowing.movie.title}</h2>
+      lg:w-11/12 lg:h-180">
+        <h2 className="p-3
+        lg:text-lg ">{selectShowing.movie.title}</h2>
         <p>{selectShowing.auditorium.name}</p>
         <p>Tid: {selectShowing.time}</p>
+
+        {/* "Cinema frame" visuell appeal */}
+        <span className="bg-gray-600 w-11/12 h-2 rounded-sm
+          
+        lg:w-9/12 lg:h-3 lg:mt-15 lg:mb-10 lg:shadow-lg lg:shadow-sky-200"></span>
+
 
         {/* Seat grid */}
         <div className="mt-4">
@@ -108,7 +115,7 @@ export default function TheaterView({ selectShowing}: Props) {
                 const isSelected = selectedSeat.has(seatKey);
                 const isAccessible = seat.accessible;
 
-                let color = "#243365";
+                let color = "#151d38ff";
                 if (isBooked) color = "#d9534f"; 
                 else if (isSelected) color = "#5cb85c"; 
                 else if (isPending) color = "#f0ad4e"; 
@@ -119,9 +126,9 @@ export default function TheaterView({ selectShowing}: Props) {
                     key={seat._id}
                     onClick={() => toggleSeat(seat.rowNumber, seat.seatNumber)}
                     style={{
-                      width: 26,
-                      height: 26,
-                      marginRight: 3,
+                      width: 28,
+                      height: 28,
+                      marginRight: 4,
                       borderRadius: 4,
                       backgroundColor: color,
                       border: "1px solid white",
@@ -138,13 +145,14 @@ export default function TheaterView({ selectShowing}: Props) {
         </div>
 
         {/* Seat summary */}
-        <div className="mt-3 text-center">
+        <div className="mt-3 text-center
+        lg:mt-10">
           <strong>Valda stolar:</strong>{" "}
           {Array.from(selectedSeat)
           .map((seatId) => {
             const seat = seats.find((s) => s._id === seatId);
             if (!seat) return null;
-            return `Rad ${seat.rowNumber + 1}, Stol ${seat.seatNumber + 1}`;
+            return `Rad ${seat.rowNumber + 1} Stol ${seat.seatNumber + 1}`;
           })
           .filter(Boolean)
           .join(", ") || "Inga"}

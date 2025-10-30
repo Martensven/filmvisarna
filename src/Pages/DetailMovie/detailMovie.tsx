@@ -53,18 +53,22 @@ export default function DetailMovie() {
     // Render movie details
     return (
         <main className="w-screen flex flex-col items-center text-white">
-            <section className="flex flex-col justify-center items-center w-full px-4 
+            <section className="flex flex-col justify-center items-center w-full px-4
+            xs:w-full xs:p-2 
             sm:px-10 
             md:px-10
             lg:px-10
             xl:w-11/12 xl:px-2">
                 {/* Trailer */}
                 <section className="flex flex-col justify-center items-center container_box mt-5 w-11/12 aspect-video bg-[#24252C]
+                xs:h-62
+                sm:h-86
+                md:h-86
                 lg:w-12/13 lg:h-110
                 xl:w-11/12 xl:h-120 xl:mb-3">
                     <iframe
-                        className="w-11/12 h-50 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
-                        sm:h-62
+                        className="w-11/12 h-62 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
+                        sm:h-72
                         md:w-11/12 md:h-82
                         lg:w-9/12 lg:h-96 lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
                         xl:w-9/12 xl:h-96 xl:bg-blue-400 lg:shadow-lg xl:shadow-blue-400/50
@@ -77,7 +81,7 @@ export default function DetailMovie() {
 
                 {/* Detaljer */}
                 <section className="flex flex-col justify-between items-center gap-5 mt-5 w-11/12
-                sm:
+                sm:w-11/12
                 md:flex-row md:items-start
                 lg:w-11/12
                 xl:w-11/12">
@@ -85,17 +89,19 @@ export default function DetailMovie() {
                         src={movie.imageSrc}
                         alt={`${movie.title} poster`}
                         className="w-6/12 object-cover rounded-md shadow-lg/30
-                        sm:w-6/12
+                        xs:w-7/12
+                        sm:w-7/12
                         md:w-5/12 md:justify-start items-start
                         lg:w-5/12
                         xl:w-5/12"
                     />
-                    <section className="flex flex-col gap-10 w-full
+                    <section className="flex flex-col gap-5 w-full
                     sm:w-full 
                     md:w-3/5
                     lg:
                     xl:h-auto">
                         <article className="text-center text-sm container_box mt-10
+                        xs:mt-0
                         sm:text-base
                         md:mt-0
                         lg:mt-0
@@ -136,15 +142,15 @@ export default function DetailMovie() {
 
                         <article className="text-center text-sm container_box
                         sm:text-base">
-                            <p className=" pt-2 px-2
-                            lg:px-1 lg:py-5">{movie.description}</p>
+                            <p className=" pt-2 px-2 mb-2
+                            lg:px-1 lg:py-4">{movie.description}</p>
 
                             {/* Recensioner */}
                             {movie.reviews && movie.reviews.length > 0 && (
-                                <article className="text-sm pt-8 space-y-4 pb-2
+                                <article className="text-sm pt-5 space-y-4 pb-2
                                 sm:text-base
                                 md:
-                                lg:pt-5 lg:pb-3">
+                                lg:pt-5 lg:pb-2">
                                     <p className="font-[Noto_Sans] underline">Recensioner</p>
                                     {movie.reviews.map((review: any, idx: number) => (
                                         <p key={idx} className="text-amber-200 italic font-[Noto_Sans] border-b-1 row-height:normal pb-4">
