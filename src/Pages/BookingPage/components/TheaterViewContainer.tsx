@@ -53,7 +53,10 @@ export default function TheaterViewContainer({ selectTheaterId, selectShowing }:
     fetchShowing();
   }, [selectShowing]);
 
-  if (!theater) return <p>Laddar salong...</p>;
+  if (!theater) return <p className="TheaterSide w-full flex flex-col justify-start items-start 
+    sm:w-11/12 sm:h-auto 
+    md:w-full md:flex md:justify-center md:items-center md:mt-5 
+    lg:w-9/12 lg:h-auto lg:mt-7 lg:flex lg:justify-start lg:items-center ">Laddar salong...</p>;
   if (!currentShowing) return <p>Laddar föreställning...</p>;
 
   return (
@@ -64,7 +67,7 @@ export default function TheaterViewContainer({ selectTheaterId, selectShowing }:
       <section className="Theaterbox w-8/12 flex 
       sm:w-full 
       md:w-full md:flex md:flex-col md:justify-center md:items-center 
-      lg:w-full lg:flex lg:justify-start lg:items-center lg:h-200 lg:mt-0">
+      lg:w-full lg:flex lg:justify-center lg:items-center lg:h-200 lg:mt-0">
         <TheaterView key={currentShowing._id} selectShowing={currentShowing} />
       </section>
     </main>

@@ -98,7 +98,7 @@ export default function TheaterView({ selectShowing}: Props) {
         {/* Seat grid */}
         <div className="mt-4">
           {rows.map((rowSeats, rowI) => (
-            <div key={rowI} className="flex mb-1">
+            <div key={rowI} className="flex mb-1 justify-center">
               {rowSeats.map((seat) => {
                 const seatKey = seat._id; // use MongoDB seat ID
                 const isBooked = bookedSeats.includes(seat._id);

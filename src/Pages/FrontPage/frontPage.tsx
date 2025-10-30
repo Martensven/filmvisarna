@@ -246,7 +246,7 @@ export default function FrontPage() {
             sm:h-94 sm:w-11/12 sm:p-2
             md:px-2 md:h-86 md:w-11/12
             lg:w-11/12 lg:h-96
-            xl:h-96 xl:p-2">
+            xl:h-98 xl:p-2">
                 {sortedMovies.length === 0 ? (
                     <p className="m-auto">Inga filmer hittades.</p>
                 ) : (
