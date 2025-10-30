@@ -100,15 +100,15 @@ export default function TheaterView({ selectShowing}: Props) {
             <div key={rowI} className="flex mb-1">
               {rowSeats.map((seat) => {
                 const seatKey = seat._id; // use MongoDB seat ID
-                const isBooked = bookedSeats.includes(seat._id);
-                const isPending = pendingSeats.includes(seat._id);
+                const isBooked = bookedSeats.includes(seatKey);
+                const isPending = pendingSeats.includes(seatKey);
                 const isSelected = selectedSeat.has(seatKey);
                 const isAccessible = seat.accessible;
 
                 let color = "#243365";
                 if (isBooked) color = "#d9534f"; 
-                else if (isPending) color = "#f0ad4e"; 
                 else if (isSelected) color = "#5cb85c"; 
+                else if (isPending) color = "#f0ad4e"; 
                 else if (isAccessible) color = "#dede39"; 
 
                 return (
