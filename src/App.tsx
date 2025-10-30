@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./context/authContext";
+
 import FrontPage from "./Pages/FrontPage/frontPage.js";
 import BookingPage from "./Pages/BookingPage/bookingPage.tsx";
 import MoviePage from "./Pages/MoviePage/moviePage.tsx";
@@ -19,13 +22,18 @@ import SalesPage from "./Pages/AdminPage/salesPage.tsx";
 import AdminAddMoviePage from "./Pages/AdminPage/adminAddMovie.tsx";
 import AdminStart from "./Pages/AdminPage/adminStart.tsx";
 import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.tsx";
+import AdminUsersPage from "./Pages/AdminPage/AdminUsers/adminUsersPage.tsx";
+
 
 function App() {
+
   const [loginPopup, setLoginPopup] = useState<
     "login" | "register" | "forgot-password" | null
   >(null);
   const [popupSlide, setPopupSlide] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+const { user, loading } = useAuth();
+
 
   const handleClosing = () => {
     setPopupSlide(true);
@@ -36,6 +44,9 @@ function App() {
   };
 
 
+  if (loading) {
+  return <div className="text-white p-10">Laddar användardata...</div>;
+}
 
   return (
     <>
@@ -67,10 +78,11 @@ function App() {
         <Route path="/kiosk" element={<KioskPage />} />
         <Route path="/movie/:id" element={<DetailMovie />} />
         {/* Adminpages uses nested routes */}
-        <Route path="/admin" element={<AdminPage />}>
+        <Route path="/admin" element={ user?.role === "admin" ? (<AdminPage />) : (<Navigate to="/" replace />) }>
           <Route index element={<AdminStart />} />
           <Route path="sales" element={<SalesPage />} />
           <Route path="add-movie" element={<AdminAddMoviePage />} />
+          <Route path="users" element={<AdminUsersPage />} />
         </Route>
       </Routes>
       {/* Making sure Header and Footer are not shown on admin pages */}

@@ -18,13 +18,15 @@ import User from './routes/userRoutes.js';
 import Auditorium from './routes/auditoriumsRoutes.js';
 import Actors from './routes/actorRoutes.js';
 import Kiosk from './routes/kioskRoutes.js';
-import AdminSales from './routes/adminRoutes.js';
+import Admin from './routes/adminRoutes.js';
+import { initSocket } from './websockets/sockets.js';
+
 
 
 const PORT = 4321;
 const app = express();
 const Socketserver = http.createServer(app);
-const io = new Server({ Socketserver }) // Websocket for realtime booking
+const io = initSocket(Socketserver);
 
 dotenv.config();
 
@@ -58,9 +60,10 @@ app.use(User);
 app.use(Auditorium);
 app.use(Actors);
 app.use(Kiosk);
-app.use(AdminSales);
+app.use(Admin);
 
-io.on("connected", () => {
+
+io.on("connected", (socket) => {
     console.log("Client connected", socket.id);
 
     socket.on("disconnect", () => {
@@ -71,7 +74,7 @@ io.on("connected", () => {
 
 mongoose.connect(process.env.DB_CONNECT) // connect to database
     .then(() => {
-        app.listen(PORT, () => {
+        Socketserver.listen(PORT, () => {
             console.log('Connected to MongoDB');
             console.log(`Server is running on http://localhost:${PORT}`);
         });

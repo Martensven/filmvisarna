@@ -37,6 +37,7 @@ router.post("/api/screening", async (req, res) => {
       time,
       showTime,
       bookedSeats: [],
+      pendingSeats: [],
       scheduleType,
     });
 

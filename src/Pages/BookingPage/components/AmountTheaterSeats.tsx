@@ -48,8 +48,10 @@ export default function AmountSeatsTheater() {
 
   return (
     <main className="flex flex-col justify-center items-center w-11/12 h-auto 
-                    ">
-      <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 md:w-10/12 md:m-1 md:justify-between ">
+                    lg:w-11/12">
+      <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 
+      md:w-10/12 md:m-1 md:justify-between
+      lg:w-10/12 lg:justify-between lg:mt-2">
         <h2 className="text-[#e4e1e1] text-sm m-1 md:text-sm md:m-5">Vuxen 140kr</h2>
         <section className="flex flex-row items-center md:mr-2">
           <button
@@ -72,7 +74,8 @@ export default function AmountSeatsTheater() {
         </section>
       </div>
 
-      <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 md:w-10/12 md:m-1 md:justify-between">
+      <div className="flex flex-row justify-between w-72 h-auto mt-2 p-2 md:w-10/12 md:m-1 md:justify-between
+      lg:justify-between">
         <h2 className="text-[#e4e1e1] text-s m-2 md:text-sm md:m-5">Senior 120kr</h2>
         <section className="flex flex-row justify-content items-center md:mr-2">
           <button
