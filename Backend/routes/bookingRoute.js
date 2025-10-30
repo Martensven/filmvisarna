@@ -5,6 +5,7 @@ import { TicketType } from "../models/ticketTypeSchema.js";
 import { Screening } from "../models/screeningSchema.js";
 import { User } from "../models/userSchema.js";
 import sendMail from "../nodemailer/sendMail.js";
+import { getIo } from "../websockets/sockets.js";
 
 const router = express.Router();
 
@@ -37,6 +38,16 @@ router.post("/api/bookings", async (req, res) => {
     // ✅ Reserve seats in screening
     screening.bookedSeats.push(...seat_ids);
     await screening.save();
+
+    try {
+      const io = getIo();
+      io.to(screening._id.toString()).emit("seatUpdate", {
+        bookedSeats: screening.bookedSeats,
+        pendingSeats: [],});
+      console.log(`Seat update emitted for screening ${screening._id}`);
+    } catch (e) {
+      console.warn("Socket emit failed:", e.message);
+    }
 
     // ✅ Build seat info
     const seats = await Promise.all(
