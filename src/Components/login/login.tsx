@@ -1,52 +1,116 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router";
+import { useAuth } from "../../context/authContext";
 
-export default function Login({ onSwitchToRegister, onSwitchToForgot, onClose, onLoginSuccess,}: { onSwitchToRegister: () => void; onSwitchToForgot: () => void; onClose: (callback?: () => void) => void; onLoginSuccess?: () => void; }) {
-    const navigate = useNavigate();
+export default function Login({
+    onSwitchToRegister,
+    onSwitchToForgot,
+    onClose,
+}: {
+    onSwitchToRegister: () => void;
+    onSwitchToForgot: () => void;
+    onClose: (callback?: () => void) => void;
+}) {
+
+    const { user, login, logout } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        if(!email.includes("@") || !password) {
-            setError("Din e-postadress eller lösenord är felaktigt");
-            return;
-        }
-
-        if (password !== "123456") {
-            setError("Din e-postadress eller lösenord är felaktigt");
-            return;
-        }
-
         setError(null);
-        console.log("Login successful:", { email });
+        setLoading(true);
 
-        onLoginSuccess && onLoginSuccess();
-        navigate("/my-page");
+        const success = await login(email, password);
+        setLoading(false);
+
+        if (!success) {
+            setError("Fel e-post eller lösenord");
+            return;
+        }
+
+        setEmail("");
+        setPassword("");
         onClose();
     };
 
+    const handleLogout = async () => {
+        await logout();
+        onClose();
+    };
+
+    // ✅ Om användaren redan är inloggad → visa Logga ut
+    if (user) {
+        return (
+            <section className="rounded p-6 flex flex-col m-5 text-center text-white">
+                <h1 className="text-3xl mb-4 font-semibold">Du är redan inloggad</h1>
+                <button
+                    onClick={handleLogout}
+                    className="bg-red-500 hover:bg-red-600 cursor-pointer my-3 p-3 rounded-md shadow-md w-40 mx-auto"
+                >
+                    Logga ut
+                </button>
+            </section>
+        );
+    }
+
     return (
-        <section className="rounded p-5 flex flex-col m-5">
+        <section className="rounded p-5 flex flex-col m-5 text-white">
             <h1 className="text-4xl">Logga In</h1>
 
-            <form className="flex flex-col m-4">
+            <form className="flex flex-col m-4" onSubmit={handleLogin}>
                 <h2 className="my-2">E-Post</h2>
-                <input className="bg-[#243365] my-1 p-2 rounded-md shadow-md text-gray-400" type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Din E-Post" />
+                <input
+                    autoFocus
+                    className="bg-[#243365] p-2 rounded-md shadow-md text-gray-200"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Din E-Post"
+                    required
+                />
 
                 <h2 className="my-2">Lösenord</h2>
-                <input className="bg-[#243365] my-1 p-2 rounded-md shadow-md text-gray-400" type="password" onChange={(e) => setPassword(e.target.value)} placeholder="Ditt Lösenord" />
-                <Link to="#" onClick={(e) => { e.preventDefault(); onSwitchToForgot();}} className="text-xs mt-1 underline">
-                Glömt ditt lösenord?</Link>
+                <input
+                    className="bg-[#243365] p-2 rounded-md shadow-md text-gray-200"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Ditt Lösenord"
+                    required
+                />
 
-                {error && <p className="bg-red-600 text-sm mt-3 p-3 rounded-md shadow-md">{error}</p>}
-                <button type="submit" onClick={handleLogin} className="bg-[#243365] cursor-pointer my-3 p-4 self-center rounded-md shadow-md w-1/2">Logga In</button>
+                <button
+                    type="button"
+                    onClick={onSwitchToForgot}
+                    className="text-xs mt-1 underline text-blue-300 hover:text-blue-400 self-start"
+                >
+                    Glömt ditt lösenord?
+                </button>
+
+                {error && (
+                    <p className="bg-red-600 text-sm mt-3 p-3 rounded-md shadow-md">
+                        {error}
+                    </p>
+                )}
+
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 cursor-pointer my-3 p-4 self-center rounded-md shadow-md w-1/2"
+                >
+                    {loading ? "Loggar in..." : "Logga In"}
+                </button>
             </form>
 
-            <button onClick={onSwitchToRegister} className="mt-1 underline cursor-pointer">Har inget konto? Skapa här</button>
+            <button
+                onClick={onSwitchToRegister}
+                className="mt-1 underline cursor-pointer"
+            >
+                Har inget konto? Skapa här
+            </button>
         </section>
     );
 }
