@@ -76,14 +76,14 @@ export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }
   );
 
   return (
-    <main className="Container-for-daysandseats h-auto flex flex-col justify-center items-center 
+    <main className="Container-for-daysandseats w-full h-auto flex flex-col justify-center items-center gap-2
     md:w-11/12
     lg:w-11/12 lg:flex lg:flex-row lg:justify-between lg:items-start lg:my-2 lg:mx-1 lg:gap-1">
       {/*----------Containers for calender days----------*/}
       
         
       <section
-        className="Todays flex flex-col justify-center items-center glass_effect w-full mb-1 overflow-x-hidden overflow-y-auto
+        className="Todays flex flex-col justify-start items-center glass_effect w-11/12 h-54 mt-3 mb-1 overflow-x-hidden overflow-y-auto
         [&::-webkit-scrollbar]:w-1  
         [&::-webkit-scrollbar-track]:rounded-full
         [&::-webkit-scrollbar-track]:bg-[#24252C]
@@ -93,7 +93,7 @@ export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }
         lg:flex lg:flex-col lg:justify-start lg:h-52 lg:w-5/12 lg:px-1 lg:p-1
         xl:w-5/12 xl:h-56"
       >
-        <h2 className="text-[#e4e1e1] p-1 
+        <h2 className="text-[#e4e1e1] mt-2 text-lg
         md:text-lg md:p-2
         lg:w-full lg:p-2">Dagens visningar</h2>
         {todaysScreening.length > 0 ? (
@@ -107,14 +107,15 @@ export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }
                 onSelectTheaterId(screening.auditorium._id);
                 onSelectShowing(screening._id);
               }}
-              className={`container_box calenderDatesContainer w-10/12 
+              className={`container_box calenderDatesContainer w-6/12 
                 md:w-4/5 md:h-30 md:text-xs cursor-pointer
                 lg:w-11/12 lg:h-30 lg:flex lg:justify-between lg:items-center
           ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
             >
-              <li className="pt-3 pb-3 text-lg font-bold 
+              <li className="pt-3 pb-1 text-base font-bold 
               lg:text-base lg:px-2 lg:py-2">{screening.time}</li>
-              <li className="pb-1 text-sm md:text-md
+              <li className="pb-3 text-sm 
+              md:text-md
               lg:px-2 lg:py-2">
                 {screening.auditorium.name}
               </li>
@@ -129,7 +130,7 @@ export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }
 
        
       <section
-        className="Otherdays flex flex-row justify-start items-start glass_effect m-1 w-100 h-auto overflow-y-auto
+        className="Otherdays flex flex-col justify-start items-center glass_effect m-1 w-11/12 h-54 overflow-y-auto
         [&::-webkit-scrollbar]:w-1  
         [&::-webkit-scrollbar-track]:rounded-full
         [&::-webkit-scrollbar-track]:bg-[#24252C]
@@ -141,14 +142,14 @@ export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }
         xl:w-6/12 xl:h-56
         "
       >
-       <h2 className="text-[#e4e1e1] p-5 
+       <h2 className="text-[#e4e1e1] mt-2 text-lg 
        md:text-lg
        lg:text-lg lg:p-2
       lg:w-full 
       xl:p-2 ">Andra visningar</h2>
         {otherDaysScrenning.length > 0 ? (
           otherDaysScrenning.map((date) => (
-            <div key={date} className="flex flex-col justify-center items-center m-5 underline 
+            <div key={date} className="flex flex-col justify-center items-center underline w-full
             lg:w-full lg:gap-1 lg:m-0 lg:p-0
             ">
               <h3 className="p-2
@@ -160,7 +161,9 @@ export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }
                 })}
               </h3>
 
-              <div className="lg:w-11/12 lg:h-auto lg:flex lg:flex-row lg:flex-wrap lg:justify-center lg:items-center">
+              <div className="w-full flex flex-col justify-center items-center
+              sm:w-11/12
+              lg:w-11/12 lg:h-auto lg:flex lg:flex-row lg:flex-wrap lg:justify-center lg:items-center">
                 {sortScreeningByDate[date].map((screening) => (
                   <ul
                     onClick={() => {
@@ -168,8 +171,8 @@ export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }
                       onSelectTheaterId(screening.auditorium._id);
                       onSelectShowing(screening._id);
                     }}
-                    className={`container_box calenderDatesContainer cursor-pointer 
-                          sm:w-32
+                    className={`container_box calenderDatesContainer cursor-pointer w-6/12
+                          sm:w-6/12
                           md:w-20 md:h-32 md:text-xs
                           lg:w-5/12 lg:h-25 lg:p-2 lg:flex lg:flex-col lg:justify-center
                           xl:w-5/12 xl:h-20 xl:mt-1
@@ -177,9 +180,9 @@ export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }
                           
                           ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
                   >
-                    <li className="
+                    <li className=" pt-3 pb-1 text-base font-bold
                     lg:text-base">{screening.time}</li>
-                    <li className="
+                    <li className=" pb-3 text-sm 
                     lg:text-sm">{screening.auditorium.name}</li>
                   </ul>
                 ))}

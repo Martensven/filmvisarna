@@ -43,7 +43,7 @@ export default function CalenderAndSeats({ onSelectTheaterId, onSelectShowing }:
           className="flex flex-row justify-center items-center w-11/12 h-auto mt-5 mb-5 glass_effect
                     sm:w-11/12
                     md:w-9/12 md:flex-col md:justify-center md:items-center md:pb-2
-                    lg:pb-0 lg:mt-2 lg:w-11/12"
+                    lg:pb-0 lg:mt-2 lg:w-8/12"
         >
 
         {/*----------Getting the component for selecting how many seats and agespan----------*/}
