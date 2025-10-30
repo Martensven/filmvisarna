@@ -58,6 +58,8 @@ export default function TheaterViewContainer({ selectTheaterId, selectShowing }:
     md:w-full md:flex md:justify-center md:items-center md:mt-5 
     lg:w-9/12 lg:h-auto lg:mt-7 lg:flex lg:justify-start lg:items-center ">Laddar salong...</p>;
   if (!currentShowing) return <p>Laddar föreställning...</p>;
+  if (!theater) return null;
+  if (!currentShowing) return null;
 
   return (
     <main className="TheaterSide w-full flex flex-col justify-start items-start 

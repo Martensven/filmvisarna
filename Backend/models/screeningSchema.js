@@ -15,6 +15,7 @@ const screeningSchema = new mongoose.Schema({
   time: { type: String, required: true },
   showTime: { type: Date, required: true },
   bookedSeats: [{ type: mongoose.Schema.Types.ObjectId, ref: "Seat" }],
+  pendingSeats: [{ type: mongoose.Schema.Types.ObjectId, ref: "Seat" }],
   //For admin purpose (place specific schedule for a specific movie)
   scheduleType: {
     type: String,
