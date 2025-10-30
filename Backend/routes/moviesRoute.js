@@ -54,7 +54,13 @@ router.get('/api/movie/filter', async (req, res) => {
         }
         
         // Age limit filtering
-        if (ageLimit) filter.age = { $lte: parseInt(ageLimit) };
+        if (ageLimit) {
+            const ageArray = Array.isArray(ageLimit)
+            ? ageLimit.map(Number)
+            : [parseInt(ageLimit)];
+            // Movies with age rating in the specified age limits
+            filter.age = { $in: ageArray };
+        }
 
         // Sorting
         let sortOption = sort === 'asc' ? { releaseYear: 1 } : sort === 'desc' ? { releaseYear: -1 } : {};
