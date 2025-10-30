@@ -22,13 +22,16 @@ import Admin from './routes/adminRoutes.js';
 import { initSocket } from './websockets/sockets.js';
 
 
-
 const PORT = 4321;
 const app = express();
 const Socketserver = http.createServer(app);
 const io = initSocket(Socketserver);
 
 dotenv.config();
+
+app.get("/api/test", (req, res) => {
+  res.send("✅ Backend is connected through proxy!");
+});
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'veryhushhushsecret',

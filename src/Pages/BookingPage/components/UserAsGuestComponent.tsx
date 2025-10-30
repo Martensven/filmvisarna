@@ -1,47 +1,46 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSeats } from "../../BookingPage/components/context/SeatsContext";
 
-//This child component is for the guest checkout that's included in CheckoutComponent.
+export default function UserAsGuestComponent() {
+  const navigate = useNavigate();
+  const { selectedSeats, selectedScreening, selectedTickets } = useSeats();
 
-export default function UserAsGuest() {
-  const [showMessage, setShowMessage] = useState(false);
-  const [showCheckoutInput, setShowCheckoutInput] = useState(true);
-  const [checkoutEmail, setCheckoutEmail] = useState("");
+  const handleGuestBooking = async () => {
+    try {
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          user_id: null, // Guest booking
+          screening_id: selectedScreening?._id,
+          seat_ids: selectedSeats.map((s) => s._id),
+          tickets: selectedTickets.map((t) => ({
+            ticket_id: t._id,
+            quantity: t.quantity,
+          })),
+        }),
+      });
 
-  const handleClick = () => {
-    setShowMessage(true);
-    setShowCheckoutInput(false);
+      if (!res.ok) throw new Error("Booking failed");
+
+      const data = await res.json();
+      navigate(`/checkout/${data._id}`); // ✅ Redirect to confirmation page
+    } catch (err) {
+      console.error("Guest booking error:", err);
+      alert("Kunde inte skapa bokning.");
+    }
   };
 
   return (
-    <main className="container_box w-86 h-auto p-3 m-3">
-      <p className="m-3">Genomför beställning:</p>
-      <div className="w-86 h-auto p-5">
-        {showCheckoutInput && (
-          <>
-            <input
-              className="w-3/5 m-2"
-              type="text"
-              placeholder="Ange e-post"
-              value={checkoutEmail}
-              onChange={(e) => setCheckoutEmail(e.target.value)}
-            />
-            <button
-              onClick={handleClick}
-              className="main_buttons w-20 h-8"
-            >
-              Beställ
-            </button>
-          </>
-        )}
-      </div>
-
-      {showMessage && (
-        <>
-          <p className="m-3">Beställning med bokningsnummer 123456789 genomförd!</p>
-          <p className="m-3">Du får en bokningsbekräftelse till: {checkoutEmail}</p>
-          <p className="m-3">Tack för din beställning!</p>
-        </>
-      )}
+    <main className="container_box w-86 h-auto p-3 m-3 text-center">
+      <p className="m-3">Bekräfta bokning som gäst:</p>
+      <button
+        onClick={handleGuestBooking}
+        className="main_buttons w-36 h-10 text-sm"
+      >
+        Bekräfta bokning
+      </button>
     </main>
   );
 }

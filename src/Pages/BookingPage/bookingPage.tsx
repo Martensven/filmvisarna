@@ -30,7 +30,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
           <TheaterViewContainer selectTheaterId={selectedTheaterId} selectShowing={selectedShowing} />
         </div>
 
-        <CheckoutComponent isLoggedIn={isLoggedIn} />
+        <CheckoutComponent />
       </main>
       </SeatsProvider>
     </>
