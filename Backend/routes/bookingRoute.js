@@ -214,38 +214,49 @@ router.put("/api/bookings/:id", async (req, res) => {
 // Delete booking by ID
 router.delete("/api/bookings/:id", async (req, res) => {
   try {
-    // Find the booking we want to delete using ID from params
+    // Find the booking by ID
     const booking = await Booking.findById(req.params.id);
     if (!booking) {
-      return res.status(404).json({ error: "Booking not found" });
+      return res.status(404).json({ errorMSG: "Bokningen hittades inte." });
     }
 
-    // Find the screening belonging to our booking
-    // Getting the screening from the booking to be able to remove the booked seats
-    const screening = await Screening.findById(
-      booking.screeningInfo.screening_id
+    // Find the related screening
+    const screening = await Screening.findById(booking.screeningInfo.screening_id);
+    if (!screening) {
+      return res.status(404).json({ errorMSG: "Visningen hittades inte." });
+    }
+
+    // check if cancellation is at least 2 hours before screening
+    const screeningDateTime = new Date(`${screening.date}T${screening.time}`);
+    const now = new Date();
+    const diffInMs = screeningDateTime - now;
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+
+    if (diffInHours < 2) {
+      return res.status(400).json({
+        errorMSG: "Det går inte att avboka biljetter mindre än två timmar före visningen.",
+      });
+    }
+
+    // remove booked seats from screening
+    const bookedSeatIds = booking.seats.map((seat) => seat.seat_id.toString());
+    screening.bookedSeats = screening.bookedSeats.filter(
+      (seatId) => !bookedSeatIds.includes(seatId.toString())
     );
-    if (screening) {
-      // Create a list of booked seat IDs from the booking
+    await screening.save();
 
-      const bookedSeatIds = booking.seats.map((seat) =>
-        seat.seat_id.toString()
-      );
-      // Filter out the bookedSeatIds from the screening's bookedSeats array
-      screening.bookedSeats = screening.bookedSeats.filter(
-        (seatId) => !bookedSeatIds.includes(seatId.toString())
-      );
-      // Save the updated screening belonging to our booking
-      await screening.save();
-    }
-    // Delete the booking
+    // delete the booking
     await Booking.deleteOne({ _id: req.params.id });
 
     res.status(200).json({ message: "Avbokning genomförd" });
   } catch (error) {
     console.error("Fel vid avbokning:", error);
-    res.status(500).json({ error: "Kunde inte avboka" });
+    res.status(500).json({
+      errorMSG: "Kunde inte avboka.",
+      details: error.message,
+    });
   }
 });
+
 
 export default router;
