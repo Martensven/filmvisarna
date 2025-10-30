@@ -21,9 +21,9 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
       >
         <MovieInformation />
 
-        <div className="flex flex-col w-full h-auto justify-center items-center
+        <div className="Booking-component flex flex-col w-full h-auto justify-center items-center container_box
                         md:flex-col md:justify-center md:items-center md:w-full 
-                        lg:flex lg:flex-row">
+                        lg:flex lg:flex-row lg:w-11/12 lg:justify-start lg:items-start">
 
           <CalenderAndSeats onSelectTheaterId={setSelectedTheaterId} onSelectShowing={setSelectedShowing} />
 

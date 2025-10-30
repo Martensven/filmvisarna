@@ -44,7 +44,6 @@
 .glass_effect {
   border-radius: 8px;
   background: #003cff2e;
-  border: solid 1px #072a9c;
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
