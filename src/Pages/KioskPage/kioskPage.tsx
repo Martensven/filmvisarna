@@ -23,9 +23,9 @@ export default function KioskPage() {
   const drinks = items.filter((item) => item.category === "drink");
   const snacks = items.filter((item) => item.category === "snack");
   const candy = items.filter((item) => item.category === "candy");
-
+  
   return (
-    <main className="w-screen bg-[#292929] text-white">
+    <main className="w-screen bg-[#292929] text-white"> 
       <header className="text-center">
         <h1 className="text-3xl shadow-md p-3 my-10 mx-auto bg-[#243365] w-10/12">
           Utbud i kiosken

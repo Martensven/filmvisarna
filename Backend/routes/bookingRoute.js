@@ -11,163 +11,111 @@ const router = express.Router();
 // Create a new booking
 router.post("/api/bookings", async (req, res) => {
   try {
-    // Destructure request body, expecting user_id (optional), screening_id, seat_ids, and tickets
-    const {
-      user_id,
-      screening_id,
-      seat_ids,
-      tickets: ticketRequests,
-    } = req.body;
+    const { user_id, screening_id, seat_ids, tickets: ticketRequests } = req.body;
 
-    // To check if user is logged in or guest
+    console.log("REQ BODY:", req.body); // Debug
+
+    // ✅ Find user if logged in
     const user = user_id ? await User.findById(user_id) : null;
 
-    // Get screening of movie
+    // ✅ Find screening
     const screening = await Screening.findById(screening_id).populate(
       "auditorium movie"
     );
-
-    // IF no screning is found, return 404
     if (!screening)
       return res.status(404).json({ error: "Ingen visning hittades" });
 
-    // Check if selected seats are unavailable
-    const alreadyBooked = seat_ids.filter((id) =>
+    // ✅ Check already booked seats
+    const alreadyBooked = seat_ids.filter(id =>
       screening.bookedSeats.includes(id)
     );
     if (alreadyBooked.length > 0)
-      return res
-        .status(400)
-        .json({
-          error: "Platser är redan bokade: " + alreadyBooked.join(", "),
-        });
+      return res.status(400).json({
+        error: "Platser är redan bokade: " + alreadyBooked.join(", "),
+      });
 
-    // Push booked seats to screening
+    // ✅ Reserve seats in screening
     screening.bookedSeats.push(...seat_ids);
     await screening.save();
 
-    // Create a seats object for the schema
-    // Promise.all to wait for all seat lookups to complete
-    // Map each seat_id to an object with seat_id and seatNumber
+    // ✅ Build seat info
     const seats = await Promise.all(
-      seat_ids.map(async (id) => {
+      seat_ids.map(async id => {
         const seat = await Seat.findById(id);
         if (!seat) throw new Error("Inga platser hittades: " + id);
         return { seat_id: seat._id, seatNumber: seat.seatNumber };
       })
     );
 
-    // Create a tickets object for the schema
+    // ✅ Build ticket info
     const tickets = await Promise.all(
-      ticketRequests.map(async (t) => {
-        // For each ticket request, find the ticket type in the database
-        const ticket = await TicketType.findById(t.ticket_id);
-        // If no ticket is found, throw an error
-        if (!ticket) throw new Error("Biljett hittades inte: " + t.ticket_id);
-        // Return the ticket information formatted for the booking schema
+      ticketRequests.map(async t => {
+        const ticketData = await TicketType.findById(t.ticket_id);
+        if (!ticketData)
+          throw new Error("Biljett hittades inte: " + t.ticket_id);
         return {
-          ticket_id: ticket._id,
-          ticketName: ticket.ticketName,
+          ticket_id: ticketData._id,
+          ticketName: ticketData.ticketName,
           quantity: t.quantity,
-          pricePerTicket: ticket.price,
-          totalPrice: ticket.price * t.quantity,
+          pricePerTicket: ticketData.price,
+          totalPrice: ticketData.price * t.quantity,
         };
       })
     );
 
-    // Calculate total price from tickets
     const totalPrice = tickets.reduce((sum, t) => sum + t.totalPrice, 0);
 
-    // Create the booking
-    const newBooking = new Booking({
-      // if user is logged in, reference their userId. If not, store as null and use guest info.
-      userInfo: user
-        ? {
-          user_id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-        }
-        : undefined,
-      // screening info is auto-filled from the screening document
-      screeningInfo: {
-        screening_id: screening._id,
-        movieTitle: screening.movie.title,
-        auditoriumName: screening.auditorium.name,
-        date: screening.date,
-        time: screening.time,
-      },
+    // ✅ Save booking
+    const newBooking = await Booking.create({
+      user_id: user ? user._id : null,
+      screening_id: screening._id,
       seats,
       tickets,
       totalPrice,
     });
-    // Save the booking to the database
-    await newBooking.save();
 
-    // Return the booking with population
+    // ✅ Populate references for response
     const populatedBooking = await Booking.findById(newBooking._id)
-      .populate("userInfo.user_id", "firstName lastName email")
-      .populate(
-        "screeningInfo.screening_id",
-        "movieTitle auditoriumName date time"
-      )
+      .populate("user_id", "firstName lastName email")
+      .populate("screening_id", "movie date time auditorium")
       .populate("seats.seat_id")
-      .populate("tickets.ticket_id", "ticketName price quantity");
+      .populate("tickets.ticket_id");
 
     res.status(201).json(populatedBooking);
 
-    // Creating booking confirmation sent to mail - Sara
-    // Getting the information from schema and routes to use the values in the mail for automatically making it refer to user.
-    const userMailConfirm = populatedBooking.userInfo;
-    const screeningInformation = populatedBooking.screeningInfo;
-    const seatInfo = populatedBooking.seats || [];
-    const ticketInfo = populatedBooking.tickets || [];
-
-    if (!userMailConfirm?.email) {
-      console.warn("Ingen epostadress hittades, inget mejl har skickats");
-    } else {
-      //Maping through the seat list to return data
-      const seatListInformation = seatInfo.map((s) => s.seatNumber).join(", ");
-      const ticketListInformation = ticketInfo
+    // ✅ Mail sending
+    if (user?.email) {
+      const seatList = seats.map(s => s.seatNumber).join(", ");
+      const ticketList = tickets
         .map(
-          (t) =>
-            `${t.ticket_id?.ticketName} (${t.quantity} st x ${t.pricePerTicket} kr)`
+          t =>
+            `${t.ticketName} (${t.quantity} x ${t.pricePerTicket} kr)`
         )
         .join("<br>");
-      // Due to date and time being Strings in schema, I needed to fetch data as this to make the date and ptime be shown in mail.
-      const formateDate = screeningInformation.date;
-      const formanteTime = screeningInformation.time;
 
-      // Sending the mail
       await sendMail({
-        to: userMailConfirm.email,
+        to: user.email,
         subject: "Filmvisarna - Bokningsbekräftelse",
-        text: "Tack för din bokning hos Filmvisarna",
         html: `
-        <h2>Hej ${userMailConfirm.firstName}!<h2>
-        <hr>
-        <p>Tack för din bokning med ordernummer: ${newBooking._id}</p>
-        
-
-        <p>Din bokning gäller: <strong>${screeningInformation.movieTitle}</strong>.</p>
-        <p><strong>Datum och tid:</strong> ${formateDate}, klockan ${formanteTime}.</p>
-
-        <p><strong>Salong:</strong> ${screeningInformation.auditoriumName}.</p>
-        <p><strong>Platser:</strong> Stol ${seatListInformation}.</p>
-        <p><strong>Biljetter:</strong> ${ticketListInformation}.</p>
-        <hr>
-        <p><strong>Totalsumma:</strong> ${populatedBooking.totalPrice} kr.</p>
-     
-        <p>Biljetterna hämtas ut i kassan. Glöm inte att besöka vår kiosk inför filmvisningen.`,
+          <h2>Hej ${user.firstName}!</h2>
+          <p>Tack för din bokning!</p>
+          <p><strong>Ordernummer:</strong> ${newBooking._id}</p>
+          <p><strong>Film:</strong> ${screening.movie.title}</p>
+          <p><strong>Datum & tid:</strong> ${screening.date} ${screening.time}</p>
+          <p><strong>Salong:</strong> ${screening.auditorium.name}</p>
+          <p><strong>Platser:</strong> ${seatList}</p>
+          <p><strong>Biljetter:</strong><br>${ticketList}</p>
+          <p><strong>Total:</strong> ${totalPrice} kr</p>
+          <p>Vi ses på bion! 🍿🎬</p>
+        `,
       });
-      console.log(
-        "Orderbekräftelse har skickats iväg som mejl till",
-        userMailConfirm.email
-      );
+
+      console.log("Mail skickat till", user.email);
     }
+
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Kunde inte skapa bokning" });
+    res.status(500).json({ errorMsg: "Kunde inte skapa bokning", error });
   }
 });
 
@@ -175,17 +123,14 @@ router.post("/api/bookings", async (req, res) => {
 router.get("/api/bookings", async (req, res) => {
   try {
     const bookings = await Booking.find()
-      .populate("userInfo.user_id", "firstName lastName email")
-      .populate(
-        "screeningInfo.screening_id",
-        "movieTitle auditoriumName date time"
-      )
+      .populate("user_id", "firstName lastName email")
+      .populate("screening_id", "movie date time auditorium")
       .populate("seats.seat_id")
-      .populate("tickets.ticket_id", "ticketName price quantity");
+      .populate("tickets.ticket_id");
 
     res.status(200).json(bookings);
   } catch (error) {
-    res.status(500).json({ error: "Failed to retrieve bookings" });
+    res.status(500).json({ errorMSG: "Failed to retrieve bookings", error });
   }
 });
 
@@ -193,39 +138,54 @@ router.get("/api/bookings", async (req, res) => {
 router.get("/api/bookings/:id", async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id)
-      .populate("userInfo.user_id", "firstName lastName email")
+      .populate("user_id", "user_id firstName lastName email")
       .populate(
-        "screeningInfo.screening_id",
+        "screening_id",
         "movieTitle auditoriumName date time"
       )
       .populate("seats.seat_id")
-      .populate("tickets.ticket_id", "ticketName price quantity");
+      .populate("tickets", "ticketName price quantity");
 
     if (!booking) {
-      return res.status(404).json({ error: "Booking not found" });
+      return res.status(404).json({ errorMsg: "Booking not found", error });
     }
 
     res.status(200).json(booking);
   } catch (error) {
-    res.status(500).json({ error: "Failed to retrieve booking" });
+    res.status(500).json({ errorMsg: "Failed to retrieve booking", error });
   }
 });
 
 // Get bookings by user ID
-router.get("/api/bookings/user/:user_id", async (req, res) => {
+router.get("/api/bookings/user/:id", async (req, res) => {
   try {
-    const bookings = await Booking.find({ user_id: req.params.userInfo_id })
-      .populate("userInfo.user_id", "firstName lastName email")
-      .populate(
-        "screeningInfo.screening_id",
-        "movieTitle auditoriumName date time"
-      )
-      .populate("seats.seat_id")
-      .populate("tickets.ticket_id", "ticketName price quantity");
+    const { id } = req.params;
+    const { type } = req.query; // "past" eller "upcoming"
 
-    res.status(200).json(bookings);
+    const bookings = await Booking.find({ user_id: id })
+      .populate("user_id", "firstName lastName email")
+      .populate({
+        path: "screening_id",
+        populate: { path: "movie auditorium" },
+      })
+      .populate("seats.seat_id")
+      .populate("tickets.ticket_id");
+
+    const now = new Date();
+    const parseBookingDate = (b) =>
+      new Date(`${b.screening_id.date} ${b.screening_id.time}`);
+
+    let filtered = bookings;
+
+    if (type === "upcoming") {
+      filtered = bookings.filter((b) => parseBookingDate(b) >= now);
+    } else if (type === "past") {
+      filtered = bookings.filter((b) => parseBookingDate(b) < now);
+    }
+
+    res.status(200).json(filtered);
   } catch (error) {
-    res.status(500).json({ error: "Failed to retrieve bookings" });
+    res.status(500).json({ errorMSG: "Failed to retrieve bookings for user", error });
   }
 });
 
@@ -236,13 +196,10 @@ router.put("/api/bookings/:id", async (req, res) => {
     const booking = await Booking.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     })
-      .populate("userInfo.user_id", "firstName lastName email")
-      .populate(
-        "screeningInfo.screening_id",
-        "movieTitle auditoriumName date time"
-      )
+      .populate("user_id", "firstName lastName email")
+      .populate("screening_id", "movie date time auditorium")
       .populate("seats.seat_id")
-      .populate("tickets.ticket_id", "ticketName price quantity");
+      .populate("tickets.ticket_id");
 
     if (!booking) {
       return res.status(404).json({ error: "Booking not found" });

@@ -25,6 +25,18 @@ router.get("/api/auditoriums/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+// Get auditorium seats by id
+router.get('/api/auditoriums/:id/seats', async (req, res) => {
+  try {
+    const auditoriumSeats = await Auditorium.findById(req.params.id).populate('seats');
+    if (!auditoriumSeats) {
+      return res.status(404).json({ message: "Auditorium not found" });
+    }
+    res.status(200).json(auditoriumSeats.seats);
+  } catch (error) {
+    res.status(500).json({ message: error.meassage });
+  }
+});
 
 
 // ------ Admin routes --------
