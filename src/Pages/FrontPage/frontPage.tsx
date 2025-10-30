@@ -243,9 +243,10 @@ export default function FrontPage() {
             [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
             snap-x snap-mandatory bg-[#24252C] text-white
 
-            sm:h-96 sm:w-11/12 sm:p-2
-            md:px-2 md:h-96 md:w-11/12
-            lg:w-11/12 lg:h-100">
+            sm:h-94 sm:w-11/12 sm:p-2
+            md:px-2 md:h-86 md:w-11/12
+            lg:w-11/12 lg:h-96
+            xl:h-96 xl:p-2">
                 {sortedMovies.length === 0 ? (
                     <p className="m-auto">Inga filmer hittades.</p>
                 ) : (
@@ -254,21 +255,23 @@ export default function FrontPage() {
                             key={movie._id}
                             className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3
                             md:min-w-42
-                            lg:min-w-46"
+                            lg:min-w-46 lg:h-86
+                            xl:h-96"
                         >
                             <Link to={`/movie/${movie._id}`} className="flex flex-col items-center justify-start w-36 gap-2
-                            sm:w-80 sm:h-86 sm:m-2
+                            sm:w-80 sm:h-auto sm:m-2
                             md:w-full
-                            lg:w-50 lg:m-1">
+                            lg:w-50 lg:m-1
+                            xl:m-0">
                                 <img
                                     src={movie.imageSrc}
                                     alt={movie.title}
                                     className="shadow-2xl w-32 h-auto object-cover rounded-md
-                                    sm:w-66 sm:h-auto sm:mr-2 sm:ml-2
-                                    md:w-80 md:h-auto md:mr-4 md:ml-4 transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
-                                    md:mx-2
+                                    sm:w-45 sm:h-auto sm:mr-1 sm:ml-1
+                                    md:w-42 md:h-auto md:mr-1 md:ml-1 transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
                                     lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105
-                                    lg:w-50 lg:mx-1 "
+                                    lg:w-50 lg:mx-1
+                                    xl:w-50 "
                                 />
                                 <p className=" text-sm mx-2 mt-2
                                 sm:text-base
