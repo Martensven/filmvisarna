@@ -138,21 +138,24 @@ router.get("/api/bookings", async (req, res) => {
 router.get("/api/bookings/:id", async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id)
-      .populate("user_id", "user_id firstName lastName email")
-      .populate(
-        "screening_id",
-        "movieTitle auditoriumName date time"
-      )
-      .populate("seats.seat_id")
-      .populate("tickets", "ticketName price quantity");
+      .populate("user_id", "firstName lastName email")
+      .populate({
+        path: "screening_id",
+        populate: [
+          { path: "movie", select: "title imageSrc length" },
+          { path: "auditorium", select: "name" },
+        ],
+        select: "movie date time auditorium",
+      })
+      .populate("seats.seat_id", "seatNumber rowNumber")
+      .populate("tickets.ticket_id", "ticketName price");
 
-    if (!booking) {
-      return res.status(404).json({ errorMsg: "Booking not found", error });
-    }
+    if (!booking) return res.status(404).json({ message: "Booking not found" });
 
     res.status(200).json(booking);
   } catch (error) {
-    res.status(500).json({ errorMsg: "Failed to retrieve booking", error });
+    console.error("Error retrieving booking:", error);
+    res.status(500).json({ message: "Failed to retrieve booking", error });
   }
 });
 

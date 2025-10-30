@@ -18,6 +18,7 @@ import AdminPage from "./Pages/AdminPage/adminPage.tsx";
 import SalesPage from "./Pages/AdminPage/salesPage.tsx";
 import AdminAddMoviePage from "./Pages/AdminPage/adminAddMovie.tsx";
 import AdminStart from "./Pages/AdminPage/adminStart.tsx";
+import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.tsx";
 
 function App() {
   const [loginPopup, setLoginPopup] = useState<
@@ -61,6 +62,7 @@ function App() {
         <Route path="/theme-sunday" element={<ThemeSundayPage />} />
         <Route path="/theme-thursday" element={<ThemeThursdayPage />} />
         <Route path="/my-page/" element={<MyPage />} />
+        <Route path="/checkout/:bookingId" element={<CheckoutPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/kiosk" element={<KioskPage />} />
         <Route path="/movie/:id" element={<DetailMovie />} />
