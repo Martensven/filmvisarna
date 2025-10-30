@@ -66,7 +66,7 @@ export default function TheaterViewContainer({ selectTheaterId, selectShowing }:
     sm:w-11/12 sm:h-auto 
     md:w-full md:flex md:justify-center md:items-center md:mt-5 
     lg:w-9/12 lg:h-auto lg:mt-7 lg:flex lg:justify-start lg:items-center">
-      <section className="Theaterbox w-8/12 flex 
+      <section className="Theaterbox w-full h-auto flex
       sm:w-full 
       md:w-full md:flex md:flex-col md:justify-center md:items-center 
       lg:w-full lg:flex lg:justify-center lg:items-center lg:h-200 lg:mt-0">

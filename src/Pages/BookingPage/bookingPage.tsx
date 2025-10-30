@@ -21,7 +21,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
       >
         <MovieInformation />
 
-        <div className="Booking-component flex flex-col w-full h-auto justify-center items-center container_box
+        <div className="Booking-component flex flex-col w-11/12 h-auto justify-center items-center container_box
                         md:flex-col md:justify-center md:items-center md:w-full 
                         lg:flex lg:flex-row lg:w-11/12 lg:justify-start lg:items-start">
 

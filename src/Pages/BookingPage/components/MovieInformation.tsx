@@ -59,23 +59,24 @@ export default function MovieInformation() {
         className="movieBoxContainer flex flex-row justify-center items-center container_box w-11/12 h-auto mb-5
                   xs:flex-row  
                   sm:flex-row sm:w-11/12
-                   md:w-11/12 md:h-auto 
-                   lg:h-96 lg:w-11/12 lg:flex lg:items-center justify-start"
+                  md:w-11/12 md:h-auto 
+                  lg:h-96 lg:w-11/12 lg:flex lg:items-center justify-start"
       >
         {/*----------Container for movie poster----------*/}
         <img
           src={movieInfo.imageSrc}
           alt={movieInfo.title}
           className="moviePoster flex justify-center items-center w-5/12 h-auto mx-3 my-3 rounded-md shadow-lg/30
-                     sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-0 
+                     sm:w-2/6 sm:ml-20 sm:mr-2 sm:mt-1 sm:mb-1  
                      md:w-2/8 md:h-auto md:m-1 md:p-0 
                      lg:w-56 lg:h-auto lg:m-0 lg:ml-10"
         />
 
         {/*----------Container movie info ----------*/}
         <article
-          className="boxForDesc flex flex-col justify-start w-11/12 h-auto pl-2 text-[#e4e1e1]
-                    sm:w-6/12 sm:h-auto
+          className="boxForDesc flex flex-col justify-start items-start w-11/12 h-auto pl-2 text-[#e4e1e1]
+                     xs:justify-start xs:items-start
+                    sm:w-6/12 sm:h-50
                      md:w-3/6 md:h-auto 
                      lg:flex lg:justify-center lg:items-start lg:ml-2 lg:w-4/12 lg:h-62"
         >
@@ -119,7 +120,7 @@ export default function MovieInformation() {
         <img
           src={cinemapic}
           alt="Cinema overview pic for fill"
-          className="invisible w-0 rounded-md [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
+          className="invisable w-0 rounded-md [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
                                                                           sm:invisble w-0
                                                                           md:visible md:w-2/6 md:p-4 md:pb-40 md:rounded-md md:shadow-md
                                                                           lg:visible lg:mt-1 lg:p-10 lg:w-5/10 "
