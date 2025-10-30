@@ -168,24 +168,35 @@ router.get("/api/bookings/:id", async (req, res) => {
 });
 
 // Get bookings by user ID
-router.get("/api/bookings/user/:user_id", async (req, res) => {
+router.get("/api/bookings/user/:id", async (req, res) => {
   try {
-    const bookings = await Booking.find({ user_id: req.params.user_id })
+    const { id } = req.params;
+    const { type } = req.query; // "past" eller "upcoming"
+
+    const bookings = await Booking.find({ user_id: id })
       .populate("user_id", "firstName lastName email")
       .populate({
         path: "screening_id",
-        populate: [
-          { path: "movie", select: "title posterUrl" },
-          { path: "auditorium", select: "name" }
-        ],
-        select: "movie date time auditorium"
+        populate: { path: "movie auditorium" },
       })
       .populate("seats.seat_id")
       .populate("tickets.ticket_id");
 
-    res.status(200).json(bookings);
+    const now = new Date();
+    const parseBookingDate = (b) =>
+      new Date(`${b.screening_id.date} ${b.screening_id.time}`);
+
+    let filtered = bookings;
+
+    if (type === "upcoming") {
+      filtered = bookings.filter((b) => parseBookingDate(b) >= now);
+    } else if (type === "past") {
+      filtered = bookings.filter((b) => parseBookingDate(b) < now);
+    }
+
+    res.status(200).json(filtered);
   } catch (error) {
-    res.status(500).json({ errorMsg: "Failed to retrieve bookings", error });
+    res.status(500).json({ errorMSG: "Failed to retrieve bookings for user", error });
   }
 });
 
@@ -214,38 +225,49 @@ router.put("/api/bookings/:id", async (req, res) => {
 // Delete booking by ID
 router.delete("/api/bookings/:id", async (req, res) => {
   try {
-    // Find the booking we want to delete using ID from params
+    // Find the booking by ID
     const booking = await Booking.findById(req.params.id);
     if (!booking) {
-      return res.status(404).json({ error: "Booking not found" });
+      return res.status(404).json({ errorMSG: "Bokningen hittades inte." });
     }
 
-    // Find the screening belonging to our booking
-    // Getting the screening from the booking to be able to remove the booked seats
-    const screening = await Screening.findById(
-      booking.screeningInfo.screening_id
+    // Find the related screening
+    const screening = await Screening.findById(booking.screeningInfo.screening_id);
+    if (!screening) {
+      return res.status(404).json({ errorMSG: "Visningen hittades inte." });
+    }
+
+    // check if cancellation is at least 2 hours before screening
+    const screeningDateTime = new Date(`${screening.date}T${screening.time}`);
+    const now = new Date();
+    const diffInMs = screeningDateTime - now;
+    const diffInHours = diffInMs / (1000 * 60 * 60);
+
+    if (diffInHours < 2) {
+      return res.status(400).json({
+        errorMSG: "Det går inte att avboka biljetter mindre än två timmar före visningen.",
+      });
+    }
+
+    // remove booked seats from screening
+    const bookedSeatIds = booking.seats.map((seat) => seat.seat_id.toString());
+    screening.bookedSeats = screening.bookedSeats.filter(
+      (seatId) => !bookedSeatIds.includes(seatId.toString())
     );
-    if (screening) {
-      // Create a list of booked seat IDs from the booking
+    await screening.save();
 
-      const bookedSeatIds = booking.seats.map((seat) =>
-        seat.seat_id.toString()
-      );
-      // Filter out the bookedSeatIds from the screening's bookedSeats array
-      screening.bookedSeats = screening.bookedSeats.filter(
-        (seatId) => !bookedSeatIds.includes(seatId.toString())
-      );
-      // Save the updated screening belonging to our booking
-      await screening.save();
-    }
-    // Delete the booking
+    // delete the booking
     await Booking.deleteOne({ _id: req.params.id });
 
     res.status(200).json({ message: "Avbokning genomförd" });
   } catch (error) {
     console.error("Fel vid avbokning:", error);
-    res.status(500).json({ error: "Kunde inte avboka" });
+    res.status(500).json({
+      errorMSG: "Kunde inte avboka.",
+      details: error.message,
+    });
   }
 });
+
 
 export default router;
