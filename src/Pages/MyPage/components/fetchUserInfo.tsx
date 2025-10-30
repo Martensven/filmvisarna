@@ -15,21 +15,21 @@ export default function FetchUserInfo() {
                 <h2 className="text-xl font-bold mb-2">Användarinformation:</h2>
                 <p>Namn: {`${user.firstName} ${user.lastName}`}</p>
                 <p>Email: {user.email}</p>
-                <p className="mb-4">Telefon: {user.phoneNumber}</p>
+                <p className="mb-4">Telefon: 0{user.phoneNumber}</p>
 
                 <button className="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600 mb-4">
                     Redigera information
                 </button>
                 {user.role === "admin" && (
-          <a
-            href="/admin"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-          >
-            Gå till Adminpanel
-          </a>
-        )}
+                    <a
+                        href="/admin"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                    >
+                        Gå till Adminpanel
+                    </a>
+                )}
             </section>
 
 

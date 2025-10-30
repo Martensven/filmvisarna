@@ -98,10 +98,6 @@ const FAQ = () => {
                             <p>Bokat: {b.created_at}</p>
 
                             <p>Bokningsnummer: {b._id}</p>
-
-                            <button className="text-red-400 hover:underline mt-1">
-                                Avboka
-                            </button>
                         </div>
                     ))}
                 </section>
