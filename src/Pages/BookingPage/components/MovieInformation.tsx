@@ -41,12 +41,12 @@ export default function MovieInformation() {
     fetchMovieInfo();
   }, [id]);
 
-  if(loading){
-    return <p>Laddar data</p>
+  if (loading) {
+    return <p>Laddar data</p>;
   }
 
-  if(!movieInfo) {
-    return <p>Ingen filmdata kunde hämtas</p>
+  if (!movieInfo) {
+    return <p>Ingen filmdata kunde hämtas</p>;
   }
 
   return (
@@ -57,7 +57,8 @@ export default function MovieInformation() {
       {/*----------Container for movie poster and title, Genre, age and time----------*/}
       <section
         className="movieBoxContainer flex flex-row justify-center items-center container_box w-11/12 h-auto mb-5
-                   sm:flex-row sm:w-11/12
+                  xs:flex-row  
+                  sm:flex-row sm:w-11/12
                    md:w-11/12 md:h-auto 
                    lg:h-96 lg:w-11/12 lg:flex lg:items-center justify-start"
       >
@@ -80,6 +81,7 @@ export default function MovieInformation() {
         >
           <h1
             className="movieTitle flex w-full h-auto text-left mt-3 text-base underline
+                      xs:text-base
                       sm:text-xl sm:m-3 sm:h-auto
                        md:justify-start md:w-full md:text-3xl md:mt-10 md:ml-0
                        lg:m-0 lg:justify-start lg:items-canter"
@@ -92,13 +94,29 @@ export default function MovieInformation() {
                         md:w-full md:h-full md:text-md md:ml-0 
                         lg:m-1"
           >
-            <li className="text-xs italic md:text-sm">
+            <li
+              className="text-sm italic md:text-sm
+            xs:text-xs"
+            >
               {movieInfo.releaseYear}
             </li>
-            <li className="text-xs italic md:text-sm">{movieInfo.genre}</li>
-            <li className="text-xs italic md:text-sm"> </li>
             <li
-              className="text-xs pt-4 text-left w-full h-full
+              className="text-sm italic
+            xs:text-xs
+             md:text-sm"
+            >
+              {movieInfo.genre}
+            </li>
+            <li
+              className="text-sm italic
+            xs:text-xs 
+            md:text-sm"
+            >
+              {" "}
+            </li>
+            <li
+              className="text-sm pt-4 text-left w-full h-full
+                          xs:text-xs
                           sm:text-base sm:text-start sm:w-full sm:h-auto sm:pt-2 sm:mt-10
                           md:text-start md:mt-5 md:text-sm md:w-11/12"
             >
