@@ -17,6 +17,7 @@
   font-family: "Noto Serif", serif;
   background-color: #292929;
   color: white;
+  overflow-x: hidden;
 }
 
 .animation-slidein {
@@ -49,8 +50,14 @@
 
 .popup-background {
   background-color: rgba(41, 41, 41, 0.5);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
+
+
+
+
+
 
 /** .popup-background:hover {
   background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.tenor.com%2F6aWBg0rV1EYAAAAi%2Ftoothless-dancing.gif&f=1&nofb=1&ipt=9421cb7e06523915cc6ea2c86042939e72eb6539590452589e1562a78530f89c);
