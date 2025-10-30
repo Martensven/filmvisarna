@@ -38,7 +38,7 @@ export default function Header({ onLoginClick }: HeaderProps) {
                 </div>
 
                 <nav className="w-11/12 flex flex-col justify-center items-center bg-[#243365] text-white mt-5 rounded-md shadow-md">
-                    <section className="flex items-center justify-between w-11/12 h-12 px-4">
+                    <section className="flex items-center justify-between w-full h-12 px-4">
 
                         <Link to="/" onClick={() => setIsOpen(false)}>
                             <i className="fa fa-home flex" style={{ fontSize: "20px" }}></i>
@@ -53,7 +53,7 @@ export default function Header({ onLoginClick }: HeaderProps) {
                         </button>
 
                         {/* ✅ Desktop menu */}
-                        <ul className="desktopNav hidden md:flex w-full justify-between items-center text-sm font-medium">
+                        <ul className="desktopNav hidden md:flex w-11/12 justify-around items-center text-sm font-medium">
                             <li className="md:hover:scale-105 lg:hover:scale-110"><Link to="/about">Om Oss</Link></li>
                             <li className="md:hover:scale-105 lg:hover:scale-110"><Link to="/kiosk">Kiosk</Link></li>
 
