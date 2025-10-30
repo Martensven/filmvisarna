@@ -7,6 +7,8 @@ import "../../index.css"
 export default function FrontPage() {
     const [filterOpen, setFilterOpen] = useState(false);
     const [sortOpen, setSortOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState<string>("");
+    const [scheduledType, setScheduledType] = useState<string>("");
 
     const [movie, setMovie] = useState<any[]>([]); // State to hold fetched movies
     const [loading, setLoading] = useState<boolean>(true);
@@ -51,13 +53,19 @@ export default function FrontPage() {
             //create query parameters based on selected filters
             const params = new URLSearchParams();
 
+            // Genres
             if (selectedGenres.length > 0) {
                 selectedGenres.forEach((genre) => params.append("genre", genre));
             }
 
+            // Age Limits
             if (selectedAges.length > 0) {
                 selectedAges.forEach((age) => params.append("ageLimit", age.toString()));
             }
+
+            // Screening filters
+            if (selectedDate) params.append("screeningDate", selectedDate);
+            if (scheduledType) params.append("scheduleType", scheduledType);
 
             const queryString = params.toString();
             const url = queryString ? `/api/movie/filter?${queryString}` : "/api/movie/filter";
@@ -89,12 +97,13 @@ export default function FrontPage() {
     }, []);
     
     useEffect(() => {
-        if (selectedGenres.length === 0 && selectedAges.length === 0) {
+        if (
+            selectedGenres.length === 0 && selectedAges.length === 0 && !selectedDate && !scheduledType) {
             fetchMovies();
         } else {
             filterMovies();
         }
-    }, [selectedGenres, selectedAges]);
+    }, [selectedGenres, selectedAges, selectedDate, scheduledType]);
 
     // Sort based on selected option. (A-Z, Z-A, Newest)
     const sortedMovies = [...movie].sort((a, b) => {
@@ -156,11 +165,12 @@ export default function FrontPage() {
                     </button>
                     {filterOpen && (
                         <div 
-                        className="flex flex-row flex-wrap justify-between items-center 
+                        className="flex flex-col flex-wrap justify-start items-start 
                         absolute -left-8 mt-5 bg-[#292929] shadow-md rounded p-5 w-72
-                        sm:w-86 sm:mt-1
+                        sm:w-86 sm:mt-1 z-50
+                        max-h-[80vh] overflow-y-auto
                         ">
-
+                            {/* Genres */}
                             {["Action", "Drama", "Komedi", "Skräck", "Äventyr", "Thriller", "Mystik"].map((genre) => (
                                 <label key={genre} className="flex items-center gap-2 px-2 py-1 mt-1 mb-2 w-30 h-8 text-sm
                                 hover:underline
@@ -174,7 +184,7 @@ export default function FrontPage() {
                                     {genre}
                                 </label>
                             ))}
-
+                            {/* Age Limits */}
                             {ageOptions.map((age) => (
                                 <label key={age.value} className="flex items-center gap-2 px-2 py-1 mt-2 text-sm text-left
                                 sm:text-base
@@ -187,8 +197,33 @@ export default function FrontPage() {
                                     {age.label}
                                 </label>
                             ))}
+
+                            {/* Screening Date */}
+                            <div className="mt-4 w-full">
+                                <label className="block text-sm mb-1">Datum:</label>
+                                <input
+                                    type="date"
+                                    value={selectedDate}
+                                    onChange={(e) => setSelectedDate(e.target.value)}
+                                    className="w-full text-white rounded px-2 py-1"
+                                />
+                            </div>
+
+                            {/* Schedule Type */}
+                            <div className="mt-4 w-full">
+                                <label className="block text-sm mb-1">Salong:</label>
+                                <select
+                                    value={scheduledType}
+                                    onChange={(e) => setScheduledType(e.target.value)}
+                                    className="w-full bg-white text-black rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#24252C]"
+                                >
+                                    <option value="">Alla salonger</option>
+                                    <option value="smallTheater">Lilla Salongen</option>
+                                    <option value="bigTheater">Stora Salongen</option>
+                                </select>
                         </div>
-                    )}
+                        </div>
+                    )}              
                 </nav>
 
                 {/* Sort */}
@@ -243,9 +278,10 @@ export default function FrontPage() {
             [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
             snap-x snap-mandatory bg-[#24252C] text-white
 
-            sm:h-96 sm:w-11/12 sm:p-2
-            md:px-2 md:h-96 md:w-11/12
-            lg:w-11/12 lg:h-100">
+            sm:h-94 sm:w-11/12 sm:p-2
+            md:px-2 md:h-86 md:w-11/12
+            lg:w-11/12 lg:h-96
+            xl:h-98 xl:p-2">
                 {sortedMovies.length === 0 ? (
                     <p className="m-auto">Inga filmer hittades.</p>
                 ) : (
@@ -254,21 +290,23 @@ export default function FrontPage() {
                             key={movie._id}
                             className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3
                             md:min-w-42
-                            lg:min-w-46"
+                            lg:min-w-46 lg:h-86
+                            xl:h-96"
                         >
                             <Link to={`/movie/${movie._id}`} className="flex flex-col items-center justify-start w-36 gap-2
-                            sm:w-80 sm:h-86 sm:m-2
+                            sm:w-80 sm:h-auto sm:m-2
                             md:w-full
-                            lg:w-50 lg:m-1">
+                            lg:w-50 lg:m-1
+                            xl:m-0">
                                 <img
                                     src={movie.imageSrc}
                                     alt={movie.title}
                                     className="shadow-2xl w-32 h-auto object-cover rounded-md
-                                    sm:w-66 sm:h-auto sm:mr-2 sm:ml-2
-                                    md:w-80 md:h-auto md:mr-4 md:ml-4 transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
-                                    md:mx-2
+                                    sm:w-45 sm:h-auto sm:mr-1 sm:ml-1
+                                    md:w-42 md:h-auto md:mr-1 md:ml-1 transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
                                     lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105
-                                    lg:w-50 lg:mx-1 "
+                                    lg:w-50 lg:mx-1
+                                    xl:w-50 "
                                 />
                                 <p className=" text-sm mx-2 mt-2
                                 sm:text-base
