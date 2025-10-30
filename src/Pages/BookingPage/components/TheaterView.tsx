@@ -15,7 +15,7 @@ export default function TheaterView({ selectShowing }: Props) {
   const [socketId, setSocketId] = useState<string>("");
   const [seats, setSeats] = useState<Seat[]>([]);
 
-  // Capture your unique socket ID when connecting
+  // Capture unique socket ID when connecting
   useEffect(() => {
     const handleConnect = () => {
       console.log("✅ Connected to socket:", sockets.id);
@@ -28,7 +28,6 @@ export default function TheaterView({ selectShowing }: Props) {
       sockets.off("connect", handleConnect);
     };
   }, []);
-
 
   // Fetch seats & handle socket events
   useEffect(() => {
@@ -91,6 +90,7 @@ export default function TheaterView({ selectShowing }: Props) {
     // Prevent clicking booked or others' pending seats
     if (bookedSeats.includes(seatId) || (pendingOwner && pendingOwner !== socketId && pendingOwner !== sockets.id)) return;
 
+    // Handle selection of seats
     setSelectedSeat(prev => {
       const newSet = new Set(prev);
       const isSelected = newSet.has(seatId);
