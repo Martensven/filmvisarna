@@ -7,75 +7,95 @@ interface Props {
   selectShowing: Showing | null;
 }
 
-export default function TheaterView({ selectShowing}: Props) {
+export default function TheaterView({ selectShowing }: Props) {
   const { totalTickets } = useSeats();
   const [selectedSeat, setSelectedSeat] = useState<Set<string>>(new Set());
   const [bookedSeats, setBookedSeats] = useState<string[]>([]);
-  const [pendingSeats, setPendingSeats] = useState<string[]>([]);
+  const [pendingSeats, setPendingSeats] = useState<{ seatId: string; owner: string }[]>([]);
+  const [socketId, setSocketId] = useState<string>("");
   const [seats, setSeats] = useState<Seat[]>([]);
 
-  // fetch auditorium seats
+  // Capture your unique socket ID when connecting
+  useEffect(() => {
+    const handleConnect = () => {
+      console.log("✅ Connected to socket:", sockets.id);
+      setSocketId(sockets.id ?? "");
+    };
+
+    sockets.on("connect", handleConnect);
+
+    return () => {
+      sockets.off("connect", handleConnect);
+    };
+  }, []);
+
+
+  // Fetch seats & handle socket events
   useEffect(() => {
     if (!selectShowing || !selectShowing.auditorium?._id) return;
-    
-    // Reset current seat state when switching screenings
+
+    // Reset state when switching screenings
     setSelectedSeat(new Set());
     setBookedSeats(selectShowing.bookedSeats || []);
-    setPendingSeats(selectShowing.pendingSeats || []);
+    setPendingSeats((selectShowing.pendingSeats || []).map((seatId: string) => ({ seatId, owner: "", })));
 
     // Fetch seat layout
     const fetchSeats = async () => {
       try {
-        const res = await fetch(`/api/auditoriums/${selectShowing.auditorium._id}/seats`, {
-          method: "GET",
-          headers: {"Content-Type": "application/json"}
-        });
+        const res = await fetch(`/api/auditoriums/${selectShowing.auditorium._id}/seats`);
         const data = await res.json();
         setSeats(data);
       } catch (err) {
         console.error("Failed to load seats:", err);
-      }};
+      }
+    };
     fetchSeats();
-    
+
     // --- SOCKET SETUP ---
     sockets.emit("joinScreening", selectShowing._id);
 
-    // Listen for live updates from other users
-    const handleSeatUpdate = (data: { bookedSeats?: string[]; pendingSeats?: string[] }) => {
-      console.log("Incoming seat update:", data); 
+    const handleSeatUpdate = (data: { bookedSeats?: string[]; pendingSeats?: { seatId: string; owner: string }[] }) => {
+      console.log("Incoming seat update:", data);
       if (data.bookedSeats) setBookedSeats(data.bookedSeats);
       if (data.pendingSeats) setPendingSeats(data.pendingSeats);
     };
-    
+
     sockets.on("seatUpdate", handleSeatUpdate);
+
     return () => {
-      sockets.emit("leaveScreening", selectShowing._id); 
+      sockets.emit("leaveScreening", selectShowing._id);
       sockets.off("seatUpdate", handleSeatUpdate);
-    };}, [selectShowing?._id, selectShowing?.auditorium?._id]);
-  
+    };
+  }, [selectShowing?._id, selectShowing?.auditorium?._id]);
+
   if (!selectShowing) return <p>Laddar föreställning...</p>;
   if (!seats.length) return <p>Laddar platser...</p>;
 
-  // Group seats in rows
+  // Group seats by rows
   const rows = seats.reduce((acc: Seat[][], seat) => {
     if (!acc[seat.rowNumber]) acc[seat.rowNumber] = [];
     acc[seat.rowNumber].push(seat);
     return acc;
   }, []);
-  
-  // toggle
+
+  // Toggle seat selection
   const toggleSeat = (row: number, seatNumber: number) => {
     if (!selectShowing) return;
     const seat = seats.find(s => s.rowNumber === row && s.seatNumber === seatNumber);
     if (!seat) return;
     const seatId = seat._id;
 
-    // Prevent interaction with booked or pending
-    if (bookedSeats.includes(seatId) || pendingSeats.includes(seatId)) return;
+    // Find if seat is pending & who owns it
+    const pendingOwner = pendingSeats.find(p => p.seatId === seatId)?.owner;
+
+    // Prevent clicking booked or others' pending seats
+    if (bookedSeats.includes(seatId) || (pendingOwner && pendingOwner !== socketId && pendingOwner !== sockets.id)) return;
 
     setSelectedSeat(prev => {
       const newSet = new Set(prev);
-      if (newSet.has(seatId)) {
+      const isSelected = newSet.has(seatId);
+
+      if (isSelected) {
         newSet.delete(seatId);
         sockets.emit("seatUnselect", { screeningId: selectShowing._id, seatId });
       } else {
@@ -83,10 +103,11 @@ export default function TheaterView({ selectShowing}: Props) {
         newSet.add(seatId);
         sockets.emit("seatSelect", { screeningId: selectShowing._id, seatId });
       }
-    return newSet;
+
+      return newSet;
     });
   };
-  
+
   return (
     <section className="flex flex-col items-center w-full mt-5 mb-5">
       <article className="flex flex-col items-center w-11/12 md:w-8/12 lg:w-6/12">
@@ -99,17 +120,19 @@ export default function TheaterView({ selectShowing}: Props) {
           {rows.map((rowSeats, rowI) => (
             <div key={rowI} className="flex mb-1">
               {rowSeats.map((seat) => {
-                const seatKey = seat._id; // use MongoDB seat ID
+                const seatKey = seat._id;
                 const isBooked = bookedSeats.includes(seatKey);
-                const isPending = pendingSeats.includes(seatKey);
+                const pendingSeat = pendingSeats.find(p => p.seatId === seatKey);
+                const isPending = !!pendingSeat;
+                const isMine = pendingSeat?.owner === socketId;
                 const isSelected = selectedSeat.has(seatKey);
                 const isAccessible = seat.accessible;
 
                 let color = "#243365";
-                if (isBooked) color = "#d9534f"; 
-                else if (isSelected) color = "#5cb85c"; 
-                else if (isPending) color = "#f0ad4e"; 
-                else if (isAccessible) color = "#dede39"; 
+                if (isBooked) color = "#d9534f";
+                else if (isSelected) color = "#5cb85c";
+                else if (isPending && !isMine) color = "#f0ad4e";
+                else if (isAccessible) color = "#dede39";
 
                 return (
                   <button
@@ -126,7 +149,15 @@ export default function TheaterView({ selectShowing}: Props) {
                     }}
                     title={`Rad ${seat.rowNumber + 1}, Stol ${seat.seatNumber + 1} ${
                       isAccessible ? "(Tillgänglighetsanpassad)" : ""
-                    } ${isBooked ? "(Upptagen)" : isPending ? "(Håller på att bli bokat)" : ""}`}
+                    } ${
+                      isBooked
+                        ? "(Upptagen)"
+                        : isPending
+                        ? isMine
+                          ? "(Din valda stol)"
+                          : "(Håller på att bli bokad)"
+                        : ""
+                    }`}
                   />
                 );
               })}
@@ -138,13 +169,13 @@ export default function TheaterView({ selectShowing}: Props) {
         <div className="mt-3 text-center">
           <strong>Valda stolar:</strong>{" "}
           {Array.from(selectedSeat)
-          .map((seatId) => {
-            const seat = seats.find((s) => s._id === seatId);
-            if (!seat) return null;
-            return `Rad ${seat.rowNumber + 1}, Stol ${seat.seatNumber + 1}`;
-          })
-          .filter(Boolean)
-          .join(", ") || "Inga"}
+            .map((seatId) => {
+              const seat = seats.find((s) => s._id === seatId);
+              if (!seat) return null;
+              return `Rad ${seat.rowNumber + 1}, Stol ${seat.seatNumber + 1}`;
+            })
+            .filter(Boolean)
+            .join(", ") || "Inga"}
         </div>
 
         <p className="mt-3">

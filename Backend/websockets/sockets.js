@@ -1,15 +1,16 @@
 import { Server } from "socket.io";
 
 let io;
-const pendingSeatsMap = {};   // { screeningId: Set([...seatIds]) }
-const socketSeatMap = {};     // { socket.id: Set([...seatIds]) }
+
+const pendingSeatsMap = {};
+const socketSeatMap = {};
 
 export function initSocket(server) {
   io = new Server(server, {
     cors: {
       origin: "http://localhost:5173",
-      methods: ["GET", "POST"]
-    }
+      methods: ["GET", "POST"],
+    },
   });
 
   io.on("connection", (socket) => {
@@ -20,34 +21,55 @@ export function initSocket(server) {
       socket.data.screeningId = screeningId;
       console.log(`🎟️ Socket ${socket.id} joined screening ${screeningId}`);
 
-      // Send the current state to the new user
-      const pending = Array.from(pendingSeatsMap[screeningId] || []);
-      socket.emit("seatUpdate", { bookedSeats: [], pendingSeats: pending });
+      const pendingArray = pendingSeatsMap[screeningId]
+      ? Array.from(pendingSeatsMap[screeningId]).map(([seatId, owner]) => ({ seatId, owner, })): [];
+
+      socket.emit("seatUpdate", {
+        bookedSeats: [],
+        pendingSeats: pendingArray,
+      });
     });
 
-    socket.on("seatSelect", ({ screeningId, seatId }) => {
-      if (!pendingSeatsMap[screeningId]) pendingSeatsMap[screeningId] = new Set();
-      if (!socketSeatMap[socket.id]) socketSeatMap[socket.id] = new Set();
 
-      // Add the seat to both maps
-      pendingSeatsMap[screeningId].add(seatId);
+    socket.on("seatSelect", ({ screeningId, seatId }) => {
+      if (!pendingSeatsMap[screeningId])
+        pendingSeatsMap[screeningId] = new Map();
+      if (!socketSeatMap[socket.id])
+        socketSeatMap[socket.id] = new Set();
+
+      pendingSeatsMap[screeningId].set(seatId, socket.id);
       socketSeatMap[socket.id].add(seatId);
 
-      console.log(`🟡 Seat selected: ${seatId} (screening: ${screeningId})`);
+      console.log(`🟡 Seat selected: ${seatId} (by ${socket.id})`);
+
+      const pendingArray = Array.from(pendingSeatsMap[screeningId]).map(
+        ([id, owner]) => ({ seatId: id, owner })
+      );
+
       io.to(screeningId).emit("seatUpdate", {
         bookedSeats: [],
-        pendingSeats: Array.from(pendingSeatsMap[screeningId]),
+        pendingSeats: pendingArray,
       });
     });
 
     socket.on("seatUnselect", ({ screeningId, seatId }) => {
-      if (pendingSeatsMap[screeningId]) pendingSeatsMap[screeningId].delete(seatId);
+      if (
+        pendingSeatsMap[screeningId] &&
+        pendingSeatsMap[screeningId].get(seatId) === socket.id
+      ) {
+        pendingSeatsMap[screeningId].delete(seatId);
+      }
       if (socketSeatMap[socket.id]) socketSeatMap[socket.id].delete(seatId);
 
-      console.log(`⚪ Seat unselected: ${seatId} (screening: ${screeningId})`);
+      console.log(`⚪ Seat unselected: ${seatId} (by ${socket.id})`);
+
+      const pendingArray = Array.from(pendingSeatsMap[screeningId] || []).map(
+        ([id, owner]) => ({ seatId: id, owner })
+      );
+
       io.to(screeningId).emit("seatUpdate", {
         bookedSeats: [],
-        pendingSeats: Array.from(pendingSeatsMap[screeningId] || []),
+        pendingSeats: pendingArray,
       });
     });
 
@@ -60,17 +82,26 @@ export function initSocket(server) {
       console.log("❌ Client disconnected:", socket.id);
       const screeningId = socket.data.screeningId;
 
-      // Remove that user's pending seats
       if (screeningId && socketSeatMap[socket.id]) {
         for (const seatId of socketSeatMap[socket.id]) {
-          if (pendingSeatsMap[screeningId]) pendingSeatsMap[screeningId].delete(seatId);
+          if (
+            pendingSeatsMap[screeningId] &&
+            pendingSeatsMap[screeningId].get(seatId) === socket.id
+          ) {
+            pendingSeatsMap[screeningId].delete(seatId);
+          }
         }
         delete socketSeatMap[socket.id];
 
         console.log(`🧹 Cleaned up seats for ${socket.id}`);
+
+        const pendingArray = Array.from(pendingSeatsMap[screeningId] || []).map(
+          ([id, owner]) => ({ seatId: id, owner })
+        );
+
         io.to(screeningId).emit("seatUpdate", {
           bookedSeats: [],
-          pendingSeats: Array.from(pendingSeatsMap[screeningId] || []),
+          pendingSeats: pendingArray,
         });
       }
     });
