@@ -57,8 +57,14 @@ export default function TheaterViewContainer({ selectTheaterId, selectShowing }:
   if (!currentShowing) return null;
 
   return (
-    <main className="w-full flex flex-col justify-center items-center sm:w-11/12 sm:h-auto md:w-full md:flex md:justify-center md:items-center md:mt-5 lg:w-11/12 lg:h-auto lg:mt-5">
-      <section className="w-11/12 sm:w-full md:w-full md:flex md:flex-col md:justify-center md:items-center lg:h-auto">
+    <main className="TheaterSide w-full flex flex-col justify-start items-start 
+    sm:w-11/12 sm:h-auto 
+    md:w-full md:flex md:justify-center md:items-center md:mt-5 
+    lg:w-9/12 lg:h-auto lg:mt-7 lg:flex lg:justify-start lg:items-center">
+      <section className="Theaterbox w-8/12 flex 
+      sm:w-full 
+      md:w-full md:flex md:flex-col md:justify-center md:items-center 
+      lg:w-full lg:flex lg:justify-start lg:items-center lg:h-200 lg:mt-0">
         <TheaterView key={currentShowing._id} selectShowing={currentShowing} />
       </section>
     </main>

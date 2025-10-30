@@ -88,8 +88,11 @@ export default function TheaterView({ selectShowing}: Props) {
   };
   
   return (
-    <section className="flex flex-col items-center w-full mt-5 mb-5">
-      <article className="flex flex-col items-center w-11/12 md:w-8/12 lg:w-6/12">
+    <section className="flex flex-col items-center w-11/12 glass_effect mt-5 mb-5
+    lg:w-11/12 lg:h-100 lg:flex lg:justify-center lg:items-center">
+      <article className="flex flex-col items-center w-11/12 
+      md:w-8/12 
+      lg:w-6/12">
         <h2 className="p-3">{selectShowing.movie.title}</h2>
         <p>{selectShowing.auditorium.name}</p>
         <p>Tid: {selectShowing.time}</p>

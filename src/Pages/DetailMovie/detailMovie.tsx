@@ -56,14 +56,18 @@ export default function DetailMovie() {
             <section className="flex flex-col justify-center items-center w-full px-4 
             sm:px-10 
             md:px-10
-            lg:px-10">
+            lg:px-10
+            xl:w-11/12 xl:px-2">
                 {/* Trailer */}
-                <section className="flex flex-col justify-center items-center container_box mt-5 w-11/12 aspect-video bg-[#24252C]">
+                <section className="flex flex-col justify-center items-center container_box mt-5 w-11/12 aspect-video bg-[#24252C]
+                lg:w-12/13 lg:h-110
+                xl:w-11/12 xl:h-120 xl:mb-3">
                     <iframe
                         className="w-11/12 h-50 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
                         sm:h-62
                         md:w-11/12 md:h-82
-                        lg:w-11/12 lg:h-96 lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
+                        lg:w-9/12 lg:h-96 lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
+                        xl:w-9/12 xl:h-96 xl:bg-blue-400 lg:shadow-lg xl:shadow-blue-400/50
 "
                         src={`https://www.youtube.com/embed/${movie.youtubeTrailers}`}
                         title={movie.title + " Trailer"}
@@ -72,24 +76,30 @@ export default function DetailMovie() {
                 </section>
 
                 {/* Detaljer */}
-                <section className="flex flex-col justify-center items-center gap-5 mt-5 w-11/12
+                <section className="flex flex-col justify-between items-center gap-5 mt-5 w-11/12
                 sm:
                 md:flex-row md:items-start
-                lg: ">
+                lg:w-11/12
+                xl:w-11/12">
                     <img
                         src={movie.imageSrc}
                         alt={`${movie.title} poster`}
                         className="w-6/12 object-cover rounded-md shadow-lg/30
-                        sm:w-8/12
-                        md:w-6/12 md:justify-start items-start
+                        sm:w-6/12
+                        md:w-5/12 md:justify-start items-start
+                        lg:w-5/12
                         xl:w-5/12"
                     />
-                    <section className="flex flex-col gap-5 w-full
+                    <section className="flex flex-col gap-10 w-full
                     sm:w-full 
                     md:w-3/5
-                    lg:">
-                        <article className="text-center text-sm container_box
-                        sm:text-base">
+                    lg:
+                    xl:h-auto">
+                        <article className="text-center text-sm container_box mt-10
+                        sm:text-base
+                        md:mt-0
+                        lg:mt-0
+                        xl:mt-0">
                             <p className="text-start pl-2 pt-2
                             sm:
                             md:

@@ -69,7 +69,7 @@ export default function MovieInformation() {
           className="moviePoster flex justify-center items-center w-5/12 h-auto mx-3 my-3 rounded-md shadow-lg/30
                      sm:w-2/5 sm:mr-2 sm:mt-0 sm:p-0 
                      md:w-2/8 md:h-auto md:m-1 md:p-0 
-                     lg:w-56 lg:h-auto lg:m-0 lg:ml-20"
+                     lg:w-56 lg:h-auto lg:m-0 lg:ml-10"
         />
 
         {/*----------Container movie info ----------*/}
@@ -77,14 +77,14 @@ export default function MovieInformation() {
           className="boxForDesc flex flex-col justify-start w-11/12 h-auto pl-2 text-[#e4e1e1]
                     sm:w-6/12 sm:h-auto
                      md:w-3/6 md:h-auto 
-                     lg:flex lg:justify-center lg:items-start lg:ml-8 lg:w-4/12"
+                     lg:flex lg:justify-center lg:items-start lg:ml-2 lg:w-4/12 lg:h-62"
         >
           <h1
             className="movieTitle flex w-full h-auto text-left mt-3 text-base underline
                       xs:text-base
                       sm:text-xl sm:m-3 sm:h-auto
                        md:justify-start md:w-full md:text-3xl md:mt-10 md:ml-0
-                       lg:m-0 lg:justify-start lg:items-canter"
+                       lg:m-0 lg:justify-start lg:items-start"
           >
             {movieInfo.title}
           </h1>
@@ -114,14 +114,6 @@ export default function MovieInformation() {
             >
               {" "}
             </li>
-            <li
-              className="text-sm pt-4 text-left w-full h-full
-                          xs:text-xs
-                          sm:text-base sm:text-start sm:w-full sm:h-auto sm:pt-2 sm:mt-10
-                          md:text-start md:mt-5 md:text-sm md:w-11/12"
-            >
-              {movieInfo.description}
-            </li>
           </ul>
         </article>
         <img
@@ -129,8 +121,8 @@ export default function MovieInformation() {
           alt="Cinema overview pic for fill"
           className="invisible w-0 rounded-md [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
                                                                           sm:invisble w-0
-                                                                          md:visible md:w-2/6 md:p-4 md:pb-40
-                                                                          lg:visible lg:ml-40 lg:mt-1 lg:p-0 lg:w-3/10 md:rounded-md md:shadow-md"
+                                                                          md:visible md:w-2/6 md:p-4 md:pb-40 md:rounded-md md:shadow-md
+                                                                          lg:visible lg:mt-1 lg:p-10 lg:w-5/10 "
         />
       </section>
     </main>
