@@ -147,14 +147,14 @@ export default function FrontPage() {
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-14 bg-[#292929]">
       <h1
-        className="text-center text-lg mb-4 w-10/12
+        className="text-center text-lg mb-4 w-11/12
             sm:text-xl
             md:text-2xl"
       >
         Välkommen till Filmvisarna!
       </h1>
       <p
-        className="text-center text-sm mb-10 w-10/12
+        className="text-center text-sm mb-10 w-11/12
             sm:text-base
             md:text-base"
       >
@@ -165,161 +165,165 @@ export default function FrontPage() {
       </p>
 
       {/* Filter & Sort */}
-      <section className="w-10/12 mb-5 rounded-md shadow-md flex justify-around items-start relative glass_effect text-white">
-        {/* Filter */}
-        <nav className="relative ">
-          <button
-            onClick={() => setFilterOpen(!filterOpen)}
-            className="px-2 py-1 cursor-pointer
+      <section className="w-11/12 mb-5 rounded-md shadow-md flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
+        <section className="flex flex-row w-1/2 justify-around items-center sm:w-full">
+          {/* Filter */}
+          <nav className="relative ">
+            <button
+              onClick={() => setFilterOpen(!filterOpen)}
+              className="px-2 py-1 cursor-pointer
                         sm:text-lg 
                         md:text-lg"
-          >
-            Filter &darr;
-          </button>
-          {filterOpen && (
-            <div
-              className="flex flex-row flex-wrap justify-start items-start 
+            >
+              Filter &darr;
+            </button>
+            {filterOpen && (
+              <div
+                className="flex flex-row flex-wrap justify-center items-center 
                         absolute -left-8 mt-5 bg-[#292929] shadow-md rounded p-5 w-72
                         sm:w-86 sm:mt-1 z-50
                         lg:max-h-[80vh]
                         
                         "
-            >
-              {/* Genres */}
-              {[
-                "Action",
-                "Drama",
-                "Komedi",
-                "Skräck",
-                "Äventyr",
-                "Thriller",
-                "Mystik",
-              ].map((genre) => (
-                <label
-                  key={genre}
-                  className="flex items-center gap-2 px-2 py-1 mt-1 mb-2 w-30 h-8 text-sm
+              >
+                {/* Genres */}
+                {[
+                  "Action",
+                  "Drama",
+                  "Komedi",
+                  "Skräck",
+                  "Äventyr",
+                  "Thriller",
+                  "Mystik",
+                ].map((genre) => (
+                  <label
+                    key={genre}
+                    className="flex items-center gap-2 px-2 py-1 mt-1 mb-2 w-30 h-8 text-sm
                                 hover:underline
                                 sm:text-base
                                 md:text-base"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedGenres.includes(genre)}
-                    onChange={() => handleGenreChange(genre)}
-                  />
-                  {genre}
-                </label>
-              ))}
-              {/* Age Limits */}
-              {ageOptions.map((age) => (
-                <label
-                  key={age.value}
-                  className="flex items-center gap-2 px-2 py-1 mt-2 text-sm text-left
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedGenres.includes(genre)}
+                      onChange={() => handleGenreChange(genre)}
+                    />
+                    {genre}
+                  </label>
+                ))}
+                {/* Age Limits */}
+                {ageOptions.map((age) => (
+                  <label
+                    key={age.value}
+                    className="flex items-center gap-2 px-2 py-1 mt-2 text-sm text-left
                                 sm:text-base
                                 md:text-base"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedAges.includes(age.value)}
-                    onChange={() => handleAgeChange(age.value)}
-                  />
-                  {age.label}
-                </label>
-              ))}
-            </div>
-          )}
-        </nav>
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedAges.includes(age.value)}
+                      onChange={() => handleAgeChange(age.value)}
+                    />
+                    {age.label}
+                  </label>
+                ))}
+              </div>
+            )}
+          </nav>
 
-        {/* Sort */}
-        <div className="relative">
-          <button
-            onClick={() => setSortOpen(!sortOpen)}
-            className="px-2 py-1 cursor-pointer
+          {/* Sort */}
+          <div className="relative">
+            <button
+              onClick={() => setSortOpen(!sortOpen)}
+              className="px-2 py-1 cursor-pointer
                         sm:text-base
                         md:text-lg"
-          >
-            Sortera &darr;
-          </button>
-          {sortOpen && (
-            <ul className="absolute mt-2 bg-[#292929] rounded shadow p-2 -right-9 w-72">
-              <li
-                className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
-                onClick={() => {
-                  setSortOption("atoz");
-                  setSortOpen(false);
-                }}
-              >
-                A–Ö
-              </li>
-              <li
-                className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
-                onClick={() => {
-                  setSortOption("ztoa");
-                  setSortOpen(false);
-                }}
-              >
-                Ö–A
-              </li>
-              <li
-                className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
-                onClick={() => {
-                  setSortOption("newest");
-                  setSortOpen(false);
-                }}
-              >
-                Nyast först
-              </li>
-              <li
-                className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
-                onClick={() => {
-                  setSortOption("oldest");
-                  setSortOpen(false);
-                }}
-              >
-                Äldst först
-              </li>
-            </ul>
-          )}
-        </div>
+            >
+              Sortera &darr;
+            </button>
+            {sortOpen && (
+              <ul className="absolute mt-2 bg-[#292929] rounded shadow p-2 -right-9 w-72">
+                <li
+                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  onClick={() => {
+                    setSortOption("atoz");
+                    setSortOpen(false);
+                  }}
+                >
+                  A–Ö
+                </li>
+                <li
+                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  onClick={() => {
+                    setSortOption("ztoa");
+                    setSortOpen(false);
+                  }}
+                >
+                  Ö–A
+                </li>
+                <li
+                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  onClick={() => {
+                    setSortOption("newest");
+                    setSortOpen(false);
+                  }}
+                >
+                  Nyast först
+                </li>
+                <li
+                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  onClick={() => {
+                    setSortOption("oldest");
+                    setSortOpen(false);
+                  }}
+                >
+                  Äldst först
+                </li>
+              </ul>
+            )}
+          </div>
+        </section>
+
+
+        <section className="flex w-full">
+          {/* Screening Date */}
+          <div className="search-date-box px-2 py-2 
+        w-11/12
+        sm:w-1/2
+        flex
+        flex-col
+      ">
+            <label className="block text-sm mb-1">Datum:</label>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="w-full h-7 bg-white text-sm text-black rounded px-1 py-1 mb-3 "
+            />
+          </div>
+
+
+          {/* Schedule Type */}
+          <div className="search-hall-box px-2 py-2 w-11/12
+        sm:w-1/2
+        flex
+        flex-col
+        ">
+            <label className="block text-sm mb-1">Salong:</label>
+            <select
+              value={scheduledType}
+              onChange={(e) => setScheduledType(e.target.value)}
+              className="w-full bg-white text-black text-sm rounded px-2 py-1 mb-3 focus:outline-none focus:ring-2 focus:ring-[#24252C]"
+            >
+              <option value="">Alla salonger</option>
+              <option value="smallTheater">Lilla Salongen</option>
+              <option value="bigTheater">Stora Salongen</option>
+            </select>
+          </div>
+        </section>
       </section>
 
-    <section className="search-date-hall-caontainer flex flex-row justify-around items-center w-8/12 container_box mt-4 mb-4
-    sm:justify-center sm:items-center sm:gap-2 sm:w-3/5
-    md:w-3/7
-    lg:gap-4">
 
-      {/* Screening Date */}
-      <div className="search-date-box px-2 py-2 w-5/12
-      sm:w-2/5
-      md:w-2/5
-      lg:w-3/6
-      lg:w-2/12">
-        <label className="block text-sm mb-1">Datum:</label>
-        <input
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          className="w-full h-7 bg-white text-sm text-black rounded px-1 py-1 mb-3 "
-        />
-      </div>
-
-      
-        {/* Schedule Type */}
-        <div className="search-hall-box px-2 py-2 w-5/10
-        sm:w-5/10
-        md:w-5/10">
-          <label className="block text-sm mb-1">Salong:</label>
-          <select
-            value={scheduledType}
-            onChange={(e) => setScheduledType(e.target.value)}
-            className="w-full bg-white text-black text-sm rounded px-2 py-1 mb-3 focus:outline-none focus:ring-2 focus:ring-[#24252C]"
-          >
-            <option value="">Alla salonger</option>
-            <option value="smallTheater">Lilla Salongen</option>
-            <option value="bigTheater">Stora Salongen</option>
-          </select>
-        </div>
-      </section>
 
       {/* Movies container*/}
       <section
@@ -382,8 +386,8 @@ export default function FrontPage() {
                 >
                   {Array.isArray(movie.genres)
                     ? movie.genres
-                        .map((genre: { title: string }) => genre.title)
-                        .join(", ")
+                      .map((genre: { title: string }) => genre.title)
+                      .join(", ")
                     : movie.genres.title}
                 </p>
               </Link>
@@ -397,7 +401,7 @@ export default function FrontPage() {
         className="flex flex-col justify-center items-center w-11/12 mt-2
             md:mt-10 md:flex md:flex-col"
       >
-        <h2 className="w-10/12 mt-10 rounded-md shadow-md text-lg glass_effect p-1 justify-center items-center">
+        <h2 className="w-full mt-10 rounded-md shadow-md text-lg glass_effect p-1 justify-center items-center">
           Temadagar
         </h2>
         <article
@@ -418,7 +422,7 @@ export default function FrontPage() {
           >
             <Slideshow day="thursday" />
             <p
-              className="w-10/12 m-2 text-center
+              className="w-11/12 m-2 text-center
                             sm:w-11/12
                             md:w-7/12 md:px-2"
             >
@@ -453,7 +457,7 @@ export default function FrontPage() {
           >
             <Slideshow day="sunday" />
             <p
-              className=" w-10/12 m-2 text-center
+              className=" w-11/12 m-2 text-center
                         sm:w-11/12
                         md:w-7/12 md:px-2
                         lg:w-7/12"
