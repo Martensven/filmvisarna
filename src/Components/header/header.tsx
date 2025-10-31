@@ -1,5 +1,7 @@
 import { Link } from "react-router";
 import { useState } from "react";
+import LoggoNR2 from "./../../../public/images/Header-loggo/Filmvisarna-loggoNR2-Andra.png"
+import LoggoNR2O from "./../../../public/images/Header-loggo/Filmvisarna-loggoNR2-opacity.png"
 
 import { useAuth } from "../../context/authContext"; // ✅ Import AuthContext
 import "./../../index.css";
@@ -21,16 +23,22 @@ export default function Header({ onLoginClick }: HeaderProps) {
 
   return (
     <main className="w-screen">
-      <header className="flex flex-col justify-center items-center text-center text-white mt-1">
-        <nav className="w-11/12 flex flex-col justify-center items-center bg-[#243365] text-white mt-5 rounded-md shadow-md">
-
+      <header className="flex flex-col justify-center items-center text-center text-white mt-1 mb-7">
+        <nav className="w-11/12 flex flex-col justify-center items-center bg-[#243365] text-white mt-10 mb-5 rounded-md shadow-md
+        sm:mb-10">
           <section className="flex items-center justify-between w-full h-12 px-4">
             <Link to="/" onClick={() => setIsOpen(false)}>
-              <i className="fa fa-home flex" style={{ fontSize: "20px" }}></i>
+              <img
+          src={`${LoggoNR2}`}
+          alt="Filmvisarnas loggo"
+          className="w-2/7 rounded-lg flex justify-start items-center ml-3
+          xs:w-2/6
+          sm:w-3/6 sm:ml-5"
+        />
             </Link>
 
             <button
-              className="md:hidden"
+              className="md:hidden mr-3"
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
             >
@@ -38,7 +46,7 @@ export default function Header({ onLoginClick }: HeaderProps) {
             </button>
 
             {/* ✅ Desktop menu */}
-            <ul className="desktopNav hidden md:flex w-11/12 justify-around items-center text-sm font-medium">
+            <ul className="desktopNav hidden md:flex w-10/12 justify-around items-center text-base font-medium">
               <li className="md:hover:scale-105 lg:hover:scale-110">
                 <Link to="/about">Om Oss</Link>
               </li>

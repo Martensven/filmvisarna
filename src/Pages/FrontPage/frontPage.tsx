@@ -148,27 +148,17 @@ export default function FrontPage() {
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-2 bg-[#292929]">
       {/* <h1 className="logo_font text-xl mt-5">FILMVISARNA</h1> */}
-      <div
-        className="flex flex-col justify-center items-center w-10/12 h-65
-                sm:justify-center sm:items-center 
-                md:justify-start md:items-start
-                lg:justify-start lg:items-start"
-      >
-        <img
-          src={`${LoggoNR1}`}
-          alt="Filmvisarnas loggo"
-          className="w-6/12 rounded-lg flex justify-start items-center mt-2"
-        />
-        <article className="flex flex-col w-full text-center">
+     
+        <article className="flex flex-col justify-center items-center w-full text-center">
         <h1
-          className="text-center text-sm mb-1
+          className="text-center text-lg mb-1
             sm:text-xl
             md:text-2xl"
         >
           Välkommen till Filmvisarna!
         </h1>
         <p
-          className="text-center text-xs mb-10 w-full
+          className="text-center text-sm w-11/12 
             sm:text-base
             md:text-base"
         >
@@ -178,14 +168,14 @@ export default function FrontPage() {
           som passar dig!
         </p>
         </article>
-      </div>
+      
 
       
       <section
-        className="search-date-hall-caontainer flex flex-row justify-around items-center w-8/12 container_box mt-4 mb-4
-    sm:justify-center sm:items-center sm:gap-2 sm:w-3/5
-    md:w-3/7
-    lg:gap-4"
+        className="search-date-hall-container flex flex-row justify-around items-center w-8/12 container_box mt-4 mb-4
+        sm:justify-center sm:items-center sm:gap-2 sm:w-3/5
+        md:w-3/7
+        lg:gap-4"
       >
         {/* Screening Date */}
         <div
