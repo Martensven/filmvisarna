@@ -5,6 +5,8 @@ const bookingSchema = new mongoose.Schema({
     // If user is logged in, reference their userId. If not, store as null and use guest info.
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false, default: null },
 
+    guestEmail: { type: String, default: null },
+
     // screening info
     screening_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Screening', required: false, default: null },
 

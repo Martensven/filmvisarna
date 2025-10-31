@@ -56,7 +56,7 @@ app.use(ReviewRoute);
 app.use(TicketTypes);
 app.use(Directors);
 app.use(Screening);
-app.use(Bookings);
+app.use("/api/bookings", Bookings);
 app.use(Genres);
 app.use(Distributors);
 app.use(User);

@@ -10,14 +10,19 @@ import { getIo } from "../websockets/sockets.js";
 const router = express.Router();
 
 // Create a new booking
-router.post("/api/bookings", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const { user_id, screening_id, seat_ids, tickets: ticketRequests } = req.body;
+    const { user_id, email, screening_id, seat_ids, tickets: ticketRequests } = req.body;
 
     console.log("REQ BODY:", req.body); // Debug
 
     // ✅ Find user if logged in
     const user = user_id ? await User.findById(user_id) : null;
+
+    // Check if it's a guest
+    if (!user && !email) {
+      return res.status(400).json({ error: "Email is required for guest booking." });
+    }
 
     // ✅ Find screening
     const screening = await Screening.findById(screening_id).populate(
@@ -79,6 +84,7 @@ router.post("/api/bookings", async (req, res) => {
     // ✅ Save booking
     const newBooking = await Booking.create({
       user_id: user ? user._id : null,
+      guestEmail: email || null,
       screening_id: screening._id,
       seats,
       tickets,
@@ -131,7 +137,7 @@ router.post("/api/bookings", async (req, res) => {
 });
 
 // Get all bookings
-router.get("/api/bookings", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const bookings = await Booking.find()
       .populate("user_id", "firstName lastName email")
@@ -146,7 +152,7 @@ router.get("/api/bookings", async (req, res) => {
 });
 
 // Get booking by ID
-router.get("/api/bookings/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id)
       .populate("user_id", "firstName lastName email")
@@ -171,7 +177,7 @@ router.get("/api/bookings/:id", async (req, res) => {
 });
 
 // Get bookings by user ID
-router.get("/api/bookings/user/:id", async (req, res) => {
+router.get("/user/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { type } = req.query; // "past" eller "upcoming"
@@ -205,7 +211,7 @@ router.get("/api/bookings/user/:id", async (req, res) => {
 
 
 // Update booking by ID
-router.put("/api/bookings/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const booking = await Booking.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -226,7 +232,7 @@ router.put("/api/bookings/:id", async (req, res) => {
 });
 
 // Delete booking by ID
-router.delete("/api/bookings/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     // Find the booking by ID
     const booking = await Booking.findById(req.params.id);
