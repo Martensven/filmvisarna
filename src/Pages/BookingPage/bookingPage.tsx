@@ -9,7 +9,8 @@ import { SeatsProvider } from "./components/context/SeatsContext";
 
 
 export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
-  const [selectedTheater, setSelectedTheater] = useState<string | null>(null);
+  const [selectedTheaterId, setSelectedTheaterId] = useState<string | null>(null);
+  const [selectedShowing, setSelectedShowing] = useState<string | null>(null);
 
   return (
     <>
@@ -20,15 +21,13 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
       >
         <MovieInformation />
 
-        <div className="flex flex-col w-full h-auto justify-center items-center
+        <div className="Booking-component flex flex-col w-11/12 h-auto justify-center items-center container_box
                         md:flex-col md:justify-center md:items-center md:w-full 
-                        lg:flex lg:flex-col">
+                        lg:flex lg:flex-row lg:w-11/12 lg:justify-start lg:items-start">
 
-          <CalenderAndSeats onSelectTheater={setSelectedTheater} />
+          <CalenderAndSeats onSelectTheaterId={setSelectedTheaterId} onSelectShowing={setSelectedShowing} />
 
-          {/* Theater view based on selected showing */}
-          {selectedTheater && <TheaterViewContainer selectTheater={selectedTheater} />}
-          
+          <TheaterViewContainer selectTheaterId={selectedTheaterId} selectShowing={selectedShowing} />
         </div>
 
         <CheckoutComponent isLoggedIn={isLoggedIn} />

@@ -1,31 +1,77 @@
-  import SeatsTheaters from "../../../../Backend/exampleSeatsTheater"
-  import TheaterView from "./TheaterView"
-//Component for the view of  theater.
+import TheaterView from "./TheaterView";
+import type { Theater, Showing } from "../../../Interfaces/type.ts";
+import { useState, useEffect } from "react";
 
 interface Props {
-  selectTheater: string;
+  selectTheaterId: string | null;
+  selectShowing: string | null; // Screening ID now, not movie ID
 }
 
-  export default function TheaterViewContainer( { selectTheater }: Props) {
-    const theater = SeatsTheaters.find(t => t.name === selectTheater);
-    if (!theater) {
-      return ;
-    }
+export default function TheaterViewContainer({ selectTheaterId, selectShowing }: Props) {
+  const [theater, setTheater] = useState<Theater | null>(null);
+  const [currentShowing, setCurrentShowing] = useState<Showing | null>(null);
 
-    return(
-        <main className="w-full flex flex-col justify-center items-center
-                        sm:w-11/12 sm:h-auto 
-                        md:w-full md:flex md:justify-center md:items-center md:mt-5
-                        lg:w-11/12 lg:h-auto lg:mt-5 ">
-          <section className="w-11/12 
-                              sm:w-full
-                              md:w-full md:flex md:flex-col md:justify-center md:items-center
-                              lg:h-auto">
-            <TheaterView key={theater.id} theaterView={theater} />
-          
-          </section>
-        </main>
-   );
-  }
-  
-  
+  // Fetch the auditorium info
+  useEffect(() => {
+    if (!selectTheaterId) return;
+
+    const fetchTheater = async () => {
+      try {
+        const res = await fetch(`/api/auditoriums/${selectTheaterId}`, {
+          method: "GET",
+          headers: {"Content-Type": "application/json"}
+        });
+        const data = await res.json();
+        console.log("This is auditorium data:", data);
+        setTheater(data);
+      } catch (err) {
+        console.error("Failed to fetch theater:", err);
+      }
+    };
+
+    fetchTheater();
+  }, [selectTheaterId]);
+
+  // Fetch the selected showing (screening)
+  useEffect(() => {
+    if (!selectShowing) return;
+
+    const fetchShowing = async () => {
+      try {
+        const res = await fetch(`/api/screening/${selectShowing}`, {
+          method: "GET",
+          headers: {"Content-Type": "application/json"}
+        });
+        const data = await res.json();
+        console.log("this is screening data:", data);
+        setCurrentShowing(data);
+      } catch (err) {
+        console.error("Failed to fetch showing:", err);
+      }
+    };
+
+    fetchShowing();
+  }, [selectShowing]);
+
+  if (!theater) return <p className="TheaterSide w-full flex flex-col justify-start items-start 
+    sm:w-11/12 sm:h-auto 
+    md:w-full md:flex md:justify-center md:items-center md:mt-5 
+    lg:w-9/12 lg:h-auto lg:mt-7 lg:flex lg:justify-start lg:items-center ">Laddar salong...</p>;
+  if (!currentShowing) return <p>Laddar föreställning...</p>;
+  if (!theater) return null;
+  if (!currentShowing) return null;
+
+  return (
+    <main className="TheaterSide w-full flex flex-col justify-start items-start 
+    sm:w-11/12 sm:h-auto 
+    md:w-full md:flex md:justify-center md:items-center md:mt-5 
+    lg:w-9/12 lg:h-auto lg:mt-7 lg:flex lg:justify-start lg:items-center">
+      <section className="Theaterbox w-full h-auto flex
+      sm:w-full 
+      md:w-full md:flex md:flex-col md:justify-center md:items-center 
+      lg:w-full lg:flex lg:justify-center lg:items-center lg:h-200 lg:mt-0">
+        <TheaterView key={currentShowing._id} selectShowing={currentShowing} />
+      </section>
+    </main>
+  );
+}

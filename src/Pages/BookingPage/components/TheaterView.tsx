@@ -1,82 +1,173 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import type { Showing, Seat } from "../../../Interfaces/type.ts";
 import { useSeats } from "./context/SeatsContext";
+import { sockets } from "./context/sockets.tsx";
 
-
-
-//Provides the function for theater overview with chairs that can be clicked and chosen.
-interface Theater {
-  id: string;
-  name: string;
-  seatsPerRow: number[];
-  Funktionhinderanpassade: { row:number; seat:number }[];
+interface Props {
+  selectShowing: Showing | null;
 }
 
-interface TheaterViewProps {
-  theaterView: Theater;
-}
-
-export default function TheaterView(
-  { theaterView }: TheaterViewProps
-) {
-
-  //State for selected seats using a Set to avoid duplicates.
-  const [selectedSeat, setSelectedSeat] = useState<Set<string>>(new Set());
-
-  //Getting total tickets from useSeats
+export default function TheaterView({ selectShowing }: Props) {
   const { totalTickets } = useSeats();
+  const [selectedSeat, setSelectedSeat] = useState<Set<string>>(new Set());
+  const [bookedSeats, setBookedSeats] = useState<string[]>([]);
+  const [pendingSeats, setPendingSeats] = useState<{ seatId: string; owner: string }[]>([]);
+  const [socketId, setSocketId] = useState<string>("");
+  const [seats, setSeats] = useState<Seat[]>([]);
 
-  //Function for toggling the seats when clicked.
-  const toggle = (rowI: number, seatI: number) => {
-    const key = `${rowI}-${seatI}`;
-    setSelectedSeat((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(key)) {
-        newSet.delete(key); // Deselect the seat if already selected
-      } else {
-        if (newSet.size >= totalTickets) {
-          return prev; // Do not add more seats if limit is reached
-        }
-        newSet.add(key); // Add the seat if not already selected
+  // Capture unique socket ID when connecting
+  useEffect(() => {
+    const handleConnect = () => {
+      console.log("✅ Connected to socket:", sockets.id);
+      setSocketId(sockets.id ?? "");
+    };
+
+    sockets.on("connect", handleConnect);
+
+    return () => {
+      sockets.off("connect", handleConnect);
+    };
+  }, []);
+
+  // Fetch seats & handle socket events
+  useEffect(() => {
+    if (!selectShowing || !selectShowing.auditorium?._id) return;
+
+    // Reset state when switching screenings
+    setSelectedSeat(new Set());
+    setBookedSeats(selectShowing.bookedSeats || []);
+    setPendingSeats((selectShowing.pendingSeats || []).map((seatId: string) => ({ seatId, owner: "", })));
+
+    // Fetch seat layout
+    const fetchSeats = async () => {
+      try {
+        const res = await fetch(`/api/auditoriums/${selectShowing.auditorium._id}/seats`);
+        const data = await res.json();
+        setSeats(data);
+      } catch (err) {
+        console.error("Failed to load seats:", err);
       }
+    };
+    fetchSeats();
+
+    // --- SOCKET SETUP ---
+    sockets.emit("joinScreening", selectShowing._id);
+
+    const handleSeatUpdate = (data: { bookedSeats?: string[]; pendingSeats?: { seatId: string; owner: string }[] }) => {
+      console.log("Incoming seat update:", data);
+      if (data.bookedSeats) setBookedSeats(data.bookedSeats);
+      if (data.pendingSeats) setPendingSeats(data.pendingSeats);
+    };
+
+    sockets.on("seatUpdate", handleSeatUpdate);
+
+    return () => {
+      sockets.emit("leaveScreening", selectShowing._id);
+      sockets.off("seatUpdate", handleSeatUpdate);
+    };
+  }, [selectShowing?._id, selectShowing?.auditorium?._id]);
+
+  if (!selectShowing) return <p>Laddar föreställning...</p>;
+  if (!seats.length) return <p>Laddar platser...</p>;
+
+  // Group seats by rows
+  const rows = seats.reduce((acc: Seat[][], seat) => {
+    if (!acc[seat.rowNumber]) acc[seat.rowNumber] = [];
+    acc[seat.rowNumber].push(seat);
+    return acc;
+  }, []);
+
+  // Toggle seat selection
+  const toggleSeat = (row: number, seatNumber: number) => {
+    if (!selectShowing) return;
+    const seat = seats.find(s => s.rowNumber === row && s.seatNumber === seatNumber);
+    if (!seat) return;
+    const seatId = seat._id;
+
+    // Find if seat is pending & who owns it
+    const pendingOwner = pendingSeats.find(p => p.seatId === seatId)?.owner;
+
+    // Prevent clicking booked or others' pending seats
+    if (bookedSeats.includes(seatId) || (pendingOwner && pendingOwner !== socketId && pendingOwner !== sockets.id)) return;
+
+    // Handle selection of seats
+    setSelectedSeat(prev => {
+      const newSet = new Set(prev);
+      const isSelected = newSet.has(seatId);
+
+      if (isSelected) {
+        newSet.delete(seatId);
+        sockets.emit("seatUnselect", { screeningId: selectShowing._id, seatId });
+      } else {
+        if (newSet.size >= totalTickets) return prev;
+        newSet.add(seatId);
+        sockets.emit("seatSelect", { screeningId: selectShowing._id, seatId });
+      }
+
       return newSet;
     });
   };
 
-  {
-    /*----------Container for a view of the salons----------*/
-  }
   return (
-    <section className="flex flex-col w-full h-auto jutify-center items-center mt-5 mb-5 container_box
-                        sm:w-full sm:h-auto 
-                        md:flex md:justify-center items-center md:w-11/12 md:mt-0 
-                        lg:w-full
-    ">
-      <article className="flex flex-col justify-center w-11/12 h-auto m-3 container_content
-                          md:w-11/12 md:h-auto 
-                          lg:w-8/12 lg:h-auto lg:mt-20 lg:mb-10 lg:p-5 lg:scale-125">
-        <h2 className="p-3">{theaterView.name}</h2>
-        <div>
-          {theaterView.seatsPerRow.map((seatCount, rowI) => (
-            <div key={rowI}>
-              {Array.from({ length: seatCount }).map((_, seatI) => {
-                const key = `${rowI}-${seatI}`;
-                const selected = selectedSeat.has(key);
-                const isAccesible = theaterView.Funktionhinderanpassade?.some(
-                  (s) => s.row === rowI && s.seat === seatI)
+    <section className="flex flex-col items-center w-full glass_effect mt-5 mb-5
+    lg:w-11/12 lg:h-200 lg:flex lg:justify-center lg:items-center lg:mt-0">
+      <article className="flex flex-col items-center w-full 
+      md:w-8/12 
+      lg:w-11/12 lg:h-180">
+        <h2 className="p-3
+        lg:text-lg ">{selectShowing.movie.title}</h2>
+        <p>{selectShowing.auditorium.name}</p>
+        <p>Tid: {selectShowing.time}</p>
+
+        {/* "Cinema frame" visuell appeal */}
+        <span className="bg-gray-600 w-11/12 h-2 rounded-sm mt-5 mb-8 shadow-lg shadow-sky-200
+          
+        lg:w-9/12 lg:h-3 lg:mt-15 lg:mb-10 lg:shadow-lg lg:shadow-sky-200"></span>
+
+
+        {/* Seat grid */}
+        <div className="mt-4">
+          {rows.map((rowSeats, rowI) => (
+            <div key={rowI} className="flex mb-1 justify-center w-full">
+              {rowSeats.map((seat) => {
+                const seatKey = seat._id;
+                const isBooked = bookedSeats.includes(seatKey);
+                const pendingSeat = pendingSeats.find(p => p.seatId === seatKey);
+                const isPending = !!pendingSeat;
+                const isMine = pendingSeat?.owner === socketId;
+                const isSelected = selectedSeat.has(seatKey);
+                const isAccessible = seat.accessible;
+
+                let color = "#151d38ff";
+                if (isBooked) color = "#d9534f";
+                else if (isSelected) color = "#5cb85c";
+                else if (isPending && !isMine) color = "#f0ad4e";
+                else if (isAccessible) color = "#dede39";
 
                 return (
                   <button
-                    key={seatI}
-                    onClick={() => toggle(rowI, seatI)}
+                    key={seat._id}
+                    onClick={() => toggleSeat(seat.rowNumber, seat.seatNumber)}
                     style={{
-                      width: 24,
-                      height: 24,
+                      width: 22,
+                      height: 22,
+                      marginRight: 3,
                       borderRadius: 4,
-                      backgroundColor: selected ? "green" : isAccesible ? "#dede39" : "#243365",
+                      backgroundColor: color,
                       border: "1px solid white",
-                      cursor: "pointer",
+                      cursor: isBooked ? "not-allowed" : "pointer",
                     }}
-                    title={`Rad ${rowI + 1}, stol ${seatI + 1} ${isAccesible ? "(Funktionshinderanpassade)" : ""}`}
+                    title={`Rad ${seat.rowNumber + 1}, Stol ${seat.seatNumber + 1} ${
+                      isAccessible ? "(Tillgänglighetsanpassad)" : ""
+                    } ${
+                      isBooked
+                        ? "(Upptagen)"
+                        : isPending
+                        ? isMine
+                          ? "(Din valda stol)"
+                          : "(Håller på att bli bokad)"
+                        : ""
+                    }`}
                   />
                 );
               })}
@@ -84,20 +175,24 @@ export default function TheaterView(
           ))}
         </div>
 
-        <span>
-          <strong className="font-medium">Valda Stolar:</strong> {Array.from(selectedSeat).join(", ")}
-        </span>
+        {/* Seat summary */}
+        <div className="mt-3 text-center
+        lg:mt-10">
+          <strong>Valda stolar:</strong>{" "}
+          {Array.from(selectedSeat)
+            .map((seatId) => {
+              const seat = seats.find((s) => s._id === seatId);
+              if (!seat) return null;
+              return `Rad ${seat.rowNumber + 1} Stol ${seat.seatNumber + 1}`;
+            })
+            .filter(Boolean)
+            .join(", ") || "Inga"}
+        </div>
+
+        <p className="mt-3 mb-3">
+          Antal platser valda: {selectedSeat.size} / {totalTickets}
+        </p>
       </article>
-
-      {/*----------Container for chosing chairs-button----------*/}
-      <section className="flex flex-row justify-end">
-        <button className="main_buttons w-20 h-8 m-5 text-sm">Välj</button>
-
-      </section>
-      <p className="mb-2">Antal platser valda: {selectedSeat.size} / {totalTickets}</p>
     </section>
   );
 }
-
-
-

@@ -1,15 +1,18 @@
-import { useState } from "react";
-import exampleList from "../../../Backend/example";
+import { useState, useEffect } from "react";
+
+type Genre = {
+    _id: number;
+    title: string;
+}
 
 type movieTheme = {
     id: number;
-    movieName: string;
-    image: string;
-    genre: string[];
+    title: string;
+    imageSrc: string;
+    genres: Genre[];
     releaseYear: number;
     description: string;
     length: number;
-    themeDay: string;
 };
 
 interface SlideshowProps {
@@ -17,12 +20,44 @@ interface SlideshowProps {
 };
 
 export default function Slideshow({ day }: SlideshowProps) {
-
-    const movies = (exampleList as movieTheme[]).filter(
-        (movie) => movie.themeDay?.toLowerCase() === day
-    );
-
+    const [movies, setMovies] = useState<movieTheme[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    
+    const fetchTheme = async () => {
+        try {
+            const themeMap: Record<SlideshowProps["day"], string> = {
+                thursday: "68ecd482dcb8359901cf375f",
+                sunday: "68ecd4f7dcb8359901cf3761",
+            };
+
+            const themeId = themeMap[day];
+            const response = await fetch(`/api/theme/${themeId}`, {
+                method: 'GET',
+                headers: {
+                        "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Serverfel: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("Fetched theme data:", data);
+            
+            if (Array.isArray(data)) {
+                setMovies(data);
+            } else if (data.movies && Array.isArray(data.movies)) {
+                setMovies(data.movies);
+            }
+        } catch (error) {
+            console.error("Error fetching theme:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchTheme();
+    }, []);
 
     if (movies.length === 0) {
         return <p>No movies available for {day}</p>
@@ -44,17 +79,44 @@ export default function Slideshow({ day }: SlideshowProps) {
     return (
         <section style={{
             backgroundColor: baseColor,
-            backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 72%, transparent), url(${currentMovie.image})`,
+            backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 45%, transparent), url(${currentMovie.imageSrc})`,
         }}
-        className="bg-contain bg-no-repeat bg-right lg:h-72 lg:w-3/8 flex flex-col justify-center rounded-md shadow-md"
+        className="w-11/12 h-60 bg-contain bg-no-repeat bg-right flex flex-col justify-center items-start rounded-md shadow-md
+        sm:w-11/12 sm:shadow-lg sm:py-2 sm:px-2 
+        md:shadow-lg
+        lg:shadow-lg lg:h-72 lg:w-5/8 "
         >
-            <article style={{color: textDay}} className="text-start textDay lg:mx-10 xs:mx-4">
-                <h1 className="my-2 lg:text-xl xs:text-sm">{currentMovie.movieName} ({currentMovie.releaseYear})</h1>
-                <h2 className="my-2 lg:text-sm xs:text-xs">{currentMovie.genre.join(", ")}</h2>
-                <h2 className="my-2 lg:text-sm xs:text-xs">Filmens Längd: {currentMovie.length} min</h2>
-                <p className="overflow-y-auto w-2/3 text-sm line-clamp-4">{currentMovie.description}</p>
+            <article style={{color: textDay}} className="w-8/12 text-start mx-2 textDay 
+            sm:w-9/12 sm:py-2 sm:px-2
+            md:w-10/12 
+            lg:mx-3  ">
+                <h1 className="text-base my-2
+                 sm:text-lg
+                 md:text-lg 
+                 lg:text-xl">
+                    {currentMovie.title} ({currentMovie.releaseYear})</h1>
+                <h2 className="text-sm my-2
+                sm:text-base 
+                lg:text-sm">
+                    {currentMovie.genres?.map(g => g.title).join(", ")}</h2>
+                <h2 className="text-sm my-2
+                sm:text-sm 
+                lg:text-sm">
+                    Filmens Längd: {currentMovie.length} min</h2>
+                <p className="overflow-y-auto w-8/12 text-sm line-clamp-4
+                [&::-webkit-scrollbar]:h-2  
+                [&::-webkit-scrollbar]:w-1
+                [&::-webkit-scrollbar-track]:rounded-full
+                [&::-webkit-scrollbar-track]:bg-[#24252C]
+                [&::-webkit-scrollbar-thumb]:rounded-full
+                [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
+                
+                sm:text-sm">{currentMovie.description}</p>
 
-                <article className="mt-4 flex gap-4 py-2">
+                <article className="text-sm mt-2 flex gap-3 py-3
+                sm:text-lg
+                md:text-base
+                lg:text-lg">
                     <button onClick={prevSlide} className="cursor-pointer">&#10216; Föregående</button>
                     <button onClick={nextSlide} className="cursor-pointer">Nästa &#10217;</button>
                 </article>

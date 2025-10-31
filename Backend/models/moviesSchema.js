@@ -13,7 +13,7 @@ const moviesSchema = new mongoose.Schema({
     directors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Directors', required: true }],
     distributors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Distributors', required: true }],
     reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Reviews', required: true }],
-    themes: { type: mongoose.Schema.Types.ObjectId, ref: 'Themes', required: true }
+    themes: { type: mongoose.Schema.Types.ObjectId, ref: 'Themes', required: true },
 });
 
 // Link movie to the respective theme 

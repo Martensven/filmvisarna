@@ -1,143 +1,199 @@
+import { useParams } from "react-router";
 import "../BookingPageStyle.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //Component contains todays showing and other dates. This ones are going to be clickable
 
 interface Props {
-  onSelectTheater: (theater: string) => void;
+  // movieId: string;
+  onSelectTheaterId: (theaterId: string) => void;
+  onSelectShowing: (showing: string) => void;
+}
+interface screening {
+  movie: {
+    _id: string; 
+    title: string; 
+  };
+  _id: string;
+  auditorium: { 
+    _id: string;
+    name: string; 
+  };
+  date: string;
+  time: string;
 }
 
-export default function CalenderComponent({ onSelectTheater }: Props) {
+export default function CalenderComponent({ onSelectTheaterId, onSelectShowing }: Props) {
   // State for active calender date with border when clicked
-  const [active, setActive] = useState<number | null>(null);
-  return (
-    <main className="h-auto flex flex-col justify-center items-center md:w-11/12">
-      {/*----------Containers for calender days----------*/}
-      <h2 className="text-[#e4e1e1] p-1 md:text-s md:p-2">Dagens visningar</h2>
-      <section
-        className="flex flex-row container_content w-11/12 mb-1 overflow-x-auto overflow-y-hidden
-         md:w-full md:place-items-center lg:h-auto"
-      >
-        <ul
-          // Setting active state to mark selected calender date and onSelectTheater to get the selected theater
-          // This will be used dynamically later on
-          onClick={() => { setActive(1); onSelectTheater("Stora Salongen")}}
-          className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
-          ${active === 1 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          
-          <li className="pt-3 pb-3 text-lg font-bold">12:00</li>
-          <li className="pb-1 text-sm md:text-md">Stora Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(2); onSelectTheater("Stora Salongen")}}
-          className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
-          ${active === 2 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-3 pb-3 text-lg font-bold">14:00</li>
-          <li className="pb-1 text-sm">Stora Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(3); onSelectTheater("Lilla Salongen")}}
-          className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
-          ${active === 3 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-3 pb-3 text-lg font-bold">18:00</li>
-          <li className="pb-1 text-sm">Lilla Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(4); onSelectTheater("Lilla Salongen")}}
-          className={`container_box calenderDatesContainer w-36 md:w-4/5 md:h-30 md:text-xs cursor-pointer
-          ${active === 4 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-3 pb-3 text-lg font-bold">20:00</li>
+  const [active, setActive] = useState<string | null>(null);
+  const [screenings, setScreenings] = useState<screening[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
 
-          <li className="pb-1 text-sm">Lilla Salongen</li>
-        </ul>
+  useEffect(() => {
+    const fetchScreeningTimes = async () => {
+      try {
+        const response = await fetch(`/api/screenings/movie/${id}`, {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`Kan inte hämta data: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Hämtad screening data: ", data);
+        setScreenings(data);
+      } catch (error) {
+        console.error("Error: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchScreeningTimes();
+  }, [id]);
+
+  if (loading) {
+    return <p>Laddar data</p>;
+  }
+
+  if (!screenings) {
+    return <p>Ingen filmdata hämtad</p>;
+  }
+
+  // Group up in date categories
+  const sortScreeningByDate = screenings.reduce((acc, s) => {
+    if (!acc[s.date]) acc[s.date] = [];
+    acc[s.date].push(s);
+    return acc;
+  }, {} as Record<string, screening[]>);
+
+  //Seperate todays screening with other screenings
+  const today = new Date().toISOString().split("T")[0]; // Declare today with current day date.
+  const todaysScreening = sortScreeningByDate[today] || [];
+  const otherDaysScrenning = Object.keys(sortScreeningByDate).filter(
+    (date) => date !== today
+  );
+
+  return (
+    <main className="Container-for-daysandseats w-full h-auto flex flex-col justify-center items-center gap-2
+    md:w-11/12
+    lg:w-11/12 lg:flex lg:flex-row lg:justify-between lg:items-start lg:my-2 lg:mx-1 lg:gap-1">
+      {/*----------Containers for calender days----------*/}
+      
+        
+      <section
+        className="Todays flex flex-col justify-start items-center glass_effect w-11/12 h-54 mt-3 mb-1 overflow-x-hidden overflow-y-auto
+        [&::-webkit-scrollbar]:w-1  
+        [&::-webkit-scrollbar-track]:rounded-full
+        [&::-webkit-scrollbar-track]:bg-[#24252C]
+        [&::-webkit-scrollbar-thumb]:rounded-full
+        [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
+        md:w-full md:place-items-center 
+        lg:flex lg:flex-col lg:justify-start lg:h-52 lg:w-5/12 lg:px-1 lg:p-1
+        xl:w-5/12 xl:h-56"
+      >
+        <h2 className="text-[#e4e1e1] mt-2 text-lg
+        md:text-lg md:p-2
+        lg:w-full lg:p-2">Dagens visningar</h2>
+        {todaysScreening.length > 0 ? (
+          todaysScreening.map((screening) => (
+            <ul
+              // Setting active state to mark selected calender date and onSelectTheater to get the selected theater
+              // This will be used dynamically later on
+              key={screening._id}
+              onClick={() => {
+                setActive(screening._id);
+                onSelectTheaterId(screening.auditorium._id);
+                onSelectShowing(screening._id);
+              }}
+              className={`container_box calenderDatesContainer w-6/12 
+                md:w-4/5 md:h-30 md:text-xs cursor-pointer
+                lg:w-11/12 lg:h-30 lg:flex lg:justify-between lg:items-center
+          ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
+            >
+              <li className="pt-3 pb-1 text-base font-bold 
+              lg:text-base lg:px-2 lg:py-2">{screening.time}</li>
+              <li className="pb-3 text-sm 
+              md:text-md
+              lg:px-2 lg:py-2">
+                {screening.auditorium.name}
+              </li>
+            </ul>
+          ))
+        ) : (
+          <p className="flex justify-center items-center bg-[#e4e1e1] text-black  w-50 h-30 m-5 rounded shadow-xl/20">Ingen visning idag</p>
+        )}
       </section>
 
       {/* Other dates */}
 
-      <h2 className="text-[#e4e1e1] p-1 md:text-s">Andra visningar</h2>
+       
       <section
-        className="flex flex-row m-1 container_content w-11/12 h-auto overflow-x-auto overflow-y-hidden
+        className="Otherdays flex flex-col justify-start items-center glass_effect m-1 w-11/12 h-54 overflow-y-auto
+        [&::-webkit-scrollbar]:w-1  
+        [&::-webkit-scrollbar-track]:rounded-full
+        [&::-webkit-scrollbar-track]:bg-[#24252C]
+        [&::-webkit-scrollbar-thumb]:rounded-full
+        [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
         sm:w-11/12
         md:w-full md:h-auto
-        lg:h-auto"
+        lg:flex lg:flex-row lg:flex-wrap lg:justify-center lg:items-center lg:gap-1 lg:w-11/12 lg:h-61 lg:m-0
+        xl:w-6/12 xl:h-56
+        "
       >
-        <ul
-          onClick={() => { setActive(5); onSelectTheater("Stora Salongen")}}
-          className={`container_box calenderDatesContainer w-24 
-                          sm:w-32
-                          md:w-20 md:h-32 md:text-xs
-                          cursor-pointer
-                          ${active === 5 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-1 pb-2 text-md font-bold">Torsdag 02/10</li>
-          <li className="text-md">15:00</li>
-          <li className="pt-3 text-sm font-bold">Stora Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(6); onSelectTheater("Stora Salongen")}}
-          className={`container_box calenderDatesContainer w-24 
-                        sm:w-32
-                        md:w-20 md:h-32 md:text-xs
-                        cursor-pointer
-                        ${active === 6 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-1 pb-2 text-md font-bold">Torsdag 02/10</li>
-          <li className="text-md">20:00</li>
-          <li className="pt-3 text-sm font-bold">Stora Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(7); onSelectTheater("Stora Salongen")}}
-          className={`container_box calenderDatesContainer w-24 
-                        sm:w-32  
-                        md:w-20 md:h-32 md:text-xs
-                        cursor-pointer
-                        ${active === 7 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-1 pb-2 text-md font-bold">Söndag 05/10</li>
-          <li className="text-md">15:00</li>
-          <li className="pt-3 text-sm font-bold">Stora Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(8); onSelectTheater("Lilla Salongen")}}
-          className={`container_box calenderDatesContainer w-24 
-                        sm:w-32
-                        md:w-20 md:h-32 md:text-xs
-                        cursor-pointer
-                        ${active === 8 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-1 pb-2 text-md font-bold">Söndag 05/10 </li>
-          <li className="text-md">20:00</li>
-          <li className="pt-3 text-sm font-bold">Lilla Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(9); onSelectTheater("Lilla Salongen")}}
-          className={`container_box calenderDatesContainer w-24 
-                        sm:w-32
-                        md:w-20 md:h-32 md:text-xs
-                        cursor-pointer
-                        ${active === 9 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-1 pb-2 text-md font-bold">Onsdag 08/10</li>
-          <li className="text-md">12:00</li>
-          <li className="pt-3 text-sm font-bold">Lilla Salongen</li>
-        </ul>
-        <ul
-          onClick={() => { setActive(10); onSelectTheater("Stora Salongen")}}
-          className={`container_box calenderDatesContainer w-24 
-                        sm:w-32
-                        md:w-20 md:h-32 md:text-xs
-                        cursor-pointer
-                        ${active === 10 ? "!border-4 !border-[#07ca00]" : ""}`}
-        >
-          <li className="pt-1 pb-2 text-md font-bold">Onsdag 08/10</li>
-          <li className="text-md">18:00</li>
-          <li className="pt-3 text-sm font-bold">Stora Salongen</li>
-        </ul>
+       <h2 className="text-[#e4e1e1] mt-2 text-lg 
+       md:text-lg
+       lg:text-lg lg:p-2
+      lg:w-full 
+      xl:p-2 ">Andra visningar</h2>
+        {otherDaysScrenning.length > 0 ? (
+          otherDaysScrenning.map((date) => (
+            <div key={date} className="flex flex-col justify-center items-center underline w-full
+            lg:w-full lg:gap-1 lg:m-0 lg:p-0
+            ">
+              <h3 className="p-2
+              xl:p-0">
+                {new Date(date).toLocaleDateString("sv-SE", {
+                  weekday: "long",
+                  day: "2-digit",
+                  month: "2-digit",
+                })}
+              </h3>
 
+              <div className="w-full flex flex-col justify-center items-center
+              sm:w-11/12
+              lg:w-11/12 lg:h-auto lg:flex lg:flex-row lg:flex-wrap lg:justify-center lg:items-center">
+                {sortScreeningByDate[date].map((screening) => (
+                  <ul
+                    onClick={() => {
+                      setActive(screening._id);
+                      onSelectTheaterId(screening.auditorium._id);
+                      onSelectShowing(screening._id);
+                    }}
+                    className={`container_box calenderDatesContainer cursor-pointer w-6/12
+                          sm:w-6/12
+                          md:w-20 md:h-32 md:text-xs
+                          lg:w-5/12 lg:h-25 lg:p-2 lg:flex lg:flex-col lg:justify-center
+                          xl:w-5/12 xl:h-20 xl:mt-1
+                          
+                          
+                          ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
+                  >
+                    <li className=" pt-3 pb-1 text-base font-bold
+                    lg:text-base">{screening.time}</li>
+                    <li className=" pb-3 text-sm 
+                    lg:text-sm">{screening.auditorium.name}</li>
+                  </ul>
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>Inga andra visningar</p>
+        )}
       </section>
     </main>
   );
 }
+
