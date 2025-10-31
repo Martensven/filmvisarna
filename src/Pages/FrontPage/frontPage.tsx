@@ -1,6 +1,7 @@
 import { use, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
+import LoggoNR1 from "./../../../public/images/Header-loggo/LoggoNR1-med-sken.png";
 import "../BookingPage/BookingPageStyle.css";
 import "../../index.css";
 
@@ -145,26 +146,103 @@ export default function FrontPage() {
   ];
 
   return (
-    <main className="w-screen flex flex-col items-center min-h-screen mt-14 bg-[#292929]">
-      <h1
-        className="text-center text-lg mb-4 w-10/12
+    <main className="w-screen flex flex-col items-center min-h-screen mt-2 bg-[#292929]">
+      {/* <h1 className="logo_font text-xl mt-5">FILMVISARNA</h1> */}
+      <div
+        className="flex flex-col justify-center items-center w-10/12 h-65
+                sm:justify-center sm:items-center 
+                md:justify-start md:items-start
+                lg:justify-start lg:items-start"
+      >
+        <img
+          src={`${LoggoNR1}`}
+          alt="Filmvisarnas loggo"
+          className="w-6/12 rounded-lg flex justify-start items-center mt-2"
+        />
+        <article className="flex flex-col w-full text-center">
+        <h1
+          className="text-center text-sm mb-1
             sm:text-xl
             md:text-2xl"
-      >
-        Välkommen till Filmvisarna!
-      </h1>
-      <p
-        className="text-center text-sm mb-10 w-10/12
+        >
+          Välkommen till Filmvisarna!
+        </h1>
+        <p
+          className="text-center text-xs mb-10 w-full
             sm:text-base
             md:text-base"
-      >
-        Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
-        filmer från 1910 talet fram till början på 2000 talet. Är detta något
-        för dig se då till att se dig runt bland våra filmer och boka en tid som
-        passar dig!
-      </p>
+        >
+          Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
+          filmer från 1910 talet fram till början på 2000 talet. Är detta något
+          för dig se då till att se dig runt bland våra filmer och boka en tid
+          som passar dig!
+        </p>
+        </article>
+      </div>
 
-      {/* Filter & Sort */}
+      
+      <section
+        className="search-date-hall-caontainer flex flex-row justify-around items-center w-8/12 container_box mt-4 mb-4
+    sm:justify-center sm:items-center sm:gap-2 sm:w-3/5
+    md:w-3/7
+    lg:gap-4"
+      >
+        {/* Screening Date */}
+        <div
+          className="search-date-box px-2 py-2 w-5/12
+      sm:w-2/5
+      md:w-2/5
+      lg:w-3/6
+      lg:w-2/12"
+        >
+          <label className="block text-sm mb-1">Datum:</label>
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            className="w-full h-7 bg-white text-sm text-black rounded px-1 py-1 mb-3 "
+          />
+        </div>
+
+        {/* Schedule Type */}
+        <div
+          className="search-hall-box px-2 py-2 w-5/10
+        sm:w-5/10
+        md:w-5/10"
+        >
+          <label className="block text-sm mb-1">Salong:</label>
+          <select
+            value={scheduledType}
+            onChange={(e) => setScheduledType(e.target.value)}
+            className="w-full bg-white text-black text-sm rounded px-2 py-1 mb-3 focus:outline-none focus:ring-2 focus:ring-[#24252C]"
+          >
+            <option value="">Alla salonger</option>
+            <option value="smallTheater">Lilla Salongen</option>
+            <option value="bigTheater">Stora Salongen</option>
+          </select>
+        </div>
+      </section>
+
+      {/* Movies container*/}
+      <section
+        className="h-80 w-11/12 rounded-md shadow-md flex flex-row
+            overflow-x-auto overflow-y-hidden
+            [&::-webkit-scrollbar]:h-2  
+            [&::-webkit-scrollbar-track]:rounded-full
+            [&::-webkit-scrollbar-track]:bg-[#24252C]
+            [&::-webkit-scrollbar-thumb]:rounded-full
+            [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
+            snap-x snap-mandatory bg-[#24252C] text-white
+
+            sm:h-94 sm:w-11/12 sm:p-2
+            md:px-2 md:h-86 md:w-11/12
+            lg:w-11/12 lg:h-96
+            xl:h-98 xl:p-2"
+      >
+
+      <div>
+
+        {/* Filter & Sort */}
       <section className="w-10/12 mb-5 rounded-md shadow-md flex justify-around items-start relative glass_effect text-white">
         {/* Filter */}
         <nav className="relative ">
@@ -283,60 +361,6 @@ export default function FrontPage() {
         </div>
       </section>
 
-    <section className="search-date-hall-caontainer flex flex-row justify-around items-center w-8/12 container_box mt-4 mb-4
-    sm:justify-center sm:items-center sm:gap-2 sm:w-3/5
-    md:w-3/7
-    lg:gap-4">
-
-      {/* Screening Date */}
-      <div className="search-date-box px-2 py-2 w-5/12
-      sm:w-2/5
-      md:w-2/5
-      lg:w-3/6
-      lg:w-2/12">
-        <label className="block text-sm mb-1">Datum:</label>
-        <input
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          className="w-full h-7 bg-white text-sm text-black rounded px-1 py-1 mb-3 "
-        />
-      </div>
-
-      
-        {/* Schedule Type */}
-        <div className="search-hall-box px-2 py-2 w-5/10
-        sm:w-5/10
-        md:w-5/10">
-          <label className="block text-sm mb-1">Salong:</label>
-          <select
-            value={scheduledType}
-            onChange={(e) => setScheduledType(e.target.value)}
-            className="w-full bg-white text-black text-sm rounded px-2 py-1 mb-3 focus:outline-none focus:ring-2 focus:ring-[#24252C]"
-          >
-            <option value="">Alla salonger</option>
-            <option value="smallTheater">Lilla Salongen</option>
-            <option value="bigTheater">Stora Salongen</option>
-          </select>
-        </div>
-      </section>
-
-      {/* Movies container*/}
-      <section
-        className="h-80 w-11/12 rounded-md shadow-md flex flex-row
-            overflow-x-auto overflow-y-hidden
-            [&::-webkit-scrollbar]:h-2  
-            [&::-webkit-scrollbar-track]:rounded-full
-            [&::-webkit-scrollbar-track]:bg-[#24252C]
-            [&::-webkit-scrollbar-thumb]:rounded-full
-            [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
-            snap-x snap-mandatory bg-[#24252C] text-white
-
-            sm:h-94 sm:w-11/12 sm:p-2
-            md:px-2 md:h-86 md:w-11/12
-            lg:w-11/12 lg:h-96
-            xl:h-98 xl:p-2"
-      >
         {sortedMovies.length === 0 ? (
           <p className="m-auto">Inga filmer hittades.</p>
         ) : (
@@ -361,10 +385,10 @@ export default function FrontPage() {
                   alt={movie.title}
                   className="shadow-2xl w-32 h-auto object-cover rounded-md
                                     sm:w-45 sm:h-auto sm:mr-1 sm:ml-1
-                                    md:w-42 md:h-auto md:mr-1 md:ml-1 transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
+                                    md:w-40 md:h-auto md:mr-1 md:ml-1 transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
                                     lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105
-                                    lg:w-50 lg:mx-1
-                                    xl:w-50 "
+                                    lg:w-45 lg:mx-1
+                                    xl:w-42 "
                 />
                 <p
                   className=" text-sm mx-2 mt-2
@@ -390,6 +414,7 @@ export default function FrontPage() {
             </article>
           ))
         )}
+        </div>
       </section>
 
       {/* Theme days container*/}
