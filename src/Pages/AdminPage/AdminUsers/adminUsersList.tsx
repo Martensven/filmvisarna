@@ -103,23 +103,36 @@ export function AdminUsersList() {
   return (
     <div>
       <h1 className="text-xl font-bold mb-4">Användare</h1>
-      <ul className="space-y-2">
-        {currentUsers.map((user) => (
-          <li
-            key={user._id}
-            className="cursor-pointer hover:underline"
-            onClick={() => handleUserClick(user)}
-          >
+      <ul className="divide-y divide-blue-100 border border-blue-200 rounded-md overflow-hidden shadow-sm">
+  {currentUsers.map((user, index) => (
+    <li
+      key={user._id}
+      onClick={() => handleUserClick(user)}
+      className={`p-4 cursor-pointer transition-colors ${
+        index % 2 === 0
+          ? "bg-[#243365] hover:bg-blue-500"
+          : "bg-[#32437c] hover:bg-blue-500"
+      }`}
+    >
+      <div className="flex justify-center items-center">
+        <div>
+          <p className="font-semibold text-[#ffffff]">
             {user.firstName} {user.lastName}
-          </li>
-        ))}
-      </ul>
+          </p>
+          <p className="text-sm text-[#ffffff]">{user.email}</p>
+        </div>
+       
+      </div>
+    </li>
+  ))}
+</ul>
+
 
       <div className="flex justify-center gap-4 mt-4">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50 cursor-pointer"
         >
           Föregående
         </button>
@@ -129,7 +142,7 @@ export function AdminUsersList() {
         <button
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50 cursor-pointer"
         >
           Nästa
         </button>
@@ -140,7 +153,7 @@ export function AdminUsersList() {
           <div className="bg-white text-black rounded-lg p-6 shadow-lg max-w-2xl w-full relative overflow-y-auto max-h-[90vh]">
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl font-bold"
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl font-bold cursor-pointer"
               aria-label="Stäng modal"
             >
               &times;
