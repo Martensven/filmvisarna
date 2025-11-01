@@ -27,6 +27,15 @@ export default function AdminStart() {
       <div>
         <h1>{date}</h1>
       </div>
+      <div>
+        {movies.map((movie) => (
+          <div key={movie._id} onClick={() => nav(`/admin/movies/${movie._id}?date=${date}`)}>
+            <h2>{movie.title}</h2>
+            <img src={movie.imageSrc} alt={movie.title} />
+          </div>
+          
+        ))}
+      </div>
     </div>
   );
 }
