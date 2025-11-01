@@ -3,7 +3,7 @@ import { KioskSale } from "../models/kioskSalesSchema.js";
 import { Kiosk } from "../models/kioskSchema.js";
 import { Booking } from "../models/bookingSchema.js";
 import { isAdmin } from "../middleware/isAdmin.js";
-
+import { Screening } from "../models/screeningSchema.js";
 
 const router = express.Router();
 // Middleware to check if user is admin for all admin routes
@@ -23,15 +23,15 @@ router.get("/api/sales/compare", async (req, res) => {
   for (const product of products) {
     const todaySales = await KioskSale.find({
       product: product._id,
-      date: { $gte: new Date(today.setHours(0, 0, 0, 0)) }
+      date: { $gte: new Date(today.setHours(0, 0, 0, 0)) },
     });
 
     const lastWeekSales = await KioskSale.find({
       product: product._id,
       date: {
         $gte: new Date(lastWeek.setHours(0, 0, 0, 0)),
-        $lt: new Date(lastWeek.setHours(23, 59, 59, 999))
-      }
+        $lt: new Date(lastWeek.setHours(23, 59, 59, 999)),
+      },
     });
 
     const todayTotal = todaySales.reduce((sum, s) => sum + s.quantity, 0);
@@ -41,17 +41,12 @@ router.get("/api/sales/compare", async (req, res) => {
       title: product.title,
       today: todayTotal,
       lastWeek: lastWeekTotal,
-      difference: todayTotal - lastWeekTotal
+      difference: todayTotal - lastWeekTotal,
     });
   }
 
   res.json(result);
 });
-
-
-
-
-
 
 router.get("/api/sales/compare/:productId", async (req, res) => {
   const { productId } = req.params;
@@ -62,15 +57,15 @@ router.get("/api/sales/compare/:productId", async (req, res) => {
 
   const todaySales = await Sale.find({
     product: productId,
-    date: { $gte: new Date(today.setHours(0,0,0,0)) }
+    date: { $gte: new Date(today.setHours(0, 0, 0, 0)) },
   });
 
   const lastWeekSales = await Sale.find({
     product: productId,
-    date: { 
-      $gte: new Date(lastWeek.setHours(0,0,0,0)),
-      $lt: new Date(lastWeek.setHours(23,59,59,999))
-    }
+    date: {
+      $gte: new Date(lastWeek.setHours(0, 0, 0, 0)),
+      $lt: new Date(lastWeek.setHours(23, 59, 59, 999)),
+    },
   });
 
   const todayTotal = todaySales.reduce((sum, s) => sum + s.quantity, 0);
@@ -79,10 +74,9 @@ router.get("/api/sales/compare/:productId", async (req, res) => {
   res.json({
     today: todayTotal,
     lastWeek: lastWeekTotal,
-    difference: todayTotal - lastWeekTotal
+    difference: todayTotal - lastWeekTotal,
   });
 });
-
 
 // ------------ Admin User routes ------------ //
 
@@ -173,7 +167,21 @@ router.delete("/api/admin/bookings/:bookingId", async (req, res) => {
   }
 });
 
+// -------------Screening routes for admin ------------- //
 
+// Get Screening by todays date
+router.get("/api/admin/screenings/today", async (req, res) => {
+  const date = req.query.date;
+  // Fill screenings with movie data for the specific date
+  const screenings = await Screening.find({ date }).populate("movie");
+  // We onlu want one of each movie even if there are multiple screenings
+  const uniqueMovie = Array.from(
+    new Map(
+      screenings.map(item => [item.movie._id.toString(), item.movie])
+    ).values()
+  );
 
+  res.json(uniqueMovie);
+});
 
 export default router;
