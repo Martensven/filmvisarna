@@ -1,12 +1,12 @@
-import LoggoNR1 from "./../../../public/images/Header-loggo/LoggoNR1.png";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 
 export default function AdminStart() {
-  return <main className="text-white h-screen">
-<img
-        src={LoggoNR1}
-        alt="Filmvisarnas loggo"
-        className="w-56 sm:w-80 mx-auto"
-    />
-  </main>;
+  // Today's date in YYYY-MM-DD format Split at T to remove time portion
+  const [date, setDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [movies, setMovies] = useState<any[]>([]);
+  const nav = useNavigate();
+
+
 }
