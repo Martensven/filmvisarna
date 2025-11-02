@@ -170,7 +170,7 @@ router.delete("/api/admin/bookings/:bookingId", async (req, res) => {
 // -------------Screening routes for admin ------------- //
 
 // Get Screening by todays date
-router.get("/api/admin/screenings/today", async (req, res) => {
+router.get("/screenings/today-movies", async (req, res) => {
   const date = req.query.date;
   // Fill screenings with movie data for the specific date
   const screenings = await Screening.find({ date }).populate("movie");

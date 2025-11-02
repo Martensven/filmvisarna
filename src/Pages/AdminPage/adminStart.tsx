@@ -21,11 +21,17 @@ export default function AdminStart() {
     };
 
     fetchMovies();
-  }, []);
+  }, [date]);
   return (
     <div>
       <div>
         <h1>{date}</h1>
+        <input
+          type="date"
+          value={date}
+          onChange={e => setDate(e.target.value)}
+      
+        />
       </div>
       <div>
         {movies.map((movie) => (
