@@ -15,14 +15,16 @@
   align-items: center;
   text-align: center;
   font-family: "Noto Serif", serif;
-  background-image: url("../public/images/BackgroundBlue.png");
+  background-image: url("../public/images/backgroundBlue.png");
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-color: #292929;
   color: white;
   overflow-x: hidden;
 }
+
 
 .animation-slidein {
   animation: slide-in 1s ease-in-out;
