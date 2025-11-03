@@ -4,8 +4,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 200px;
-  height: 100px;
+  /* width: 200px;
+  height: 100px; */
   background-color: #18203a2a;
 
   -webkit-backdrop-filter: blur(2px);
