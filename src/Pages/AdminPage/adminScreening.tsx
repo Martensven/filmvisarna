@@ -1,3 +1,5 @@
+import { MdEdit } from "react-icons/md";
+
 import { useEffect, useState } from "react";
 
 type ScreeningItem = {
@@ -41,7 +43,8 @@ export default function AdminScreenings() {
         />
       </section>
 
-      <section className="hidden md:grid grid-cols-4 text-sm font-semibold border-b border-gray-700 pb-2 mb-2">
+      <section className="hidden md:grid grid-cols-5 text-sm font-semibold border-b border-gray-700 pb-2 mb-2">
+        <div>Edit</div>
         <div>Film</div>
         <div>Tid</div>
         <div>Salong</div>
@@ -51,9 +54,17 @@ export default function AdminScreenings() {
       {screenings.map((s) => (
         <div
           key={s.id}
-          className="grid grid-cols-2 md:grid-cols-4 py-3 border-b border-gray-800 text-sm"
+          className="grid grid-cols-2 md:grid-cols-5 py-3 border-b border-gray-800 text-sm items-center"
         >
-          <div className="font-medium">{s.movieTitle}</div>
+            <div className="flex items-center justify-center">
+            <button className="hover:text-gray-300 transition">
+              <MdEdit size={20} />
+            </button>
+          </div>
+          <div className="font-medium flex items-center gap-2 justify-center">
+            
+            {s.movieTitle}
+          </div>
           <div>{s.time}</div>
           <div>{s.auditorium}</div>
 
