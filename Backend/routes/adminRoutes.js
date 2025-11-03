@@ -220,6 +220,26 @@ console.log("ROWS:", s.auditorium.rows, "SEATS PER ROW:", s.auditorium.seatsPerR
   }
 });
 
+// Get total amount of bookings for all screenings at today's date
+router.get("/screenings/today/bookings/count", async (req, res) => {
+  try {
+    const date = req.query.date; 
+    const screenings = await Screening.find({ date });
+
+    // Start value at 0 and add number of bookings for each screening
+    let totalBookings = 0;
+    for (const screening of screenings) {
+      const bookingCount = await Booking.countDocuments({ screening_id: screening._id });
+      totalBookings += bookingCount;
+    }
+    res.json({ totalBookings });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+
 
 
 

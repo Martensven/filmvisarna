@@ -57,6 +57,7 @@ export default function AdminScreenings() {
           className="grid grid-cols-2 md:grid-cols-5 py-3 border-b border-gray-800 text-sm items-center"
         >
             <div className="flex items-center justify-center">
+                {/* Need to work on edit functionality */}
             <button className="hover:text-gray-300 transition">
               <MdEdit size={20} />
             </button>
