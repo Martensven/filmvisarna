@@ -172,7 +172,7 @@ router.delete("/api/admin/bookings/:bookingId", async (req, res) => {
 // Get Screening by todays date
 router.get("/screenings/today-movies", async (req, res) => {
   const date = req.query.date;
-  // Fill screenings with movie data for the specific date
+  // we send in the date and get all screenings for that date. 
   const screenings = await Screening.find({ date }).populate("movie");
   // We onlu want one of each movie even if there are multiple screenings
   const uniqueMovie = Array.from(
@@ -183,5 +183,40 @@ router.get("/screenings/today-movies", async (req, res) => {
 
   res.json(uniqueMovie);
 });
+
+// Get screenings with booked seats count for today
+
+router.get("/screenings/today", async (req, res) => {
+  try {
+    const date = req.query.date;
+
+    const screenings = await Screening.find({ date })
+      .populate("auditorium")
+      .populate("movie")
+      .lean();
+
+    const formatted = screenings.map((s) => {
+      const auditorium = s.auditorium;
+      const totalSeats = auditorium.rows * auditorium.seatsPerRow;
+
+      return {
+        id: s._id,
+        movieTitle: s.movie.title,
+        time: s.time,
+        auditorium: auditorium.name,
+        bookedCount: s.bookedSeats.length,
+        totalSeats,
+      };
+    });
+
+    res.json(formatted);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+
+
 
 export default router;
