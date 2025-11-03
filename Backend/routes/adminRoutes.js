@@ -193,11 +193,15 @@ router.get("/screenings/today", async (req, res) => {
     const screenings = await Screening.find({ date })
       .populate("auditorium")
       .populate("movie")
+      
       .lean();
 
     const formatted = screenings.map((s) => {
       const auditorium = s.auditorium;
-      const totalSeats = auditorium.rows * auditorium.seatsPerRow;
+const totalSeats = auditorium.seats.length;
+      console.log("AUDITORIUM:", s.auditorium);
+console.log("ROWS:", s.auditorium.rows, "SEATS PER ROW:", s.auditorium.seatsPerRow);
+
 
       return {
         id: s._id,

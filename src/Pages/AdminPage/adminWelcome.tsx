@@ -8,7 +8,7 @@ export default function AdminWelcome() {
 
     return (
       <>
-        <section className="text-center h-fit bg-[#243365] flex items-center justify-center p-8 rounded-xl">
+        <section className="text-center h-fit bg-[#243365] flex items-center justify-center p-6 rounded-xl">
             <h2 className="text-xl font-bold">Välkommen, {user.firstName}!</h2>
         </section>
       </>

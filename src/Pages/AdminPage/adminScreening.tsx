@@ -5,7 +5,7 @@ type ScreeningItem = {
   movieTitle: string;
   time: string;
   auditorium: string;
-  bookedSeats: number;
+  bookedCount: number;
   totalSeats: number;
 };
 
@@ -42,11 +42,26 @@ export default function AdminScreenings() {
       </section>
 
       <section className="hidden md:grid grid-cols-4 text-sm font-semibold border-b border-gray-700 pb-2 mb-2">
-        <div>Filmtitel</div>
+        <div>Film</div>
         <div>Tid</div>
         <div>Salong</div>
         <div>Bokade platser</div>
       </section>
+
+      {screenings.map((s) => (
+        <div
+          key={s.id}
+          className="grid grid-cols-2 md:grid-cols-4 py-3 border-b border-gray-800 text-sm"
+        >
+          <div className="font-medium">{s.movieTitle}</div>
+          <div>{s.time}</div>
+          <div>{s.auditorium}</div>
+
+          <div>
+            {s.bookedCount} / {s.totalSeats}
+          </div>
+        </div>
+      ))}
     </section>
   );
 }
