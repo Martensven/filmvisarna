@@ -16,14 +16,14 @@ export default function CalenderAndSeats({ onSelectTheaterId, onSelectShowing }:
     return(
         <article className="CalenderTickets w-full flex justify-center items-center 
                             md:w-full md:flex md:justify-center md:items-center
-                            lg:flex lg:flex-row lg:justify-around lg:w-10/12 lg:h-auto lg:ml-0 ">
+                            lg:flex lg:flex-row lg:justify-around lg:w-7/12 lg:h-auto lg:ml-0 ">
             
       {/*----------Parent Container for choosing date and tickets----------*/}
       <section
         className="CalenderTicketsContainer flex flex-col justify-center items-center w-full h-auto 
                    sm:w-11/12 sm:h-auto
                    md:w-11/12 md:h-auto
-                   lg:flex lg:flex-col lg:justify-between lg:items-center lg:w-full lg:h-auto
+                   lg:flex lg:flex-col lg:justify-between lg:items-center lg:w-full lg:h-auto lg:p-1
                    "
       >
         {/*----------Child container for date----------*/}

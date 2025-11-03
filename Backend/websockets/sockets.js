@@ -25,7 +25,6 @@ export function initSocket(server) {
       ? Array.from(pendingSeatsMap[screeningId]).map(([seatId, owner]) => ({ seatId, owner, })): [];
 
       socket.emit("seatUpdate", {
-        bookedSeats: [],
         pendingSeats: pendingArray,
       });
     });
@@ -47,7 +46,6 @@ export function initSocket(server) {
       );
 
       io.to(screeningId).emit("seatUpdate", {
-        bookedSeats: [],
         pendingSeats: pendingArray,
       });
     });
@@ -68,7 +66,6 @@ export function initSocket(server) {
       );
 
       io.to(screeningId).emit("seatUpdate", {
-        bookedSeats: [],
         pendingSeats: pendingArray,
       });
     });
@@ -100,7 +97,6 @@ export function initSocket(server) {
         );
 
         io.to(screeningId).emit("seatUpdate", {
-          bookedSeats: [],
           pendingSeats: pendingArray,
         });
       }

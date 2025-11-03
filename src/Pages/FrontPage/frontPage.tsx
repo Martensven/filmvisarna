@@ -1,6 +1,7 @@
 import { use, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
+import LoggoNR1 from "./../../../public/images/Header-loggo/LoggoNR1-med-sken.png";
 import "../BookingPage/BookingPageStyle.css";
 import "../../index.css";
 
@@ -145,7 +146,7 @@ export default function FrontPage() {
   ];
 
   return (
-    <main className="w-screen flex flex-col items-center min-h-screen mt-14 bg-[#292929]">
+    <main className="w-screen flex flex-col items-center min-h-screen mt-14">
       <h1
         className="text-center text-lg mb-4 w-11/12
             sm:text-xl
@@ -157,12 +158,14 @@ export default function FrontPage() {
         className="text-center text-sm mb-10 w-11/12
             sm:text-base
             md:text-base"
-      >
-        Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
-        filmer från 1910 talet fram till början på 2000 talet. Är detta något
-        för dig se då till att se dig runt bland våra filmer och boka en tid som
-        passar dig!
-      </p>
+        >
+          Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
+          filmer från 1910 talet fram till början på 2000 talet. Är detta något
+          för dig se då till att se dig runt bland våra filmer och boka en tid
+          som passar dig!
+        </p>
+       
+      
 
       {/* Filter & Sort */}
       <section className="w-11/12 mb-5 rounded-md shadow-md flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
@@ -393,6 +396,7 @@ export default function FrontPage() {
             </article>
           ))
         )}
+        
       </section>
 
       {/* Theme days container*/}
