@@ -1,10 +1,20 @@
 import { Link } from "react-router";
 import { useState } from "react";
-import LoggoNR2 from "./../../../public/images/Header-loggo/Filmvisarna-loggoNR2-Andra.png"
-import LoggoNR2O from "./../../../public/images/Header-loggo/Filmvisarna-loggoNR2-opacity.png"
+import LoggoComponent from "./LoggoComponent";
+// import LoggoNR2 from "./../../../public/images/Header-loggo/Filmvisarna-loggoNR2-Andra.png"
+
 
 import { useAuth } from "../../context/authContext"; // ✅ Import AuthContext
 import "./../../index.css";
+
+        //   <img
+        //   src={`${LoggoNR2}`}
+        //   alt="Filmvisarnas loggo"
+        //   className="w-2/7 rounded-lg flex justify-start items-center ml-3
+        //   xs:w-2/6
+        //   sm:w-3/6 sm:ml-5
+        //   xl:w-7/12"
+        // />
 
 interface HeaderProps {
   onLoginClick: () => void;
@@ -25,16 +35,11 @@ export default function Header({ onLoginClick }: HeaderProps) {
     <main className="w-screen">
       <header className="flex flex-col justify-center items-center text-center text-white mt-1 mb-7">
         <nav className="w-11/12 flex flex-col justify-center items-center bg-[#243365] text-white mt-10 mb-5 rounded-md shadow-md
-        sm:mb-10">
+        sm:mb-10
+        xl:mt-20 xl:justify-center xl:items-center">
           <section className="flex items-center justify-between w-full h-12 px-4">
             <Link to="/" onClick={() => setIsOpen(false)}>
-              <img
-          src={`${LoggoNR2}`}
-          alt="Filmvisarnas loggo"
-          className="w-2/7 rounded-lg flex justify-start items-center ml-3
-          xs:w-2/6
-          sm:w-3/6 sm:ml-5"
-        />
+              <LoggoComponent />
             </Link>
 
             <button

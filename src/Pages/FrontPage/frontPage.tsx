@@ -146,7 +146,7 @@ export default function FrontPage() {
   ];
 
   return (
-    <main className="w-screen flex flex-col items-center min-h-screen mt-14 bg-[#292929]">
+    <main className="w-screen flex flex-col items-center min-h-screen mt-14">
       <h1
         className="text-center text-lg mb-4 w-11/12
             sm:text-xl
@@ -164,7 +164,7 @@ export default function FrontPage() {
           för dig se då till att se dig runt bland våra filmer och boka en tid
           som passar dig!
         </p>
-        </article>
+       
       
 
       {/* Filter & Sort */}

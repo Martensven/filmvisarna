@@ -15,6 +15,10 @@
   align-items: center;
   text-align: center;
   font-family: "Noto Serif", serif;
+  background-image: url("../public/images/BackgroundBlue.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-color: #292929;
   color: white;
   overflow-x: hidden;
