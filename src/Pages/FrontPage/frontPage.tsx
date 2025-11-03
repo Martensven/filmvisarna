@@ -183,7 +183,7 @@ export default function FrontPage() {
             {filterOpen && (
               <div
                 className="flex flex-row flex-wrap justify-center items-center 
-                        absolute -left-8 mt-5 bg-[#292929] shadow-md rounded p-5 w-72
+                        absolute -left-14 mt-5 bg-[#292929] shadow-md rounded p-5 w-72
                         sm:w-86 sm:mt-1 z-50
                         lg:max-h-[80vh]
                         
@@ -330,62 +330,58 @@ export default function FrontPage() {
 
       {/* Movies container*/}
       <section
-        className="h-80 w-11/12 rounded-md shadow-md flex flex-row
-            overflow-x-auto overflow-y-hidden
-            [&::-webkit-scrollbar]:h-2  
-            [&::-webkit-scrollbar-track]:rounded-full
-            [&::-webkit-scrollbar-track]:bg-[#24252C]
-            [&::-webkit-scrollbar-thumb]:rounded-full
-            [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
-            snap-x snap-mandatory bg-[#24252C] text-white
+        className="
+    h-96 w-11/12 mx-5
+    flex flex-row overflow-x-auto overflow-y-hidden
+    [&::-webkit-scrollbar]:h-2  
+    [&::-webkit-scrollbar-track]:rounded-full
+    [&::-webkit-scrollbar-track]:bg-[#24252C]
+    [&::-webkit-scrollbar-thumb]:rounded-full
+    [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
+    snap-x snap-mandatory text-white
 
-            sm:h-94 sm:w-11/12 sm:p-2
-            md:px-2 md:h-86 md:w-11/12
-            lg:w-11/12 lg:h-96
-            xl:h-98 xl:p-2"
-      >
+    
+
+    lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:h-auto
+    xl:h-auto xl:p-2 xl:grid xl:grid-cols-4  
+    2xl:h-auto 2xl:p-2 2xl:grid 2xl:grid-cols-5
+
+  ">
         {sortedMovies.length === 0 ? (
           <p className="m-auto">Inga filmer hittades.</p>
         ) : (
           sortedMovies.map((movie) => (
             <article
               key={movie._id}
-              className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3
-                            md:min-w-42
-                            lg:min-w-46 lg:h-86
-                            xl:h-96"
+              className="flex justify-center items-center h-76 min-w-56 snap-center m-3
+                            lg:h-auto lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105
+                            xl:h-auto xl:mt-10"
             >
               <Link
                 to={`/movie/${movie._id}`}
-                className="flex flex-col items-center justify-start w-36 gap-2
-                            sm:w-80 sm:h-auto sm:m-2
-                            md:w-full
-                            lg:w-50 lg:m-1
-                            xl:m-0"
+                className="flex flex-col items-center justify-start
+                            sm:h-auto m-0
+                            lg:h-auto"
               >
                 <img
                   src={movie.imageSrc}
                   alt={movie.title}
-                  className="shadow-2xl w-32 h-auto object-cover rounded-md
-                                    sm:w-45 sm:h-auto sm:mr-1 sm:ml-1
-                                    md:w-40 md:h-auto md:mr-1 md:ml-1 transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
-                                    lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105
-                                    lg:w-45 lg:mx-1
-                                    xl:w-42 "
+                  className="shadow-2xl w-auto h-auto object-cover rounded-md
+                                    sm:w-auto sm:h-auto
+                                    md:w-auto md:h-auto
+                                    lg:w-auto
+                                    xl:w-auto p-0 "
                 />
                 <p
-                  className=" text-sm mx-2 mt-2
-                                sm:text-base
-                                lg:m-0 lg:text-base"
+                  className="mt-2
+                             text-sm
+                                lg:m-0"
                 >
                   {movie.title}
                 </p>
 
                 <p
-                  className="text-xs
-                                sm:text-sm 
-                                md:
-                                lg:underline"
+                  className="text-sm"
                 >
                   {Array.isArray(movie.genres)
                     ? movie.genres
