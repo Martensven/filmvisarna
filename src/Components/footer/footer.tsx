@@ -1,6 +1,6 @@
 export default function Footer() {
     return (
-        <footer className="h-84 w-full flex flex-col justify-center items-center text-center mt-30 bg-gradient-to-t from-[#243365] to-[#292929] text-white m-0" >
+        <footer className="h-84 w-full flex flex-col justify-center items-center text-center mt-30 bg-gradient-to-t from-[#243365] to-[hsla(200,100%,50%,0)] text-white m-0" >
             <section className="md:w-1/3 h-full flex justify-center items-center mt-2">
                 <h1 className="text-2xl">Filmvisarna</h1>
             </section>

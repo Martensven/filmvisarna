@@ -350,35 +350,38 @@ export default function FrontPage() {
           sortedMovies.map((movie) => (
             <article
               key={movie._id}
-              className="flex justify-center items-center h-76 min-w-56 snap-center m-3
-                            lg:h-auto lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105
+              className="flex justify-center items-center h-auto min-w-56 snap-center m-3 p-5
+                            lg:h-auto lg:hover:scale-105
                             xl:h-auto xl:mt-10"
             >
               <Link
                 to={`/movie/${movie._id}`}
-                className="flex flex-col items-center justify-start
+                className="flex flex-col items-center justify-start h-auto
                             sm:h-auto m-0
                             lg:h-auto"
               >
                 <img
                   src={movie.imageSrc}
                   alt={movie.title}
-                  className="shadow-2xl w-auto h-auto object-cover rounded-md
-                                    sm:w-auto sm:h-auto
-                                    md:w-auto md:h-auto
-                                    lg:w-auto
-                                    xl:w-auto p-0 "
+                  className="shadow-2xl w-auto h-4/5 object-cover rounded-md p-0 "
                 />
                 <p
                   className="mt-2
                              text-sm
-                                lg:m-0"
+                                lg:m-0
+                                lg:text-md
+                                xl:text-lg
+                                2xl:text-xl"
                 >
                   {movie.title}
                 </p>
 
                 <p
-                  className="text-sm"
+                  className="text-sm
+                             lg:m-0
+                             lg:text-md
+                             xl:text-lg
+                             2xl:text-xl"
                 >
                   {Array.isArray(movie.genres)
                     ? movie.genres
