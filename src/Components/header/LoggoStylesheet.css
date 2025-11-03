@@ -1,9 +1,103 @@
 .Loggo-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 100px;
-    border: 5px dotted yellow;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* width: 200px;
+  height: 100px; */
+  background-color: #18203a2a;
+
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  animation:  pulse-flicker-effect 5s infinite;
+  
+}
+
+.Loggo-box::before {
+  content: " ";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  bottom: -5px;
+  right: -5px;
+  border: 7px solid rgb(148, 5, 5);
+  border-radius: 5px;
+}
+.Loggo-box::after {
+  content: " ";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  bottom: -3px;
+  right: -3px;
+  border: 4px dotted rgba(243, 243, 110, 0.808);
+}
+
+.h1-font {
+  font-family: "Fascinate", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.h2-font {
+  font-family: "Train One", system-ui;
+  text-shadow: 
+  1px 0 7px rgb(230, 65, 65), 
+  3px 0 10px rgb(168, 0, 0), 
+  5px 0 15px rgb(255, 164, 164), 
+  10px 0 20px rgb(255, 255, 255), 
+  15px 0 30px rgb(255, 255, 255);
+  letter-spacing: 1px;
+
+}
+
+.flicker-fast-effect {
+    animation: flicker-effect 3s linear infinite;
+}
+
+.flicker-slow-effect {
+    animation: flicker-effect 5s linear infinite;
+}
+
+@keyframes flicker-effect {
+  0%,
+  19.999%,
+  22%,
+  62.999%,
+  64%,
+  64.999%,
+  70%,
+  100% {
+    opacity: 0.99;
+  }
+  20%,
+  21.999%,
+  63%,
+  63.999%,
+  65%,
+  69.999% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes pulse-flicker-effect {
+ 0%,
+  19.999%,
+  22%,
+  62.999%,
+  64%,
+  64.999%,
+  70%,
+  100%  {box-shadow: 1px 1px 15px 3px lightgoldenrodyellow} 
+    20%,
+  21.999%,
+  63%,
+  63.999%,
+  65%,
+  69.999% {
+    box-shadow: 1px 1px 15px 3px rgb(233, 233, 161)
+
+  }
+
 }
