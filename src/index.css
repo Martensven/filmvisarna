@@ -25,7 +25,6 @@
   overflow-x: hidden;
 }
 
-
 .animation-slidein {
   animation: slide-in 1s ease-in-out;
 }
