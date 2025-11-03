@@ -17,7 +17,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
       <SeatsProvider>
       {/*----------Container for booking page----------*/}
       <main
-        className="w-screen min-h-screen flex flex-col justify-center items-center overscroll-y-auto bg-[#292929] pt-10"
+        className="w-screen min-h-screen flex flex-col justify-center items-center overscroll-y-auto pt-10"
       >
         <MovieInformation />
 
