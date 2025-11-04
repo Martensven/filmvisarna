@@ -130,10 +130,10 @@ export default function TheaterView({ selectShowing }: Props) {
   };
 
   return (
-    <section>
+    <section className="w-full flex justify-center items-center">
       <article
         className="flex flex-col items-center w-full 
-      md:w-8/12 
+      md:w-full 
       lg:w-11/12 lg:h-180"
       >
         <h2
@@ -150,6 +150,7 @@ export default function TheaterView({ selectShowing }: Props) {
         <span
           className="w-full h-20 bg-gradient-to-b from-sky-100 to-sky-900 h-2 rounded-sm mt-8 
             flex justify-center items-center text-zinc-200 font-semibold text-2xl
+            md:w-full
             lg:w-9/12 lg:h-3 lg:mt-15 lg:mb-10 lg:shadow-lg lg:shadow-sky-200"
           style={{ clipPath: "polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%)" }}
         >
@@ -158,7 +159,8 @@ export default function TheaterView({ selectShowing }: Props) {
         <div className="mx-auto w-9/11 h-2 shadow-lg shadow-white mb-10 bg-sky-900 blur"></div>
 
         {/* Seat grid */}
-        <div className="mt-4">
+        <div className="mt-2
+        md:scale-110">
           {rows.map((rowSeats, rowI) => (
             <div key={rowI} className="flex mb-1 justify-center w-full">
               {rowSeats.map((seat) => {

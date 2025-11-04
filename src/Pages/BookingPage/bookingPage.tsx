@@ -24,15 +24,15 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         md:w-12/13 md:flex md:items-start md:ml-8 md:mr-8 "
         >
           <section
-            className="w-11/12 flex justify-center items-center h-30 mb-5 sticky top-10 bg-[#041720] bg-opacity-20 z-1 rounded-md
-          md:flex md:justify-center md:items-center md:fixed md:top-[190px] md:right-[30px] md:w-5/12 md:h-80 md:container-box"
+            className="Recipe w-11/12 flex justify-center items-center h-30 mb-5 sticky top-10 container_box z-1 rounded-md
+          md:flex md:justify-center md:items-center md:fixed md:top-[190px] md:right-[30px] md:w-5/13 md:h-80 md:container_box"
           >
             <CheckoutRecipe />
           </section>
 
           <section
             className="Movie-Screening-Days flex flex-row container_box w-11/12 h-100 mb-4
-          md:flex-col md:w-6/12 md:h-auto"
+          md:flex-col md:w-7/13 md:h-auto"
           >
             <MovieInformation />
             <CalenderComponent
@@ -43,7 +43,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
 
           <div
             className="Booking-component flex flex-col w-11/12 h-auto justify-center items-center container_box
-                        md:flex-col md:justify-center md:items-center md:w-full 
+                        md:flex-col md:justify-center md:items-center md:w-7/13 
                         lg:flex lg:flex-row lg:w-11/12 lg:justify-start lg:items-start"
           >
             <AmountTheaterSeats />

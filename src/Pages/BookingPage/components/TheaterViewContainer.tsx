@@ -63,7 +63,7 @@ export default function TheaterViewContainer({ selectTheaterId, selectShowing }:
 
   return (
     <main>
-      <section className="Theaterbox h-auto flex p-2 
+      <section className="Theaterbox h-auto flex justify-center items-center p-2 w-full
       sm:w-full 
       md:w-full md:flex md:flex-col md:justify-center md:items-center 
       lg:w-full lg:flex lg:justify-center lg:items-center lg:h-200 lg:mt-0">
