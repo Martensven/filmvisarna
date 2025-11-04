@@ -1,5 +1,5 @@
 import CalenderComponent from "./CalenderComponent";
-import AmountTheaterSeats from "./AmountTheaterSeats";
+
 //import TheaterViewContainer from "./TheaterViewContainer";
 //import { useState } from "react"
 
@@ -46,8 +46,7 @@ export default function CalenderAndSeats({ onSelectTheaterId, onSelectShowing }:
                     lg:pb-0 lg:mt-2 lg:w-8/12"
         >
 
-        {/*----------Getting the component for selecting how many seats and agespan----------*/}
-          <AmountTheaterSeats />
+        
         </article>
 
       </section>
