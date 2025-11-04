@@ -7,128 +7,128 @@ import LoggoComponent from "./LoggoComponent";
 import { useAuth } from "../../context/authContext"; // ✅ Import AuthContext
 import "./../../index.css";
 
-        //   <img
-        //   src={`${LoggoNR2}`}
-        //   alt="Filmvisarnas loggo"
-        //   className="w-2/7 rounded-lg flex justify-start items-center ml-3
-        //   xs:w-2/6
-        //   sm:w-3/6 sm:ml-5
-        //   xl:w-7/12"
-        // />
+//   <img
+//   src={`${LoggoNR2}`}
+//   alt="Filmvisarnas loggo"
+//   className="w-2/7 rounded-lg flex justify-start items-center ml-3
+//   xs:w-2/6
+//   sm:w-3/6 sm:ml-5
+//   xl:w-7/12"
+// />
 
 interface HeaderProps {
-  onLoginClick: () => void;
-  isLoggedIn: boolean;
-  onLogout: () => void;
+    onLoginClick: () => void;
+    isLoggedIn: boolean;
+    onLogout: () => void;
 }
 
 export default function Header({ onLoginClick }: HeaderProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const { user, logout } = useAuth(); // ✅ Kopplar in auth
+    const [isOpen, setIsOpen] = useState(false);
+    const { user, logout } = useAuth(); // ✅ Kopplar in auth
 
-  const handleLogout = async () => {
-    await logout();
-    setIsOpen(false);
-  };
+    const handleLogout = async () => {
+        await logout();
+        setIsOpen(false);
+    };
 
-  return (
-    <main className="w-screen">
-      <header className="flex flex-col justify-center items-center text-center text-white mt-3 mb-7">
-        <nav className="w-11/12 flex flex-col justify-center items-center bg-[#243365] text-white mt-10 mb-5 rounded-md shadow-md
+    return (
+        <main className="w-screen">
+            <header className="flex flex-col justify-center items-center text-center text-white mt-3 mb-7">
+                <nav className="w-11/12 flex flex-col justify-center items-center bg-[#243365] text-white mt-10 mb-5 rounded-md shadow-md
         sm:mb-10
         xl:mt-20 xl:justify-center xl:items-center">
-          <section className="flex items-center justify-between w-full h-12 px-4">
-            <Link to="/" onClick={() => setIsOpen(false)}>
-              <LoggoComponent />
-            </Link>
+                    <section className="flex items-center justify-between w-full h-12 px-4">
+                        <Link to="/" onClick={() => setIsOpen(false)}>
+                            <LoggoComponent />
+                        </Link>
 
-            <button
-              className="md:hidden mr-3"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle menu"
-            >
-              {isOpen ? "✕" : "☰"}
-            </button>
+                        <button
+                            className="md:hidden mr-3"
+                            onClick={() => setIsOpen(!isOpen)}
+                            aria-label="Toggle menu"
+                        >
+                            {isOpen ? "✕" : "☰"}
+                        </button>
 
-            {/* ✅ Desktop menu */}
-            <ul className="desktopNav hidden md:flex w-10/12 justify-around items-center text-base font-medium">
-              <li className="md:hover:scale-105 lg:hover:scale-110">
-                <Link to="/about">Om Oss</Link>
-              </li>
-              <li className="md:hover:scale-105 lg:hover:scale-110">
-                <Link to="/kiosk">Kiosk</Link>
-              </li>
+                        {/* ✅ Desktop menu */}
+                        <ul className="desktopNav hidden md:flex w-10/12 justify-around items-center text-base font-medium">
+                            <li className="md:hover:scale-105 lg:hover:scale-110">
+                                <Link to="/about">Om Oss</Link>
+                            </li>
+                            <li className="md:hover:scale-105 lg:hover:scale-110">
+                                <Link to="/kiosk">Kiosk</Link>
+                            </li>
 
-              {user && (
-                <li className="md:hover:scale-105 lg:hover:scale-110">
-                  <Link
-                    to="/my-page"
-                    className="cursor-pointer hover:underline"
-                  >
-                    Mina Sidor
-                  </Link>
-                </li>
-              )}
+                            {user && (
+                                <li className="md:hover:scale-105 lg:hover:scale-110">
+                                    <Link
+                                        to="/my-page"
+                                        className="cursor-pointer hover:underline"
+                                    >
+                                        Mina Sidor
+                                    </Link>
+                                </li>
+                            )}
 
-              <li className="md:hover:scale-105 lg:hover:scale-110">
-                {user ? (
-                  <button
-                    onClick={handleLogout}
-                    className="cursor-pointer text-red-300 hover:text-red-400"
-                  >
-                    Logga Ut
-                  </button>
-                ) : (
-                  <button onClick={onLoginClick} className="cursor-pointer">
-                    Logga In
-                  </button>
-                )}
-              </li>
-            </ul>
-          </section>
+                            <li className="md:hover:scale-105 lg:hover:scale-110">
+                                {user ? (
+                                    <button
+                                        onClick={handleLogout}
+                                        className="cursor-pointer text-red-300 hover:text-red-400"
+                                    >
+                                        Logga Ut
+                                    </button>
+                                ) : (
+                                    <button onClick={onLoginClick} className="cursor-pointer">
+                                        Logga In
+                                    </button>
+                                )}
+                            </li>
+                        </ul>
+                    </section>
 
-          {/* ✅ Mobile menu */}
-          {isOpen && (
-            <ul className="flex flex-col md:hidden px-4 pb-4 space-y-2">
-              <li>
-                <Link to="/about" onClick={() => setIsOpen(false)}>
-                  Om Oss
-                </Link>
-              </li>
-              <li>
-                <Link to="/kiosk" onClick={() => setIsOpen(false)}>
-                  Kiosk
-                </Link>
-              </li>
+                    {/* ✅ Mobile menu */}
+                    {isOpen && (
+                        <ul className="flex flex-col md:hidden px-4 pb-4 space-y-2 mt-8">
+                            <li>
+                                <Link to="/about" onClick={() => setIsOpen(false)}>
+                                    Om Oss
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/kiosk" onClick={() => setIsOpen(false)}>
+                                    Kiosk
+                                </Link>
+                            </li>
 
-              {user && (
-                <li>
-                  <Link
-                    to="/my-page"
-                    onClick={() => setIsOpen(false)}
-                    className="hover:underline"
-                  >
-                    Mina Sidor
-                  </Link>
-                </li>
-              )}
+                            {user && (
+                                <li>
+                                    <Link
+                                        to="/my-page"
+                                        onClick={() => setIsOpen(false)}
+                                        className="hover:underline"
+                                    >
+                                        Mina Sidor
+                                    </Link>
+                                </li>
+                            )}
 
-              <li>
-                {user ? (
-                  <button
-                    onClick={handleLogout}
-                    className="text-red-300 hover:text-red-400"
-                  >
-                    Logga Ut
-                  </button>
-                ) : (
-                  <button onClick={onLoginClick}>Logga In</button>
-                )}
-              </li>
-            </ul>
-          )}
-        </nav>
-      </header>
-    </main>
-  );
+                            <li>
+                                {user ? (
+                                    <button
+                                        onClick={handleLogout}
+                                        className="text-red-300 hover:text-red-400"
+                                    >
+                                        Logga Ut
+                                    </button>
+                                ) : (
+                                    <button onClick={onLoginClick}>Logga In</button>
+                                )}
+                            </li>
+                        </ul>
+                    )}
+                </nav>
+            </header>
+        </main>
+    );
 }
