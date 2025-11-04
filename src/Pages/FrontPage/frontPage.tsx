@@ -1,6 +1,7 @@
 import { use, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
+import LoggoNR1 from "./../../../public/images/Header-loggo/LoggoNR1-med-sken.png";
 import "../BookingPage/BookingPageStyle.css";
 import "../../index.css";
 
@@ -145,7 +146,7 @@ export default function FrontPage() {
   ];
 
   return (
-    <main className="w-screen flex flex-col items-center min-h-screen mt-14 bg-[#292929]">
+    <main className="w-screen flex flex-col items-center min-h-screen mt-14">
       <h1
         className="text-center text-lg mb-4 w-11/12
             sm:text-xl
@@ -157,12 +158,14 @@ export default function FrontPage() {
         className="text-center text-sm mb-10 w-11/12
             sm:text-base
             md:text-base"
-      >
-        Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
-        filmer från 1910 talet fram till början på 2000 talet. Är detta något
-        för dig se då till att se dig runt bland våra filmer och boka en tid som
-        passar dig!
-      </p>
+        >
+          Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
+          filmer från 1910 talet fram till början på 2000 talet. Är detta något
+          för dig se då till att se dig runt bland våra filmer och boka en tid
+          som passar dig!
+        </p>
+       
+      
 
       {/* Filter & Sort */}
       <section className="w-11/12 mb-5 rounded-md shadow-md flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
@@ -180,7 +183,7 @@ export default function FrontPage() {
             {filterOpen && (
               <div
                 className="flex flex-row flex-wrap justify-center items-center 
-                        absolute -left-8 mt-5 bg-[#292929] shadow-md rounded p-5 w-72
+                        absolute -left-14 mt-5 bg-[#292929] shadow-md rounded p-5 w-72
                         sm:w-86 sm:mt-1 z-50
                         lg:max-h-[80vh]
                         
@@ -327,62 +330,61 @@ export default function FrontPage() {
 
       {/* Movies container*/}
       <section
-        className="h-80 w-11/12 rounded-md shadow-md flex flex-row
-            overflow-x-auto overflow-y-hidden
-            [&::-webkit-scrollbar]:h-2  
-            [&::-webkit-scrollbar-track]:rounded-full
-            [&::-webkit-scrollbar-track]:bg-[#24252C]
-            [&::-webkit-scrollbar-thumb]:rounded-full
-            [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
-            snap-x snap-mandatory bg-[#24252C] text-white
+        className="
+    h-96 w-11/12 mx-5
+    flex flex-row overflow-x-auto overflow-y-hidden
+    [&::-webkit-scrollbar]:h-2  
+    [&::-webkit-scrollbar-track]:rounded-full
+    [&::-webkit-scrollbar-track]:bg-[#24252C]
+    [&::-webkit-scrollbar-thumb]:rounded-full
+    [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
+    snap-x snap-mandatory text-white
 
-            sm:h-94 sm:w-11/12 sm:p-2
-            md:px-2 md:h-86 md:w-11/12
-            lg:w-11/12 lg:h-96
-            xl:h-98 xl:p-2"
-      >
+    
+
+    lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:h-auto
+    xl:h-auto xl:p-2 xl:grid xl:grid-cols-4  
+    2xl:h-auto 2xl:p-2 2xl:grid 2xl:grid-cols-5
+
+  ">
         {sortedMovies.length === 0 ? (
           <p className="m-auto">Inga filmer hittades.</p>
         ) : (
           sortedMovies.map((movie) => (
             <article
               key={movie._id}
-              className="flex justify-center items-between min-w-36 h-76 snap-center mx-2 my-3
-                            md:min-w-42
-                            lg:min-w-46 lg:h-86
-                            xl:h-96"
+              className="flex justify-center items-center h-auto min-w-56 snap-center m-3 p-5
+                            lg:h-auto lg:hover:scale-105
+                            xl:h-auto xl:mt-10"
             >
               <Link
                 to={`/movie/${movie._id}`}
-                className="flex flex-col items-center justify-start w-36 gap-2
-                            sm:w-80 sm:h-auto sm:m-2
-                            md:w-full
-                            lg:w-50 lg:m-1
-                            xl:m-0"
+                className="flex flex-col items-center justify-start h-auto
+                            sm:h-auto m-0
+                            lg:h-auto"
               >
                 <img
                   src={movie.imageSrc}
                   alt={movie.title}
-                  className="shadow-2xl w-32 h-auto object-cover rounded-md
-                                    sm:w-45 sm:h-auto sm:mr-1 sm:ml-1
-                                    md:w-42 md:h-auto md:mr-1 md:ml-1 transition-transform md:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] md:hover:scale-105
-                                    lg:transition-transform lg:hover:shadow-[0_0_15px_rgba(70,106,228,0.4)] lg:hover:scale-105
-                                    lg:w-50 lg:mx-1
-                                    xl:w-50 "
+                  className="shadow-2xl w-auto h-4/5 object-cover rounded-md p-0 "
                 />
                 <p
-                  className=" text-sm mx-2 mt-2
-                                sm:text-base
-                                lg:m-0 lg:text-base"
+                  className="mt-2
+                             text-sm
+                                lg:m-0
+                                lg:text-md
+                                xl:text-lg
+                                2xl:text-xl"
                 >
                   {movie.title}
                 </p>
 
                 <p
-                  className="text-xs
-                                sm:text-sm 
-                                md:
-                                lg:underline"
+                  className="text-sm
+                             lg:m-0
+                             lg:text-md
+                             xl:text-lg
+                             2xl:text-xl"
                 >
                   {Array.isArray(movie.genres)
                     ? movie.genres
@@ -394,6 +396,7 @@ export default function FrontPage() {
             </article>
           ))
         )}
+        
       </section>
 
       {/* Theme days container*/}
