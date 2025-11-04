@@ -6,8 +6,8 @@ import { Outlet } from "react-router-dom";
 
 export default function AdminPage() {
   return (
-    <div className="w-screen min-h-screen bg-[#1f1f1f] text-white">
-      <nav className="bg-[#243365] shadow-md">
+    <div className="w-screen min-h-screen bg-[#ffffff]">
+      <nav className="bg-[#ffffff] shadow-md text-black">
         <div
           className="
             flex flex-col sm:flex-row

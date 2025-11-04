@@ -4,6 +4,7 @@ import { Kiosk } from "../models/kioskSchema.js";
 import { Booking } from "../models/bookingSchema.js";
 import { isAdmin } from "../middleware/isAdmin.js";
 import { Screening } from "../models/screeningSchema.js";
+import { User } from "../models/userSchema.js";
 
 const router = express.Router();
 // Middleware to check if user is admin for all admin routes
@@ -81,13 +82,15 @@ router.get("/api/sales/compare/:productId", async (req, res) => {
 // ------------ Admin User routes ------------ //
 
 // Get all users
-router.get("/admin/api/users", async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
+    console.log("ADMIN USER ERROR:", error);
     res.status(500).json({ message: error.message });
-  }
+}
+
 });
 
 // get user by id
@@ -134,12 +137,19 @@ router.delete("/admin/api/users/:id", async (req, res) => {
 
 // Get bookings by user ID
 
-router.get("/admin/bookings/:userId", async (req, res) => {
+router.get("/bookings/:userId", async (req, res) => {
   try {
     const bookings = await Booking.find({ user_id: req.params.userId })
-      .populate("screening_id")
-      .populate("seats.seat_id")
-      .populate("tickets.ticket_id");
+  .populate({
+    path: "screening_id",
+    populate: [
+      { path: "movie", select: "title" },
+      { path: "auditorium", select: "name" },
+    ],
+  })
+  .populate("seats.seat_id")
+  .populate("tickets.ticket_id");
+
 
     res.json(bookings);
   } catch (error) {
@@ -148,9 +158,9 @@ router.get("/admin/bookings/:userId", async (req, res) => {
   }
 });
 
-// DELETE /api/bookings/:bookingId
+// DELETE bookings/:bookingId
 
-router.delete("/api/admin/bookings/:bookingId", async (req, res) => {
+router.delete("/bookings/:bookingId", async (req, res) => {
   try {
     const { bookingId } = req.params;
 
@@ -232,7 +242,7 @@ router.get("/screenings/today/bookings/count", async (req, res) => {
       const bookingCount = await Booking.countDocuments({ screening_id: screening._id });
       totalBookings += bookingCount;
     }
-    res.json({ totalBookings });
+    res.json({ count: totalBookings });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "server error" });
@@ -240,7 +250,18 @@ router.get("/screenings/today/bookings/count", async (req, res) => {
 });
 
 
+// ----------- Movie routes for admin ------------ //
 
+// POST Route, /api/movie
+router.post('/movie', async (req, res) => {
+    try {
+        const movies = new Movies(req.body);
+        await movies.save();
+        res.status(201).json(movies);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
 
 
 export default router;
