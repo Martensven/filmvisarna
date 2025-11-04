@@ -11,7 +11,9 @@ export default function TheaterView({ selectShowing }: Props) {
   const { totalTickets } = useSeats();
   const [selectedSeat, setSelectedSeat] = useState<Set<string>>(new Set());
   const [bookedSeats, setBookedSeats] = useState<string[]>([]);
-  const [pendingSeats, setPendingSeats] = useState<{ seatId: string; owner: string }[]>([]);
+  const [pendingSeats, setPendingSeats] = useState<
+    { seatId: string; owner: string }[]
+  >([]);
   const [socketId, setSocketId] = useState<string>("");
   const [seats, setSeats] = useState<Seat[]>([]);
 
@@ -36,12 +38,19 @@ export default function TheaterView({ selectShowing }: Props) {
     // Reset state when switching screenings
     setSelectedSeat(new Set());
     setBookedSeats(selectShowing.bookedSeats || []);
-    setPendingSeats((selectShowing.pendingSeats || []).map((seatId: string) => ({ seatId, owner: "", })));
+    setPendingSeats(
+      (selectShowing.pendingSeats || []).map((seatId: string) => ({
+        seatId,
+        owner: "",
+      }))
+    );
 
     // Fetch seat layout
     const fetchSeats = async () => {
       try {
-        const res = await fetch(`/api/auditoriums/${selectShowing.auditorium._id}/seats`);
+        const res = await fetch(
+          `/api/auditoriums/${selectShowing.auditorium._id}/seats`
+        );
         const data = await res.json();
         setSeats(data);
       } catch (err) {
@@ -53,7 +62,10 @@ export default function TheaterView({ selectShowing }: Props) {
     // --- SOCKET SETUP ---
     sockets.emit("joinScreening", selectShowing._id);
 
-    const handleSeatUpdate = (data: { bookedSeats?: string[]; pendingSeats?: { seatId: string; owner: string }[] }) => {
+    const handleSeatUpdate = (data: {
+      bookedSeats?: string[];
+      pendingSeats?: { seatId: string; owner: string }[];
+    }) => {
       console.log("Incoming seat update:", data);
       if (data.bookedSeats) setBookedSeats(data.bookedSeats);
       if (data.pendingSeats) setPendingSeats(data.pendingSeats);
@@ -80,24 +92,33 @@ export default function TheaterView({ selectShowing }: Props) {
   // Toggle seat selection
   const toggleSeat = (row: number, seatNumber: number) => {
     if (!selectShowing) return;
-    const seat = seats.find(s => s.rowNumber === row && s.seatNumber === seatNumber);
+    const seat = seats.find(
+      (s) => s.rowNumber === row && s.seatNumber === seatNumber
+    );
     if (!seat) return;
     const seatId = seat._id;
 
     // Find if seat is pending & who owns it
-    const pendingOwner = pendingSeats.find(p => p.seatId === seatId)?.owner;
+    const pendingOwner = pendingSeats.find((p) => p.seatId === seatId)?.owner;
 
     // Prevent clicking booked or others' pending seats
-    if (bookedSeats.includes(seatId) || (pendingOwner && pendingOwner !== socketId && pendingOwner !== sockets.id)) return;
+    if (
+      bookedSeats.includes(seatId) ||
+      (pendingOwner && pendingOwner !== socketId && pendingOwner !== sockets.id)
+    )
+      return;
 
     // Handle selection of seats
-    setSelectedSeat(prev => {
+    setSelectedSeat((prev) => {
       const newSet = new Set(prev);
       const isSelected = newSet.has(seatId);
 
       if (isSelected) {
         newSet.delete(seatId);
-        sockets.emit("seatUnselect", { screeningId: selectShowing._id, seatId });
+        sockets.emit("seatUnselect", {
+          screeningId: selectShowing._id,
+          seatId,
+        });
       } else {
         if (newSet.size >= totalTickets) return prev;
         newSet.add(seatId);
@@ -109,21 +130,32 @@ export default function TheaterView({ selectShowing }: Props) {
   };
 
   return (
-    <section className="flex flex-col items-center w-full glass_effect mt-5 mb-5
-    lg:w-11/12 lg:h-200 lg:flex lg:justify-center lg:items-center lg:mt-0">
-      <article className="flex flex-col items-center w-full 
+    <section>
+      <article
+        className="flex flex-col items-center w-full 
       md:w-8/12 
-      lg:w-11/12 lg:h-180">
-        <h2 className="p-3
-        lg:text-lg ">{selectShowing.movie.title}</h2>
-        <p>{selectShowing.auditorium.name}</p>
-        <p>Tid: {selectShowing.time}</p>
-
-        {/* "Cinema frame" visuell appeal */}
-        <span className="bg-gray-600 w-11/12 h-2 rounded-sm mt-5 mb-8 shadow-lg shadow-sky-200
+      lg:w-11/12 lg:h-180"
+      >
+        <h2
+          className="p-3
+        lg:text-lg "
+        >
           
-        lg:w-9/12 lg:h-3 lg:mt-15 lg:mb-10 lg:shadow-lg lg:shadow-sky-200"></span>
+        </h2>
+        <p>{selectShowing.auditorium.name}</p>
+        <p>Tid: {selectShowing.time.slice(0,5)}</p>
 
+        {/* Cinema frame" visuell appeal */}
+
+        <span
+          className="w-full h-20 bg-gradient-to-b from-sky-100 to-sky-900 h-2 rounded-sm mt-8 
+            flex justify-center items-center text-zinc-200 font-semibold text-2xl
+            lg:w-9/12 lg:h-3 lg:mt-15 lg:mb-10 lg:shadow-lg lg:shadow-sky-200"
+          style={{ clipPath: "polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%)" }}
+        >
+          <p className="text-black opacity-90 text-base italic">{selectShowing.movie.title}</p>
+        </span>
+        <div className="mx-auto w-9/11 h-2 shadow-lg shadow-white mb-10 bg-sky-900 blur"></div>
 
         {/* Seat grid */}
         <div className="mt-4">
@@ -132,13 +164,15 @@ export default function TheaterView({ selectShowing }: Props) {
               {rowSeats.map((seat) => {
                 const seatKey = seat._id;
                 const isBooked = bookedSeats.includes(seatKey);
-                const pendingSeat = pendingSeats.find(p => p.seatId === seatKey);
+                const pendingSeat = pendingSeats.find(
+                  (p) => p.seatId === seatKey
+                );
                 const isPending = !!pendingSeat;
                 const isMine = pendingSeat?.owner === socketId;
                 const isSelected = selectedSeat.has(seatKey);
                 const isAccessible = seat.accessible;
 
-                let color = "#151d38ff";
+                let color = "#343d5eff";
                 if (isBooked) color = "#d9534f";
                 else if (isSelected) color = "#5cb85c";
                 else if (isPending && !isMine) color = "#f0ad4e";
@@ -154,12 +188,17 @@ export default function TheaterView({ selectShowing }: Props) {
                       marginRight: 3,
                       borderRadius: 4,
                       backgroundColor: color,
-                      border: "1px solid white",
+                      border: "1px solid transparent",
+                      borderImageSource:
+                        "linear-gradient(to bottom, rgba(0, 0, 0, 0.74), rgba(175, 175, 175, 0.81))",
+                      borderImageSlice: 1,
+                      borderTopLeftRadius: 5,
+                      borderTopRightRadius: 5,
                       cursor: isBooked ? "not-allowed" : "pointer",
                     }}
-                    title={`Rad ${seat.rowNumber + 1}, Stol ${seat.seatNumber + 1} ${
-                      isAccessible ? "(Tillgänglighetsanpassad)" : ""
-                    } ${
+                    title={`Rad ${seat.rowNumber + 1}, Stol ${
+                      seat.seatNumber + 1
+                    } ${isAccessible ? "(Tillgänglighetsanpassad)" : ""} ${
                       isBooked
                         ? "(Upptagen)"
                         : isPending
@@ -176,8 +215,10 @@ export default function TheaterView({ selectShowing }: Props) {
         </div>
 
         {/* Seat summary */}
-        <div className="mt-3 text-center
-        lg:mt-10">
+        <div
+          className="mt-3 text-center
+        lg:mt-10"
+        >
           <strong>Valda stolar:</strong>{" "}
           {Array.from(selectedSeat)
             .map((seatId) => {
