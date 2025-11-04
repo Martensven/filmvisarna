@@ -19,10 +19,12 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     <>
       <SeatsProvider>
         {/*----------Container for booking page----------*/}
-        <main className="w-screen min-h-screen flex flex-col justify-center items-center overscroll-y-auto pt-5">
+        <main className="w-screen min-h-screen flex flex-col justify-center items-center overscroll-y-auto pt-5 relative
+        md:w-12/13 md:flex md:items-start md:ml-8 md:mr-8 md:sticky">
 
 
-          <section className="Movie-Screening-Days flex flex-row container_box w-11/12 h-86 mb-4">
+          <section className="Movie-Screening-Days flex flex-row container_box w-11/12 h-86 mb-4
+          md:flex-col md:w-6/12 md:h-auto">
             <MovieInformation />
             <CalenderComponent
               onSelectTheaterId={setSelectedTheaterId}
@@ -41,7 +43,11 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
               selectTheaterId={selectedTheaterId}
               selectShowing={selectedShowing}
             />
-            <CheckoutRecipe />
+
+            <section className="absolute top-10">
+              <CheckoutRecipe />
+            </section>
+            
           </div>
 
           <CheckoutComponent isLoggedIn={isLoggedIn} />
