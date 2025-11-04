@@ -1,4 +1,3 @@
-
 import AdminScreenings from "./adminScreening.tsx";
 import AdminWelcome from "./adminWelcome.tsx";
 
@@ -15,6 +14,3 @@ export default function AdminStart() {
     </main>
   );
 }
-
-
-

@@ -11,7 +11,7 @@ import type {
   Theme,
   MovieInput,
   Review,
-} from "../../types/movieTypes";
+} from "../../../types/movieTypes";
 
 export default function AddMovieForm() {
   // State to hold all data to be saved to backend database
