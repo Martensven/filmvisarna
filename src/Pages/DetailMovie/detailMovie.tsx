@@ -65,9 +65,11 @@ export default function DetailMovie() {
                 sm:h-86
                 md:h-86
                 lg:w-12/13 lg:h-110
-                xl:w-11/12 xl:h-120 xl:mb-3">
+                xl:w-11/12 xl:h-120 xl:mb-3
+                2xl:w-11/12 2xl:h-130">
+
                     <iframe
-                        className="w-11/12 h-62 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
+                        className="w-11/12 h-auto rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
                         sm:h-72
                         md:w-11/12 md:h-82
                         lg:w-9/12 lg:h-96 lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
@@ -132,7 +134,7 @@ export default function DetailMovie() {
                                     : movie.directors?.name || "Okänd"}
                             </p>
                             <p className="text-start pl-2 pt-0.5 pb-2
-                            lg:pt-0.5 lg:pl-3 pb-3">
+                            lg:pt-0.5 lg:pl-3">
                                 <strong>Skådespelare:</strong>{" "}
                                 {Array.isArray(movie.actors)
                                     ? movie.actors.map((a: { name: string }) => a.name).join(", ")
