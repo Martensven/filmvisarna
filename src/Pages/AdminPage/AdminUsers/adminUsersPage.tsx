@@ -8,9 +8,9 @@ export default function AdminUsersPage() {
   const [showSearchModal, setShowSearchModal] = useState(false);
 
   return (
-    <main className="bg-[#1f1f1f] text-white p-6 flex flex-col items-center justify-center min-h-screen">
+    <main className="max-w-3xl mx-auto bg-[#243365] text-white p-6 flex flex-col min-h-30vh rounded-xl">
       <header className="text-center mb-10">
-        <h1 className="text-3xl font-bold bg-[#243365] py-3 rounded-lg shadow-md inline-block px-6">
+        <h1 className="text-3xl font-bold inline-block px-6 text-white">
           Användarhantering
         </h1>
       </header>
