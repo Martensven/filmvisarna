@@ -1,7 +1,6 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
-import LoggoNR1 from "./../../../public/images/Header-loggo/LoggoNR1-med-sken.png";
 import "../BookingPage/BookingPageStyle.css";
 import "../../index.css";
 
@@ -158,14 +157,14 @@ export default function FrontPage() {
         className="text-center text-sm mb-10 w-11/12
             sm:text-base
             md:text-base"
-        >
-          Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
-          filmer från 1910 talet fram till början på 2000 talet. Är detta något
-          för dig se då till att se dig runt bland våra filmer och boka en tid
-          som passar dig!
-        </p>
-       
-      
+      >
+        Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
+        filmer från 1910 talet fram till början på 2000 talet. Är detta något
+        för dig se då till att se dig runt bland våra filmer och boka en tid
+        som passar dig!
+      </p>
+
+
 
       {/* Filter & Sort */}
       <section className="w-11/12 mb-5 rounded-md shadow-md flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
@@ -396,7 +395,7 @@ export default function FrontPage() {
             </article>
           ))
         )}
-        
+
       </section>
 
       {/* Theme days container*/}
@@ -408,7 +407,7 @@ export default function FrontPage() {
           Temadagar
         </h2>
         <article
-          className="min-h-96 w-full rounded-md shadow-md my-5 justify-center items-center flex flex-col bg-[#24252C] text-white
+          className="min-h-96 w-full  my-5 justify-center items-center flex flex-col text-white
                 "
         >
           <h2
@@ -445,7 +444,7 @@ export default function FrontPage() {
           </Link>
         </article>
 
-        <article className="min-h-96 rounded-md shadow-md my-5 justify-center items-center flex  flex-col bg-[#24252C] text-white">
+        <article className="min-h-96 my-5 justify-center items-center flex  flex-col text-white">
           <h2
             className="text-center text-xl uppercase font-bold my-2
                     lg:mt-5 lg:underline"

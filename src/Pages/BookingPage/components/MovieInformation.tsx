@@ -52,7 +52,7 @@ export default function MovieInformation() {
   return (
     <main
       className="movieInfoContainer flex flex-col justify-center items-center w-full h-auto
-                   md:w-full md:place-items-center md:place-items-center"
+                   md:w-full md:place-items-center"
     >
       {/*----------Container for movie poster and title, Genre, age and time----------*/}
       <section
@@ -60,7 +60,7 @@ export default function MovieInformation() {
                   xs:flex-row  
                   sm:flex-row sm:w-11/12
                   md:w-11/12 md:h-auto 
-                  lg:h-96 lg:w-11/12 lg:flex lg:items-center justify-start"
+                  lg:h-96 lg:w-11/12 lg:flex lg:items-center"
       >
         {/*----------Container for movie poster----------*/}
         <img
@@ -121,7 +121,7 @@ export default function MovieInformation() {
           src={cinemapic}
           alt="Cinema overview pic for fill"
           className="invisable w-0 rounded-md [mask-image:linear-gradient(to_right,transparent,black,transparent)] [mask-repeat:no-repeat] [mask-size:100%_100%]
-                                                                          sm:invisble w-0
+                                                                          sm:invisble
                                                                           md:visible md:w-2/6 md:p-4 md:pb-40 md:rounded-md md:shadow-md
                                                                           lg:visible lg:mt-1 lg:p-10 lg:w-5/10 "
         />
