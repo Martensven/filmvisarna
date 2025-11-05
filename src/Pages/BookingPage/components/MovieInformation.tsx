@@ -52,8 +52,10 @@ export default function MovieInformation() {
   return (
     
     <main
-      className="movieBoxScreeningContainer flex flex-col justify-start items-start w-9/12 h-auto
-      md:w-full md:justify-center md:items-center"
+      className="movieBoxScreeningContainer flex flex-col justify-center items-center w-10/12 h-auto
+      md:w-full md:justify-center md:items-center
+      lg:w-7/12
+      xl:w-6/12 xl:flex-col"
     >
       
      
@@ -61,29 +63,31 @@ export default function MovieInformation() {
         <img
           src={movieInfo.imageSrc}
           alt={movieInfo.title}
-          className="moviePoster flex justify-center items-center w-50 h-auto ml-5 mt-7 mb-2 rounded-md shadow-lg/30
-                     xs:min-w-26 xs:max-w-30 
-                     md:min-w-50 md:ml-0"
+          className="moviePoster flex justify-center items-center max-w-42 h-auto ml-2 mt-7 mb-2 rounded-md shadow-lg/30
+                     sm:min-w-50 sm:mt-7 
+                     md:min-w-50 md:ml-0
+                     lg:w-50 lg:mt-4"
         />
 
         {/*----------Container movie info ----------*/}
         <article
           className="boxForDesc flex flex-col justify-start items-start ml-5
-          md:justify-center md:items-center "
+          sm:justify-center sm:items-center sm:min-w-50 sm:mb-5
+          md:justify-center md:items-center md:ml-0 md:mb-0
+          xl:justify-start xl:w-4/12"
         >
           <h1
-            className="movieTitle flex w-full h-auto text-left text-base underline 
-            md:justify-center md:items-center md:text-lg md:w-full
-                      "
+            className="movieTitle flex w-full h-auto text-base underline 
+            md:justify-center md:items-center md:text-lg md:w-full"
           >
             {movieInfo.title}
           </h1>
 
           <ul
             className="movieDesc w-full h-full text-left mb-3
-                        sm:text-lg sm:ml-3 sm:h-auto
+                        sm:text-lg sm:h-auto
                         md:w-full md:h-full md:text-md md:ml-0 md:text-center
-                        lg:m-1"
+                        lg:m-1 lg:h-15"
           >
             <li
               className="text-sm italic mb-2
