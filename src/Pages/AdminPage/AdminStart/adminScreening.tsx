@@ -72,7 +72,8 @@ const sorted = [...screenings].sort((a, b) => {
       </section>
 
       {/* header row */}
-<div className="hidden md:grid grid-cols-4 text-sm font-semibold border-b border-gray-700 pb-2 mb-2 select-none">
+<div className="hidden md:grid grid-cols-5 text-sm font-semibold border-b border-gray-700 pb-2 mb-2 select-none">
+  <div>Edit</div>
   <div onClick={() => handleSort("movieTitle")} className="cursor-pointer hover:text-gray-300">
     Film
   </div>
@@ -91,8 +92,11 @@ const sorted = [...screenings].sort((a, b) => {
 {sorted.map((s) => (
   <div
     key={s.id}
-    className="grid grid-cols-2 md:grid-cols-4 py-3 border-b border-gray-800 text-sm"
+    className="grid grid-cols-2 md:grid-cols-5 py-3 border-b border-gray-800 text-sm"
   >
+    <div>
+      <MdEdit size={20} className="cursor-pointer hover:text-gray-300 mx-auto" />
+    </div>
     <div className="font-medium">{s.movieTitle}</div>
     <div>{s.time}</div>
     <div>{s.auditorium}</div>
