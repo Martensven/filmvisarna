@@ -179,21 +179,6 @@ router.delete("/bookings/:bookingId", async (req, res) => {
 
 // -------------Screening routes for admin ------------- //
 
-// Get Screening by todays date
-router.get("/screenings/today-movies", async (req, res) => {
-  const date = req.query.date;
-  // we send in the date and get all screenings for that date. 
-  const screenings = await Screening.find({ date }).populate("movie");
-  // We onlu want one of each movie even if there are multiple screenings
-  const uniqueMovie = Array.from(
-    new Map(
-      screenings.map(item => [item.movie._id.toString(), item.movie])
-    ).values()
-  );
-
-  res.json(uniqueMovie);
-});
-
 // Get screenings with booked seats count for today
 
 router.get("/screenings/today", async (req, res) => {
@@ -209,8 +194,7 @@ router.get("/screenings/today", async (req, res) => {
     const formatted = screenings.map((s) => {
       const auditorium = s.auditorium;
 const totalSeats = auditorium.seats.length;
-      console.log("AUDITORIUM:", s.auditorium);
-console.log("ROWS:", s.auditorium.rows, "SEATS PER ROW:", s.auditorium.seatsPerRow);
+      
 
 
       return {
@@ -229,6 +213,52 @@ console.log("ROWS:", s.auditorium.rows, "SEATS PER ROW:", s.auditorium.seatsPerR
     res.status(500).json({ error: "server error" });
   }
 });
+
+
+
+
+
+// get one
+router.get("/screenings/:id", async (req,res)=>{
+  const s = await Screening.findById(req.params.id)
+    .populate("auditorium")
+    .populate("movie")
+    .lean()
+
+  res.json({
+    id: s._id,
+    movieTitle: s.movie.title,
+    time: s.time,
+    auditoriumName: s.auditorium.name,
+    auditoriumId: s.auditorium._id.toString()   // <— lägg till detta
+  })
+})
+
+// update
+router.put("/screenings/:id", async (req,res)=>{
+  const { time, auditoriumId } = req.body
+
+  await Screening.findByIdAndUpdate(req.params.id, {
+    time,
+    auditorium: auditoriumId
+  })
+
+  res.json({ ok: true })
+})
+
+// delete
+router.delete("/screenings/:id", async (req,res)=>{
+  await Screening.findByIdAndDelete(req.params.id)
+  res.json({ ok: true })
+})
+
+
+
+
+
+
+
+
 
 // Get total amount of bookings for all screenings at today's date
 router.get("/screenings/today/bookings/count", async (req, res) => {
