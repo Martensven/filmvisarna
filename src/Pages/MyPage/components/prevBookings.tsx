@@ -49,7 +49,7 @@ const FAQ = () => {
                 <button
                     onClick={() => setAccordionOpen(!accordionOpen)}
                     className="flex justify-between w-full">
-                    <h2>Tidigare bokningar</h2>
+                    <h2>Historik</h2>
                     {accordionOpen ? <h2>-</h2> : <h2>+</h2>}
 
                 </button>
