@@ -97,25 +97,46 @@ export default function AdminScreenings() {
       </div>
 
       {sorted.map((s) => (
-        <div
-          key={s.id}
-          className="grid grid-cols-2 md:grid-cols-5 py-3 border-b border-gray-800 text-sm"
-        >
-          <div>
-            <MdEdit
-              size={20}
-              className="cursor-pointer hover:text-gray-300 mx-auto"
-              onClick={() => navigate(`/admin/screenings/${s.id}`)}
-            />
-          </div>
-          <div className="font-medium">{s.movieTitle}</div>
-          <div>{s.time}</div>
-          <div>{s.auditorium}</div>
-          <div>
-            {s.bookedCount} / {s.totalSeats}
-          </div>
-        </div>
-      ))}
+  <div
+    key={s.id}
+    className="
+      border-b border-gray-400 text-sm py-4
+      flex flex-col gap-2
+      md:grid md:grid-cols-5
+    "
+  >
+    <div className="flex items-center gap-2 md:block md:text-center">
+      <MdEdit
+  size={20}
+  className="cursor-pointer hover:text-gray-300 md:mx-auto"
+        onClick={() => navigate(`/admin/screenings/${s.id}`)}
+      />
+      {/* mobillabel */}
+      <span className="text-xs text-gray-300 md:hidden">Edit</span>
+    </div>
+
+    <div>
+      <span className="text-xs text-gray-300 md:hidden">Film: </span>
+      {s.movieTitle}
+    </div>
+
+    <div>
+      <span className="text-xs text-gray-300 md:hidden">Tid: </span>
+      {s.time}
+    </div>
+
+    <div>
+      <span className="text-xs text-gray-300 md:hidden">Salong: </span>
+      {s.auditorium}
+    </div>
+
+    <div>
+      <span className="text-xs text-gray-300 md:hidden">Bokade: </span>
+      {s.bookedCount} / {s.totalSeats}
+    </div>
+  </div>
+))}
+
     </section>
   );
 }
