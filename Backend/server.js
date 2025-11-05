@@ -60,7 +60,7 @@ app.use(User);
 app.use(Auditorium);
 app.use(Actors);
 app.use(Kiosk);
-app.use(Admin);
+app.use("/api/admin", Admin);
 
 
 io.on("connected", (socket) => {
