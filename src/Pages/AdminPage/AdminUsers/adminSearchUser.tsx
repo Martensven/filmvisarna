@@ -40,7 +40,9 @@ export function SearchUserModal({ onClose }: Props) {
   }, [selectedUser]);
 
   const handleCancelBooking = async (bookingId: string) => {
-    const confirmed = window.confirm("Är du säker på att du vill avboka denna bokning?");
+    const confirmed = window.confirm(
+      "Är du säker på att du vill avboka denna bokning?"
+    );
     if (!confirmed) return;
 
     try {
@@ -60,16 +62,18 @@ export function SearchUserModal({ onClose }: Props) {
 
   const options = users.map((user) => ({
     value: user._id,
-    label: `${user.firstName || ""} ${user.lastName || ""} | ${user.email} | ${user.phoneNumber}`,
+    label: `${user.firstName || ""} ${user.lastName || ""} | ${user.email} | ${
+      user.phoneNumber
+    }`,
     user,
   }));
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white text-black rounded-lg p-6 shadow-lg max-w-2xl w-full relative overflow-y-auto max-h-[90vh]">
+      <div className="bg-white text-black rounded-lg p-8 shadow-2xl w-full max-w-4xl h-[80vh] overflow-y-auto relative">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl font-bold"
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl font-bold cursor-pointer"
         >
           &times;
         </button>
@@ -87,9 +91,15 @@ export function SearchUserModal({ onClose }: Props) {
             <h3 className="text-xl font-semibold mb-2">
               {selectedUser.firstName} {selectedUser.lastName}
             </h3>
-            <p><strong>Telefon:</strong> {selectedUser.phoneNumber}</p>
-            <p><strong>Email:</strong> {selectedUser.email}</p>
-            <p><strong>Användar-ID:</strong> {selectedUser._id}</p>
+            <p>
+              <strong>Telefon:</strong> {selectedUser.phoneNumber}
+            </p>
+            <p>
+              <strong>Email:</strong> {selectedUser.email}
+            </p>
+            <p>
+              <strong>Användar-ID:</strong> {selectedUser._id}
+            </p>
 
             <h4 className="text-lg font-semibold mt-4 mb-2">Bokningar</h4>
             {bookings.length === 0 ? (
@@ -97,12 +107,27 @@ export function SearchUserModal({ onClose }: Props) {
             ) : (
               <ul className="space-y-4">
                 {bookings.map((booking) => (
-                  <li key={booking._id} className="border p-4 rounded-md bg-gray-100 text-black">
-                    <p><strong>Film:</strong> {booking.screening_id?.movie?.title || "Okänd"}</p>
-                    <p><strong>Datum:</strong> {booking.screening_id?.date}</p>
-                    <p><strong>Tid:</strong> {booking.screening_id?.time}</p>
-                    <p><strong>Salong:</strong> {booking.screening_id?.auditorium?.name || "Okänd"}</p>
-                    <p><strong>Totalt pris:</strong> {booking.totalPrice} kr</p>
+                  <li
+                    key={booking._id}
+                    className="border p-4 rounded-md bg-gray-100 text-black"
+                  >
+                    <p>
+                      <strong>Film:</strong>{" "}
+                      {booking.screening_id?.movie?.title || "Okänd"}
+                    </p>
+                    <p>
+                      <strong>Datum:</strong> {booking.screening_id?.date}
+                    </p>
+                    <p>
+                      <strong>Tid:</strong> {booking.screening_id?.time}
+                    </p>
+                    <p>
+                      <strong>Salong:</strong>{" "}
+                      {booking.screening_id?.auditorium?.name || "Okänd"}
+                    </p>
+                    <p>
+                      <strong>Totalt pris:</strong> {booking.totalPrice} kr
+                    </p>
                     <button
                       onClick={() => handleCancelBooking(booking._id)}
                       className="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
@@ -114,7 +139,9 @@ export function SearchUserModal({ onClose }: Props) {
               </ul>
             )}
             {cancelMessage && (
-              <div className="mt-4 text-green-700 font-semibold">{cancelMessage}</div>
+              <div className="mt-4 text-green-700 font-semibold">
+                {cancelMessage}
+              </div>
             )}
           </div>
         )}
