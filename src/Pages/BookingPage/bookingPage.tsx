@@ -8,6 +8,7 @@ import CheckoutComponent from "./components/CheckoutComponent";
 import AmountTheaterSeats from "./components/AmountTheaterSeats";
 import { SeatsProvider } from "./components/context/SeatsContext";
 import { CheckoutProvider } from "./components/context/CheckoutContext";
+import CheckoutRecipe from "./components/CheckoutRecipe";
 
 
 
@@ -29,14 +30,15 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
           lg:w-12/13 lg:mt-10 
           xl:w-full"
           >
-            {/* <section
-            className="Recipe w-11/12 flex justify-center items-center h-30 mb-5 sticky top-10 container_box z-1 rounded-md
+            <section
+              className="Recipe w-11/12 flex justify-center items-center h-30 mb-5 sticky top-10 container_box z-1 rounded-md
             sm:h-20
             md:flex md:justify-center md:items-center md:fixed md:top-[170px] md:right-[30px] md:w-5/13 md:h-80 md:container_box 
             lg:right-[35px] lg:top-[180px]
             xl:right-[60px] xl:top-[220px]"
-          >
-          </section> */}
+            >
+              <CheckoutRecipe />
+            </section>
 
             <section
               className="Movie-Screening-Days flex flex-row container_box w-11/12 h-100 mb-4
