@@ -340,9 +340,28 @@ router.post("/screenings", async (req, res) => {
         .json({ error: "Det finns redan en visning i denna salong vid denna tid" });
     }
 
+    // Determine schedule type based on theater name
+    const scheduleType = theaterName === "Lilla Salongen" ? "smallTheater" : "bigTheater";
 
+    const newScreening = new Screening({
+      movie: movieId._id,
+      auditorium: auditorium._id,
+      date,
+      time,
+      showTime: new Date(`${date}T${time}:00`),
+      bookedSeats: [],
+      scheduleType,
+    });
+
+    await newScreening.save();
+    res.status(201).json({ message: "Visning skapad", newScreening });
+  } catch (error) {
+    console.error("Fel vid skapande av visning:", error);
+    res.status(500).json({ error: "Serverfel, Kunde inte skapa visning" });
   }
-})
+});
+
+
 
 // Get total amount of bookings for all screenings at today's date
 router.get("/screenings/today/bookings/count", async (req, res) => {
