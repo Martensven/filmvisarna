@@ -1,5 +1,5 @@
 import { useState } from "react";
-import UserAsGuest from "./UserAsGuestComponent";
+import GuestOrderComponent from "./UserAsGuestComponent";
 import UserOrderComponent from "./UserOrderComponent";
 import { useAuth } from "../../../context/authContext";
 
@@ -33,7 +33,7 @@ export default function CheckoutComponent() {
                 Boka som Gäst
               </button>
             ) : (
-              <UserAsGuest />
+              <GuestOrderComponent />
             )}
           </div>
         )}
