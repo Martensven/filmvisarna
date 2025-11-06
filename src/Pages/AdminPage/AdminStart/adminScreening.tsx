@@ -64,7 +64,7 @@ export default function AdminScreenings() {
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="bg-gray-800 border border-gray-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mt-4 mb-6"
+          className="bg-white text-black border border-gray-700 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mt-4 mb-6"
         />
       </section>
 

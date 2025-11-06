@@ -20,9 +20,9 @@ export default function AdminPage() {
             px-2 sm:px-4
           "
         >
-          <h1 className="text-lg sm:text-xl font-bold mb-3 sm:mb-0">
+          <Link to="/admin" className="hidden sm:block">
             Admin Filmvisarna
-          </h1>
+          </Link>
 
           <div
             className="
@@ -30,6 +30,9 @@ export default function AdminPage() {
               justify-center sm:justify-end
             "
           >
+            <Link to="screenings" className="hover:text-gray-300 transition">
+              <TbMovie size={24} />
+            </Link>
             <Link to="add-movie" className="hover:text-gray-300 transition">
               <MdMovieEdit size={28} />
             </Link>

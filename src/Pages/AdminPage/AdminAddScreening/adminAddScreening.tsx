@@ -14,7 +14,7 @@ export default function AdminAddScreening() {
 
   const [movieTheme, setMovieTheme] = useState<string>("");
 
-  // Hämta filmer och salonger
+  // Get movies and auditoriums on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,7 +30,7 @@ export default function AdminAddScreening() {
     fetchData();
   }, []);
 
-  // När film ändras
+  // When movie changes, check for theme and set salon + date if needed
   useEffect(() => {
     if (!movieId) {
       setMovieTheme("");
@@ -38,12 +38,13 @@ export default function AdminAddScreening() {
       setDate("");
       return;
     }
-
+    // Find movie theme
     const movie = movies.find((m) => m._id === movieId);
     const theme = movie?.themes?.themeDesc?.toLowerCase() || "";
     setMovieTheme(theme);
 
-    // Om temadag, sätt salong + datum automatiskt
+    // If theme day, set salon and date
+    // Using getNextDate to get the next date for that weekday
     if (theme.startsWith("tysta torsdagen")) {
       setSalonName("Lilla Salongen");
       setDate(getNextDate("thursday"));
@@ -56,7 +57,7 @@ export default function AdminAddScreening() {
     }
   }, [movieId, movies]);
 
-  // Hämta lediga tider
+    // When date or salon changes, fetch free times
   useEffect(() => {
     if (!date || !salonName) {
       setFreeTimes([]);
@@ -64,6 +65,7 @@ export default function AdminAddScreening() {
       return;
     }
 
+    // Fetch available times
     const fetchSchedule = async () => {
       try {
         const res = await fetch(
@@ -89,7 +91,7 @@ export default function AdminAddScreening() {
     fetchSchedule();
   }, [date, salonName]);
 
-  // Spara screening
+  // Save new screening
   const handleSave = async () => {
     if (!movieId || !date || !salonName || !selectedTime) return;
 
@@ -116,14 +118,14 @@ export default function AdminAddScreening() {
         return;
       }
 
-      location.href = "/admin";
+      location.href = "/admin/screenings";
     } catch (err) {
       console.error("Fel vid skapande:", err);
       alert("Serverfel vid skapande av visning");
     }
   };
 
-  // Hjälpfunktion för nästa temadag
+  // Helper to get next date for a given weekday
   const getNextDate = (weekday: string) => {
     const days = [
       "sunday",
@@ -139,14 +141,13 @@ export default function AdminAddScreening() {
     const diff = (targetDay + 7 - now.getDay()) % 7 || 7;
     const next = new Date(now);
     next.setDate(now.getDate() + diff);
-    return next.toISOString().split("T")[0]; // yyyy-mm-dd
+    return next.toISOString().split("T")[0];
   };
 
   return (
     <div className="p-6 bg-[#243365] text-white w-full rounded-xl min-h-[70vh] flex flex-col gap-4">
       <h1 className="text-2xl font-bold">Skapa visning</h1>
 
-      {/* Film */}
       <label className="flex flex-col">
         Film:
         <select
@@ -163,7 +164,6 @@ export default function AdminAddScreening() {
         </select>
       </label>
 
-      {/* Datum */}
       <label className="flex flex-col">
         Datum:
         <input
@@ -174,7 +174,6 @@ export default function AdminAddScreening() {
         />
       </label>
 
-      {/* Salong */}
       <label className="flex flex-col">
         Salong:
         <select
@@ -191,7 +190,6 @@ export default function AdminAddScreening() {
         </select>
       </label>
 
-      {/* Tid */}
       {freeTimes.length > 0 ? (
         <label className="flex flex-col">
           Tid:
