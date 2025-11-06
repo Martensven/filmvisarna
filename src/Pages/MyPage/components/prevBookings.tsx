@@ -35,11 +35,11 @@ const FAQ = () => {
         }
     }, [userId]);
 
+
     if (loading) return <p className="text-white text-center mt-10">Laddar...</p>;
     if (error) return <p className="text-red-500 text-center mt-10">Fel: {error}</p>;
     if (bookings.length === 0) return <p className="text-white text-center mt-10">Inga bokningar hittades.</p>;
     console.log(bookings);
-
 
     return (
 
