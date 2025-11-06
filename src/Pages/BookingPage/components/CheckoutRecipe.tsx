@@ -12,41 +12,49 @@ export default function CheckoutRecipe() {
   }
 
   return (
-    <aside
-      className="flex flex-col justify-center items-center w-11/12 h-auto 
-      md:w-10/12 lg:w-8/12 xl:w-6/12 mt-4 p-3 border-t border-gray-600"
-    >
-      {/* Visa varje biljettyp */}
-      {ticketTypes.map((type) => {
-        const quantity = counts[type._id] || 0;
-        const subtotal = quantity * type.price;
+    <>
+      <aside
+        className="flex
+    sm:w-11/12 sm:flex sm:flex-row sm:justify-center sm:gap-2 sm:items-center 
+    md:w-11/12 md:flex-col"
+      >
+        {/* Visa varje biljettyp */}
+        {ticketTypes.map((type) => {
+          const quantity = counts[type._id] || 0;
+          const subtotal = quantity * type.price;
 
-        return (
-          <div
-            key={type._id}
-            className="flex flex-row justify-between items-center w-full text-[#e4e1e1] py-2 border-b border-gray-700"
-          >
-            <h2 className="text-sm md:text-base capitalize">{type.ticketName}</h2>
-            <p className="text-sm md:text-base">
-              {quantity} st × {type.price} kr
-            </p>
-            <p className="text-sm md:text-base font-semibold">{subtotal} kr</p>
-          </div>
-        );
-      })}
+          return (
+            <div
+              key={type._id}
+              className="flex justify-between space
+        md:w-full"
+            >
+              <h2 className="text-[#e4e1e1] text-sm m-1  md:text-base md:m-5">{type.ticketName}</h2>
+              <p className="text-[#e4e1e1] text-sm m-2  md:text-base md:m-5">
+                {quantity} st × {type.price} kr
+              </p>
+              <p className="text-[#e4e1e1] text-sm m-2  md:text-base md:m-5">{subtotal} kr</p>
+            </div>
+          );
+        })}
 
-      {/* Sammanställning */}
-      <section className="flex flex-row justify-between items-center w-full border-t border-gray-400 mt-3 pt-2">
-        <h2 className="text-[#e4e1e1] text-sm md:text-base font-semibold">
-          Totalt:
-        </h2>
-        <p className="text-[#e4e1e1] text-sm md:text-base">
-          {totalTickets} biljetter
-        </p>
-        <p className="text-[#e4e1e1] text-sm md:text-base font-bold">
-          {totalPrice} kr
-        </p>
-      </section>
-    </aside>
+        {/* Sammanställning */}
+        <section className="Type-of-tickets flex flex-row justify-between items-center w-70 h-auto border-t border-gray-400 text-sm
+      sm:w-72 sm:text-sm
+      md:flex-col md:p-5 md:text-base md:w-66">
+          <h2 className="text-[#e4e1e1] text-sm md:text-base font-semibold">
+            Totalt:
+          </h2>
+          <p className="text-[#e4e1e1] text-sm md:text-base">
+            {totalTickets} biljetter
+          </p>
+          <p className="text-[#e4e1e1] text-sm md:text-base font-bold">
+            {totalPrice} kr
+          </p>
+        </section>
+      </aside>
+
+
+    </>
   );
 }
