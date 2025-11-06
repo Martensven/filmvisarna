@@ -1,6 +1,8 @@
 import { BsGraphUpArrow } from "react-icons/bs";
 import { MdMovieEdit } from "react-icons/md";
 import { FaUsersCog } from "react-icons/fa";
+import { TbMovie } from "react-icons/tb";
+
 import { Link } from "react-router";
 import { Outlet } from "react-router-dom";
 

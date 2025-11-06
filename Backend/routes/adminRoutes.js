@@ -302,24 +302,24 @@ router.delete("/screenings/:id", async (req,res)=>{
 router.post("/screenings", async (req, res) => {
   try {
     // Validating input data from request body
-    const { movieId, date, time, theaterName } = req.body;
+    const { movieId, date, time, salonName } = req.body;
     // Check for missing fields
-    if (!movieId || !date || !time || !theaterName) {
+    if (!movieId || !date || !time || !salonName) {
       return res
         .status(400)
-        .json({ error: "movieId, date, time och theaterName krävs" });
+        .json({ error: "movieId, date, time och salonName krävs" });
     }
     // Check if movie exists by using the provided movieId from request body
     const movie = await Movies.findById(movieId);
     if (!movie) return res.status(404).json({ error: "Film hittades inte" });
-    // Check if auditorium exists by using the provided theaterName from request body
-    const auditorium = await Auditorium.findOne({ name: theaterName });
+    // Check if auditorium exists by using the provided salonName from request body
+    const auditorium = await Auditorium.findOne({ name: salonName });
     if (!auditorium)
       return res.status(400).json({ error: "Salong hittades inte" });
 
-    // Check timeslots from schedule.js based on theater type
+    // Check timeslots from schedule.js based on salon type
     const allowedTimes =
-      theaterName === "Lilla Salongen"
+      salonName === "Lilla Salongen"
         ? schedule.smallTheaterTimes
         : schedule.bigTheaterTimes;
 
@@ -341,11 +341,11 @@ router.post("/screenings", async (req, res) => {
         .json({ error: "Det finns redan en visning i denna salong vid denna tid" });
     }
 
-    // Determine schedule type based on theater name
-    const scheduleType = theaterName === "Lilla Salongen" ? "smallTheater" : "bigTheater";
+    // Determine schedule type based on salon name
+    const scheduleType = salonName === "Lilla Salongen" ? "smallTheater" : "bigTheater";
 
     const newScreening = new Screening({
-      movie: movieId._id,
+      movie: movieId,
       auditorium: auditorium._id,
       date,
       time,
