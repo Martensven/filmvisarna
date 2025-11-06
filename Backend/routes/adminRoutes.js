@@ -316,6 +316,31 @@ router.post("/screenings", async (req, res) => {
     if (!auditorium)
       return res.status(400).json({ error: "Salong hittades inte" });
 
+    // Check timeslots from schedule.js based on theater type
+    const allowedTimes =
+      theaterName === "Lilla Salongen"
+        ? schedule.smallTheaterTimes
+        : schedule.bigTheaterTimes;
+
+        if (!allowedTimes.includes(time)) {
+          return res.status(400).json({ error: "Ogiltig tid för vald salong" });
+        }
+
+    // Check for conflicting screenings in the same auditorium at the same date and time
+    // Sending in date and time from request body
+    const conflictingScreening = await Screening.findOne({
+      auditorium: auditorium._id,
+      date,
+      time,
+    });
+
+    if (conflictingScreening) {
+      return res
+        .status(400)
+        .json({ error: "Det finns redan en visning i denna salong vid denna tid" });
+    }
+
+
   }
 })
 
