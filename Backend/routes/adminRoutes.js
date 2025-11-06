@@ -6,6 +6,9 @@ import { isAdmin } from "../middleware/isAdmin.js";
 import { Screening } from "../models/screeningSchema.js";
 import { User } from "../models/userSchema.js";
 import sendMail from "../nodemailer/sendMail.js";
+import { Movies } from "../models/moviesSchema.js";
+import { Auditorium } from "../models/auditoriumSchema.js";
+import schedule from "../schedule.js";
 
 const router = express.Router();
 // Middleware to check if user is admin for all admin routes
@@ -295,6 +298,26 @@ router.delete("/screenings/:id", async (req,res)=>{
   res.json({ ok: true })
 })
 
+router.post("/screenings", async (req, res) => {
+  try {
+    // Validating input data from request body
+    const { movieId, date, time, theaterName } = req.body;
+    // Check for missing fields
+    if (!movieId || !date || !time || !theaterName) {
+      return res
+        .status(400)
+        .json({ error: "movieId, date, time och theaterName krävs" });
+    }
+    // Check if movie exists by using the provided movieId from request body
+    const movie = await Movies.findById(movieId);
+    if (!movie) return res.status(404).json({ error: "Film hittades inte" });
+    // Check if auditorium exists by using the provided theaterName from request body
+    const auditorium = await Auditorium.findOne({ name: theaterName });
+    if (!auditorium)
+      return res.status(400).json({ error: "Salong hittades inte" });
+
+  }
+})
 
 // Get total amount of bookings for all screenings at today's date
 router.get("/screenings/today/bookings/count", async (req, res) => {
@@ -329,5 +352,7 @@ router.post("/movie", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+
 
 export default router;
