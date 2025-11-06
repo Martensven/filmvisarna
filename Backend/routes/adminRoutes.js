@@ -9,6 +9,7 @@ import sendMail from "../nodemailer/sendMail.js";
 import { Movies } from "../models/moviesSchema.js";
 import { Auditorium } from "../models/auditoriumSchema.js";
 import schedule from "../schedule.js";
+import { get } from "mongoose";
 
 const router = express.Router();
 // Middleware to check if user is admin for all admin routes
@@ -361,6 +362,53 @@ router.post("/screenings", async (req, res) => {
   }
 });
 
+// Get available and taken times for a specific date and theater
+router.get("/schedule", async (req, res) => {
+  try {
+    // Validating query parameters from request
+    const { date, theaterName } = req.query;
+
+    // Check for missing fields
+    if (!date || !theaterName) {
+      return res.status(400).json({ error: "date och theaterName krävs" });
+    }
+
+    // Check if auditorium exists by using the provided theaterName from request query
+    const auditorium = await Auditorium.findOne({ name: theaterName });
+    if (!auditorium) return res.status(400).json({ error: "Salong saknas" });
+
+    // Array to hold allowed times based on theater type
+    let allowedTimes = [];
+
+    // If theaterName is "Lilla Salongen", use smallTheaterTimes from schedule.js
+    if (theaterName === "Lilla Salongen") {
+      allowedTimes = schedule.smallTheaterTimes || [];
+    // If theaterName is "Stora Salongen", use bigTheaterTimes from schedule.js
+    } else if (theaterName === "Stora Salongen") {
+      allowedTimes = schedule.bigTheaterTimes || [];
+    }
+
+    // Find screenings already booked for the specified date and auditorium
+    const takenScreenings = await Screening.find({
+      auditorium: auditorium._id,
+      date,
+      // Only select the time field
+    }).select("time");
+    
+    // Extract times from the taken screenings
+    const takenTimes = takenScreenings.map((s) => s.time);
+
+    // Return allowed, taken, and free times
+    return res.json({
+      allowedTimes,
+      takenTimes,
+      freeTimes: allowedTimes.filter((t) => !takenTimes.includes(t)),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Serverfel" });
+  }
+});
 
 
 // Get total amount of bookings for all screenings at today's date
