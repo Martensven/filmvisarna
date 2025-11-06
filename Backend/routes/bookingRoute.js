@@ -127,6 +127,21 @@ router.post("/api/bookings", async (req, res) => {
       console.log("Mail skickat till", user.email);
     }
 
+    if (!user && req.body.guestInfo?.email) {
+      const { firstName, email } = req.body.guestInfo;
+      await sendMail({
+        to: email,
+        subject: "Filmvisarna - Bokningsbekräftelse",
+        html: `
+      <h2>Hej ${firstName || "Gäst"}!</h2>
+      <p>Tack för din bokning hos Filmvisarna!</p>
+      <p><strong>Ordernummer:</strong> ${newBooking._id}</p>
+      <p><strong>Total:</strong> ${totalPrice} kr</p>
+      <p>Vi ses på bion! 🍿🎬</p>
+    `
+      });
+    }
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ errorMsg: "Kunde inte skapa bokning", error });
