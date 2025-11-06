@@ -432,6 +432,12 @@ router.get("/screenings/today/bookings/count", async (req, res) => {
   }
 });
 
+// Get all auditoriums to populate dropdowns
+router.get("/auditoriums", async (req,res)=>{
+  const auditoriums = await Auditorium.find();
+  res.json(auditoriums);
+})
+
 // ----------- Movie routes for admin ------------ //
 
 // POST Route, /api/movie
