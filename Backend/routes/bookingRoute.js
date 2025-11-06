@@ -43,7 +43,8 @@ router.post("/api/bookings", async (req, res) => {
       const io = getIo();
       io.to(screening._id.toString()).emit("seatUpdate", {
         bookedSeats: screening.bookedSeats,
-        pendingSeats: [],});
+        pendingSeats: [],
+      });
       console.log(`Seat update emitted for screening ${screening._id}`);
     } catch (e) {
       console.warn("Socket emit failed:", e.message);
