@@ -5,6 +5,7 @@ import { Booking } from "../models/bookingSchema.js";
 import { isAdmin } from "../middleware/isAdmin.js";
 import { Screening } from "../models/screeningSchema.js";
 import { User } from "../models/userSchema.js";
+import sendMail from "../nodemailer/sendMail.js";
 
 const router = express.Router();
 // Middleware to check if user is admin for all admin routes
@@ -89,8 +90,7 @@ router.get("/users", async (req, res) => {
   } catch (error) {
     console.log("ADMIN USER ERROR:", error);
     res.status(500).json({ message: error.message });
-}
-
+  }
 });
 
 // get user by id
@@ -140,16 +140,15 @@ router.delete("/admin/api/users/:id", async (req, res) => {
 router.get("/bookings/:userId", async (req, res) => {
   try {
     const bookings = await Booking.find({ user_id: req.params.userId })
-  .populate({
-    path: "screening_id",
-    populate: [
-      { path: "movie", select: "title" },
-      { path: "auditorium", select: "name" },
-    ],
-  })
-  .populate("seats.seat_id")
-  .populate("tickets.ticket_id");
-
+      .populate({
+        path: "screening_id",
+        populate: [
+          { path: "movie", select: "title" },
+          { path: "auditorium", select: "name" },
+        ],
+      })
+      .populate("seats.seat_id")
+      .populate("tickets.ticket_id");
 
     res.json(bookings);
   } catch (error) {
@@ -179,21 +178,6 @@ router.delete("/bookings/:bookingId", async (req, res) => {
 
 // -------------Screening routes for admin ------------- //
 
-// Get Screening by todays date
-router.get("/screenings/today-movies", async (req, res) => {
-  const date = req.query.date;
-  // we send in the date and get all screenings for that date. 
-  const screenings = await Screening.find({ date }).populate("movie");
-  // We onlu want one of each movie even if there are multiple screenings
-  const uniqueMovie = Array.from(
-    new Map(
-      screenings.map(item => [item.movie._id.toString(), item.movie])
-    ).values()
-  );
-
-  res.json(uniqueMovie);
-});
-
 // Get screenings with booked seats count for today
 
 router.get("/screenings/today", async (req, res) => {
@@ -203,15 +187,12 @@ router.get("/screenings/today", async (req, res) => {
     const screenings = await Screening.find({ date })
       .populate("auditorium")
       .populate("movie")
-      
+
       .lean();
 
     const formatted = screenings.map((s) => {
       const auditorium = s.auditorium;
-const totalSeats = auditorium.seats.length;
-      console.log("AUDITORIUM:", s.auditorium);
-console.log("ROWS:", s.auditorium.rows, "SEATS PER ROW:", s.auditorium.seatsPerRow);
-
+      const totalSeats = auditorium.seats.length;
 
       return {
         id: s._id,
@@ -230,16 +211,103 @@ console.log("ROWS:", s.auditorium.rows, "SEATS PER ROW:", s.auditorium.seatsPerR
   }
 });
 
+// get one
+router.get("/screenings/:id", async (req, res) => {
+  const s = await Screening.findById(req.params.id)
+    .populate("auditorium")
+    .populate("movie")
+    .lean();
+
+  res.json({
+    id: s._id,
+    movieTitle: s.movie.title,
+    time: s.time,
+    auditoriumName: s.auditorium.name,
+    auditoriumId: s.auditorium._id.toString(),
+  });
+});
+
+// update
+router.put("/screenings/:id", async (req, res) => {
+  const { time, auditoriumId } = req.body;
+  const screening = await Screening.findById(req.params.id).populate(
+    "movie auditorium"
+  );
+
+  await Screening.findByIdAndUpdate(req.params.id, {
+    time,
+    auditorium: auditoriumId,
+  });
+
+  const userBookings = await Booking.find({
+    screening_id: req.params.id,
+  }).populate("user_id");
+
+  for (const booking of userBookings) {
+    if (booking.user_id && booking.user_id.email) {
+      await sendMail({
+        to: booking.user_id.email,
+        subject: "Filmvisarna - Uppdatering av din bokning",
+        html: `Hej ${booking.user_id.firstName},<br><br>Vi vill informera dig om att din bokning 
+              för filmen ${screening.movie.title} ${screening.date} har uppdaterats. Den nya 
+              tiden är ${time} i "${screening.auditorium.name}".<br><br>
+              Vi ser fram emot ditt besök!<br><br>Vänliga hälsningar,<br>Filmvisarna`,
+      });
+    }
+  }
+
+  res.json({ ok: true });
+});
+
+// delete
+router.delete("/screenings/:id", async (req,res)=>{
+  const screening = await Screening.findById(req.params.id)
+    .populate("movie")
+    .lean()
+
+  if (!screening) return res.status(404).json({ error: "Visning saknas" })
+
+  // Get bookings to be able to notify users
+  const bookings = await Booking.find({ screening_id: req.params.id })
+    .populate("user_id")
+
+  // Delete screening
+  await Screening.findByIdAndDelete(req.params.id)
+
+  // Mail users about deleted screening
+  await Promise.all(
+    bookings.map(b => {
+      if (!b.user_id?.email) return
+      return sendMail({
+        to: b.user_id.email,
+        subject: "Filmvisarna – visning inställd",
+        html: `
+          <h2>Hej ${b.user_id.firstName}!</h2>
+          <p>Visningen du har bokat är tyvärr inställd.</p>
+          <p>${screening.movie.title}, ${screening.date}, ${screening.time}</p>
+          <p>Kontakta oss vid frågor.</p>
+          <p>Vänliga hälsningar,<br/>Filmvisarna</p>
+        `
+      })
+    })
+  )
+
+  res.json({ ok: true })
+})
+
+
 // Get total amount of bookings for all screenings at today's date
 router.get("/screenings/today/bookings/count", async (req, res) => {
   try {
-    const date = req.query.date; 
+    const date = req.query.date;
     const screenings = await Screening.find({ date });
 
     // Start value at 0 and add number of bookings for each screening
     let totalBookings = 0;
     for (const screening of screenings) {
-      const bookingCount = await Booking.countDocuments({ screening_id: screening._id });
+      const bookingCount = await Booking.countDocuments({
+        screening_id: screening._id,
+      });
       totalBookings += bookingCount;
     }
     res.json({ count: totalBookings });
@@ -249,19 +317,17 @@ router.get("/screenings/today/bookings/count", async (req, res) => {
   }
 });
 
-
 // ----------- Movie routes for admin ------------ //
 
 // POST Route, /api/movie
-router.post('/movie', async (req, res) => {
-    try {
-        const movies = new Movies(req.body);
-        await movies.save();
-        res.status(201).json(movies);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
+router.post("/movie", async (req, res) => {
+  try {
+    const movies = new Movies(req.body);
+    await movies.save();
+    res.status(201).json(movies);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
-
 
 export default router;

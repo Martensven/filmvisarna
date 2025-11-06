@@ -23,6 +23,7 @@ import AdminAddMoviePage from "./Pages/AdminPage/AdminAddMovie/adminAddMovie.tsx
 import AdminStart from "./Pages/AdminPage/AdminStart/adminStart.tsx";
 import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.tsx";
 import AdminUsersPage from "./Pages/AdminPage/AdminUsers/adminUsersPage.tsx";
+import AdminEditScreening from "./Pages/AdminPage/AdminStart/adminEditScreening.tsx";
 
 function App() {
   const [loginPopup, setLoginPopup] = useState<
@@ -83,6 +84,10 @@ function App() {
           <Route path="sales" element={<SalesPage />} />
           <Route path="add-movie" element={<AdminAddMoviePage />} />
           <Route path="users" element={<AdminUsersPage />} />
+          <Route
+            path="screenings/:id"
+            element={<AdminEditScreening />}
+          />
         </Route>
       </Routes>
       {/* Making sure Header and Footer are not shown on admin pages */}
