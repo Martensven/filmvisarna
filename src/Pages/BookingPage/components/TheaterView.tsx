@@ -157,7 +157,6 @@ export default function TheaterView({ selectShowing }: Props) {
         <p>Tid: {selectShowing.time.slice(0, 5)}</p>
 
         {/* Cinema frame" visuell appeal */}
-
         <span
           className="w-full h-20 bg-gradient-to-b from-sky-100 to-sky-900 rounded-sm mt-8 mb-8 
             flex justify-center items-center text-zinc-200 font-semibold text-2xl
