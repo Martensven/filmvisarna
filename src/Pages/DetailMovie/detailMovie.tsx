@@ -59,48 +59,47 @@ export default function DetailMovie() {
             md:px-10
             lg:px-10
             xl:w-11/12 xl:px-2">
-                {/* Trailer */}
-                <section className="flex flex-col justify-center items-center container_box mt-5 w-11/12 aspect-video bg-[#24252C]
-                xs:h-62
-                sm:h-86
-                md:h-86
-                lg:w-12/13 lg:h-110
-                xl:w-11/12 xl:h-120 xl:mb-3
-                2xl:w-11/12 2xl:h-130">
-
-                    <iframe
-                        className="w-11/12 h-auto rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
-                        sm:h-72
-                        md:w-11/12 md:h-82
-                        lg:w-9/12 lg:h-96 lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
-                        xl:w-9/12 xl:h-96 xl:bg-blue-400 lg:shadow-lg xl:shadow-blue-400/50
-"
-                        src={`https://www.youtube.com/embed/${movie.youtubeTrailers}`}
-                        title={movie.title + " Trailer"}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    ></iframe>
-                </section>
-
                 {/* Detaljer */}
                 <section className="flex flex-col justify-between items-center gap-5 mt-5 w-11/12
                 sm:w-11/12
-                md:flex-row md:items-start
-                lg:w-11/12
-                xl:w-11/12">
+                md:items-center
+                lg:flex-row
+                ">
                     <img
                         src={movie.imageSrc}
                         alt={`${movie.title} poster`}
                         className="w-6/12 object-cover rounded-md shadow-lg/30
                         xs:w-7/12
                         sm:w-7/12
-                        md:w-5/12 md:justify-start items-start
-                        lg:w-5/12
-                        xl:w-5/12"
+                        md:w-3/5
+                        xl:w-5/5 xl:h-130"
                     />
+                    {/* Trailer */}
+                    <section className="flex flex-col justify-center items-center container_box w-5/5 aspect-video bg-[#24252C]
+                    sm:h-86
+                    md:h-86
+                    lg:w-12/13 lg:h-130
+                    xl:w-5/12 2xl:h-130">
+                        <h2 className="text-2xl pl-2 pt-2 my-2
+                            sm:
+                            md:
+                            lg:pt-3 lg:pl-3">{movie.title}</h2>
+                        <p className=" pt-2 px-2 mb-2
+                            lg:px-1 lg:py-4">{movie.description}</p>
+                        <iframe
+                        className="w-11/12 h-auto rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
+                        sm:h-72
+                        md:w-11/12 md:h-82
+                        lg:w-9/12 lg:h-96 lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
+                        xl:w-11/12 xl:h-96 xl:bg-blue-400 lg:shadow-lg xl:shadow-blue-400/50
+"
+                        src={`https://www.youtube.com/embed/${movie.youtubeTrailers}`}
+                        title={movie.title + " Trailer"}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        ></iframe>
+                    </section>
                     <section className="flex flex-col gap-5 w-full
                     sm:w-full 
-                    md:w-3/5
-                    lg:
                     xl:h-auto">
                         <article className="text-center text-sm container_box mt-10
                         xs:mt-0
@@ -108,32 +107,24 @@ export default function DetailMovie() {
                         md:mt-0
                         lg:mt-0
                         xl:mt-0">
-                            <p className="text-start pl-2 pt-2
-                            sm:
-                            md:
-                            lg:pt-3 lg:pl-3"><strong>Titel:</strong> {movie.title}</p>
-                            <p className="text-start pl-2 pt-0.5
-                            sm:
-                            md:
+                            <p className="text-start pl-2 pt-0.5 my-2
                             lg:pt-0.5 lg:pl-3">
                                 <strong>Genre:</strong>{" "}
                                 {Array.isArray(movie.genres)
                                     ? movie.genres.map((g: { title: string }) => g.title).join(", ")
                                     : movie.genres?.title || "Okänd"}
                             </p>
-                            <p className="text-start pl-2 pt-0.5
-                            sm:text-base
-                            md:
+                            <p className="text-start pl-2 pt-0.5 my-2
                             lg:pt-0.5 lg:pl-3"><strong>Utgivningsår:</strong> {movie.releaseYear}</p>
-                            <p className="text-start pl-2 pt-0.5
+                            <p className="text-start pl-2 pt-0.5 my-2
                             lg:pt-0.5 lg:pl-3"><strong>Speltid: </strong> {movie.length} min</p>
-                            <p className="text-start pl-2 pt-0.5
+                            <p className="text-start pl-2 pt-0.5 my-2
                             lg:pt-0.5 lg:pl-3"><strong>Regissör: </strong>
                                 {Array.isArray(movie.directors)
                                     ? movie.directors.map((d: { name: string }) => d.name).join(", ")
                                     : movie.directors?.name || "Okänd"}
                             </p>
-                            <p className="text-start pl-2 pt-0.5 pb-2
+                            <p className="text-start pl-2 pt-0.5 pb-2 my-2
                             lg:pt-0.5 lg:pl-3">
                                 <strong>Skådespelare:</strong>{" "}
                                 {Array.isArray(movie.actors)
@@ -144,12 +135,9 @@ export default function DetailMovie() {
 
                         <article className="text-center text-sm container_box
                         sm:text-base">
-                            <p className=" pt-2 px-2 mb-2
-                            lg:px-1 lg:py-4">{movie.description}</p>
-
                             {/* Recensioner */}
                             {movie.reviews && movie.reviews.length > 0 && (
-                                <article className="text-sm pt-5 space-y-4 pb-2
+                                <article className="text-sm pt-5 space-y-4 pb-2 my-3
                                 sm:text-base
                                 md:
                                 lg:pt-5 lg:pb-2">
@@ -167,10 +155,7 @@ export default function DetailMovie() {
                             )}
                         </article>
                     </section>
-
-
                 </section>
-
                 {/* Boka-knapp */}
                 <Link className="flex justify-center items-center w-full" to={`/booking/${movie._id}`}>
                     <button className="main_buttons cursor-pointer w-2/5 h-15 text-center flex items-center justify-center mt-10

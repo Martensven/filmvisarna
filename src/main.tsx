@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router'
 import ScrollToTop from './ScrollToTop.tsx'
 import { AuthProvider } from "./context/authContext";
 
+
 createRoot(document.getElementById('root')!).render(
 
   <StrictMode>
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')!).render(
       <AuthProvider>
         <ScrollToTop />
         <App />
+
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>

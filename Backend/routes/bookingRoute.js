@@ -43,7 +43,8 @@ router.post("/api/bookings", async (req, res) => {
       const io = getIo();
       io.to(screening._id.toString()).emit("seatUpdate", {
         bookedSeats: screening.bookedSeats,
-        pendingSeats: [],});
+        pendingSeats: [],
+      });
       console.log(`Seat update emitted for screening ${screening._id}`);
     } catch (e) {
       console.warn("Socket emit failed:", e.message);
@@ -76,14 +77,16 @@ router.post("/api/bookings", async (req, res) => {
 
     const totalPrice = tickets.reduce((sum, t) => sum + t.totalPrice, 0);
 
-    // ✅ Save booking
-    const newBooking = await Booking.create({
+    // ✅ Save booking (trigger pre-save hook for bookingNumber)
+    const newBooking = new Booking({
       user_id: user ? user._id : null,
       screening_id: screening._id,
       seats,
       tickets,
       totalPrice,
     });
+
+    await newBooking.save();
 
     // ✅ Populate references for response
     const populatedBooking = await Booking.findById(newBooking._id)
@@ -110,7 +113,7 @@ router.post("/api/bookings", async (req, res) => {
         html: `
           <h2>Hej ${user.firstName}!</h2>
           <p>Tack för din bokning!</p>
-          <p><strong>Ordernummer:</strong> ${newBooking._id}</p>
+          <p><strong>Ordernummer:</strong> ${newBooking.bookingNumber}</p>
           <p><strong>Film:</strong> ${screening.movie.title}</p>
           <p><strong>Datum & tid:</strong> ${screening.date} ${screening.time}</p>
           <p><strong>Salong:</strong> ${screening.auditorium.name}</p>
@@ -122,6 +125,21 @@ router.post("/api/bookings", async (req, res) => {
       });
 
       console.log("Mail skickat till", user.email);
+    }
+
+    if (!user && req.body.guestInfo?.email) {
+      const { firstName, email } = req.body.guestInfo;
+      await sendMail({
+        to: email,
+        subject: "Filmvisarna - Bokningsbekräftelse",
+        html: `
+      <h2>Hej ${firstName || "Gäst"}!</h2>
+      <p>Tack för din bokning hos Filmvisarna!</p>
+      <p><strong>Ordernummer:</strong> ${newBooking._id}</p>
+      <p><strong>Total:</strong> ${totalPrice} kr</p>
+      <p>Vi ses på bion! 🍿🎬</p>
+    `
+      });
     }
 
   } catch (error) {
