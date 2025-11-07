@@ -153,10 +153,22 @@ export default function TheaterView({ selectShowing }: Props) {
     <section className="w-full flex justify-center items-center">
       <article className="flex flex-col items-center w-full">
         {/* Movie & showing info */}
-        <h3 className="mb-2">{selectShowing.movie.title}</h3>
-        <p className="mb-2">
-          {selectShowing.auditorium.name} — {selectShowing.time}
-        </p>
+        <p>{selectShowing.auditorium.name}</p>
+        <p>Tid: {selectShowing.time.slice(0, 5)}</p>
+
+        {/* Cinema frame" visuell appeal */}
+
+        <span
+          className="w-full h-20 bg-gradient-to-b from-sky-100 to-sky-900 rounded-sm mt-8 mb-8 
+            flex justify-center items-center text-zinc-200 font-semibold text-2xl
+            sm:scale-105
+            md:w-full md:scale-110
+            lg:w-full lg:scale-110
+            xl:scale-115"
+          style={{ clipPath: "polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%)" }}
+        >
+          <p className="text-black opacity-90 text-base italic">{selectShowing.movie.title}</p>
+        </span>
 
         {/* Seat Grid */}
         {rows.map((row, rowI) => (
