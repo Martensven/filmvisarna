@@ -18,25 +18,27 @@ export default function CheckoutRecipe() {
     sm:w-11/12 sm:flex sm:flex-row sm:justify-center sm:gap-2 sm:items-center 
     md:w-11/12 md:flex-col"
       >
-        {/* Visa varje biljettyp */}
-        {ticketTypes.map((type) => {
-          const quantity = counts[type._id] || 0;
-          const subtotal = quantity * type.price;
+        <section className="">
+          {/* Visa varje biljettyp */}
+          {ticketTypes.map((type) => {
+            const quantity = counts[type._id] || 0;
+            const subtotal = quantity * type.price;
 
-          return (
-            <div
-              key={type._id}
-              className="flex justify-between space
+            return (
+              <div
+                key={type._id}
+                className="flex justify-between
         md:w-full"
-            >
-              <h2 className="text-[#e4e1e1] text-sm m-1  md:text-base md:m-5">{type.ticketName}</h2>
-              <p className="text-[#e4e1e1] text-sm m-2  md:text-base md:m-5">
+              >
+                <h2 className="text-[#e4e1e1] text-sm m-1  md:text-base md:m-5">{type.ticketName}: {quantity} st</h2>
+                {/* <p className="text-[#e4e1e1] text-sm m-2  md:text-base md:m-5 flex justify-center">
                 {quantity} st × {type.price} kr
-              </p>
-              <p className="text-[#e4e1e1] text-sm m-2  md:text-base md:m-5">{subtotal} kr</p>
-            </div>
-          );
-        })}
+              </p> */}
+                <p className="text-[#e4e1e1] text-sm m-2  md:text-base md:m-5">{subtotal} kr</p>
+              </div>
+            );
+          })}
+        </section>
 
         {/* Sammanställning */}
         <section className="Type-of-tickets flex flex-row justify-between items-center w-70 h-auto border-t border-gray-400 text-sm
