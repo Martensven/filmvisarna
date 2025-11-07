@@ -95,9 +95,9 @@ const FAQ = () => {
                             {/* Total cost */}
                             <p className="font-medium">Pris: {b.totalPrice} kr</p>
 
-                            <p>Bokat: {b.created_at}</p>
+                            {/* <p>Bokat: {b.created_at}</p> */}
 
-                            <p>Bokningsnummer: {b._id}</p>
+                            <p>Bokningsnummer: {b.bookingNumber}</p>
                         </div>
                     ))}
                 </section>

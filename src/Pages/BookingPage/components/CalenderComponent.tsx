@@ -183,7 +183,7 @@ export default function CalenderComponent({
         "
         >
           {otherDaysScrenning.length > 0 ? (
-            otherDaysScrenning.slice(0, 3).map((date) => (
+            otherDaysScrenning.slice(0).map((date) => (
               <div
                 key={date}
                 className="flex flex-col justify-center items-center underline w-full
