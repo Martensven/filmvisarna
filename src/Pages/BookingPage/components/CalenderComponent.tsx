@@ -75,7 +75,7 @@ export default function CalenderComponent({
   const today = new Date().toISOString().split("T")[0]; // Declare today with current day date.
   const todaysScreening = sortScreeningByDate[today] || [];
   const otherDaysScrenning = Object.keys(sortScreeningByDate).filter(
-    (date) => date !== today
+    (date) => date > today
   );
 
   return (
@@ -223,17 +223,16 @@ export default function CalenderComponent({
                           xl:w-10/12 xl:h-20 xl:mt-1 
                           
                           
-                          ${
-                            active === screening._id
-                              ? "!border-4 !border-[#07ca00]"
-                              : ""
-                          }`}
+                          ${active === screening._id
+                          ? "!border-4 !border-[#07ca00]"
+                          : ""
+                        }`}
                     >
                       <li
                         className="pt-1 text-sm font-bold
                     lg:text-base"
                       >
-                        {screening.time.slice(0,5)}  {/*Getting rid of the seconds area when fetching screening time*/}
+                        {screening.time.slice(0, 5)}  {/*Getting rid of the seconds area when fetching screening time*/}
                       </li>
                       <li
                         className="pb-1 px-1 text-xs 
