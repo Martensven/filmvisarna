@@ -31,8 +31,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
           xl:w-full"
           >
             <section
-              className="Recipe w-11/12 flex justify-center items-center h-30 mb-5 sticky top-10 container_box z-1 rounded-md
-            sm:h-auto
+              className="Recipe w-11/12 flex justify-center items-center h-50 mb-5 sticky top-10 container_box z-1 rounded-md
             md:flex md:justify-center md:items-center md:fixed md:top-[170px] md:right-[30px] md:w-5/13 md:h-80 md:container_box 
             lg:right-[35px] lg:top-[180px]
             xl:right-[60px] xl:top-[220px]"
