@@ -75,7 +75,7 @@ export default function CalenderComponent({
   const today = new Date().toISOString().split("T")[0]; // Declare today with current day date.
   const todaysScreening = sortScreeningByDate[today] || [];
   const otherDaysScrenning = Object.keys(sortScreeningByDate).filter(
-    (date) => date !== today
+    (date) => date > today
   );
 
   return (
