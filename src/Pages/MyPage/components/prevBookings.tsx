@@ -20,14 +20,22 @@ const FAQ = () => {
             if (!response.ok) throw new Error(`Serverfel: ${response.status}`);
 
             const data = await response.json();
-            setBookings(data);
-        } catch (err: any) {
-            console.error("Error fetching bookings:", err);
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+
+            // Sort the previous bookings from newest to oldest
+            const sorting = [...data].sort((a: any, b: any) => {
+            const firstDate = new Date(`${a.screening_id.date}T${a.screening_id.time}`).getTime();
+            const secondDate = new Date(`${b.screening_id.date}T${b.screening_id.time}`).getTime();
+        return secondDate - firstDate;
+    });
+
+    setBookings(sorting);
+  } catch (err: any) {
+    console.error("Error fetching bookings:", err);
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
     useEffect(() => {
         if (userId) {
@@ -43,7 +51,7 @@ const FAQ = () => {
 
     return (
 
-        <section className="previous p-4 bg-[#817E7E] rounded-lg">
+        <section className="previous p-4 glass_effect rounded-lg mt-3">
 
             <section className="py-2 w-10/12 flex flex-col items-center justify-center mx-auto text-white">
                 <button
