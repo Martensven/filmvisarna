@@ -24,6 +24,8 @@ import AdminStart from "./Pages/AdminPage/AdminStart/adminStart.tsx";
 import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.tsx";
 import AdminUsersPage from "./Pages/AdminPage/AdminUsers/adminUsersPage.tsx";
 import AdminEditScreening from "./Pages/AdminPage/AdminStart/adminEditScreening.tsx";
+import AdminAddScreening from "./Pages/AdminPage/AdminAddScreening/adminAddScreening.tsx";
+import AdminScreeningStart from "./Pages/AdminPage/AdminAddScreening/adminScreeningStart.tsx";
 
 function App() {
   const [loginPopup, setLoginPopup] = useState<
@@ -88,6 +90,7 @@ function App() {
             path="screenings/:id"
             element={<AdminEditScreening />}
           />
+          <Route path="screenings" element={<AdminScreeningStart />} />
         </Route>
       </Routes>
       {/* Making sure Header and Footer are not shown on admin pages */}

@@ -6,6 +6,10 @@ import { isAdmin } from "../middleware/isAdmin.js";
 import { Screening } from "../models/screeningSchema.js";
 import { User } from "../models/userSchema.js";
 import sendMail from "../nodemailer/sendMail.js";
+import { Movies } from "../models/moviesSchema.js";
+import { Auditorium } from "../models/auditoriumSchema.js";
+import schedule from "../schedule.js";
+import { get } from "mongoose";
 
 const router = express.Router();
 // Middleware to check if user is admin for all admin routes
@@ -295,6 +299,117 @@ router.delete("/screenings/:id", async (req,res)=>{
   res.json({ ok: true })
 })
 
+router.post("/screenings", async (req, res) => {
+  try {
+    // Validating input data from request body
+    const { movieId, date, time, salonName } = req.body;
+    // Check for missing fields
+    if (!movieId || !date || !time || !salonName) {
+      return res
+        .status(400)
+        .json({ error: "movieId, date, time och salonName krävs" });
+    }
+    // Check if movie exists by using the provided movieId from request body
+    const movie = await Movies.findById(movieId);
+    if (!movie) return res.status(404).json({ error: "Film hittades inte" });
+    // Check if auditorium exists by using the provided salonName from request body
+    const auditorium = await Auditorium.findOne({ name: salonName });
+    if (!auditorium)
+      return res.status(400).json({ error: "Salong hittades inte" });
+
+    // Check timeslots from schedule.js based on salon type
+    const allowedTimes =
+      salonName === "Lilla Salongen"
+        ? schedule.smallTheaterTimes
+        : schedule.bigTheaterTimes;
+
+        if (!allowedTimes.includes(time)) {
+          return res.status(400).json({ error: "Ogiltig tid för vald salong" });
+        }
+
+    // Check for conflicting screenings in the same auditorium at the same date and time
+    // Sending in date and time from request body
+    const conflictingScreening = await Screening.findOne({
+      auditorium: auditorium._id,
+      date,
+      time,
+    });
+
+    if (conflictingScreening) {
+      return res
+        .status(400)
+        .json({ error: "Det finns redan en visning i denna salong vid denna tid" });
+    }
+
+    // Determine schedule type based on salon name
+    const scheduleType = salonName === "Lilla Salongen" ? "smallTheater" : "bigTheater";
+
+    const newScreening = new Screening({
+      movie: movieId,
+      auditorium: auditorium._id,
+      date,
+      time,
+      showTime: new Date(`${date}T${time}:00`),
+      bookedSeats: [],
+      scheduleType,
+    });
+
+    await newScreening.save();
+    res.status(201).json({ message: "Visning skapad", newScreening });
+  } catch (error) {
+    console.error("Fel vid skapande av visning:", error);
+    res.status(500).json({ error: "Serverfel, Kunde inte skapa visning" });
+  }
+});
+
+// Get available and taken times for a specific date and theater
+router.get("/schedule", async (req, res) => {
+  try {
+    // Validating query parameters from request
+    const { date, theaterName } = req.query;
+
+    // Check for missing fields
+    if (!date || !theaterName) {
+      return res.status(400).json({ error: "date och theaterName krävs" });
+    }
+
+    // Check if auditorium exists by using the provided theaterName from request query
+    const auditorium = await Auditorium.findOne({ name: theaterName });
+    if (!auditorium) return res.status(400).json({ error: "Salong saknas" });
+
+    // Array to hold allowed times based on theater type
+    let allowedTimes = [];
+
+    // If theaterName is "Lilla Salongen", use smallTheaterTimes from schedule.js
+    if (theaterName === "Lilla Salongen") {
+      allowedTimes = schedule.smallTheaterTimes || [];
+    // If theaterName is "Stora Salongen", use bigTheaterTimes from schedule.js
+    } else if (theaterName === "Stora Salongen") {
+      allowedTimes = schedule.bigTheaterTimes || [];
+    }
+
+    // Find screenings already booked for the specified date and auditorium
+    const takenScreenings = await Screening.find({
+      auditorium: auditorium._id,
+      date,
+      // Only select the time field
+    }).select("time");
+    
+    // Extract times from the taken screenings
+    const takenTimes = takenScreenings.map((s) => s.time);
+
+    // Return allowed, taken, and free times
+    return res.json({
+      allowedTimes,
+      takenTimes,
+      freeTimes: allowedTimes.filter((t) => !takenTimes.includes(t)),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Serverfel" });
+  }
+});
+
 
 // Get total amount of bookings for all screenings at today's date
 router.get("/screenings/today/bookings/count", async (req, res) => {
@@ -317,6 +432,12 @@ router.get("/screenings/today/bookings/count", async (req, res) => {
   }
 });
 
+// Get all auditoriums to populate dropdowns
+router.get("/auditoriums", async (req,res)=>{
+  const auditoriums = await Auditorium.find();
+  res.json(auditoriums);
+})
+
 // ----------- Movie routes for admin ------------ //
 
 // POST Route, /api/movie
@@ -329,5 +450,7 @@ router.post("/movie", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+
 
 export default router;
