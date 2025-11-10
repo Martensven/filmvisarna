@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router";
 import { useSeats } from "./context/SeatsContext";
 import { useCheckout } from "./context/CheckoutContext";
@@ -12,6 +13,8 @@ export default function GuestOrderComponent() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   const handleBooking = async () => {
     try {
@@ -55,7 +58,8 @@ export default function GuestOrderComponent() {
       if (!res.ok) throw new Error("Bokning misslyckades");
 
       const data = await res.json();
-      setOrderId(data._id);
+
+      navigate(`/checkout/${data._id}`);
     } catch (err) {
       console.error(err);
       setError("Kunde inte genomföra bokningen.");
@@ -63,6 +67,15 @@ export default function GuestOrderComponent() {
       setLoading(false);
     }
   };
+      
+  //     setOrderId(data._id);
+  //   } catch (err) {
+  //     console.error(err);
+  //     setError("Kunde inte genomföra bokningen.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <main className="container_box w-86 h-auto p-3 m-3 text-center">

@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { useSeats } from "./context/SeatsContext";
 import { useCheckout } from "./context/CheckoutContext";
 import { useState } from "react";
@@ -11,11 +11,13 @@ export default function UserOrderComponent() {
   const [orderId, setOrderId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleBooking = async () => {
     try {
       setLoading(true);
 
-      const userId = user?.userId ? user.userId : "";
+      const userId = user?._id ?? null;
 
       const ticketRequests = ticketTypes
         .filter((t) => counts[t._id] > 0)
@@ -39,8 +41,8 @@ export default function UserOrderComponent() {
       if (!res.ok) throw new Error("Bokning misslyckades");
 
       const data = await res.json();
-      setOrderId(data._id);
-      alert("Bokningen lyckades!");
+
+      navigate(`/checkout/${data._id}`);
     } catch (err) {
       console.error(err);
       alert("Kunde inte genomföra bokningen");
@@ -48,6 +50,16 @@ export default function UserOrderComponent() {
       setLoading(false);
     }
   };
+
+  //     setOrderId(data._id);
+  //     alert("Bokningen lyckades!");
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert("Kunde inte genomföra bokningen");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <main className="container_box w-86 h-auto p-3 m-3 text-center">
