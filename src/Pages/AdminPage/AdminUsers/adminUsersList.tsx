@@ -28,6 +28,8 @@ export function AdminUsersList() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [bookingToCancel, setBookingToCancel] = useState<string | null>(null);
+
   const usersPerPage = 10;
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -85,25 +87,41 @@ export function AdminUsersList() {
     setToastMessage(null); 
   };
 
+  // const handleCancelBooking = async (bookingId: string) => {
+  //   const confirmed = window.confirm(
+  //     "Är du säker på att du vill avboka denna bokning?"
+  //   );
+  //   if (!confirmed) return;
+
+  //   try {
+  //     const response = await fetch(`/api/admin/bookings/${bookingId}`, {
+  //       method: "DELETE",
+  //     });
+  //     if (!response.ok) throw new Error("Kunde inte ta bort bokningen");
+
+  //     setToastMessage("Bokningen har avbokats.");
+  //     setBookings(bookings.filter((b) => b._id !== bookingId));
+  //   } catch (error) {
+  //     console.error("Fel vid avbokning av bokning:", error);
+  //     setToastMessage("Ett fel uppstod vid avbokning av bokningen.");
+  //   }
+  // };
+
   const handleCancelBooking = async (bookingId: string) => {
-    const confirmed = window.confirm(
-      "Är du säker på att du vill avboka denna bokning?"
-    );
-    if (!confirmed) return;
+  try {
+    const response = await fetch(`/api/admin/bookings/${bookingId}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) throw new Error("Kunde inte ta bort bokningen");
 
-    try {
-      const response = await fetch(`/api/admin/bookings/${bookingId}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Kunde inte ta bort bokningen");
+    setToastMessage("Bokningen har avbokats.");
+    setBookings(bookings.filter((b) => b._id !== bookingId));
+  } catch (error) {
+    console.error("Fel vid avbokning av bokning:", error);
+    setToastMessage("Ett fel uppstod vid avbokning av bokningen.");
+  }
+};
 
-      setToastMessage("Bokningen har avbokats.");
-      setBookings(bookings.filter((b) => b._id !== bookingId));
-    } catch (error) {
-      console.error("Fel vid avbokning av bokning:", error);
-      setToastMessage("Ett fel uppstod vid avbokning av bokningen.");
-    }
-  };
 
   if (loading) {
     return <div>Laddar användare...</div>;
@@ -140,7 +158,7 @@ export function AdminUsersList() {
       <div className="flex items-center">
         <button
           onClick={() => handleUserClick(user)}
-          className="bg-blue-500 px-3 py-1 rounded-md hover:bg-blue-600 mx-auto"
+          className="bg-blue-500 px-3 py-1 rounded-md hover:bg-blue-600 mx-auto cursor-pointer"
         >
           Öppna
         </button>
@@ -207,16 +225,45 @@ export function AdminUsersList() {
               <p><strong>Totalt pris:</strong> {booking.totalPrice} kr</p>
 
               <button
-                onClick={() => handleCancelBooking(booking._id)}
-                className="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-              >
-                Avboka
-              </button>
+  onClick={() => setBookingToCancel(booking._id)}
+  className="mt-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer"
+>
+  Avboka
+</button>
+
             </li>
           ))}
         </ul>
       )}
     </div>
+    {bookingToCancel && (
+  <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+    <div className="bg-[#243365] p-6 rounded-xl w-[90%] max-w-sm text-white space-y-4">
+      <h3 className="text-xl font-semibold">Bekräfta avbokning</h3>
+      <p>Vill du verkligen avboka denna bokning?</p>
+
+      <div className="flex justify-end gap-3 mt-4">
+        <button
+          onClick={() => setBookingToCancel(null)}
+          className="px-4 py-2 rounded bg-gray-500 hover:bg-gray-600 mx-auto"
+        >
+          Nej
+        </button>
+
+        <button
+          onClick={() => {
+            handleCancelBooking(bookingToCancel);
+            setBookingToCancel(null);
+          }}
+          className="px-4 py-2 rounded bg-red-600 hover:bg-red-700 mx-auto"
+        >
+          Ja, avboka
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
   </div>
 )}
 
