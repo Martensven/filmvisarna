@@ -253,7 +253,7 @@ router.delete("/api/bookings/:id", async (req, res) => {
     }
 
     // Find the related screening
-    const screening = await Screening.findById(booking.screeningInfo.screening_id);
+    const screening = await Screening.findById(booking.screening_id);
     if (!screening) {
       return res.status(404).json({ errorMSG: "Visningen hittades inte." });
     }

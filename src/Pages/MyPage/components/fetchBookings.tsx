@@ -95,7 +95,7 @@ export default function FetchBookings() {
                         </p>
 
                         <p className="font-medium">Pris: {b.totalPrice} kr</p>
-                        <p>Bokat: {b.created_at}</p>
+                        {/* <p>Bokat: {b.created_at}</p> */}
                         <p>Bokningsnummer: {b.bookingNumber}</p>
 
                         <button

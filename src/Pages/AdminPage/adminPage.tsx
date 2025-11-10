@@ -1,4 +1,4 @@
-import { BsGraphUpArrow } from "react-icons/bs";
+// import { BsGraphUpArrow } from "react-icons/bs";
 import { MdMovieEdit } from "react-icons/md";
 import { FaUsersCog } from "react-icons/fa";
 import { TbMovie } from "react-icons/tb";
@@ -36,9 +36,9 @@ export default function AdminPage() {
             <Link to="add-movie" className="hover:text-gray-300 transition">
               <MdMovieEdit size={28} />
             </Link>
-            <Link to="sales" className="hover:text-gray-300 transition">
+            {/* <Link to="sales" className="hover:text-gray-300 transition">
               <BsGraphUpArrow size={24} />
-            </Link>
+            </Link> */}
             <Link to="users"className="hover:text-gray-300 transition">
               <FaUsersCog size={24} />
             </Link>

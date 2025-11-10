@@ -1,63 +1,105 @@
 import { useParams, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import Toast from "../../../toast/toast";
 
 export default function AdminEditScreening() {
-    // Using Params to get the id from the URL to get the screening to edit
-    const { id } = useParams();
-    const nav = useNavigate();
+  // Using Params to get the id from the URL to get the screening to edit
+  const { id } = useParams();
+  const nav = useNavigate();
 
-    const [time, setTime] = useState("");
-    const [screeningData, setScreeningData] = useState<{
-        movieTitle: string;
-        auditoriumName: string;
-        id: string;
-    } | null>(null);
+  const [time, setTime] = useState("");
+  const [screeningData, setScreeningData] = useState<{
+    movieTitle: string;
+    auditoriumName: string;
+    id: string;
+  } | null>(null);
 
-    // Fetching screening data
-    useEffect(() => {
-        const fetchScreening = async () => {
-            const screeningRes = await fetch(`/api/admin/screenings/${id}`);
-            const screeningData = await screeningRes.json();
-            setScreeningData(screeningData);
-            setTime(screeningData.time);
-        };
-        fetchScreening();
-    }, [id]);
+  // toast state
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<"success" | "error">("success");
 
-    const handleSave = async () => {
-        await fetch(`/api/admin/screenings/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ time }),
-        });
-        nav("/admin");
+  // Fetching screening data
+  useEffect(() => {
+    const fetchScreening = async () => {
+      const screeningRes = await fetch(`/api/admin/screenings/${id}`);
+      const screeningData = await screeningRes.json();
+      setScreeningData(screeningData);
+      setTime(screeningData.time);
     };
+    fetchScreening();
+  }, [id]);
 
-        const handleDelete = async () => {
-            await fetch(`/api/admin/screenings/${id}`, {
-                method: "DELETE",
-            });
-            nav("/admin");
-        };
+  const handleSave = async () => {
+    const res = await fetch(`/api/admin/screenings/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ time }),
+    });
 
-    return (
-        <div className="p-6 bg-[#243365] text-white max-w-2xl mx-auto rounded-xl min-h-[70vh] flex flex-col gap-4">
-            <h1 className="text-2xl font-bold">Ändra Visning</h1>
-            <h2 className="text-xl">{screeningData?.movieTitle}</h2>
-            <p>{screeningData?.auditoriumName}</p>
-            <span className="">{screeningData?.id}</span>
-            <label className="flex flex-col">
-                Tid:
-                <input
-                    type="text"
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    className="p-2 rounded-md mt-1 border border-gray-300 text-black bg-white"
-                />
-            </label>
-            
-            <button onClick={handleSave} className="bg-green-500 p-2 rounded-md cursor-pointer">Spara</button>
-            <button onClick={handleDelete} className="bg-red-500 p-2 rounded-md cursor-pointer">Ta bort visningen</button>
-        </div>
-    );
+    if (!res.ok) {
+      setToastType("error");
+      setToastMessage("Fel vid uppdatering");
+      return;
+    }
+
+    setToastType("success");
+    setToastMessage("Visning uppdaterad!");
+
+    setTimeout(() => {
+      nav("/admin");
+    }, 2000);
+  };
+
+  const handleDelete = async () => {
+    const res = await fetch(`/api/admin/screenings/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      setToastType("error");
+      setToastMessage("Fel vid radering");
+      return;
+    }
+
+    setToastType("success");
+    setToastMessage("Visning raderad!");
+
+    setTimeout(() => {
+      nav("/admin");
+    }, 600);
+  };
+
+  return (
+    <div className="p-6 bg-[#243365] text-white max-w-2xl mx-auto rounded-xl min-h-[70vh] flex flex-col gap-4">
+      <h1 className="text-2xl font-bold">Ändra Visning</h1>
+      <h2 className="text-xl">{screeningData?.movieTitle}</h2>
+      <p>{screeningData?.auditoriumName}</p>
+      <span className="">{screeningData?.id}</span>
+
+      <label className="flex flex-col">
+        Tid:
+        <input
+          type="text"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+          className="p-2 rounded-md mt-1 border border-gray-300 text-black bg-white"
+        />
+      </label>
+
+      <button onClick={handleSave} className="bg-green-500 p-2 rounded-md cursor-pointer">
+        Spara
+      </button>
+      <button onClick={handleDelete} className="bg-red-500 p-2 rounded-md cursor-pointer">
+        Ta bort visningen
+      </button>
+
+      {toastMessage && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          onClose={() => setToastMessage("")}
+        />
+      )}
+    </div>
+  );
 }

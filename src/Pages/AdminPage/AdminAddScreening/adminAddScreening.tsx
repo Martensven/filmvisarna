@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Toast from "../../../toast/toast";
 
 type Movie = { _id: string; title: string; themes?: { themeDesc?: string } };
 type Auditorium = { _id: string; name: string };
@@ -14,7 +15,10 @@ export default function AdminAddScreening() {
 
   const [movieTheme, setMovieTheme] = useState<string>("");
 
-  // Get movies and auditoriums on mount
+  // toast state
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<"success" | "error">("success");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,7 +34,6 @@ export default function AdminAddScreening() {
     fetchData();
   }, []);
 
-  // When movie changes, check for theme and set salon + date if needed
   useEffect(() => {
     if (!movieId) {
       setMovieTheme("");
@@ -38,13 +41,10 @@ export default function AdminAddScreening() {
       setDate("");
       return;
     }
-    // Find movie theme
     const movie = movies.find((m) => m._id === movieId);
     const theme = movie?.themes?.themeDesc?.toLowerCase() || "";
     setMovieTheme(theme);
 
-    // If theme day, set salon and date
-    // Using getNextDate to get the next date for that weekday
     if (theme.startsWith("tysta torsdagen")) {
       setSalonName("Lilla Salongen");
       setDate(getNextDate("thursday"));
@@ -57,7 +57,6 @@ export default function AdminAddScreening() {
     }
   }, [movieId, movies]);
 
-    // When date or salon changes, fetch free times
   useEffect(() => {
     if (!date || !salonName) {
       setFreeTimes([]);
@@ -65,7 +64,6 @@ export default function AdminAddScreening() {
       return;
     }
 
-    // Fetch available times
     const fetchSchedule = async () => {
       try {
         const res = await fetch(
@@ -74,8 +72,6 @@ export default function AdminAddScreening() {
           )}`
         );
         if (!res.ok) {
-          const errData = await res.json();
-          console.error("Fetch error:", errData);
           setFreeTimes([]);
           return;
         }
@@ -91,7 +87,6 @@ export default function AdminAddScreening() {
     fetchSchedule();
   }, [date, salonName]);
 
-  // Save new screening
   const handleSave = async () => {
     if (!movieId || !date || !salonName || !selectedTime) return;
 
@@ -113,19 +108,23 @@ export default function AdminAddScreening() {
 
       if (!res.ok) {
         const errData = await res.json();
-        console.error("Fel vid skapande:", errData);
-        alert(errData.error || "Fel vid skapande av visning");
+        setToastType("error");
+        setToastMessage(errData.error || "Fel vid skapande av visning");
         return;
       }
 
-      location.href = "/admin/screenings";
+      setToastType("success");
+      setToastMessage("Visning skapad!");
+
+      setTimeout(() => {
+        location.href = "/admin/screenings";
+      }, 600);
     } catch (err) {
-      console.error("Fel vid skapande:", err);
-      alert("Serverfel vid skapande av visning");
+      setToastType("error");
+      setToastMessage("Serverfel vid skapande av visning");
     }
   };
 
-  // Helper to get next date for a given weekday
   const getNextDate = (weekday: string) => {
     const days = [
       "sunday",
@@ -217,6 +216,14 @@ export default function AdminAddScreening() {
       >
         Spara
       </button>
+
+      {toastMessage && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          onClose={() => setToastMessage("")}
+        />
+      )}
     </div>
   );
 }
