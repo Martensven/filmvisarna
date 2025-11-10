@@ -80,7 +80,7 @@ export default function AmountSeatsTheater() {
         <p>Totalt pris: {totalPrice} kr</p>
       </section>
 
-      <section className="mt-5 flex items-center">
+      <section className="pl-40 mt-5 flex items-center">
         <article className="flex items-center gap-2">
           <p className="w-4 h-4 rounded-full bg-yellow-400"></p>
           <p>Handikappanpassad</p>
