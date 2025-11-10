@@ -75,10 +75,7 @@ export default function AmountSeatsTheater() {
         />
       ))}
 
-      <section className="mt-4 text-center text-gray-200">
-        <p>Antal biljetter: {totalTickets}</p>
-        <p>Totalt pris: {totalPrice} kr</p>
-      </section>
+    
     </main>
   );
 }
