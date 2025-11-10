@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
 import "../BookingPage/BookingPageStyle.css";
 import "../../index.css";
@@ -17,6 +17,8 @@ export default function FrontPage() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [selectedAges, setSelectedAges] = useState<number[]>([]);
   const [sortOption, setSortOption] = useState<string>("");
+  
+  const location = useLocation();
 
   // fetch movies from backend
   const fetchMovies = async () => {
@@ -109,6 +111,16 @@ export default function FrontPage() {
       filterMovies();
     }
   }, [selectedGenres, selectedAges, selectedDate, scheduledType]);
+
+  useEffect(() => {
+    const scrollTo = location.state?.scrollTo;
+    if (scrollTo) {
+      const element = document.getElementById(scrollTo);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   // Sort based on selected option. (A-Z, Z-A, Newest)
   const sortedMovies = [...movie].sort((a, b) => {
@@ -406,10 +418,7 @@ export default function FrontPage() {
         <h2 className="w-full mt-10 rounded-md shadow-md text-lg glass_effect p-1 justify-center items-center">
           Temadagar
         </h2>
-        <article
-          className="min-h-96 w-full  my-5 justify-center items-center flex flex-col text-white
-                "
-        >
+        <article className="min-h-96 w-full  my-5 justify-center items-center flex flex-col text-white" id="thuTheme">
           <h2
             className=" text-center text-xl uppercase font-bold my-2
                     lg:mt-5 lg:underline"
@@ -433,18 +442,9 @@ export default function FrontPage() {
               mer knappen nedan för att få mer information om temadagen.
             </p>
           </section>
-
-          <Link to="/theme-thursday" className="">
-            <button
-              className="main_buttons p-1 px-2 mb-3 mt-5
-                        sm:w-25 sm:h-10 sm:text-lg sm:mt-2 sm:mb-5"
-            >
-              Läs mer
-            </button>
-          </Link>
         </article>
 
-        <article className="min-h-96 my-5 justify-center items-center flex  flex-col text-white">
+        <article className="min-h-96 my-5 justify-center items-center flex  flex-col text-white" id="sunTheme">
           <h2
             className="text-center text-xl uppercase font-bold my-2
                     lg:mt-5 lg:underline"
@@ -469,15 +469,6 @@ export default function FrontPage() {
               information om vilka filmer som visas.
             </p>
           </section>
-
-          <Link to="/theme-sunday" className="">
-            <button
-              className="main_buttons p-1 px-2 mb-3 mt-5
-                        sm:w-25 sm:h-10 sm:text-lg sm:mt-2 sm:mb-5"
-            >
-              Läs mer
-            </button>
-          </Link>
         </article>
       </section>
     </main>

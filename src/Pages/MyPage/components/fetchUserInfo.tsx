@@ -60,7 +60,7 @@ export default function FetchUserInfo() {
                     <p>Email: {formData.email}</p>
                     <p className="mb-4">Telefon: 0{formData.phoneNumber}</p>
 
-                    <button onClick={() => setEditMode(true)} className="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600 mb-4">
+                    <button onClick={() => setEditMode(true)} className="px-4 py-2 bg-[#243365] cursor-pointer rounded hover:bg-blue-900 mb-4">
                         Redigera information
                     </button>
                     {user.role === "admin" && (
@@ -106,10 +106,10 @@ export default function FetchUserInfo() {
                         placeholder="Telefonnummer" />
 
                         <section className="flex gap-2 justify-center">
-                            <button onClick={handleSave} disabled={updating} className="px-4 py-2 bg-green-600 rounded hover:bg-green-700">
+                            <button onClick={handleSave} disabled={updating} className="px-4 py-2 cursor-pointer bg-green-700 rounded hover:bg-green-600">
                                 {updating ? "Sparar...." : "Sparar ändringar"}
                             </button>
-                            <button onClick={() => setEditMode(false)} className="px-4 py-2 bg-gray-600 rounded hover:bg-gray-700">
+                            <button onClick={() => setEditMode(false)} className="px-4 py-2 cursor-pointer bg-red-700 rounded hover:bg-red-600">
                                 Avbryt
                             </button>
                         </section>
