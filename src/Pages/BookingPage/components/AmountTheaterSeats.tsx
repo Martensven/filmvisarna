@@ -79,6 +79,26 @@ export default function AmountSeatsTheater() {
         <p>Antal biljetter: {totalTickets}</p>
         <p>Totalt pris: {totalPrice} kr</p>
       </section>
-    </main>
+
+      <section className="mt-5 flex items-center">
+        <article className="flex items-center gap-2">
+          <p className="w-4 h-4 rounded-full bg-yellow-400"></p>
+          <p>Handikappanpassad</p>
+        </article>
+        <article className="flex items-center gap-2 pl-3">
+          <p className="w-4 h-4 rounded-full bg-green-400 shrink-0"></p>
+          <p>Vald stol</p>
+        </article>
+        <article className="flex items-center gap-2 pl-3">
+          <p className="w-4 h-4 rounded-full bg-orange-400 shrink-0"></p>
+          <p>Bokas av annan</p>
+        </article>
+        <article className="flex items-center gap-2 pl-3">
+          <p className="w-4 h-4 rounded-full bg-red-400 shrink-0"></p>
+          <p>Upptagen</p>
+        </article>
+      </section>
+
+</main>
   );
 }
