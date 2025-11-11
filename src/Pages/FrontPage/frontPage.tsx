@@ -113,6 +113,8 @@ export default function FrontPage() {
   }, [selectedGenres, selectedAges, selectedDate, scheduledType]);
 
   useEffect(() => {
+    if (loading) return; // don't scroll until data is ready
+
     const scrollTo = location.state?.scrollTo;
     if (scrollTo) {
       const element = document.getElementById(scrollTo);
@@ -120,7 +122,7 @@ export default function FrontPage() {
         element.scrollIntoView({ behavior: "smooth" });
       }
     }
-  }, [location]);
+  }, [location, loading]);
 
   // Sort based on selected option. (A-Z, Z-A, Newest)
   const sortedMovies = [...movie].sort((a, b) => {
