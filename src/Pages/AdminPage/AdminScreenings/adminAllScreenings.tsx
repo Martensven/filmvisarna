@@ -19,7 +19,7 @@ export default function AdminAllScreenings() {
   const [screenings, setScreenings] = useState<ScreeningItem[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [sortBy, setSortBy] = useState<keyof ScreeningItem>("time");
+  const [sortBy, setSortBy] = useState<keyof ScreeningItem>("date");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const navigate = useNavigate();
 
@@ -41,9 +41,8 @@ export default function AdminAllScreenings() {
       try {
         // Fetch screenings with pagination and sorting parameters
         // we are sending page, sortBy and sortDir as query parameters
-        const response = await fetch(
-          `/api/admin/screenings/all?page=${page}&sortBy=${sortBy}&sortDir=${sortDir}`
-        );
+        const response = await fetch(`/api/admin/screenings?page=${page}&limit=10&sortBy=${sortBy}&sortDir=${sortDir}`);
+
         const data = await response.json();
         // Update state with fetched data from backend endpoint
         setScreenings(data.data);
@@ -64,7 +63,7 @@ export default function AdminAllScreenings() {
       </section>
 
       {/* Table header for screenings, handlesort sets sorting column and direction */}
-      <div className="hidden md:grid grid-cols-5 text-sm font-semibold border-b border-gray-700 pb-2 mb-2 select-none">
+      <div className="hidden md:grid grid-cols-6 text-sm font-semibold border-b border-gray-700 pb-2 mb-2 select-none">
         <div>Edit</div>
         <div
           onClick={() => handleSort("movieTitle")}
@@ -101,7 +100,7 @@ export default function AdminAllScreenings() {
       {screenings.map((s) => (
         <div
           key={s.id}
-          className="border-b border-gray-400 text-sm py-4 flex flex-col gap-2 md:grid md:grid-cols-5"
+          className="border-b border-gray-400 text-sm py-4 flex flex-col gap-2 md:grid md:grid-cols-6"
         >
           <div className="flex items-center gap-2 md:block md:text-center">
             <MdEdit
@@ -138,7 +137,7 @@ export default function AdminAllScreenings() {
         <button
           onClick={() => setPage((p) => Math.max(1, p - 1))}
           disabled={page === 1}
-          className="bg-gray-500 hover:bg-gray-400 text-white px-3 py-1 rounded disabled:opacity-50"
+          className="bg-gray-500 hover:bg-gray-400 text-white px-3 py-1 rounded disabled:opacity-50 cursor-pointer"
         >
           Föregående
         </button>
@@ -148,7 +147,7 @@ export default function AdminAllScreenings() {
         <button
           onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
           disabled={page === totalPages}
-          className="bg-gray-500 hover:bg-gray-400 text-white px-3 py-1 rounded disabled:opacity-50"
+          className="bg-gray-500 hover:bg-gray-400 text-white px-3 py-1 rounded disabled:opacity-50 cursor-pointer"
         >
           Nästa
         </button>
