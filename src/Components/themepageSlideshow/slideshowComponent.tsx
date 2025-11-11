@@ -81,29 +81,29 @@ export default function Slideshow({ day }: SlideshowProps) {
             backgroundColor: baseColor,
             backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 45%, transparent), url(${currentMovie.imageSrc})`,
         }}
-        className="w-11/12 h-60 bg-contain bg-no-repeat bg-right flex flex-col justify-center items-start rounded-md shadow-md
-        sm:w-11/12 sm:shadow-lg sm:py-2 sm:px-2 
+        className="w-11/12 h-60 bg-contain bg-no-repeat bg-right flex flex-col justify-center items-start rounded-md shadow-md relative
+        sm:shadow-lg sm:py-2 sm:px-2 xs:h-80
         md:shadow-lg
         lg:shadow-lg lg:h-72 lg:w-5/8 "
         >
-            <article style={{color: textDay}} className="w-8/12 text-start mx-2 textDay 
+            <article style={{color: textDay}} className="w-8/12 text-start mx-2 textDay absolute top-5
             sm:w-9/12 sm:py-2 sm:px-2
-            md:w-10/12 
+            md:w-10/12 md:top-0
             lg:mx-3  ">
                 <h1 className="text-base my-2
                  sm:text-lg
                  md:text-lg 
                  lg:text-xl">
                     {currentMovie.title} ({currentMovie.releaseYear})</h1>
-                <h2 className="text-sm my-2
+                <h2 className="text-sm my-2 
                 sm:text-base 
                 lg:text-sm">
                     {currentMovie.genres?.map(g => g.title).join(", ")}</h2>
-                <h2 className="text-sm my-2
+                <h2 className="text-sm my-2 
                 sm:text-sm 
                 lg:text-sm">
                     Filmens Längd: {currentMovie.length} min</h2>
-                <p className="overflow-y-auto w-8/12 text-sm line-clamp-4
+                <p className="overflow-y-auto w-10/12 text-sm line-clamp-4 h-auto
                 [&::-webkit-scrollbar]:h-2  
                 [&::-webkit-scrollbar]:w-1
                 [&::-webkit-scrollbar-track]:rounded-full
@@ -111,15 +111,17 @@ export default function Slideshow({ day }: SlideshowProps) {
                 [&::-webkit-scrollbar-thumb]:rounded-full
                 [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
                 
-                sm:text-sm">{currentMovie.description}</p>
-
-                <article className="text-sm mt-2 flex gap-3 py-3
-                sm:text-lg
-                md:text-base
-                lg:text-lg">
-                    <button onClick={prevSlide} className="cursor-pointer">&#10216; Föregående</button>
-                    <button onClick={nextSlide} className="cursor-pointer">Nästa &#10217;</button>
-                </article>
+                xs:h-30 xs:w-full
+                sm:text-sm 
+                md:w-6/12">{currentMovie.description}</p>
+                
+            </article>
+            <article className="text-sm mt-2 flex gap-3 py-3 absolute bottom-0 left-5
+            xs:text-lg
+            md:text-base
+            lg:text-lg">
+                <button onClick={prevSlide} className="cursor-pointer">&#10216; Föregående</button>
+                <button onClick={nextSlide} className="cursor-pointer">Nästa &#10217;</button>
             </article>
         </section>
     )

@@ -4,6 +4,12 @@ import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.ts
 import "../BookingPage/BookingPageStyle.css";
 import "../../index.css";
 
+type Theme = {
+  _id: string;
+  themeDesc: string;
+  weekDay: string;
+}
+
 export default function FrontPage() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
@@ -11,6 +17,8 @@ export default function FrontPage() {
   const [scheduledType, setScheduledType] = useState<string>("");
 
   const [movie, setMovie] = useState<any[]>([]); // State to hold fetched movies
+  const [sunTheme, setSunTheme] = useState<Theme>();
+  const [thuTheme, setThuTheme] = useState<Theme>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,6 +52,37 @@ export default function FrontPage() {
       setLoading(false);
     }
   };
+
+  const fetchThemes = async () => {
+    try {
+      const responseSun = await fetch(`api/theme/68ecd4f7dcb8359901cf3761`, {
+        method: "GET",
+        headers: {
+          "Conent-Type": "application/json",
+        }
+      });
+
+      const responseThu = await fetch(`/api/theme/68ecd482dcb8359901cf375f`, {
+        method: "GET",
+        headers: {
+          "Conent-Type": "application/json",
+        }
+      });
+
+      if (!responseSun.ok || !responseThu.ok) {
+        throw new Error(`Serverfel: ${responseSun.status}, ${responseThu.status}`);
+      }
+
+      const thuData = await responseThu.json();
+      const sunData = await responseSun.json();
+
+      setThuTheme(thuData);
+      setSunTheme(sunData);
+      } catch (error:any) {
+        console.error('Error fetching themes', error);
+      }
+    };
+  
 
   const filterMovies = async () => {
     try {
@@ -97,6 +136,7 @@ export default function FrontPage() {
 
   useEffect(() => {
     fetchMovies();
+    fetchThemes();
   }, []);
 
   useEffect(() => {
@@ -113,6 +153,8 @@ export default function FrontPage() {
   }, [selectedGenres, selectedAges, selectedDate, scheduledType]);
 
   useEffect(() => {
+    if (loading) return; // don't scroll until data is ready
+
     const scrollTo = location.state?.scrollTo;
     if (scrollTo) {
       const element = document.getElementById(scrollTo);
@@ -120,7 +162,7 @@ export default function FrontPage() {
         element.scrollIntoView({ behavior: "smooth" });
       }
     }
-  }, [location]);
+  }, [location, loading]);
 
   // Sort based on selected option. (A-Z, Z-A, Newest)
   const sortedMovies = [...movie].sort((a, b) => {
@@ -418,12 +460,12 @@ export default function FrontPage() {
         <h2 className="w-full mt-10 rounded-md shadow-md text-lg glass_effect p-1 justify-center items-center">
           Temadagar
         </h2>
-        <article className="min-h-96 w-full  my-5 justify-center items-center flex flex-col text-white" id="thuTheme">
+        <article className="min-h-96 my-5 justify-center items-center flex flex-col text-white" id="thuTheme">
           <h2
-            className=" text-center text-xl uppercase font-bold my-2
+            className=" text-center text-xl uppercase font-bold my-2 glass_effect px-20 py-5 
                     lg:mt-5 lg:underline"
           >
-            Tysta Torsdagen
+            {thuTheme?.weekDay}
           </h2>
           <section
             className=" flex flex-col justify-center items-center 
@@ -433,23 +475,19 @@ export default function FrontPage() {
           >
             <Slideshow day="thursday" />
             <p
-              className="w-11/12 m-2 text-center
+              className="w-11/12 m-10 text-center glass_effect px-10 py-28 
                             sm:w-11/12
                             md:w-7/12 md:px-2"
-            >
-              Varje Torsdag i vår lilla salong spelas stumfilmer från tidigast
-              1910-tal. Vill man läsa mer om tema dagen så tryck gärna på läs
-              mer knappen nedan för att få mer information om temadagen.
-            </p>
+            >{thuTheme?.themeDesc}</p>
           </section>
         </article>
 
         <article className="min-h-96 my-5 justify-center items-center flex  flex-col text-white" id="sunTheme">
           <h2
-            className="text-center text-xl uppercase font-bold my-2
+            className="text-center text-xl uppercase font-bold my-2 glass_effect px-20 py-5 
                     lg:mt-5 lg:underline"
           >
-            Svenska Söndagen
+            {sunTheme?.weekDay}
           </h2>
           <section
             className="flex flex-col justify-center items-center
@@ -459,15 +497,11 @@ export default function FrontPage() {
           >
             <Slideshow day="sunday" />
             <p
-              className=" w-11/12 m-2 text-center
+              className=" w-11/12 m-10 text-center glass_effect px-10 py-28 
                         sm:w-11/12
                         md:w-7/12 md:px-2
                         lg:w-7/12"
-            >
-              Söndagar är till för att uppleva gamla goda svenska klassiker.
-              Visas i vår lilla salong under hela Söndagen. Läs mer för för
-              information om vilka filmer som visas.
-            </p>
+            >{sunTheme?.themeDesc}</p>
           </section>
         </article>
       </section>
