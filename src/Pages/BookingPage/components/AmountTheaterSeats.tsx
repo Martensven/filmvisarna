@@ -80,25 +80,31 @@ export default function AmountSeatsTheater() {
         <p>Totalt pris: {totalPrice} kr</p>
       </section>
 
-      <section className="pl-40 mt-5 flex items-center">
-        <article className="flex items-center gap-2">
-          <p className="w-4 h-4 rounded-full bg-yellow-400"></p>
-          <p>Handikappanpassad</p>
-        </article>
-        <article className="flex items-center gap-2 pl-3">
-          <p className="w-4 h-4 rounded-full bg-green-400 shrink-0"></p>
-          <p>Vald stol</p>
-        </article>
-        <article className="flex items-center gap-2 pl-3">
-          <p className="w-4 h-4 rounded-full bg-orange-400 shrink-0"></p>
-          <p>Bokas av annan</p>
-        </article>
-        <article className="flex items-center gap-2 pl-3">
-          <p className="w-4 h-4 rounded-full bg-red-400 shrink-0"></p>
-          <p>Upptagen</p>
-        </article>
-      </section>
+<div className="w-full max-w-screen-xl mx-auto px-4 pt-5">
+      <section
+  className="w-full px-4 pt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start lg:pl-40"
+>
+  <article className="flex items-center gap-2 shrink-0">
+    <span className="w-4 h-4 rounded-full bg-yellow-400 flex-none" />
+    <span className="text-sm sm:text-base">Handikappanpassad</span>
+  </article>
 
+  <article className="flex items-center gap-2 pl-0 lg:pl-3 shrink-0">
+    <span className="w-4 h-4 rounded-full bg-green-400 flex-none" />
+    <span className="text-sm sm:text-base">Vald stol</span>
+  </article>
+
+  <article className="flex items-center gap-2 pl-0 lg:pl-3 shrink-0">
+    <span className="w-4 h-4 rounded-full bg-orange-400 flex-none" />
+    <span className="text-sm sm:text-base">Bokas av annan</span>
+  </article>
+
+  <article className="flex items-center gap-2 pl-0 lg:pl-3 shrink-0">
+    <span className="w-4 h-4 rounded-full bg-red-400 flex-none" />
+    <span className="text-sm sm:text-base">Upptagen</span>
+  </article>
+</section>
+</div>
 </main>
   );
 }
