@@ -158,7 +158,7 @@ export default function TheaterView({ selectShowing }: Props) {
 
         {/* Cinema frame" visuell appeal */}
         <span
-          className="inline-flex flex-none shrink-0 grow-0 w-[240px] h-[40px]
+          className="inline-flex flex-none shrink-0 grow-0 w-[280px] h-[40px]
           bg-gradient-to-b from-sky-100 to-sky-900 rounded-sm mt-8 mb-8
           justify-center items-center text-zinc-200 font-semibold text-2xl
           sm:scale-105 xl:scale-115"

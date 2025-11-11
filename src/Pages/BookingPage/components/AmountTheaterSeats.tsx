@@ -85,22 +85,22 @@ export default function AmountSeatsTheater() {
   className="w-full px-4 pt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start lg:pl-40"
 >
   <article className="flex items-center gap-2 shrink-0">
-    <span className="w-4 h-4 rounded-full bg-yellow-400 flex-none" />
+    <span className="w-4 h-4 rounded-full bg-[#dede39] flex-none" />
     <span className="text-sm sm:text-base">Handikappanpassad</span>
   </article>
 
   <article className="flex items-center gap-2 pl-0 lg:pl-3 shrink-0">
-    <span className="w-4 h-4 rounded-full bg-green-400 flex-none" />
+    <span className="w-4 h-4 rounded-full bg-[#5cb85c] flex-none" />
     <span className="text-sm sm:text-base">Vald stol</span>
   </article>
 
   <article className="flex items-center gap-2 pl-0 lg:pl-3 shrink-0">
-    <span className="w-4 h-4 rounded-full bg-orange-400 flex-none" />
+    <span className="w-4 h-4 rounded-full bg-[#f0ad4e] flex-none" />
     <span className="text-sm sm:text-base">Bokas av annan</span>
   </article>
 
   <article className="flex items-center gap-2 pl-0 lg:pl-3 shrink-0">
-    <span className="w-4 h-4 rounded-full bg-red-400 flex-none" />
+    <span className="w-4 h-4 rounded-full bg-[#d9534f] flex-none" />
     <span className="text-sm sm:text-base">Upptagen</span>
   </article>
 </section>
