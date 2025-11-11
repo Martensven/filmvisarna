@@ -29,7 +29,7 @@ async function sendTestMail() {
     to: "test@example.com",
     subject: "Filmvisarna - Bokningsbekräftelse",
     html: `
-    <div style="font-family: Noto Serif, serif; padding:10px;">
+    <div style="font-family: Noto Serif, san-serif; padding:10px;">
       <table align="center" width="600" cellpadding="0" cellspacing="3">
         <tr>
           <td style="background-color:#243365; padding:5px;" 
