@@ -34,3 +34,26 @@ export default function AdminAllScreenings() {
             setSortDir("asc");
         }
     }
+
+    // Fetch screenings data from the backend
+    useEffect(() => {
+        const fetchScreenings = async () => {
+            try {
+                // Fetch screenings with pagination and sorting parameters
+                // we are sending page, sortBy and sortDir as query parameters
+                const response = await fetch(
+                    `/api/admin/screenings/all?page=${page}&sortBy=${sortBy}&sortDir=${sortDir}`
+                );
+                const data = await response.json();
+                // Update state with fetched data from backend endpoint
+                setScreenings(data.data);
+                setTotalPages(data.totalPages);
+            } catch (error) {
+                console.error("Något gick fel vid hämtning av filmvisningar:", error);
+            }
+        };
+
+        fetchScreenings();
+        // Re-fetch data whenever page, sortBy, or sortDir changes
+    }, [page, sortBy, sortDir]);
+
