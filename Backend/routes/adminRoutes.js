@@ -111,6 +111,86 @@ router.delete("/bookings/:bookingId", async (req, res) => {
 
 // -------------Screening routes for admin ------------- //
 
+// Get all screenings with pagination and sorting
+router.get("/screenings", async (req, res) => {
+  try {
+  // Page is which page number.
+  const page = parseInt(req.query.page) || 1;
+  // Limit is how many items per page.
+  const limit = parseInt(req.query.limit9) || 10;
+  // SortBy is which field to sort by.
+  const sortBy = req.query.sortBy || "date";
+  // SortDir is the direction of the sort, either ascending or descending.
+  const sortDir = req.query.sortDir === "desc" ? -1 : 1;
+
+  const now = new Date();
+  // picking out today's date in YYYY-MM-DD format
+  const today = now.toISOString().split("T")[0];
+  // picking out current time in HH:MM format
+  const currentTime = now.toISOString().slice(11, 16);
+
+  // we only want to show screenings from today and onwards
+  const query = {
+    // $oroperator to combine two conditions
+    // $gtmeans greater than
+    // $gtemeans greater than or equal to
+  
+    $or: [
+      { date: { $gt: today } },
+      // if date is today, we want to show screenings with time greater than or equal to current time
+      { date: today, time: { $gte: currentTime } },
+    ],
+  };
+  // Calculate total number of screenings matching the query
+  const total = await Screening.countDocuments(query);
+  
+  const sortCriteria =
+    sortBy === "date"
+      ? { date: sortDir, time: sortDir }
+      : { [sortBy]: sortDir };
+
+  // Fetch screenings with pagination and sorting
+  //.populate to get related auditorium and movie details
+  //.skip to skip documents for pagination
+  //.limit to limit number of documents per page
+  //.lean to get plain JavaScript objects instead of Mongoose documents
+  const screenings = await Screening.find(query)
+    .populate("auditorium")
+    .populate("movie")
+    .sort(sortCriteria)
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .lean();
+
+// Format screenings data to include necessary details
+const formatted = screenings.map((s) => {
+  const auditorium = s.auditorium;
+  const totalSeats = auditorium.seats.length;
+
+  return {
+    id: s._id,
+    movieTitle: s.movie.title,
+    date: s.date,
+    time: s.time,
+    auditorium: auditorium.name,
+    bookedCount: s.bookedSeats.length,
+    totalSeats,
+  };
+});
+// Send response with formatted data and pagination info
+res.json({
+  data: formatted,
+  total,
+  page,
+  totalPages: Math.ceil(total / limit),
+});
+} catch (err) {
+  console.log(err);
+  res.status(500).json({ error: "server error" });
+}
+});
+  
+
 // Get screenings with booked seats count for today
 
 router.get("/screenings/today", async (req, res) => {
