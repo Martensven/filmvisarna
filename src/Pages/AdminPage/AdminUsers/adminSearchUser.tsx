@@ -15,7 +15,7 @@ export function SearchUserModal({ onClose }: Props) {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("/api/users");
+        const response = await fetch("/api/admin/users");
         const data: User[] = await response.json();
         setUsers(data);
       } catch (error) {
