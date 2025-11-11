@@ -118,7 +118,7 @@ export default function AdminAddScreening() {
 
       setTimeout(() => {
         location.href = "/admin/screenings";
-      }, 600);
+      }, 3000);
     } catch (err) {
       setToastType("error");
       setToastMessage("Serverfel vid skapande av visning");
@@ -212,7 +212,7 @@ export default function AdminAddScreening() {
       <button
         onClick={handleSave}
         disabled={!movieId || !date || !salonName || !selectedTime}
-        className="bg-green-500 p-2 rounded-md disabled:bg-gray-500"
+        className="bg-green-500 p-2 rounded-md disabled:bg-gray-500 cursor-pointer"
       >
         Spara
       </button>

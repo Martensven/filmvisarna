@@ -13,8 +13,6 @@ import Login from "./Components/login/login.tsx";
 import Register from "./Components/register/register.tsx";
 import AboutPage from "./Pages/AboutPage/aboutPage.tsx";
 import KioskPage from "./Pages/KioskPage/kioskPage.tsx";
-import ThemeSundayPage from "./Pages/ThemePage/themeSunPage.tsx";
-import ThemeThursdayPage from "./Pages/ThemePage/themeThuPage.tsx";
 import DetailMovie from "./Pages/DetailMovie/detailMovie.tsx";
 import ForgotPassword from "./Components/login/forgotPassword.tsx";
 import AdminPage from "./Pages/AdminPage/adminPage.tsx";
@@ -68,8 +66,6 @@ function App() {
           element={<BookingPage isLoggedIn={isLoggedIn} />}
         />
         <Route path="/movie" element={<MoviePage />} />
-        <Route path="/theme-sunday" element={<ThemeSundayPage />} />
-        <Route path="/theme-thursday" element={<ThemeThursdayPage />} />
         <Route path="/my-page/" element={<MyPage />} />
         <Route path="/checkout/:bookingId" element={<CheckoutPage />} />
         <Route path="/about" element={<AboutPage />} />

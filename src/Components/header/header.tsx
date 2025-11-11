@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
 import { useState } from "react";
 import LoggoComponent from "./LoggoComponent";
 // import LoggoNR2 from "./../../../public/images/Header-loggo/Filmvisarna-loggoNR2-Andra.png"
@@ -25,10 +25,21 @@ interface HeaderProps {
 export default function Header({ onLoginClick }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { user, logout } = useAuth(); // ✅ Kopplar in auth
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogout = async () => {
         await logout();
         setIsOpen(false);
+    };
+
+    const handleScroll = (id: string) => {
+        if (location.pathname !== "/") {
+            navigate("/", { state: { scrollTo: id} });
+        } else {
+            const element = document.getElementById(id);
+            if (element) element.scrollIntoView({ behavior: "smooth" });
+        }
     };
 
     return (
@@ -52,6 +63,13 @@ export default function Header({ onLoginClick }: HeaderProps) {
 
                         {/* ✅ Desktop menu */}
                         <ul className="desktopNav hidden md:flex w-10/12 justify-around items-center text-base font-medium">
+                            <li className="md:hover:scale-105 lg:hover:scale-110 dropdown relative cursor-pointer">
+                                Temadagar
+                                <ul className="dropdown-content hidden absolute left-1/2 top-full -translate-x-1/2 text-center">
+                                    <li className="block bg-[#243365] w-30 py-5 hover:bg-[#2b4185] rounded-t" onClick={() => handleScroll("thuTheme")}>Tysta Torsdagen</li>
+                                    <li className="block bg-[#243365] w-30 py-5 hover:bg-[#2b4185] rounded-b" onClick={() => handleScroll("sunTheme")}>Svenska Söndagen</li>
+                                </ul>
+                            </li>
                             <li className="md:hover:scale-105 lg:hover:scale-110">
                                 <Link to="/about">Om Oss</Link>
                             </li>
@@ -90,6 +108,12 @@ export default function Header({ onLoginClick }: HeaderProps) {
                     {/* ✅ Mobile menu */}
                     {isOpen && (
                         <ul className="flex flex-col md:hidden px-4 pb-4 space-y-2 mt-8">
+                            <li onClick={() => handleScroll("thuTheme")}>
+                                Tysta Torsdagen
+                            </li>
+                            <li onClick={() => handleScroll("sunTheme")}>
+                                Svenska Söndagen
+                            </li>
                             <li>
                                 <Link to="/about" onClick={() => setIsOpen(false)}>
                                     Om Oss
