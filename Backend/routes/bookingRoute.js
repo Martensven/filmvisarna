@@ -111,7 +111,6 @@ router.post("/api/bookings", async (req, res) => {
         to: user.email,
         subject: "Filmvisarna - Bokningsbekräftelse",
         html: `
-      
           <div style="font-family: Noto Serif, san-serif; padding:10px;">
       <table align="center" width="600" cellpadding="0" cellspacing="3">
         <tr>
