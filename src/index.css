@@ -26,25 +26,6 @@
   overflow-x: hidden;
 }
 
-.dropdown {
-  position: relative;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-}
-
-.dropdown-content li {
-  display: block;
-  background-color: #243365;
-  padding: 10px 0;
-}
-
-.dropdown:hover {
-  cursor: pointer;
-}
-
 .dropdown:hover .dropdown-content {
   display: block;
   cursor: pointer;
