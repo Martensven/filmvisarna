@@ -146,6 +146,7 @@ router.post("/api/bookings", async (req, res) => {
                         <p><strong>Biljetter:</strong><br>${ticketList}</p>
                         <p><strong>Total:</strong> ${totalPrice} kr</p>
                         <p>Vi ses på bion! 🍿🎬</p>
+                        <p style="font-size:13px;">Psst.. Glöm inte att besöka våran kiosk innan filmen börjar 😇 </p>
                       </td>
                     <tr>
                   </table>    
@@ -177,30 +178,86 @@ router.post("/api/bookings", async (req, res) => {
       });
 
       console.log("Mail skickat till", user.email);
-    } catch (err) {
+      } catch(err) {
       console.error("Kunde inte skicka iväg mejl", err)
     }
-    }
-   
-    if (!user && req.body.guestInfo?.email) {
+     
+    } else if(!user && req.body.guestInfo?.email) {
       const { firstName, email } = req.body.guestInfo;
+       const seatList = seats.map((s) => s.seatNumber).join(", ");
+      const ticketList = tickets
+        .map((t) => `${t.ticketName} (${t.quantity} x ${t.pricePerTicket} kr)`)
+        .join("<br>");
       await sendMail({
         to: email,
         subject: "Filmvisarna - Bokningsbekräftelse",
         html: `
-      <h2>Hej ${firstName || "Gäst"}!</h2>
-      <p>Tack för din bokning hos Filmvisarna!</p>
-      <p><strong>Ordernummer:</strong> ${newBooking._id}</p>
-      <p><strong>Total:</strong> ${totalPrice} kr</p>
-      <p>Vi ses på bion! 🍿🎬</p>
+          <table align="center" width="600" cellpadding="0" cellspacing="3" style="font-family: Arial, serif; padding:10px;">
+              <tr>
+                <td style="background-color: #243365; padding:5px; border-radius:5px;" 
+                width="600" height="120" align="left">
+          
+                  <img src="cid:logo" alt="Filmvisarnas logga" width="150" style="margin:10px 20px 2px 20px;" > 
+                  <h2 style="color:white; font-size:20px; margin:1px 20px 10px 20px;" align="center">Bokningsbekräftelse</h2>
+           
+                </td>
+              </tr>
+
+              <tr>
+                <td style="color:white; text-align:center; padding:5px; background-color: #243365; border-radius:5px;">
+                  <h2 style="margin:3px;">Hej ${firstName || "Gäst"}! 🙂</h2>
+                  <p style="margin-top:1px;">Tack för att du bokar din bioupplevelse hos oss.</p>
+
+                  <table align="center" cellpadding="0" cellspacing="0" width="600" style="background-color: #9ca6c7ff; border:2px solid #243365; border-radius:5px; margin:20px 20px; padding:10px;">
+                    <tr>
+                      <td style="color: #0d1325ff; text-align:center; padding:10px;">
+                        <h2 style="text-align:center; margin: 0;">Din Bokning</h2>
+                        <p><strong>Ordernummer:</strong> ${newBooking.bookingNumber}</p>
+                        <p><strong>Film:</strong> ${screening.movie.title}</p>
+                
+                        <p><strong>Datum & tid:</strong> ${screening.date}, ${screening.time}</p>
+                        <p><strong>Salong:</strong> ${screening.auditorium.name}</p>
+                        <p><strong>Platser:</strong> ${seatList}</p>
+                        <p><strong>Biljetter:</strong><br>${ticketList}</p>
+                        <p><strong>Total:</strong> ${totalPrice} kr</p>
+                        <p style="margin-top:5px;">Biljetten/Biljetterna hämtas ut vid kassan vid ankomst</p>
+                        <p>Vi ses på bion! 🍿🎬</p>
+                        <p style="font-size:13px;">Psst.. Glöm inte att besöka våran kiosk innan filmen börjar 😇 </p>
+                      </td>
+                    <tr>
+                  </table>    
+
+                  <table cellpadding="0" cellspacing="0" style="color:white; margin:20px auto 25px auto;" align="center">
+                    <tr>
+                      <td align="center">
+                        <h1 style="font-size:25px; margin:3px;">Filmvisarna</h1>
+                        <h3 style="font-size:20px; margin:2px 0px;">Kontakt</h3>
+                        <p style="font-size:15px; margin:2px;">Epost: info@filmvisarna.se</p>
+                        <p style="font-size:15px; margin:2px;">Telefon: 123-456 78 90</p>
+                        <p style="font-size:15px; margin:2px;">Adress: Biogatan 1, 123 45, Filmstaden</p>
+                      </td>
+                    </tr>
+                  </table>
+
+                </td>
+              </tr>
+            </table>
     `,
+     attachments: [
+          {
+            filename: "LoggoMail.png",
+            path: "./assets/LoggoMail.png",
+            cid: "logo",
+          },
+        ],
       });
+         console.log("Mail skickat till", email);
     }
   } catch (error) {
     console.error(error);
     res.status(500).json({ errorMsg: "Kunde inte skapa bokning", error });
-  }
-});
+    }
+  });
 
 // Get all bookings
 router.get("/api/bookings", async (req, res) => {

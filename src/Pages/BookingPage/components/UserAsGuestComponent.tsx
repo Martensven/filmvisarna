@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { useSeats } from "./context/SeatsContext";
 import { useCheckout } from "./context/CheckoutContext";
 
