@@ -68,8 +68,8 @@ export default function DetailMovie() {
                         <img
                             src={movie.imageSrc}
                             alt={`${movie.title} poster`}
-                            className="ml-10 mt-10 md:mt-0 rounded-md shadow-lg/30
-                            md: h-130
+                            className="ml-10 mt-10 mb-10 md:mt-0 rounded-md shadow-lg/30
+                            h-130 xl:mb-3 
                          "
                         />
 
@@ -93,7 +93,7 @@ export default function DetailMovie() {
                                 title={movie.title + " Trailer"}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             ></iframe>
-                            <p className="w-11/12 pt-2 px-2
+                            <p className="w-11/12 pt-2 px-2 pb-5
                             lg:px-1">{movie.description}</p>
                         </article>
                     </section>
