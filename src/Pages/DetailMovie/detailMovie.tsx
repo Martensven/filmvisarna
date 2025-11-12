@@ -53,60 +53,60 @@ export default function DetailMovie() {
     // Render movie details
     return (
         <main className="w-screen flex flex-col items-center text-white">
+            {/* Section for all components */}
             <section className="flex flex-col justify-center items-center w-full px-4
             xs:w-full xs:p-2 
             sm:px-10 
-            md:px-10
-            lg:px-10
             xl:w-11/12 xl:px-2">
-                {/* Detaljer */}
-                <section className="flex flex-col justify-between items-center gap-5 mt-5 w-11/12
-                sm:w-11/12
+                <section>
+                    {/* Detaljer */}
+                    <section className="flex flex-col container_box mb-5 justify-between items-center gap-5 mt-5 w-full
                 md:items-center
                 lg:flex-row
                 ">
-                    <img
-                        src={movie.imageSrc}
-                        alt={`${movie.title} poster`}
-                        className="w-6/12 object-cover rounded-md shadow-lg/30
-                        xs:w-7/12
-                        sm:w-7/12
-                        md:w-3/5
-                        xl:w-5/5 xl:h-130"
-                    />
-                    {/* Trailer */}
-                    <section className="flex flex-col justify-center items-center container_box w-5/5 aspect-video bg-[#24252C]
-                    sm:h-86
-                    md:h-86
-                    lg:w-12/13 lg:h-130
-                    xl:w-5/12 2xl:h-130">
-                        <h2 className="text-2xl pl-2 pt-2 my-2
-                            sm:
-                            md:
+
+                        <img
+                            src={movie.imageSrc}
+                            alt={`${movie.title} poster`}
+                            className="ml-10 mt-10 mb-10 md:mt-0 rounded-md shadow-lg/30
+                            h-130 xl:mb-3 
+                         "
+                        />
+
+                        {/* Trailer */}
+                        <article className="flex flex-col justify-center items-center  aspect-video ]
+                        w-full
+                    
+                    ">
+                            <h2 className="text-2xl pl-2 pt-2 my-2
+                        
                             lg:pt-3 lg:pl-3">{movie.title}</h2>
-                        <p className=" pt-2 px-2 mb-2
-                            lg:px-1 lg:py-4">{movie.description}</p>
-                        <iframe
-                        className="w-11/12 h-auto rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
+
+                            <iframe
+                                className="w-11/12 h-72 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
                         sm:h-72
-                        md:w-11/12 md:h-82
-                        lg:w-9/12 lg:h-96 lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
-                        xl:w-11/12 xl:h-96 xl:bg-blue-400 lg:shadow-lg xl:shadow-blue-400/50
+                        md:h-96
+                        lg:h-130 lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
+                        xl:shadow-blue-400/50
 "
-                        src={`https://www.youtube.com/embed/${movie.youtubeTrailers}`}
-                        title={movie.title + " Trailer"}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        ></iframe>
+                                src={`https://www.youtube.com/embed/${movie.youtubeTrailers}`}
+                                title={movie.title + " Trailer"}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            ></iframe>
+                            <p className="w-11/12 pt-2 px-2 pb-5
+                            lg:px-1">{movie.description}</p>
+                        </article>
                     </section>
-                    <section className="flex flex-col gap-5 w-full
-                    sm:w-full 
+
+                    {/* Section for movie details and reviews */}
+                    <section className="flex flex-col  gap-5 w-full
+                    md:flex-row 
                     xl:h-auto">
+                        {/* Movie details */}
                         <article className="text-center text-sm container_box mt-10
                         xs:mt-0
                         sm:text-base
-                        md:mt-0
-                        lg:mt-0
-                        xl:mt-0">
+                        ">
                             <p className="text-start pl-2 pt-0.5 my-2
                             lg:pt-0.5 lg:pl-3">
                                 <strong>Genre:</strong>{" "}
@@ -133,17 +133,18 @@ export default function DetailMovie() {
                             </p>
                         </article>
 
+                        {/* Reviews */}
                         <article className="text-center text-sm container_box
-                        sm:text-base">
-                            {/* Recensioner */}
+                        sm:text-base w-full">
+
                             {movie.reviews && movie.reviews.length > 0 && (
-                                <article className="text-sm pt-5 space-y-4 pb-2 my-3
+                                <article className="flex flex-col items-center justify-center  text-sm pt-5 space-y-4 pb-2 my-3
                                 sm:text-base
                                 md:
                                 lg:pt-5 lg:pb-2">
                                     <p className="font-[Noto_Sans] underline">Recensioner</p>
                                     {movie.reviews.map((review: any, idx: number) => (
-                                        <p key={idx} className="text-amber-200 italic font-[Noto_Sans] border-b-1 row-height:normal pb-4">
+                                        <p key={idx} className=" text-amber-200 italic font-[Noto_Sans] border-b w-11/12 row-height:normal pb-4">
                                             "{review.review}"
                                             <br />
                                             - {review.author}, {review.publisher}
@@ -156,12 +157,11 @@ export default function DetailMovie() {
                         </article>
                     </section>
                 </section>
-                {/* Boka-knapp */}
-                <Link className="flex justify-center items-center w-full" to={`/booking/${movie._id}`}>
-                    <button className="main_buttons cursor-pointer w-2/5 h-15 text-center flex items-center justify-center mt-10
-                    sm:w-1/3 
-                    md:w-1/2 
-                    lg:w-2/12 lg:h-10 lg:mt-20">
+
+                {/* Button linked to bookingPage */}
+                <Link className="flex justify-center items-center w-32 h-15 mt-10" to={`/booking/${movie._id}`}>
+                    <button className="main_buttons cursor-pointer w-32 h-15 text-center flex items-center justify-center
+                     ">
                         Boka Biljetter
                     </button>
                 </Link>

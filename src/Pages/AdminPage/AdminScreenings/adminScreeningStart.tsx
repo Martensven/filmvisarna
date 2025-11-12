@@ -1,4 +1,4 @@
-import AdminScreenings from "../AdminStart/adminScreening";
+import AdminAllScreenings from "./adminAllScreenings";
 import AdminAddScreening from "./adminAddScreening";
 export default function AdminScreeningStart() {
     return (
@@ -8,7 +8,7 @@ export default function AdminScreeningStart() {
               </div>
         
               <div className="w-full md:w-2/3">
-                <AdminScreenings />
+                <AdminAllScreenings />
               </div>
             </main>
     );

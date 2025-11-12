@@ -158,12 +158,10 @@ export default function TheaterView({ selectShowing }: Props) {
 
         {/* Cinema frame" visuell appeal */}
         <span
-          className="w-full h-20 bg-gradient-to-b from-sky-100 to-sky-900 rounded-sm mt-8 mb-8 
-            flex justify-center items-center text-zinc-200 font-semibold text-2xl
-            sm:scale-105
-            md:w-full md:scale-110
-            lg:w-full lg:scale-110
-            xl:scale-115"
+          className="inline-flex flex-none shrink-0 grow-0 w-[280px] h-[40px]
+          bg-gradient-to-b from-sky-100 to-sky-900 rounded-sm mt-8 mb-8
+          justify-center items-center text-zinc-200 font-semibold text-2xl
+          sm:scale-105 xl:scale-115"
           style={{ clipPath: "polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%)" }}
         >
           <p className="text-black opacity-90 text-base italic">{selectShowing.movie.title}</p>
@@ -216,7 +214,38 @@ export default function TheaterView({ selectShowing }: Props) {
         <p className="mt-2">
           Antal platser valda: {selectedSeats.length} / {totalTickets}
         </p>
+
+        <section
+          className="flex flex-col justify-center items-start w-full px-4 pt-5  gap-x-4 gap-y-2 
+          mb-10
+          lg:justify-start"
+        >
+          <article className="flex items-center gap-2">
+            <span className="w-4 h-4 rounded-full bg-[#dede39]" />
+            <span className="text-sm sm:text-base">Handikappanpassad</span>
+          </article>
+
+          <article className="flex items-center gap-2 pl-0">
+            <span className="w-4 h-4 rounded-full bg-[#5cb85c]" />
+            <span className="text-sm sm:text-base">Vald stol</span>
+          </article>
+
+          <article className="flex items-center gap-2 pl-0">
+            <span className="w-4 h-4 rounded-full bg-[#f0ad4e]" />
+            <span className="text-sm sm:text-base">Bokas av annan</span>
+          </article>
+
+          <article className="flex items-center gap-2 pl-0">
+            <span className="w-4 h-4 rounded-full bg-[#d9534f]" />
+            <span className="text-sm sm:text-base">Upptagen</span>
+          </article>
+        </section>
       </article>
+
+
+
     </section>
+
+
   );
 }

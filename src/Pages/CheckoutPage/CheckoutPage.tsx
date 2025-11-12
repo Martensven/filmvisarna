@@ -71,7 +71,7 @@ export default function CheckoutPage() {
   const { user_id, screening_id, seats, tickets, totalPrice } = booking;
 
   return (
-    <div className="max-w-3xl mx-auto bg-[#24252C] rounded-xl shadow-md p-6 mt-10">
+    <div className="max-w-3xl mx-auto glass_effect rounded-xl shadow-md p-6 mt-10">
       <h2 className="text-2xl font-bold mb-6 text-center text-white">🎬 Bokningsinformation</h2>
 
       <div className="flex flex-col md:flex-row gap-4">

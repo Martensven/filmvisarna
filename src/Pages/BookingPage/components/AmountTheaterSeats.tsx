@@ -30,9 +30,9 @@ export default function AmountSeatsTheater() {
     price: number;
   }) => (
     <div
-      className="flex flex-row justify-between w-72 h-auto mt-2 p-2 
-      md:w-10/12 md:m-1 md:justify-between
-      lg:w-11/12 lg:justify-between lg:mt-2 lg:p-1"
+      className="flex flex-row justify-between items-center w-72 h-auto mt-2 
+      md:w-10/12 md:m-1
+      lg:w-11/12"
     >
       <h2 className="text-[#e4e1e1] text-sm m-1 md:text-sm md:m-5 xl:text-lg">
         {label} {price} kr
@@ -63,7 +63,7 @@ export default function AmountSeatsTheater() {
     <main
       className="flex flex-col justify-center items-center w-11/12 h-auto 
                  lg:w-11/12
-                 xl:w-4/12 xl:justify-around xl:items-center xl:h-80"
+                 xl:w-4/12 xl:justify-around xl:items-center"
     >
       {ticketTypes.map((type) => (
         <TicketRow
@@ -75,7 +75,14 @@ export default function AmountSeatsTheater() {
         />
       ))}
 
-    
+      <section className="mt-4 text-center text-gray-200">
+        <p>Antal biljetter: {totalTickets}</p>
+        <p>Totalt pris: {totalPrice} kr</p>
+      </section>
+
+      {/* <div className="flex flex-col justify-center items-start w-full mx-auto px-4 pt-5 text-left"> */}
+
+      {/* </div> */}
     </main>
   );
 }
