@@ -196,33 +196,84 @@ res.json({
 router.get("/screenings/today", async (req, res) => {
   try {
     const date = req.query.date;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const sortBy = req.query.sortBy || "time";
+    const sortDir = req.query.sortDir === "desc" ? -1 : 1;
+    
+    const total = await Screening.countDocuments({ date });
 
-    const screenings = await Screening.find({ date })
-      .populate("auditorium")
-      .populate("movie")
+    const sortCriteria =
+      sortBy === "date"
+        ? { date: sortDir, time: sortDir }
+        : { [sortBy]: sortDir };
 
-      .lean();
+        const screenings = await Screening.find({ date })
+        .populate("auditorium")
+        .populate("movie")
+        .sort(sortCriteria)
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .lean();
 
-    const formatted = screenings.map((s) => {
-      const auditorium = s.auditorium;
-      const totalSeats = auditorium.seats.length;
+        const formatted = screenings.map((s) => {
+          const auditorium = s.auditorium;
+          const totalSeats = auditorium.seats.length;
 
-      return {
-        id: s._id,
-        movieTitle: s.movie.title,
-        time: s.time,
-        auditorium: auditorium.name,
-        bookedCount: s.bookedSeats.length,
-        totalSeats,
-      };
-    });
+          return {
+            id: s._id,
+            movieTitle: s.movie.title,
+            date: s.date,
+            time: s.time,
+            auditorium: auditorium.name,
+            bookedCount: s.bookedSeats.length,
+            totalSeats,
+          };
+        
+        });
 
-    res.json(formatted);
+        res.json({
+          data: formatted,
+          total,
+          page,
+          totalPages: Math.ceil(total / limit),
+        });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "server error" });
   }
-});
+})
+
+// router.get("/screenings/today", async (req, res) => {
+//   try {
+//     const date = req.query.date;
+
+//     const screenings = await Screening.find({ date })
+//       .populate("auditorium")
+//       .populate("movie")
+
+//       .lean();
+
+//     const formatted = screenings.map((s) => {
+//       const auditorium = s.auditorium;
+//       const totalSeats = auditorium.seats.length;
+
+//       return {
+//         id: s._id,
+//         movieTitle: s.movie.title,
+//         time: s.time,
+//         auditorium: auditorium.name,
+//         bookedCount: s.bookedSeats.length,
+//         totalSeats,
+//       };
+//     });
+
+//     res.json(formatted);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: "server error" });
+//   }
+// });
 
 // get one
 router.get("/screenings/:id", async (req, res) => {
