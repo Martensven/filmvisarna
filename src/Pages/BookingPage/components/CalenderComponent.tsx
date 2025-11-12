@@ -193,7 +193,14 @@ export default function CalenderComponent({
                    lg:h-auto lg:justify-center xl:grid xl:grid-col-2
                   "
                 >
-                  {sortScreeningByDate[date].map((screening) => (
+                  {/*time in a string renders out right date but not the right order on time. This function sorters that out by sorting the numbers correctly before we map it out 
+                  ex 10:00 before 20:00. */}
+                  {sortScreeningByDate[date].slice().sort((a, b) => {
+                     const [ax, ay] = a.time.split(":").map(Number);
+                     const [bx, by] = b.time.split(":").map(Number);
+                     return ax *60 + ay - (bx * 60 + by);   
+                  })
+                  .map((screening) => (
                     <ul
                       onClick={() => {
                         setActive(screening._id);
