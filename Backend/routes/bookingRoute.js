@@ -146,6 +146,7 @@ router.post("/api/bookings", async (req, res) => {
                         <p><strong>Biljetter:</strong><br>${ticketList}</p>
                         <p><strong>Total:</strong> ${totalPrice} kr</p>
                         <p>Vi ses på bion! 🍿🎬</p>
+                        <p style="font-size:13px;">Psst.. Glöm inte att besöka våran kiosk innan filmen börjar 😇 </p>
                       </td>
                     <tr>
                   </table>    
@@ -177,21 +178,16 @@ router.post("/api/bookings", async (req, res) => {
       });
 
       console.log("Mail skickat till", user.email);
-    } catch (err) {
+      } catch(err) {
       console.error("Kunde inte skicka iväg mejl", err)
     }
-    }
-   
-    if (!user && req.body.guestInfo?.email) {
-      console.log("försöker skicka mejl till, ", guestInfo.email)
-      console.log("Nuvarande mapp:", process.cwd());
-      const seatList = seats.map((s) => s.seatNumber).join(", ");
+     
+    } else if(!user && req.body.guestInfo?.email) {
+      const { firstName, email } = req.body.guestInfo;
+       const seatList = seats.map((s) => s.seatNumber).join(", ");
       const ticketList = tickets
         .map((t) => `${t.ticketName} (${t.quantity} x ${t.pricePerTicket} kr)`)
         .join("<br>");
-        
-      const { firstName, email } = req.body.guestInfo;
-
       await sendMail({
         to: email,
         subject: "Filmvisarna - Bokningsbekräftelse",
@@ -226,6 +222,7 @@ router.post("/api/bookings", async (req, res) => {
                         <p><strong>Total:</strong> ${totalPrice} kr</p>
                         <p style="margin-top:5px;">Biljetten/Biljetterna hämtas ut vid kassan vid ankomst</p>
                         <p>Vi ses på bion! 🍿🎬</p>
+                        <p style="font-size:13px;">Psst.. Glöm inte att besöka våran kiosk innan filmen börjar 😇 </p>
                       </td>
                     <tr>
                   </table>    
@@ -254,13 +251,13 @@ router.post("/api/bookings", async (req, res) => {
           },
         ],
       });
-         console.log("Mail skickat till", user.email);
+         console.log("Mail skickat till", email);
     }
   } catch (error) {
     console.error(error);
     res.status(500).json({ errorMsg: "Kunde inte skapa bokning", error });
-  }
-});
+    }
+  });
 
 // Get all bookings
 router.get("/api/bookings", async (req, res) => {
