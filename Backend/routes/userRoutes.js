@@ -58,6 +58,7 @@ router.post(
         },
       });
 
+
       //Add automatic mail at registered user - Sara
       await sendMail({
         to: user.email,
@@ -78,22 +79,28 @@ router.post(
 
               <tr>
                 <td style="color:white; text-align:center; padding:5px; background-color: #243365; border-radius:5px;">
-                  <h2 style="margin:3px;">Hej och välkommen ${user.firstName}! 🙂</h2>
+                  <h2 style="margin:3px;">Hej och välkommen ${user.firstName}!🙂</h2>
                   <p style="margin-top:1px;">Vad kul att du har registrerat ett konto hos oss på Filmvisarna i Småstad.</p>
 
                   <table align="center" cellpadding="0" cellspacing="0" width="600" style="background-color: #9ca6c7ff; border:2px solid #243365; border-radius:5px; margin:20px 20px; padding:10px;">
                     <tr>
                       <td style="color: #0d1325ff; text-align:center; padding:10px;">
                         <h2 style="text-align:center; margin: 0;">Dina kontouppgifter</h2>
-                        <p>Ditt användarnamn är: <strong>${user.email}</strong>.</p>
-                        <p>Ditt användarID är: <strong>${user._id}</strong>.</p>
-                
-                        <p> Vi hoppas att du ska finna mycket nöje med vårt utbud av gamla goda klassiker mellan tidigt 1900tal och senare 2000tal.</p>
-                        <p>Ytterligare information om ditt konto eller behov av lösenords-återställning finns att hämta hos oss vår kundservice.</p>
-                        
+                        <p>Användarnamn: <strong>${user.email}</strong></p>
+                        <p>Förnamn: <strong>${user.firstName}</strong></p>
+                        <p>Efternamn: <strong>${user.lastName}</strong></p>
+                        <p>Telefonnummer: <strong>${user.phoneNumber}</strong></p>
+
                       </td>
+
+                  <table align="center" cellpadding="0" cellspacing="0" width="600">
                     <tr>
-                  </table>    
+                      <td style="color: white; text-align: center; padding: 10px;">
+                        <p style="padding: 5px; font-size: 15px;">Vi hoppas att du ska finna mycket nöje med vårt utbud av gamla goda klassiker mellan tidigt 1900tal och senare 2000tal.</p>
+                        <p style="padding: 2px; font-size: 12px;">Ytterligare information om ditt konto eller behov av lösenords-återställning finns att hämta hos oss vår kundservice.</p>
+                      </td>
+                    </td>
+                  </table> 
 
                   <table cellpadding="0" cellspacing="0" style="color:white; margin:20px auto 25px auto;" align="center">
                     <tr>
@@ -110,7 +117,7 @@ router.post(
                 </td>
               </tr>
             </table>
-          `, 
+        `, 
           attachments: [
           {
             filename: "LoggoMail.png",
@@ -119,7 +126,7 @@ router.post(
           },
         ],
       });
-      
+
       console.log("Mejl har skickats iväg");
     } catch (error) {
       res.status(400).json({ message: error.message });
