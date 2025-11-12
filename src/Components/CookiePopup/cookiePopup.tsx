@@ -7,36 +7,32 @@ type CookiePref = {
 
 const CookiePopup = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const [cookiePref, setCookiePref] = useState<CookiePref>({
-    necessary: true,
-    analytics: false,
-  });
+  const [analyticsConsent, setAnalyticsConsent] = useState(false);
 
-
-useEffect(() => {
+  useEffect(() => {
     const savedPrefs = localStorage.getItem("cookiePreferences");
     if (!savedPrefs) {
       setShowPopup(true);
+    } else {
+        const prefs = JSON.parse(savedPrefs) as CookiePref;
+        setAnalyticsConsent(prefs.analytics);
     }
-}, []);
+  }, []);
 
-const handleAcceptAll = () => {
-    const prefs = { necessary: true, analytics: true };
+  const handleSavePreferences = () => {
+    const prefs: CookiePref = {
+      necessary: true,
+      analytics: analyticsConsent,
+  };
     localStorage.setItem("cookiePreferences", JSON.stringify(prefs));
-    setCookiePref(prefs);
     setShowPopup(false);
+  };
+
+  if (!showPopup) return null;
+
+  return (
+   
+  );
 };
-
-const handleOnlyNecessary = () => {
-    const prefs = { necessary: true, analytics: false };
-    localStorage.setItem("cookiePreferences", JSON.stringify(prefs));
-    setCookiePref(prefs);
-    setShowPopup(false);
-};
-
-    if (!showPopup) return null;
-
-}
-
 
 export default CookiePopup;
