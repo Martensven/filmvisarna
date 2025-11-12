@@ -99,7 +99,7 @@ export default function DetailMovie() {
                     </section>
 
                     {/* Section for movie details and reviews */}
-                    <section className="flex flex-col gap-5 w-full
+                    <section className="flex flex-col  gap-5 w-full
                     md:flex-row 
                     xl:h-auto">
                         {/* Movie details */}

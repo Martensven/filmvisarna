@@ -80,36 +80,29 @@ export default function CalenderComponent({
 
   return (
     <main
-      className="Container-for-days w-7/12 h-full flex flex-col justify-center items-center
-      sm:justify-center sm:items-center sm:mb-5 sm:h-100
-      md:w-full md:h-auto md:flex-col md:justify-center md:items-center
+      className="Container-for-days w-7/12  flex flex-col justify-center items-center
+      sm:justify-center sm:items-center sm:mb-5
+      md:w-full md:flex-col md:justify-center md:items-center
       lg:w-6/12 
       xl:w-8/12"
     >
       {/*----------Containers for calender days----------*/}
       <div className="todays-container flex flex-col justify-center items-center mt-2 h-auto w-full
-      md:w-11/12 md:h-30 md:justify-center md:items-center
+      md:w-11/12 md:justify-center md:items-center
       lg:w-11/12
       xl:w-11/12">
         <h2
           className="text-[#e4e1e1] text-sm
         md:text-lg md:p-2
-        lg:w-10/12 lg:p-2 lg:h-10"
+        lg:w-10/12 lg:p-2 "
         >
           Dagens visningar
         </h2>
         <section
-          className="Todays flex flex-col justify-center items-center w-11/12 h-25 rounded-md          
-          overflow-y-hidden overflow-x-auto
-          [&::-webkit-scrollbar]:h-1  
-          [&::-webkit-scrollbar-track]:rounded-full
-          [&::-webkit-scrollbar-track]:bg-[#24252C]
-          [&::-webkit-scrollbar-thumb]:rounded-full
-          [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
-
-          md:flex-row md:w-5/12 md:justify-center md:items-center md:h-15
-          lg:flex lg:flex-row lg:justify-center lg:h-20 lg:w-10/12 
-          xl:w-7/12 xl:h-40"
+          className="Todays flex flex-col justify-center items-center w-11/12 rounded-md          
+          md:flex-row md:w-5/12 md:justify-center md:items-center
+          lg:flex lg:flex-row lg:justify-center lg:w-10/12 
+          xl:w-7/12 "
         >
           {todaysScreening.length > 0 ? (
             todaysScreening.map((screening) => (
@@ -125,7 +118,7 @@ export default function CalenderComponent({
                 className={`calenderDatesContainer container_box bg-[#e4e1e1] w-9/12 h-auto shadow-xl/20
                 sm:mb-2 
                 md:w-full md:text-base md:justify-center md:items-center cursor-pointer
-                lg:w-11/12 lg:h-15 lg:flex lg:flex-col lg:justify-between lg:items-center">
+                lg:w-11/12 lg:flex lg:flex-col lg:justify-between lg:items-center">
           ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
               >
                 <li
@@ -145,8 +138,8 @@ export default function CalenderComponent({
               </ul>
             ))
           ) : (
-            <p className="flex justify-center items-center bg-[#e4e1e1] text-black w-50 h-10 mt-2 rounded-sm shadow-xl/20
-            lg:w-50 lg:h-20">
+            <p className="flex h-20 px-2 justify-center items-center bg-[#e4e1e1] text-black mt-2 rounded-sm shadow-xl/20
+             ">
               Ingen visning idag
             </p>
           )}
@@ -154,10 +147,9 @@ export default function CalenderComponent({
       </div>
 
       {/* Other dates */}
-      <div className="other-days-container flex flex-col justify-center items-center h-auto w-full
-      sm:w-full
-      md:w-11/12 md:mt-2 md:h-65
-      xl:w-11/12 ">
+      <div className="other-days-container flex flex-col justify-center items-center w-full
+       md:mt-2 
+       ">
         <h2
           className="text-[#e4e1e1] mt-2 text-sm 
        md:text-lg
@@ -168,27 +160,19 @@ export default function CalenderComponent({
           Andra visningar
         </h2>
         <section
-          className="Otherdays flex flex-col  justify-start items-start mt-1 w-11/12 h-42 rounded-md
-          overflow-y-auto overflow-x-hidden
-          [&::-webkit-scrollbar]:w-1  
-          [&::-webkit-scrollbar-track]:rounded-full
-          [&::-webkit-scrollbar-track]:bg-[#24252C]
-          [&::-webkit-scrollbar-thumb]:rounded-full
-          [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
-
-          sm:h-56
-          md:w-11/12 md:h-60 md:justify-start md:mb-7
-          lg:flex lg:flex-col lg:justify-center lg:items-center lg:gap-2 lg:w-full lg:m-0 lg:grid lg:grid-cols-2
-          xl:w-full xl:h-80 xl:flex-row xl:justify-start xl:items-start xl:grid xl:grid-cols-3 xl:mt-2
+          className="Otherdays flex flex-col justify-start items-center mt-1 w-11/12 rounded-md
+          md:w-11/12  md:mb-7
+          lg:justify-center lg:gap-2 lg:w-full lg:m-0
+          xl:w-full  xl:flex-row xl:justify-start xl:items-start xl:grid xl:grid-cols-2 xl:mt-2
         "
         >
           {otherDaysScrenning.length > 0 ? (
             otherDaysScrenning.slice(0).map((date) => (
               <div
                 key={date}
-                className="flex flex-col justify-center items-center underline w-full
+                className="flex flex-col justify-center items-center underline w-56
                 lg:w-full lg:m-0 lg:p-0
-                xl:w-12/12 xl:flex-col 
+                
                 "
               >
                 <h3
@@ -204,10 +188,10 @@ export default function CalenderComponent({
 
                 <div
                   className="w-full flex flex-col justify-center items-center 
-                  sm:w-11/12 sm:mb-2 sm:grid sm:grid-cols-2
-                  md:w-full md:mt-2 md:mb-2 
-                  lg:w-11/12 lg:h-auto lg:flex lg:flex-row lg:justify-center lg:items-center lg:grid lg:grid-col-1
-                  xl:w-11/12 xl:flex xl:flex-col"
+                  sm:w-11/12 sm:mb-2 
+                   md:mt-2 md:mb-2 lg:grid lg:grid-cols-1
+                   lg:h-auto lg:justify-center xl:grid xl:grid-col-2
+                  "
                 >
                   {sortScreeningByDate[date].map((screening) => (
                     <ul
@@ -216,10 +200,10 @@ export default function CalenderComponent({
                         onSelectTheaterId(screening.auditorium._id);
                         onSelectShowing(screening._id);
                       }}
-                      className={`container_box calenderDatesContainer cursor-pointer w-9/12 h-15 flex flex-col justify-center items-center
+                      className={`container_box calenderDatesContainer min-w-36 cursor-pointer w-9/12 h-15 flex flex-col justify-center items-center
                           sm:w-11/12 sm:h-15
                           md:w-11/12 md:h-12 md:text-xs
-                          lg:w-11/12 lg:h-20  lg:flex lg:flex-col lg:justify-center 
+                          lg:w-11/12 lg:h-20
                           xl:w-10/12 xl:h-20 xl:mt-1 
                           
                           
