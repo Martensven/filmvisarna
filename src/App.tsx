@@ -22,6 +22,7 @@ import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.tsx";
 import AdminUsersPage from "./Pages/AdminPage/AdminUsers/adminUsersPage.tsx";
 import AdminEditScreening from "./Pages/AdminPage/AdminStart/adminEditScreening.tsx";
 import AdminScreeningStart from "./Pages/AdminPage/AdminScreenings/adminScreeningStart.tsx";
+import CookiePopup from "./Components/CookiePopup/cookiePopup.tsx";
 
 function App() {
   const [loginPopup, setLoginPopup] = useState<
@@ -90,6 +91,7 @@ function App() {
       {!window.location.pathname.startsWith("/admin") && (
         <>
           <Footer />
+          <CookiePopup />
         </>
       )}
 
