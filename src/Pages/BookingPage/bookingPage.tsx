@@ -42,8 +42,8 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             <section
               className="Movie-Screening-Days flex flex-col  sm:flex-row container_box w-11/12 mb-4
             justify-center items-center
-            md:flex-col md:w-7/14 md:ml-10
-            lg:flex-row lg:w-8/14 lg:ml-11
+            md:w-7/14 md:ml-10
+            lg:w-8/14 lg:ml-11
             xl:ml-18 xl:w-6/12"
             >
               <MovieInformation />
