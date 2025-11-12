@@ -1,8 +1,20 @@
-import { Link } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
 import { useState } from "react";
-import LoggoNR1 from "./../../../public/images/Header-loggo/LoggoNR1-med-sken.png";
+import LoggoComponent from "./LoggoComponent";
+// import LoggoNR2 from "./../../../public/images/Header-loggo/Filmvisarna-loggoNR2-Andra.png"
+
+
 import { useAuth } from "../../context/authContext"; // ✅ Import AuthContext
 import "./../../index.css";
+
+//   <img
+//   src={`${LoggoNR2}`}
+//   alt="Filmvisarnas loggo"
+//   className="w-2/7 rounded-lg flex justify-start items-center ml-3
+//   xs:w-2/6
+//   sm:w-3/6 sm:ml-5
+//   xl:w-7/12"
+// />
 
 interface HeaderProps {
     onLoginClick: () => void;
@@ -13,39 +25,36 @@ interface HeaderProps {
 export default function Header({ onLoginClick }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { user, logout } = useAuth(); // ✅ Kopplar in auth
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogout = async () => {
         await logout();
         setIsOpen(false);
     };
 
+    const handleScroll = (id: string) => {
+        if (location.pathname !== "/") {
+            navigate("/", { state: { scrollTo: id} });
+        } else {
+            const element = document.getElementById(id);
+            if (element) element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     return (
         <main className="w-screen">
-            <header className="flex flex-col justify-center items-center text-center text-white mt-1">
-                {/* <h1 className="logo_font text-xl mt-5">FILMVISARNA</h1> */}
-                <div className="flex justify-center items-center m-0 w-11/12 
-                sm:justify-center sm:items-center 
-                md:justify-start md:items-start
-                lg:justify-start lg:items-start">
-                    <img
-                        src={`${LoggoNR1}`}
-                        alt="Filmvisarnas loggo"
-                        className="w-56 m-5 rounded-sm
-                        sm:w-74 
-                        md:w-86 md:ml-8 
-                        lg:w-96 lg:ml-8"
-                    />
-                </div>
-
-                <nav className="w-11/12 flex flex-col justify-center items-center bg-[#243365] text-white mt-5 rounded-md shadow-md">
+            <header className="flex flex-col justify-center relative z-1 items-center text-center text-white mt-3 mb-7">
+                <nav className="w-11/12 flex flex-col justify-center items-center bg-[#243365] text-white mt-10 mb-5 rounded-md shadow-md
+        sm:mb-10
+        xl:mt-20 xl:justify-center xl:items-center">
                     <section className="flex items-center justify-between w-full h-12 px-4">
-
                         <Link to="/" onClick={() => setIsOpen(false)}>
-                            <i className="fa fa-home flex" style={{ fontSize: "20px" }}></i>
+                            <LoggoComponent />
                         </Link>
 
                         <button
-                            className="md:hidden"
+                            className="md:hidden mr-3"
                             onClick={() => setIsOpen(!isOpen)}
                             aria-label="Toggle menu"
                         >
@@ -53,13 +62,27 @@ export default function Header({ onLoginClick }: HeaderProps) {
                         </button>
 
                         {/* ✅ Desktop menu */}
-                        <ul className="desktopNav hidden md:flex w-11/12 justify-around items-center text-sm font-medium">
-                            <li className="md:hover:scale-105 lg:hover:scale-110"><Link to="/about">Om Oss</Link></li>
-                            <li className="md:hover:scale-105 lg:hover:scale-110"><Link to="/kiosk">Kiosk</Link></li>
+                        <ul className="desktopNav hidden md:flex w-10/12 justify-around items-center text-base font-medium">
+                            <li className="md:hover:scale-105 lg:hover:scale-110 dropdown relative cursor-pointer">
+                                Temadagar
+                                <ul className="dropdown-content hidden absolute left-1/2 top-full -translate-x-1/2 text-center">
+                                    <li className="block bg-[#243365] w-30 py-5 hover:bg-[#2b4185] rounded-t" onClick={() => handleScroll("thuTheme")}>Tysta Torsdagen</li>
+                                    <li className="block bg-[#243365] w-30 py-5 hover:bg-[#2b4185] rounded-b" onClick={() => handleScroll("sunTheme")}>Svenska Söndagen</li>
+                                </ul>
+                            </li>
+                            <li className="md:hover:scale-105 lg:hover:scale-110">
+                                <Link to="/about">Om Oss</Link>
+                            </li>
+                            <li className="md:hover:scale-105 lg:hover:scale-110">
+                                <Link to="/kiosk">Kiosk</Link>
+                            </li>
 
                             {user && (
                                 <li className="md:hover:scale-105 lg:hover:scale-110">
-                                    <Link to="/my-page" className="cursor-pointer hover:underline">
+                                    <Link
+                                        to="/my-page"
+                                        className="cursor-pointer hover:underline"
+                                    >
                                         Mina Sidor
                                     </Link>
                                 </li>
@@ -67,7 +90,10 @@ export default function Header({ onLoginClick }: HeaderProps) {
 
                             <li className="md:hover:scale-105 lg:hover:scale-110">
                                 {user ? (
-                                    <button onClick={handleLogout} className="cursor-pointer text-red-300 hover:text-red-400">
+                                    <button
+                                        onClick={handleLogout}
+                                        className="cursor-pointer text-red-300 hover:text-red-400"
+                                    >
                                         Logga Ut
                                     </button>
                                 ) : (
@@ -81,13 +107,31 @@ export default function Header({ onLoginClick }: HeaderProps) {
 
                     {/* ✅ Mobile menu */}
                     {isOpen && (
-                        <ul className="flex flex-col md:hidden px-4 pb-4 space-y-2">
-                            <li><Link to="/about" onClick={() => setIsOpen(false)}>Om Oss</Link></li>
-                            <li><Link to="/kiosk" onClick={() => setIsOpen(false)}>Kiosk</Link></li>
+                        <ul className="flex flex-col md:hidden px-4 pb-4 space-y-2 mt-8">
+                            <li onClick={() => handleScroll("thuTheme")}>
+                                Tysta Torsdagen
+                            </li>
+                            <li onClick={() => handleScroll("sunTheme")}>
+                                Svenska Söndagen
+                            </li>
+                            <li>
+                                <Link to="/about" onClick={() => setIsOpen(false)}>
+                                    Om Oss
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/kiosk" onClick={() => setIsOpen(false)}>
+                                    Kiosk
+                                </Link>
+                            </li>
 
                             {user && (
                                 <li>
-                                    <Link to="/my-page" onClick={() => setIsOpen(false)} className="hover:underline">
+                                    <Link
+                                        to="/my-page"
+                                        onClick={() => setIsOpen(false)}
+                                        className="hover:underline"
+                                    >
                                         Mina Sidor
                                     </Link>
                                 </li>
@@ -95,13 +139,14 @@ export default function Header({ onLoginClick }: HeaderProps) {
 
                             <li>
                                 {user ? (
-                                    <button onClick={handleLogout} className="text-red-300 hover:text-red-400">
+                                    <button
+                                        onClick={handleLogout}
+                                        className="text-red-300 hover:text-red-400"
+                                    >
                                         Logga Ut
                                     </button>
                                 ) : (
-                                    <button onClick={onLoginClick}>
-                                        Logga In
-                                    </button>
+                                    <button onClick={onLoginClick}>Logga In</button>
                                 )}
                             </li>
                         </ul>

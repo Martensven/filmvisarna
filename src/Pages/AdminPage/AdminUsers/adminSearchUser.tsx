@@ -13,17 +13,18 @@ export function SearchUserModal({ onClose }: Props) {
   const [cancelMessage, setCancelMessage] = useState("");
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("/api/users");
-        const data: User[] = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error("Fel vid hämtning av användare:", error);
-      }
-    };
-    fetchUsers();
-  }, []);
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("/api/admin/users");
+      const result = await response.json();
+      setUsers(result.data);
+    } catch (error) {
+      console.error("Fel vid hämtning av användare:", error);
+    }
+  };
+  fetchUsers();
+}, []);
+
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -70,7 +71,7 @@ export function SearchUserModal({ onClose }: Props) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white text-black rounded-lg p-8 shadow-2xl w-full max-w-4xl h-[80vh] overflow-y-auto relative">
+      <div className="bg-[#243365] text-white rounded-lg p-8 shadow-2xl w-full max-w-4xl h-[80vh] overflow-y-auto relative">
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl font-bold cursor-pointer"
@@ -84,10 +85,11 @@ export function SearchUserModal({ onClose }: Props) {
           onChange={(option) => setSelectedUser(option?.user || null)}
           placeholder="Sök på namn, e-post, telefon eller ID..."
           isClearable
+          className="mb-6 text-black"
         />
 
         {selectedUser && (
-          <div className="mt-6">
+          <div className="mt-6" >
             <h3 className="text-xl font-semibold mb-2">
               {selectedUser.firstName} {selectedUser.lastName}
             </h3>
@@ -105,11 +107,11 @@ export function SearchUserModal({ onClose }: Props) {
             {bookings.length === 0 ? (
               <p>Inga bokningar hittades.</p>
             ) : (
-              <ul className="space-y-4">
+              <ul className="space-y-4" >
                 {bookings.map((booking) => (
                   <li
                     key={booking._id}
-                    className="border p-4 rounded-md bg-gray-100 text-black"
+                    className="border border-white/20 p-4 rounded-md bg-[#32437c]"
                   >
                     <p>
                       <strong>Film:</strong>{" "}

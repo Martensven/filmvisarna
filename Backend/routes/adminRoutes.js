@@ -1,100 +1,48 @@
 import express, { Router } from "express";
-import { KioskSale } from "../models/kioskSalesSchema.js";
-import { Kiosk } from "../models/kioskSchema.js";
 import { Booking } from "../models/bookingSchema.js";
 import { isAdmin } from "../middleware/isAdmin.js";
-
+import { Screening } from "../models/screeningSchema.js";
+import { User } from "../models/userSchema.js";
+import sendMail from "../nodemailer/sendMail.js";
+import { Movies } from "../models/moviesSchema.js";
+import { Auditorium } from "../models/auditoriumSchema.js";
+import schedule from "../schedule.js";
+import { get } from "mongoose";
 
 const router = express.Router();
 // Middleware to check if user is admin for all admin routes
 router.use(isAdmin);
 
-// Admin route, get sales from kiosk
-router.get("/api/sales/compare", async (req, res) => {
-  const today = new Date();
-  const lastWeek = new Date(today);
-  lastWeek.setDate(today.getDate() - 7);
-
-  // Hämta alla produkter
-  const products = await Kiosk.find();
-
-  const result = [];
-
-  for (const product of products) {
-    const todaySales = await KioskSale.find({
-      product: product._id,
-      date: { $gte: new Date(today.setHours(0, 0, 0, 0)) }
-    });
-
-    const lastWeekSales = await KioskSale.find({
-      product: product._id,
-      date: {
-        $gte: new Date(lastWeek.setHours(0, 0, 0, 0)),
-        $lt: new Date(lastWeek.setHours(23, 59, 59, 999))
-      }
-    });
-
-    const todayTotal = todaySales.reduce((sum, s) => sum + s.quantity, 0);
-    const lastWeekTotal = lastWeekSales.reduce((sum, s) => sum + s.quantity, 0);
-
-    result.push({
-      title: product.title,
-      today: todayTotal,
-      lastWeek: lastWeekTotal,
-      difference: todayTotal - lastWeekTotal
-    });
-  }
-
-  res.json(result);
-});
-
-
-
-
-
-
-router.get("/api/sales/compare/:productId", async (req, res) => {
-  const { productId } = req.params;
-
-  const today = new Date();
-  const lastWeek = new Date();
-  lastWeek.setDate(today.getDate() - 7);
-
-  const todaySales = await Sale.find({
-    product: productId,
-    date: { $gte: new Date(today.setHours(0,0,0,0)) }
-  });
-
-  const lastWeekSales = await Sale.find({
-    product: productId,
-    date: { 
-      $gte: new Date(lastWeek.setHours(0,0,0,0)),
-      $lt: new Date(lastWeek.setHours(23,59,59,999))
-    }
-  });
-
-  const todayTotal = todaySales.reduce((sum, s) => sum + s.quantity, 0);
-  const lastWeekTotal = lastWeekSales.reduce((sum, s) => sum + s.quantity, 0);
-
-  res.json({
-    today: todayTotal,
-    lastWeek: lastWeekTotal,
-    difference: todayTotal - lastWeekTotal
-  });
-});
-
-
 // ------------ Admin User routes ------------ //
 
-// Get all users
-router.get("/admin/api/users", async (req, res) => {
+// Get all users with pagination and sorting
+router.get("/users", async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(200).json(users);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const sortBy = req.query.sortBy || "lastName";
+    const sortDir = req.query.sortDir === "desc" ? -1 : 1;
+
+    const totalUsers = await User.countDocuments();
+
+    const users = await User.find()
+      .sort({ [sortBy]: sortDir })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+
+    res.status(200).json({
+      data: users,
+      total: totalUsers,
+      page,
+      totalPages: Math.ceil(totalUsers / limit),
+    });
   } catch (error) {
+    console.log("ADMIN USER ERROR:", error);
     res.status(500).json({ message: error.message });
   }
 });
+
 
 // get user by id
 router.get("/admin/users/:id", async (req, res) => {
@@ -139,24 +87,48 @@ router.delete("/admin/api/users/:id", async (req, res) => {
 });
 
 // Get bookings by user ID
-
-router.get("/admin/bookings/:userId", async (req, res) => {
+router.get("/bookings/:userId", async (req, res) => {
   try {
-    const bookings = await Booking.find({ user_id: req.params.userId })
-      .populate("screening_id")
-      .populate("seats.seat_id")
-      .populate("tickets.ticket_id");
+    const { userId } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5; // visa 5 per sida i modalen
+    const sortBy = req.query.sortBy || "created_at";
+    const sortDir = req.query.sortDir === "desc" ? -1 : 1;
 
-    res.json(bookings);
+    const query = { user_id: userId };
+    const total = await Booking.countDocuments(query);
+
+    const bookings = await Booking.find(query)
+      .populate({
+        path: "screening_id",
+        populate: [
+          { path: "movie", select: "title" },
+          { path: "auditorium", select: "name" },
+        ],
+      })
+      .populate("seats.seat_id")
+      .populate("tickets.ticket_id")
+      .sort({ [sortBy]: sortDir })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+
+    res.json({
+      data: bookings,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (error) {
     console.error("Fel vid hämtning av bokningar:", error);
     res.status(500).json({ error: "Kunde inte hämta bokningar" });
   }
 });
 
-// DELETE /api/bookings/:bookingId
 
-router.delete("/api/admin/bookings/:bookingId", async (req, res) => {
+// DELETE bookings/:bookingId
+
+router.delete("/bookings/:bookingId", async (req, res) => {
   try {
     const { bookingId } = req.params;
 
@@ -173,6 +145,380 @@ router.delete("/api/admin/bookings/:bookingId", async (req, res) => {
   }
 });
 
+// -------------Screening routes for admin ------------- //
+
+// Get all screenings with pagination and sorting
+router.get("/screenings", async (req, res) => {
+  try {
+  // Page is which page number.
+  const page = parseInt(req.query.page) || 1;
+  // Limit is how many items per page.
+  const limit = parseInt(req.query.limit9) || 10;
+  // SortBy is which field to sort by.
+  const sortBy = req.query.sortBy || "date";
+  // SortDir is the direction of the sort, either ascending or descending.
+  const sortDir = req.query.sortDir === "desc" ? -1 : 1;
+
+  const now = new Date();
+  // picking out today's date in YYYY-MM-DD format
+  const today = now.toISOString().split("T")[0];
+  // picking out current time in HH:MM format
+  const currentTime = now.toISOString().slice(11, 16);
+
+  // we only want to show screenings from today and onwards
+  const query = {
+    // $oroperator to combine two conditions
+    // $gtmeans greater than
+    // $gtemeans greater than or equal to
+  
+    $or: [
+      { date: { $gt: today } },
+      // if date is today, we want to show screenings with time greater than or equal to current time
+      { date: today, time: { $gte: currentTime } },
+    ],
+  };
+  // Calculate total number of screenings matching the query
+  const total = await Screening.countDocuments(query);
+  
+  const sortCriteria =
+    sortBy === "date"
+      ? { date: sortDir, time: sortDir }
+      : { [sortBy]: sortDir };
+
+  // Fetch screenings with pagination and sorting
+  //.populate to get related auditorium and movie details
+  //.skip to skip documents for pagination
+  //.limit to limit number of documents per page
+  //.lean to get plain JavaScript objects instead of Mongoose documents
+  const screenings = await Screening.find(query)
+    .populate("auditorium")
+    .populate("movie")
+    .sort(sortCriteria)
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .lean();
+
+// Format screenings data to include necessary details
+const formatted = screenings.map((s) => {
+  const auditorium = s.auditorium;
+  const totalSeats = auditorium.seats.length;
+
+  return {
+    id: s._id,
+    movieTitle: s.movie.title,
+    date: s.date,
+    time: s.time,
+    auditorium: auditorium.name,
+    bookedCount: s.bookedSeats.length,
+    totalSeats,
+  };
+});
+// Send response with formatted data and pagination info
+res.json({
+  data: formatted,
+  total,
+  page,
+  totalPages: Math.ceil(total / limit),
+});
+} catch (err) {
+  console.log(err);
+  res.status(500).json({ error: "server error" });
+}
+});
+  
+
+// Get screenings with booked seats count for today
+
+router.get("/screenings/today", async (req, res) => {
+  try {
+    const date = req.query.date;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const sortBy = req.query.sortBy || "time";
+    const sortDir = req.query.sortDir === "desc" ? -1 : 1;
+    
+    const total = await Screening.countDocuments({ date });
+
+    const sortCriteria =
+      sortBy === "date"
+        ? { date: sortDir, time: sortDir }
+        : { [sortBy]: sortDir };
+
+        const screenings = await Screening.find({ date })
+        .populate("auditorium")
+        .populate("movie")
+        .sort(sortCriteria)
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .lean();
+
+        const formatted = screenings.map((s) => {
+          const auditorium = s.auditorium;
+          const totalSeats = auditorium.seats.length;
+
+          return {
+            id: s._id,
+            movieTitle: s.movie.title,
+            date: s.date,
+            time: s.time,
+            auditorium: auditorium.name,
+            bookedCount: s.bookedSeats.length,
+            totalSeats,
+          };
+        
+        });
+
+        res.json({
+          data: formatted,
+          total,
+          page,
+          totalPages: Math.ceil(total / limit),
+        });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "server error" });
+  }
+})
+
+// get one
+router.get("/screenings/:id", async (req, res) => {
+  const s = await Screening.findById(req.params.id)
+    .populate("auditorium")
+    .populate("movie")
+    .lean();
+
+  res.json({
+    id: s._id,
+    movieTitle: s.movie.title,
+    time: s.time,
+    auditoriumName: s.auditorium.name,
+    auditoriumId: s.auditorium._id.toString(),
+  });
+});
+
+// update
+router.put("/screenings/:id", async (req, res) => {
+  const { time, auditoriumId } = req.body;
+  const screening = await Screening.findById(req.params.id).populate(
+    "movie auditorium"
+  );
+
+  await Screening.findByIdAndUpdate(req.params.id, {
+    time,
+    auditorium: auditoriumId,
+  });
+
+  const userBookings = await Booking.find({
+    screening_id: req.params.id,
+  }).populate("user_id");
+
+  for (const booking of userBookings) {
+    if (booking.user_id && booking.user_id.email) {
+      await sendMail({
+        to: booking.user_id.email,
+        subject: "Filmvisarna - Uppdatering av din bokning",
+        html: `Hej ${booking.user_id.firstName},<br><br>Vi vill informera dig om att din bokning 
+              för filmen ${screening.movie.title} ${screening.date} har uppdaterats. Den nya 
+              tiden är ${time} i "${screening.auditorium.name}".<br><br>
+              Vi ser fram emot ditt besök!<br><br>Vänliga hälsningar,<br>Filmvisarna`,
+      });
+    }
+  }
+
+  res.json({ ok: true });
+});
+
+// delete
+router.delete("/screenings/:id", async (req,res)=>{
+  const screening = await Screening.findById(req.params.id)
+    .populate("movie")
+    .lean()
+
+  if (!screening) return res.status(404).json({ error: "Visning saknas" })
+
+  // Get bookings to be able to notify users
+  const bookings = await Booking.find({ screening_id: req.params.id })
+    .populate("user_id")
+
+  // Delete screening
+  await Screening.findByIdAndDelete(req.params.id)
+
+  // Mail users about deleted screening
+  await Promise.all(
+    bookings.map(b => {
+      if (!b.user_id?.email) return
+      return sendMail({
+        to: b.user_id.email,
+        subject: "Filmvisarna – visning inställd",
+        html: `
+          <h2>Hej ${b.user_id.firstName}!</h2>
+          <p>Visningen du har bokat är tyvärr inställd.</p>
+          <p>${screening.movie.title}, ${screening.date}, ${screening.time}</p>
+          <p>Kontakta oss vid frågor.</p>
+          <p>Vänliga hälsningar,<br/>Filmvisarna</p>
+        `
+      })
+    })
+  )
+
+  res.json({ ok: true })
+})
+
+router.post("/screenings", async (req, res) => {
+  try {
+    // Validating input data from request body
+    const { movieId, date, time, salonName } = req.body;
+    // Check for missing fields
+    if (!movieId || !date || !time || !salonName) {
+      return res
+        .status(400)
+        .json({ error: "movieId, date, time och salonName krävs" });
+    }
+    // Check if movie exists by using the provided movieId from request body
+    const movie = await Movies.findById(movieId);
+    if (!movie) return res.status(404).json({ error: "Film hittades inte" });
+    // Check if auditorium exists by using the provided salonName from request body
+    const auditorium = await Auditorium.findOne({ name: salonName });
+    if (!auditorium)
+      return res.status(400).json({ error: "Salong hittades inte" });
+
+    // Check timeslots from schedule.js based on salon type
+    const allowedTimes =
+      salonName === "Lilla Salongen"
+        ? schedule.smallTheaterTimes
+        : schedule.bigTheaterTimes;
+
+        if (!allowedTimes.includes(time)) {
+          return res.status(400).json({ error: "Ogiltig tid för vald salong" });
+        }
+
+    // Check for conflicting screenings in the same auditorium at the same date and time
+    // Sending in date and time from request body
+    const conflictingScreening = await Screening.findOne({
+      auditorium: auditorium._id,
+      date,
+      time,
+    });
+
+    if (conflictingScreening) {
+      return res
+        .status(400)
+        .json({ error: "Det finns redan en visning i denna salong vid denna tid" });
+    }
+
+    // Determine schedule type based on salon name
+    const scheduleType = salonName === "Lilla Salongen" ? "smallTheater" : "bigTheater";
+
+    const newScreening = new Screening({
+      movie: movieId,
+      auditorium: auditorium._id,
+      date,
+      time,
+      showTime: new Date(`${date}T${time}:00`),
+      bookedSeats: [],
+      scheduleType,
+    });
+
+    await newScreening.save();
+    res.status(201).json({ message: "Visning skapad", newScreening });
+  } catch (error) {
+    console.error("Fel vid skapande av visning:", error);
+    res.status(500).json({ error: "Serverfel, Kunde inte skapa visning" });
+  }
+});
+
+// Get available and taken times for a specific date and theater
+router.get("/schedule", async (req, res) => {
+  try {
+    // Validating query parameters from request
+    const { date, theaterName } = req.query;
+
+    // Check for missing fields
+    if (!date || !theaterName) {
+      return res.status(400).json({ error: "date och theaterName krävs" });
+    }
+
+    // Check if auditorium exists by using the provided theaterName from request query
+    const auditorium = await Auditorium.findOne({ name: theaterName });
+    if (!auditorium) return res.status(400).json({ error: "Salong saknas" });
+
+    // Array to hold allowed times based on theater type
+    let allowedTimes = [];
+
+    // If theaterName is "Lilla Salongen", use smallTheaterTimes from schedule.js
+    if (theaterName === "Lilla Salongen") {
+      allowedTimes = schedule.smallTheaterTimes || [];
+    // If theaterName is "Stora Salongen", use bigTheaterTimes from schedule.js
+    } else if (theaterName === "Stora Salongen") {
+      allowedTimes = schedule.bigTheaterTimes || [];
+    }
+
+    // Find screenings already booked for the specified date and auditorium
+    const takenScreenings = await Screening.find({
+      auditorium: auditorium._id,
+      date,
+      // Only select the time field
+    }).select("time");
+    
+    // Extract times from the taken screenings
+    const takenTimes = takenScreenings.map((s) => s.time);
+
+    // Return allowed, taken, and free times
+    return res.json({
+      allowedTimes,
+      takenTimes,
+      freeTimes: allowedTimes.filter((t) => !takenTimes.includes(t)),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Serverfel" });
+  }
+});
+
+
+// Get total number of seats booked for all screenings today
+router.get("/screenings/today/bookings/count", async (req, res) => {
+  try {
+    const date = req.query.date;
+    const screenings = await Screening.find({ date });
+
+    let totalGuests = 0;
+
+    for (const screening of screenings) {
+  
+      const bookings = await Booking.find({ screening_id: screening._id });
+
+      for (const booking of bookings) {
+        totalGuests += booking.seats?.length || 0;
+      }
+    }
+
+    res.json({ count: totalGuests });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+
+// Get all auditoriums to populate dropdowns
+router.get("/auditoriums", async (req,res)=>{
+  const auditoriums = await Auditorium.find();
+  res.json(auditoriums);
+})
+
+// ----------- Movie routes for admin ------------ //
+
+// POST Route, /api/movie
+router.post("/movie", async (req, res) => {
+  try {
+    const movies = new Movies(req.body);
+    await movies.save();
+    res.status(201).json(movies);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
 
 

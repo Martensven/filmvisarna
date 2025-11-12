@@ -11,7 +11,7 @@ import type {
   Theme,
   MovieInput,
   Review,
-} from "../../types/movieTypes";
+} from "../../../types/movieTypes";
 
 export default function AddMovieForm() {
   // State to hold all data to be saved to backend database
@@ -123,7 +123,8 @@ export default function AddMovieForm() {
     setMessage("");
 
     try {
-      const response = await fetch("/api/movie", {
+      const response = await fetch("/api/admin/movie", {
+        credentials: "include",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -161,7 +162,7 @@ export default function AddMovieForm() {
   };
 
   return (
-    <div className="w-full p-4 bg-[#1f1f1f]">
+    <div className="w-full p-4 bg-[#243365] rounded-xl text-white">
       <h2 className="text-2xl font-bold mb-6">Lägg till ny film</h2>
       {loading ? (
         <p className="text-white">Laddar...</p>

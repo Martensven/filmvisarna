@@ -95,11 +95,11 @@ export default function FetchBookings() {
                         </p>
 
                         <p className="font-medium">Pris: {b.totalPrice} kr</p>
-                        <p>Bokat: {b.created_at}</p>
-                        <p>Bokningsnummer: {b._id}</p>
+                        {/* <p>Bokat: {b.created_at}</p> */}
+                        <p>Bokningsnummer: {b.bookingNumber}</p>
 
                         <button
-                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mt-3"
                             onClick={() => setSelectedBooking(b)}
                         >
                             Avboka

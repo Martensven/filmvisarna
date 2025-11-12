@@ -12,7 +12,12 @@ const router = express.Router();
 // Create a new booking
 router.post("/api/bookings", async (req, res) => {
   try {
-    const { user_id, screening_id, seat_ids, tickets: ticketRequests } = req.body;
+    const {
+      user_id,
+      screening_id,
+      seat_ids,
+      tickets: ticketRequests,
+    } = req.body;
 
     console.log("REQ BODY:", req.body); // Debug
 
@@ -27,7 +32,7 @@ router.post("/api/bookings", async (req, res) => {
       return res.status(404).json({ error: "Ingen visning hittades" });
 
     // ✅ Check already booked seats
-    const alreadyBooked = seat_ids.filter(id =>
+    const alreadyBooked = seat_ids.filter((id) =>
       screening.bookedSeats.includes(id)
     );
     if (alreadyBooked.length > 0)
@@ -43,7 +48,8 @@ router.post("/api/bookings", async (req, res) => {
       const io = getIo();
       io.to(screening._id.toString()).emit("seatUpdate", {
         bookedSeats: screening.bookedSeats,
-        pendingSeats: [],});
+        pendingSeats: [],
+      });
       console.log(`Seat update emitted for screening ${screening._id}`);
     } catch (e) {
       console.warn("Socket emit failed:", e.message);
@@ -51,7 +57,7 @@ router.post("/api/bookings", async (req, res) => {
 
     // ✅ Build seat info
     const seats = await Promise.all(
-      seat_ids.map(async id => {
+      seat_ids.map(async (id) => {
         const seat = await Seat.findById(id);
         if (!seat) throw new Error("Inga platser hittades: " + id);
         return { seat_id: seat._id, seatNumber: seat.seatNumber };
@@ -60,7 +66,7 @@ router.post("/api/bookings", async (req, res) => {
 
     // ✅ Build ticket info
     const tickets = await Promise.all(
-      ticketRequests.map(async t => {
+      ticketRequests.map(async (t) => {
         const ticketData = await TicketType.findById(t.ticket_id);
         if (!ticketData)
           throw new Error("Biljett hittades inte: " + t.ticket_id);
@@ -76,14 +82,16 @@ router.post("/api/bookings", async (req, res) => {
 
     const totalPrice = tickets.reduce((sum, t) => sum + t.totalPrice, 0);
 
-    // ✅ Save booking
-    const newBooking = await Booking.create({
+    // ✅ Save booking (trigger pre-save hook for bookingNumber)
+    const newBooking = new Booking({
       user_id: user ? user._id : null,
       screening_id: screening._id,
       seats,
       tickets,
       totalPrice,
     });
+
+    await newBooking.save();
 
     // ✅ Populate references for response
     const populatedBooking = await Booking.findById(newBooking._id)
@@ -96,34 +104,160 @@ router.post("/api/bookings", async (req, res) => {
 
     // ✅ Mail sending
     if (user?.email) {
-      const seatList = seats.map(s => s.seatNumber).join(", ");
+      console.log("försöker skicka mejl till, ", user.email);
+      console.log("📂 Nuvarande mapp:", process.cwd());
+      const seatList = seats.map((s) => s.seatNumber).join(", ");
       const ticketList = tickets
-        .map(
-          t =>
-            `${t.ticketName} (${t.quantity} x ${t.pricePerTicket} kr)`
-        )
+        .map((t) => `${t.ticketName} (${t.quantity} x ${t.pricePerTicket} kr)`)
         .join("<br>");
 
+      try {
+        await sendMail({
+          to: user.email,
+          subject: "Filmvisarna - Bokningsbekräftelse",
+          html: `
+      
+            <table align="center" width="600" cellpadding="0" cellspacing="3" style="font-family: Arial, serif; padding:10px;">
+              <tr>
+                <td style="background-color: #243365; padding:5px; border-radius:5px;" 
+                width="600" height="120" align="left">
+          
+                  <img src="cid:logo" alt="Filmvisarnas logga" width="150" style="margin:10px 20px 2px 20px;" > 
+                  <h2 style="color:white; font-size:20px; margin:1px 20px 10px 20px;" align="center">Bokningsbekräftelse</h2>
+           
+                </td>
+              </tr>
+
+              <tr>
+                <td style="color:white; text-align:center; padding:5px; background-color: #243365; border-radius:5px;">
+                  <h2 style="margin:3px;">Hej ${user.firstName}! 🙂</h2>
+                  <p style="margin-top:1px;">Tack för att du bokar din bioupplevelse hos oss.</p>
+
+                  <table align="center" cellpadding="0" cellspacing="0" width="600" style="background-color: #9ca6c7ff; border:2px solid #243365; border-radius:5px; margin:20px 20px; padding:10px;">
+                    <tr>
+                      <td style="color: #0d1325ff; text-align:center; padding:10px;">
+                        <h2 style="text-align:center; margin: 0;">Din Bokning</h2>
+                        <p><strong>Ordernummer:</strong> ${newBooking.bookingNumber}</p>
+                        <p><strong>Film:</strong> ${screening.movie.title}</p>
+                
+                        <p><strong>Datum & tid:</strong> ${screening.date}, ${screening.time}</p>
+                        <p><strong>Salong:</strong> ${screening.auditorium.name}</p>
+                        <p><strong>Platser:</strong> ${seatList}</p>
+                        <p><strong>Biljetter:</strong><br>${ticketList}</p>
+                        <p><strong>Total:</strong> ${totalPrice} kr</p>
+                        <p>Vi ses på bion! 🍿🎬</p>
+                        <p style="font-size:13px;">Psst.. Glöm inte att besöka våran kiosk innan filmen börjar 😇 </p>
+                      </td>
+                    <tr>
+                  </table>    
+
+                  <table cellpadding="0" cellspacing="0" style="color:white; margin:20px auto 25px auto;" align="center">
+                    <tr>
+                      <td align="center">
+                        <h1 style="font-size:25px; margin:3px;">Filmvisarna</h1>
+                        <h3 style="font-size:20px; margin:2px 0px;">Kontakt</h3>
+                        <p style="font-size:15px; margin:2px;">Epost: info@filmvisarna.se</p>
+                        <p style="font-size:15px; margin:2px;">Telefon: 123-456 78 90</p>
+                        <p style="font-size:15px; margin:2px;">Adress: Biogatan 1, 123 45, Filmstaden</p>
+                      </td>
+                    </tr>
+                  </table>
+
+                </td>
+              </tr>
+            </table>
+      
+        `,
+          attachments: [
+            {
+              filename: "LoggoMail.png",
+              path: "./assets/LoggoMail.png",
+              cid: "logo",
+            },
+          ],
+        });
+
+        console.log("Mail skickat till", user.email);
+      } catch (err) {
+        console.error("Kunde inte skicka iväg mejl", err);
+      }
+    } else if (!user && req.body.guestInfo?.email) {
+      const { firstName, email } = req.body.guestInfo;
+      const seatList = seats.map((s) => s.seatNumber).join(", ");
+      const ticketList = tickets
+        .map((t) => `${t.ticketName} (${t.quantity} x ${t.pricePerTicket} kr)`)
+        .join("<br>");
       await sendMail({
-        to: user.email,
+        to: email,
         subject: "Filmvisarna - Bokningsbekräftelse",
         html: `
-          <h2>Hej ${user.firstName}!</h2>
-          <p>Tack för din bokning!</p>
-          <p><strong>Ordernummer:</strong> ${newBooking._id}</p>
-          <p><strong>Film:</strong> ${screening.movie.title}</p>
-          <p><strong>Datum & tid:</strong> ${screening.date} ${screening.time}</p>
-          <p><strong>Salong:</strong> ${screening.auditorium.name}</p>
-          <p><strong>Platser:</strong> ${seatList}</p>
-          <p><strong>Biljetter:</strong><br>${ticketList}</p>
-          <p><strong>Total:</strong> ${totalPrice} kr</p>
-          <p>Vi ses på bion! 🍿🎬</p>
-        `,
+          <table align="center" width="600" cellpadding="0" cellspacing="3" style="font-family: Arial, serif; padding:10px;">
+              <tr>
+                <td style="background-color: #243365; padding:5px; border-radius:5px;" 
+                width="600" height="120" align="left">
+          
+                  <img src="cid:logo" alt="Filmvisarnas logga" width="150" style="margin:10px 20px 2px 20px;" > 
+                  <h2 style="color:white; font-size:20px; margin:1px 20px 10px 20px;" align="center">Bokningsbekräftelse</h2>
+           
+                </td>
+              </tr>
+
+              <tr>
+                <td style="color:white; text-align:center; padding:5px; background-color: #243365; border-radius:5px;">
+                  <h2 style="margin:3px;">Hej ${firstName || "Gäst"}! 🙂</h2>
+                  <p style="margin-top:1px;">Tack för att du bokar din bioupplevelse hos oss.</p>
+
+                  <table align="center" cellpadding="0" cellspacing="0" width="600" style="background-color: #9ca6c7ff; border:2px solid #243365; border-radius:5px; margin:20px 20px; padding:10px;">
+                    <tr>
+                      <td style="color: #0d1325ff; text-align:center; padding:10px;">
+                        <h2 style="text-align:center; margin: 0;">Din Bokning</h2>
+                        <p><strong>Ordernummer:</strong> ${
+                          newBooking.bookingNumber
+                        }</p>
+                        <p><strong>Film:</strong> ${screening.movie.title}</p>
+                
+                        <p><strong>Datum & tid:</strong> ${screening.date}, ${
+          screening.time
+        }</p>
+                        <p><strong>Salong:</strong> ${
+                          screening.auditorium.name
+                        }</p>
+                        <p><strong>Platser:</strong> ${seatList}</p>
+                        <p><strong>Biljetter:</strong><br>${ticketList}</p>
+                        <p><strong>Total:</strong> ${totalPrice} kr</p>
+                        <p style="margin-top:5px;">Biljetten/Biljetterna hämtas ut vid kassan vid ankomst</p>
+                        <p>Vi ses på bion! 🍿🎬</p>
+                        <p style="font-size:13px;">Psst.. Glöm inte att besöka våran kiosk innan filmen börjar 😇 </p>
+                      </td>
+                    <tr>
+                  </table>    
+
+                  <table cellpadding="0" cellspacing="0" style="color:white; margin:20px auto 25px auto;" align="center">
+                    <tr>
+                      <td align="center">
+                        <h1 style="font-size:25px; margin:3px;">Filmvisarna</h1>
+                        <h3 style="font-size:20px; margin:2px 0px;">Kontakt</h3>
+                        <p style="font-size:15px; margin:2px;">Epost: info@filmvisarna.se</p>
+                        <p style="font-size:15px; margin:2px;">Telefon: 123-456 78 90</p>
+                        <p style="font-size:15px; margin:2px;">Adress: Biogatan 1, 123 45, Filmstaden</p>
+                      </td>
+                    </tr>
+                  </table>
+
+                </td>
+              </tr>
+            </table>
+    `,
+        attachments: [
+          {
+            filename: "LoggoMail.png",
+            path: "./assets/LoggoMail.png",
+            cid: "logo",
+          },
+        ],
       });
-
-      console.log("Mail skickat till", user.email);
+      console.log("Mail skickat till", email);
     }
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ errorMsg: "Kunde inte skapa bokning", error });
@@ -199,10 +333,11 @@ router.get("/api/bookings/user/:id", async (req, res) => {
 
     res.status(200).json(filtered);
   } catch (error) {
-    res.status(500).json({ errorMSG: "Failed to retrieve bookings for user", error });
+    res
+      .status(500)
+      .json({ errorMSG: "Failed to retrieve bookings for user", error });
   }
 });
-
 
 // Update booking by ID
 router.put("/api/bookings/:id", async (req, res) => {
@@ -229,13 +364,13 @@ router.put("/api/bookings/:id", async (req, res) => {
 router.delete("/api/bookings/:id", async (req, res) => {
   try {
     // Find the booking by ID
-    const booking = await Booking.findById(req.params.id);
+    const booking = await Booking.findById(req.params.id).populate("user_id");
     if (!booking) {
       return res.status(404).json({ errorMSG: "Bokningen hittades inte." });
     }
 
     // Find the related screening
-    const screening = await Screening.findById(booking.screeningInfo.screening_id);
+    const screening = await Screening.findById(booking.screening_id);
     if (!screening) {
       return res.status(404).json({ errorMSG: "Visningen hittades inte." });
     }
@@ -248,7 +383,8 @@ router.delete("/api/bookings/:id", async (req, res) => {
 
     if (diffInHours < 2) {
       return res.status(400).json({
-        errorMSG: "Det går inte att avboka biljetter mindre än två timmar före visningen.",
+        errorMSG:
+          "Det går inte att avboka biljetter mindre än två timmar före visningen.",
       });
     }
 
@@ -259,10 +395,77 @@ router.delete("/api/bookings/:id", async (req, res) => {
     );
     await screening.save();
 
+    if (booking.user_id?.email) {
+      const email = booking.user_id?.email;
+      const firstname = booking.user_id?.firstName;
+      const bookingNumber = booking.bookingNumber;
+
+      console.log("Försöker skicka mejl till ", email)
+      
+      try {
+        await sendMail({
+          to: email,
+          subject: "Filmvisarna - Avbokad bokning",
+          html: `
+          <table align="center" width="600" cellpadding="0" cellspacing="3" style="font-family: Arial, serif; padding:10px;">
+              <tr>
+                <td style="background-color: #243365; padding:5px; border-radius:5px;" 
+                width="600" height="120" align="left">
+          
+                  <img src="cid:logo" alt="Filmvisarnas logga" width="150" style="margin:10px 20px 2px 20px;" > 
+                  <h2 style="color:white; font-size:20px; margin:1px 20px 10px 20px;" align="center">Avbokad Bioupplevelse</h2>
+           
+                </td>
+              </tr>
+
+              <tr>
+                <td style="color:white; text-align:center; padding:5px; background-color: #243365; border-radius:5px;">
+                  <h2 style="margin:3px;">Hej ${firstname}! 🙂</h2>
+            
+                  <table align="center" cellpadding="0" cellspacing="0" width="600" style="background-color: #9ca6c7ff; border:2px solid #243365; border-radius:5px; margin:20px 20px; padding:10px;">
+                    <tr>
+                      <td style="color: #0d1325ff; text-align:center; padding:10px;">
+                        <h2 style="text-align:center; margin: 0; font-size: 22px;">Din Bokning med ordernummer:</h2>
+                        <p style="font-size:20px;"><strong>${bookingNumber}</strong></p>
+                        <p style="margin-top:5px;"><strong>Har blivit avbokat</strong></p>
+                        <p>Kom gärna tillbaka och boka en ny bioupplevelse hos oss snart!</p>
+                      </td>
+                    <tr>
+                  </table>    
+
+                  <table cellpadding="0" cellspacing="0" style="color:white; margin:20px auto 25px auto;" align="center">
+                    <tr>
+                      <td align="center">
+                        <h1 style="font-size:25px; margin:3px;">Filmvisarna</h1>
+                        <h3 style="font-size:20px; margin:2px 0px;">Kontakt</h3>
+                        <p style="font-size:15px; margin:2px;">Epost: info@filmvisarna.se</p>
+                        <p style="font-size:15px; margin:2px;">Telefon: 123-456 78 90</p>
+                        <p style="font-size:15px; margin:2px;">Adress: Biogatan 1, 123 45, Filmstaden</p>
+                      </td>
+                    </tr>
+                  </table>
+
+                </td>
+              </tr>
+            </table>
+        `,
+          attachments: [
+            {
+              filename: "LoggoMail.png",
+              path: "./assets/LoggoMail.png",
+              cid: "logo",
+            },
+          ],
+        });
+        console.log("mejl om avbokning har skickats till ", email);
+      } catch (err) {
+        console.error("Mejl kunde inte skickas iväg", err);
+      }
+    }
     // delete the booking
     await Booking.deleteOne({ _id: req.params.id });
-
     res.status(200).json({ message: "Avbokning genomförd" });
+
   } catch (error) {
     console.error("Fel vid avbokning:", error);
     res.status(500).json({
@@ -271,6 +474,5 @@ router.delete("/api/bookings/:id", async (req, res) => {
     });
   }
 });
-
 
 export default router;
