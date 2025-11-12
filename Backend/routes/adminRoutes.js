@@ -476,26 +476,30 @@ router.get("/schedule", async (req, res) => {
 });
 
 
-// Get total amount of bookings for all screenings at today's date
+// Get total number of seats booked for all screenings today
 router.get("/screenings/today/bookings/count", async (req, res) => {
   try {
     const date = req.query.date;
     const screenings = await Screening.find({ date });
 
-    // Start value at 0 and add number of bookings for each screening
-    let totalBookings = 0;
+    let totalGuests = 0;
+
     for (const screening of screenings) {
-      const bookingCount = await Booking.countDocuments({
-        screening_id: screening._id,
-      });
-      totalBookings += bookingCount;
+  
+      const bookings = await Booking.find({ screening_id: screening._id });
+
+      for (const booking of bookings) {
+        totalGuests += booking.seats?.length || 0;
+      }
     }
-    res.json({ count: totalBookings });
+
+    res.json({ count: totalGuests });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({ error: "server error" });
   }
 });
+
 
 // Get all auditoriums to populate dropdowns
 router.get("/auditoriums", async (req,res)=>{
