@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { KioskItem } from "../../types/kiosk";
 import CategorySection from "./components/categorySection";
+import "./kioskStyle.css"
 
 export default function KioskPage() {
   const [items, setItems] = useState<KioskItem[]>([]);
@@ -25,16 +26,24 @@ export default function KioskPage() {
   const candy = items.filter((item) => item.category === "candy");
   
   return (
-    <main className="w-screen text-white"> 
-      <header className="text-center">
-        <h1 className="text-3xl shadow-md p-3 my-10 mx-auto bg-[#243365] w-10/12">
-          Utbud i kiosken
+    <main className="w-screen flex flex-col justify-center items-end text-white
+    lg:items-end"> 
+      <header className="KioskSign flex flex-col justify-center items-center w-50 h-30 text-center mx-10 my-10 rotate-10
+      lg:mr-[50px] lg:rotate-[10deg]">
+        <h1 className="text-lg">
+          Kiosken
         </h1>
+        <p className="text-[10px] text-center w-30 ">Snacks och godis gör bioupplevelsen komplett</p>
+      </header>
 
-        <CategorySection title="Drycker" items={drinks} />
+      <section>
+        <div className="flex justify-center items-center">
+          <CategorySection title="Drycker" items={drinks} />
+        </div>
+        
         <CategorySection title="Snacks" items={snacks} />
         <CategorySection title="Godis" items={candy} />
-      </header>
+      </section>
     </main>
   );
 }

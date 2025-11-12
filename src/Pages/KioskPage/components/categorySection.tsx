@@ -1,17 +1,18 @@
 import type { CategorySectionProps } from "../kioskPage";
+import "./../kioskStyle.css"
 
 export default function CategorySection({
   title,
   items,
 }: CategorySectionProps) {
   return (
-    <section className="w-screen">
-      <h3 className="text-center text-xl m-4">{title}</h3>
+    <section className="StallContainer w-11/12 flex flex-col justify-center items-center">
+      <h3 className="flex justify-center items-center text-center text-xl m-4 bg-[#455896] rounded-[50px] w-50 h-10">{title}</h3>
       <section className="w-full flex flex-wrap justify-center items-center gap-5">
         {items.map((item) => (
           <article
             key={item._id}
-            className="w-48 h-64 relative flex items-end justify-center text-center text-white"
+            className="w-30 h-64 relative flex items-end justify-center text-center text-white"
           >
             <img
               src={item.image}
