@@ -15,16 +15,34 @@ router.use(isAdmin);
 
 // ------------ Admin User routes ------------ //
 
-// Get all users
+// Get all users with pagination and sorting
 router.get("/users", async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(200).json(users);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const sortBy = req.query.sortBy || "lastName";
+    const sortDir = req.query.sortDir === "desc" ? -1 : 1;
+
+    const totalUsers = await User.countDocuments();
+
+    const users = await User.find()
+      .sort({ [sortBy]: sortDir })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+
+    res.status(200).json({
+      data: users,
+      total: totalUsers,
+      page,
+      totalPages: Math.ceil(totalUsers / limit),
+    });
   } catch (error) {
     console.log("ADMIN USER ERROR:", error);
     res.status(500).json({ message: error.message });
   }
 });
+
 
 // get user by id
 router.get("/admin/users/:id", async (req, res) => {
@@ -69,10 +87,18 @@ router.delete("/admin/api/users/:id", async (req, res) => {
 });
 
 // Get bookings by user ID
-
 router.get("/bookings/:userId", async (req, res) => {
   try {
-    const bookings = await Booking.find({ user_id: req.params.userId })
+    const { userId } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5; // visa 5 per sida i modalen
+    const sortBy = req.query.sortBy || "created_at";
+    const sortDir = req.query.sortDir === "desc" ? -1 : 1;
+
+    const query = { user_id: userId };
+    const total = await Booking.countDocuments(query);
+
+    const bookings = await Booking.find(query)
       .populate({
         path: "screening_id",
         populate: [
@@ -81,14 +107,24 @@ router.get("/bookings/:userId", async (req, res) => {
         ],
       })
       .populate("seats.seat_id")
-      .populate("tickets.ticket_id");
+      .populate("tickets.ticket_id")
+      .sort({ [sortBy]: sortDir })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
 
-    res.json(bookings);
+    res.json({
+      data: bookings,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (error) {
     console.error("Fel vid hämtning av bokningar:", error);
     res.status(500).json({ error: "Kunde inte hämta bokningar" });
   }
 });
+
 
 // DELETE bookings/:bookingId
 
@@ -243,37 +279,6 @@ router.get("/screenings/today", async (req, res) => {
     res.status(500).json({ error: "server error" });
   }
 })
-
-// router.get("/screenings/today", async (req, res) => {
-//   try {
-//     const date = req.query.date;
-
-//     const screenings = await Screening.find({ date })
-//       .populate("auditorium")
-//       .populate("movie")
-
-//       .lean();
-
-//     const formatted = screenings.map((s) => {
-//       const auditorium = s.auditorium;
-//       const totalSeats = auditorium.seats.length;
-
-//       return {
-//         id: s._id,
-//         movieTitle: s.movie.title,
-//         time: s.time,
-//         auditorium: auditorium.name,
-//         bookedCount: s.bookedSeats.length,
-//         totalSeats,
-//       };
-//     });
-
-//     res.json(formatted);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json({ error: "server error" });
-//   }
-// });
 
 // get one
 router.get("/screenings/:id", async (req, res) => {
