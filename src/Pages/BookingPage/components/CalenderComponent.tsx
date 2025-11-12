@@ -82,7 +82,7 @@ export default function CalenderComponent({
     <main
       className="Container-for-days w-7/12  flex flex-col justify-center items-center
       sm:justify-center sm:items-center sm:mb-5
-      md:w-full md:flex-col md:justify-center md:items-center
+      md:w-full md:justify-center md:items-center
       lg:w-6/12 
       xl:w-8/12"
     >
@@ -101,7 +101,7 @@ export default function CalenderComponent({
         <section
           className="Todays flex flex-col justify-center items-center w-11/12 rounded-md          
           md:flex-row md:w-5/12 md:justify-center md:items-center
-          lg:flex lg:flex-row lg:justify-center lg:w-10/12 
+          lg:flex-row lg:justify-center lg:w-10/12 
           xl:w-7/12 "
         >
           {todaysScreening.length > 0 ? (
