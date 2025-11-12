@@ -110,8 +110,16 @@ router.post(
                 </td>
               </tr>
             </table>
-          `,
+          `, 
+          attachments: [
+          {
+            filename: "LoggoMail.png",
+            path: "./assets/LoggoMail.png",
+            cid: "logo",
+          },
+        ],
       });
+      
       console.log("Mejl har skickats iväg");
     } catch (error) {
       res.status(400).json({ message: error.message });
