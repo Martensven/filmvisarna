@@ -16,14 +16,12 @@ import KioskPage from "./Pages/KioskPage/kioskPage.tsx";
 import DetailMovie from "./Pages/DetailMovie/detailMovie.tsx";
 import ForgotPassword from "./Components/login/forgotPassword.tsx";
 import AdminPage from "./Pages/AdminPage/adminPage.tsx";
-import SalesPage from "./Pages/AdminPage/AdminSales/salesPage.tsx";
 import AdminAddMoviePage from "./Pages/AdminPage/AdminAddMovie/adminAddMovie.tsx";
 import AdminStart from "./Pages/AdminPage/AdminStart/adminStart.tsx";
 import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.tsx";
 import AdminUsersPage from "./Pages/AdminPage/AdminUsers/adminUsersPage.tsx";
 import AdminEditScreening from "./Pages/AdminPage/AdminStart/adminEditScreening.tsx";
-import AdminAddScreening from "./Pages/AdminPage/AdminAddScreening/adminAddScreening.tsx";
-import AdminScreeningStart from "./Pages/AdminPage/AdminAddScreening/adminScreeningStart.tsx";
+import AdminScreeningStart from "./Pages/AdminPage/AdminScreenings/adminScreeningStart.tsx";
 
 function App() {
   const [loginPopup, setLoginPopup] = useState<
@@ -79,7 +77,6 @@ function App() {
           }
         >
           <Route index element={<AdminStart />} />
-          <Route path="sales" element={<SalesPage />} />
           <Route path="add-movie" element={<AdminAddMoviePage />} />
           <Route path="users" element={<AdminUsersPage />} />
           <Route
