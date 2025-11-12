@@ -40,9 +40,9 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             </section>
 
             <section
-              className="Movie-Screening-Days flex flex-row container_box w-11/12 h-100 mb-4
-            sm:h-105 sm:justify-center sm:items-center
-            md:flex-col md:w-7/14 md:h-auto md:ml-10
+              className="Movie-Screening-Days flex flex-col  sm:flex-row container_box w-11/12 mb-4
+            justify-center items-center
+            md:flex-col md:w-7/14 md:ml-10
             lg:flex-row lg:w-8/14 lg:ml-11
             xl:ml-18 xl:w-6/12"
             >
@@ -57,7 +57,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
               className="Booking-component flex flex-col w-11/12 h-auto justify-center items-center container_box
                         md:flex-col md:justify-center md:items-center md:w-7/14 md:ml-10
                         lg:flex lg:flex-col lg:w-8/14 lg:justify-center lg:items-center lg:ml-11
-                        xl:flex-row xl:ml-18 xl:justify-around xl:h-150 xl:w-6/12"
+                        xl:flex-row xl:ml-18 xl:justify-around xl:w-6/12"
             >
               <AmountTheaterSeats />
 
