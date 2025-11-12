@@ -31,7 +31,7 @@ export default function AdminWelcome() {
     <>
       <section className="text-center h-fit bg-[#243365] flex flex-col items-center justify-center p-6 rounded-xl">
         <h2 className="text-xl font-bold">Välkommen, {user.firstName} {user.lastName}!</h2>
-        <p className="mt-2">Idag har vi {totalBookings} bokningar.</p>
+        <p className="mt-2">Idag har vi {totalBookings} gäster.</p>
       </section>
     </>
   );

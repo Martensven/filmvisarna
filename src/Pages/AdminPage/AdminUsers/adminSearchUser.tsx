@@ -13,17 +13,18 @@ export function SearchUserModal({ onClose }: Props) {
   const [cancelMessage, setCancelMessage] = useState("");
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("/api/admin/users");
-        const data: User[] = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error("Fel vid hämtning av användare:", error);
-      }
-    };
-    fetchUsers();
-  }, []);
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("/api/admin/users");
+      const result = await response.json();
+      setUsers(result.data);
+    } catch (error) {
+      console.error("Fel vid hämtning av användare:", error);
+    }
+  };
+  fetchUsers();
+}, []);
+
 
   useEffect(() => {
     const fetchBookings = async () => {
