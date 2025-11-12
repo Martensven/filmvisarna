@@ -138,13 +138,13 @@ export default function DetailMovie() {
                         sm:text-base w-full">
 
                             {movie.reviews && movie.reviews.length > 0 && (
-                                <article className="text-sm pt-5 space-y-4 pb-2 my-3
+                                <article className="flex flex-col items-center justify-center  text-sm pt-5 space-y-4 pb-2 my-3
                                 sm:text-base
                                 md:
                                 lg:pt-5 lg:pb-2">
                                     <p className="font-[Noto_Sans] underline">Recensioner</p>
                                     {movie.reviews.map((review: any, idx: number) => (
-                                        <p key={idx} className="text-amber-200 italic font-[Noto_Sans] border-b row-height:normal pb-4">
+                                        <p key={idx} className=" text-amber-200 italic font-[Noto_Sans] border-b w-11/12 row-height:normal pb-4">
                                             "{review.review}"
                                             <br />
                                             - {review.author}, {review.publisher}
