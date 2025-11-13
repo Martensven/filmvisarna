@@ -32,7 +32,7 @@ export default function ResetPassword() {
   };
   return (
     <section className="flex flex-col justify-center items-center mt-20">
-      <form onSubmit={handleSubmit}>
+      <form className="flex flex-col justify-center items-center" onSubmit={handleSubmit}>
         <h1>Återställ lösenord</h1>
         <input
           type="password"
@@ -49,13 +49,14 @@ export default function ResetPassword() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Skriv lösenord igen"
-                />
-      
-      </form>
+            />
+
         <button type="submit" disabled={loading} className="main_buttons w-45 h-15 mt-5 p-2">
           Återställ Lösenordet
         </button>
         {message && <p>{message}</p>}
+      </form>
+        
     </section>
   );
 }
