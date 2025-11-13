@@ -1,0 +1,35 @@
+.KioskSign {
+    position: relative;
+    background-color: #455896;
+    border-radius: 50%;
+    box-shadow: 2px 2px 10px 5px rgba(0, 0, 0, 0.356);
+}
+
+.KioskSign::before {
+    content: " ";
+    position: absolute;
+    border: 6px dotted rgb(229, 229, 132);
+    top:7px;
+    left:7px;
+    right: 7px;
+    bottom:7px;
+    border-radius: 50%;
+}
+
+.KioskSign:hover {
+    box-shadow: 2px 2px 10px 5px rgba(99, 163, 192, 0.356);
+    scale: 1.05;
+}
+
+/* .KioskTopRoof {
+    background-image: url("/public/images/kiosk/Markis-opacity.png") ;
+    background-size: contain;
+    background-repeat: no-repeat;
+} */
+
+
+
+.StallContainer {
+    background-color: #18203a2a;
+}
+
