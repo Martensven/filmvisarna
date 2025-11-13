@@ -110,7 +110,7 @@ function App() {
               onClick={handleClosing}
               className="self-center rounded-md shadow-md cursor-pointer"
             >
-              [X]
+              [&times;]
             </button>
 
             {loginPopup === "login" && (

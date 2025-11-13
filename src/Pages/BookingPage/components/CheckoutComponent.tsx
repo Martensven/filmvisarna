@@ -28,7 +28,7 @@ export default function CheckoutComponent() {
             {!showGuestOrder ? (
               <button
                 onClick={() => setShowGuestOrder(true)}
-                className="main_buttons w-36 m-2 h-10 text-sm"
+                className="main_buttons w-36 m-2 h-10 text-sm cursor-pointer"
               >
                 Boka som Gäst
               </button>
@@ -44,7 +44,7 @@ export default function CheckoutComponent() {
             {!showUserOrder ? (
               <button
                 onClick={() => setShowUserOrder(true)}
-                className="main_buttons w-36 m-2 h-10 text-sm"
+                className="main_buttons w-36 m-2 h-10 text-sm cursor-pointer"
               >
                 Boka som Medlem
               </button>
