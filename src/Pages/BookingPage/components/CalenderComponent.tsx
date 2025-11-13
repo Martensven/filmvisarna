@@ -56,14 +56,6 @@ export default function CalenderComponent({
     fetchScreeningTimes();
   }, [id]);
 
-  if (loading) {
-    return <p>Laddar data</p>;
-  }
-
-  if (!screenings) {
-    return <p>Ingen filmdata hämtad</p>;
-  }
-
   // Group up in date categories
   const sortScreeningByDate = screenings.reduce((acc, s) => {
     if (!acc[s.date]) acc[s.date] = [];
@@ -73,10 +65,51 @@ export default function CalenderComponent({
 
   //Seperate todays screening with other screenings
   const today = new Date().toISOString().split("T")[0]; // Declare today with current day date.
-  const todaysScreening = sortScreeningByDate[today] || [];
-  const otherDaysScrenning = Object.keys(sortScreeningByDate).filter(
-    (date) => date > today
+
+  const sortedDates = Object.keys(sortScreeningByDate).sort(
+    (a, b) => new Date(a).getTime() - new Date(b).getTime()
   );
+
+  const availableDates = sortedDates.filter((d) => new Date(d) >= new Date(today));
+  const todayOrNextDate = sortScreeningByDate[today] 
+  ? today : availableDates.length > 0
+  ? availableDates[0] : null;
+
+  const todaysScreening = todayOrNextDate ? sortScreeningByDate[todayOrNextDate] : [];
+  const otherDaysScrenning = sortedDates.filter((date) =>  date !== todayOrNextDate);
+
+  useEffect(() => {
+    if (active) return; // Don't overwrite if user already clicked something
+
+    let firstAvailable: screening | undefined;
+
+    // Prefer a screening from today if available
+    if (todaysScreening.length > 0) {
+      firstAvailable = todaysScreening[0];
+    } 
+    // Otherwise, pick the first screening from "Andra visningar"
+    else if (otherDaysScrenning.length > 0) {
+      const firstDate = otherDaysScrenning[0];
+      const screeningsForThatDay = sortScreeningByDate[firstDate];
+      if (screeningsForThatDay && screeningsForThatDay.length > 0) {
+        firstAvailable = screeningsForThatDay[0];
+      }
+    }
+
+    if (firstAvailable) {
+      setActive(firstAvailable._id);
+      onSelectTheaterId(firstAvailable.auditorium._id);
+      onSelectShowing(firstAvailable._id);
+    }
+  }, [active, todaysScreening, otherDaysScrenning, sortScreeningByDate, onSelectTheaterId, onSelectShowing,]);
+
+  if (loading) {
+    return <p>Laddar data</p>;
+  }
+
+  if (!screenings) {
+    return <p>Ingen filmdata hämtad</p>;
+  }
 
   return (
     <main

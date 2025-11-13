@@ -468,16 +468,17 @@ export default function FrontPage() {
             {thuTheme?.weekDay}
           </h2>
           <section
-            className=" flex flex-col justify-center items-center 
+            className=" flex flex-col justify-center items-center mt-5
                     sm:flex-col sm:p-5
                     md:flex-row 
-                    lg:flex-row  "
+                    lg:flex-row"
           >
             <Slideshow day="thursday" />
             <p
-              className="w-11/12 m-10 text-center glass_effect px-10 py-28 
+              className="w-11/12 text-center glass_effect px-10 py-28 
                             sm:w-11/12
-                            md:w-7/12 md:px-2"
+                            md:w-8/12 md:px-2
+                            lg:w-full lg:h-80"
             >{thuTheme?.themeDesc}</p>
           </section>
         </article>
@@ -490,17 +491,17 @@ export default function FrontPage() {
             {sunTheme?.weekDay}
           </h2>
           <section
-            className="flex flex-col justify-center items-center
+            className="flex flex-col justify-center items-center mt-5
                     sm:flex-col sm:p-5
                     md:flex-row-reverse  
-                    lg:flex-row-reverse lg:w-full"
+                    lg:flex-row-reverse"
           >
             <Slideshow day="sunday" />
             <p
-              className=" w-11/12 m-10 text-center glass_effect px-10 py-28 
+              className="w-11/12 text-center glass_effect px-20 py-28 
                         sm:w-11/12
-                        md:w-7/12 md:px-2
-                        lg:w-7/12"
+                        md:w-8/12 md:px-2 
+                        lg:w-full lg:h-80"
             >{sunTheme?.themeDesc}</p>
           </section>
         </article>
