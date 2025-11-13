@@ -76,7 +76,7 @@ export default function DetailMovie() {
                              lg:mr-5
                          "
                             />
-                            <p className="h-16"></p>
+                            <p className="h-16 "></p>
                         </section>
 
 
@@ -101,7 +101,7 @@ export default function DetailMovie() {
                                 title={movie.title + " Trailer"}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             ></iframe>
-                            <p className="h-16 lg:w-9/12">{movie.description}</p>
+                            <p className="h-16 lg:w-9/12 flex justify-center items-center">{movie.description}</p>
                         </article>
                     </section>
 
