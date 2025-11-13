@@ -64,14 +64,12 @@ export default function FetchBookings() {
 
     if (loading) return <p className="text-white text-center mt-10">Laddar...</p>;
     if (error) return <p className="text-red-500 text-center mt-10">Fel: {error}</p>;
-    if (bookings.length === 0)
-        return <p className="text-white text-center mt-10">Inga bokningar hittades.</p>;
 
     return (
         <>
             {/* pop-up for cancellation confirmation */}
             {selectedBooking && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 backdrop-blur-sm">
+                <div className="flex z-50 inset-50 sticky mb-10">
                     <div className="bg-gray-800 p-6 rounded-2xl shadow-lg text-center w-80">
                         <h3 className="text-lg font-semibold mb-4 text-white">
                             Är du säker att du vill avboka?
@@ -109,9 +107,12 @@ export default function FetchBookings() {
                     </div>
                 </div>
             )}
-            <section className="current space-y-6 leading-loose w-10/12">
-                <h2 className="text-xl font-semibold">Dina bokningar</h2>
+            {bookings.length === 0 ? (
+                <p className="text-white text-center mt-10">Inga bokningar hittades.</p>
+            ) : (
 
+                <section className="current space-y-6 leading-loose w-10/12">
+                <h2 className="text-xl font-semibold">Dina bokningar</h2>
                 {bookings.map((b: any, index: number) => (
                     <div key={b._id || index} className="border-b border-gray-700 pb-4">
                         <p className="font-bold">{b.screening_id.movie.title}</p>
@@ -151,6 +152,7 @@ export default function FetchBookings() {
                     </div>
                 ))}
             </section>
+            )}
         </>
     );
 }

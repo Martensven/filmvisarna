@@ -55,12 +55,12 @@ export default function DetailMovie() {
         <main className="w-screen flex flex-col items-center text-white">
             {/* Section for all components */}
             <section className="flex flex-col justify-center items-center w-full px-4
-            xs:w-full xs:p-2 
+            xs:p-2 
             sm:px-10 
             xl:w-11/12 xl:px-2">
                 <section>
                     {/* Detaljer */}
-                    <section className="flex flex-col container_box mb-5 justify-between items-center gap-5 mt-5 w-full
+                    <section className="flex flex-col container_box mb-5 justify-between items-center gap-5 mt-5 w-[90vw]
                 md:items-center
                 lg:flex-row
                 ">
@@ -68,8 +68,8 @@ export default function DetailMovie() {
                         <img
                             src={movie.imageSrc}
                             alt={`${movie.title} poster`}
-                            className="ml-10 mt-10 mb-10 md:mt-0 rounded-md shadow-lg/30
-                            h-130 xl:mb-3 
+                            className="lg:ml-10 mt-10 md:mt-0 rounded-md shadow-lg/30
+                            h-130 
                          "
                         />
 
