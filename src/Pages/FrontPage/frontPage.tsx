@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
 import "../BookingPage/BookingPageStyle.css";
 import "../../index.css";
+import { useAuth } from "../../../src/context/authContext.tsx";
 
 type Theme = {
   _id: string;
@@ -15,6 +16,7 @@ export default function FrontPage() {
   const [sortOpen, setSortOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [scheduledType, setScheduledType] = useState<string>("");
+  const { user } = useAuth();
 
   const [movie, setMovie] = useState<any[]>([]); // State to hold fetched movies
   const [sunTheme, setSunTheme] = useState<Theme>();
@@ -201,12 +203,23 @@ export default function FrontPage() {
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
       <h1
-        className="text-center text-lg mb-4 w-11/12
-            sm:text-xl
-            md:text-2xl"
-      >
-        Välkommen till Filmvisarna!
-      </h1>
+  className="text-center text-lg mb-4 w-11/12
+        sm:text-xl
+        md:text-2xl"
+>
+  {user ? (
+    <>
+      Hej, {" "}
+      <span className="text-green-600 font-bold">
+        {user.firstName}
+      </span>!
+      <br />
+      Välkommen till Filmvisarna!
+    </>
+  ) : (
+    "Välkommen till Filmvisarna!"
+  )}
+</h1>
       <p
         className="text-center text-sm mb-10 w-11/12
             sm:text-base
