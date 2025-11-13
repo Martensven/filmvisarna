@@ -21,6 +21,15 @@
     scale: 1.05;
 }
 
+/* .KioskTopRoof {
+    background-image: url("/public/images/kiosk/Markis-opacity.png") ;
+    background-size: contain;
+    background-repeat: no-repeat;
+} */
+
+
+
 .StallContainer {
     background-color: #18203a2a;
 }
+
