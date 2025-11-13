@@ -214,6 +214,32 @@ export default function TheaterView({ selectShowing }: Props) {
         <p className="mt-2">
           Antal platser valda: {selectedSeats.length} / {totalTickets}
         </p>
+
+        <section
+          className="flex flex-col justify-center items-start w-full px-4 pt-5  gap-x-4 gap-y-2 
+          mb-10
+          lg:justify-start"
+        >
+          <article className="flex items-center gap-2">
+            <span className="w-4 h-4 rounded-full bg-[#dede39]" />
+            <span className="text-sm sm:text-base">Handikappanpassad</span>
+          </article>
+
+          <article className="flex items-center gap-2 pl-0">
+            <span className="w-4 h-4 rounded-full bg-[#5cb85c]" />
+            <span className="text-sm sm:text-base">Vald stol</span>
+          </article>
+
+          <article className="flex items-center gap-2 pl-0">
+            <span className="w-4 h-4 rounded-full bg-[#f0ad4e]" />
+            <span className="text-sm sm:text-base">Bokas av annan</span>
+          </article>
+
+          <article className="flex items-center gap-2 pl-0">
+            <span className="w-4 h-4 rounded-full bg-[#d9534f]" />
+            <span className="text-sm sm:text-base">Upptagen</span>
+          </article>
+        </section>
       </article>
     </section>
   );

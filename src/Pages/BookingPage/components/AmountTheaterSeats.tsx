@@ -30,9 +30,9 @@ export default function AmountSeatsTheater() {
     price: number;
   }) => (
     <div
-      className="flex flex-row justify-between w-72 h-auto mt-2 p-2 
-      md:w-10/12 md:m-1 md:justify-between
-      lg:w-11/12 lg:justify-between lg:mt-2 lg:p-1"
+      className="flex flex-row justify-between items-center w-72 h-auto mt-2 
+      md:w-10/12 md:m-1
+      lg:w-11/12"
     >
       <h2 className="text-[#e4e1e1] text-sm m-1 md:text-sm md:m-5 xl:text-lg">
         {label} {price} kr
@@ -63,7 +63,7 @@ export default function AmountSeatsTheater() {
     <main
       className="flex flex-col justify-center items-center w-11/12 h-auto 
                  lg:w-11/12
-                 xl:w-4/12 xl:justify-around xl:items-center xl:h-80"
+                 xl:w-4/12 xl:justify-around xl:items-center"
     >
       {ticketTypes.map((type) => (
         <TicketRow
@@ -80,31 +80,9 @@ export default function AmountSeatsTheater() {
         <p>Totalt pris: {totalPrice} kr</p>
       </section>
 
-<div className="w-full max-w-screen-xl mx-auto px-4 pt-5">
-      <section
-  className="w-full px-4 pt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:justify-start lg:pl-40"
->
-  <article className="flex items-center gap-2 shrink-0">
-    <span className="w-4 h-4 rounded-full bg-[#dede39] flex-none" />
-    <span className="text-sm sm:text-base">Handikappanpassad</span>
-  </article>
+      {/* <div className="flex flex-col justify-center items-start w-full mx-auto px-4 pt-5 text-left"> */}
 
-  <article className="flex items-center gap-2 pl-0 lg:pl-3 shrink-0">
-    <span className="w-4 h-4 rounded-full bg-[#5cb85c] flex-none" />
-    <span className="text-sm sm:text-base">Vald stol</span>
-  </article>
-
-  <article className="flex items-center gap-2 pl-0 lg:pl-3 shrink-0">
-    <span className="w-4 h-4 rounded-full bg-[#f0ad4e] flex-none" />
-    <span className="text-sm sm:text-base">Bokas av annan</span>
-  </article>
-
-  <article className="flex items-center gap-2 pl-0 lg:pl-3 shrink-0">
-    <span className="w-4 h-4 rounded-full bg-[#d9534f] flex-none" />
-    <span className="text-sm sm:text-base">Upptagen</span>
-  </article>
-</section>
-</div>
-</main>
+      {/* </div> */}
+    </main>
   );
 }

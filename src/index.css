@@ -16,7 +16,7 @@
   align-items: center;
   text-align: center;
   font-family: "Noto Serif", serif;
-  background-image: url("../public/images/backgroundBlue.png");
+  background-image: url("/images/BackgroundBlue.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
