@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/authContext";
+import "../../BookingPage/BookingPageStyle.css";
 
 export default function FetchBookings() {
     const { user } = useAuth();
@@ -70,7 +71,7 @@ export default function FetchBookings() {
             {/* pop-up for cancellation confirmation */}
             {selectedBooking && (
                 <div className="flex z-50 inset-50 sticky mb-10">
-                    <div className="bg-gray-800 p-6 rounded-2xl shadow-lg text-center w-80">
+                    <div className="glass_effect p-6 rounded-2xl shadow-lg text-center w-80">
                         <h3 className="text-lg font-semibold mb-4 text-white">
                             Är du säker att du vill avboka?
                         </h3>
@@ -97,11 +98,11 @@ export default function FetchBookings() {
             )}
             {alertMessage && (
                 <div className={`flex z-50 inset-50 sticky mb-10`}>
-                    <div className={`p-6 rounded-xl shadow-lg text-center w-80 transition-all duration-300 
-                        ${alertType === "success" ? "bg-green-600" : "bg-red-600"}`}>
+                    <div className={`p-6 rounded-xl shadow-lg text-center w-80 transition-all duration-300 glass_effect`}>
                             <h3 className="text-white text-lg font-semibold mb-3">{alertType === "success" ? "Klart!" : "Fel inträffade"}</h3>
                             <p className="text-white mb-5">{alertMessage}</p>
-                            <button onClick={() => setAlertMessage(null)} className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900">
+                            <button onClick={() => setAlertMessage(null)} className={`bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900
+                            ${alertType === "success" ? "bg-green-600" : "bg-red-600"}`}>
                                 Stäng
                             </button>
                     </div>
