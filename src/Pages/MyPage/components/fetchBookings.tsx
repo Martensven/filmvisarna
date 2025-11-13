@@ -71,7 +71,7 @@ export default function FetchBookings() {
         <>
             {/* pop-up for cancellation confirmation */}
             {selectedBooking && (
-                <div className="flex z-50 inset-50 sticky mb-10">
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 backdrop-blur-sm">
                     <div className="bg-gray-800 p-6 rounded-2xl shadow-lg text-center w-80">
                         <h3 className="text-lg font-semibold mb-4 text-white">
                             Är du säker att du vill avboka?
