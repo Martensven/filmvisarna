@@ -1,17 +1,20 @@
 import bcrypt from "bcrypt"
-import Sendmail from "./../nodemailer/sendMail.js";
-import { User } from "../models/userSchema";
+import sendMail from "./../nodemailer/sendMail.js";
+import { User } from "./../models/userSchema.js";
 import { validateData } from "../middleware/dataValidation.js";
+import express from "express";
+import crypto from "crypto";
 
-
+const router = express.Router();
 //Router endpoint for forgotten password
 router.post("/api/forgotPass", async (req, res) => {
-    const email = req.body;
+    const {email} = req.body;
     try{
+        console.log("Begäran om lösenordsåterställning för:", email);
         const user = await User.findOne({email});
         if(!user) return res.status(404).json({error: "Finns ingen användare med den mailadressen"});
 
-        const firstName = await User.findOne({firstName})
+        const firstName = user.firstName
 
         const generateToken = crypto.randomBytes(32).toString("hex");
 
@@ -20,9 +23,9 @@ router.post("/api/forgotPass", async (req, res) => {
         user.resetPasswordExpire = Date.now()+15*60*1000;
         await user.save();
 
-        const resetPassLink = "http://localhost:4321/api/forgotPass/${token}";
+        const resetPassLink = `http://localhost:5173/forgotPass/${generateToken}`;
         
-        await Sendmail({
+        await sendMail({
             to: email,
             subject: "Filmvisarna - Återställning av lösenord",
             html: `
@@ -46,16 +49,13 @@ router.post("/api/forgotPass", async (req, res) => {
                     <tr>
                       <td style="color: #0d1325ff; text-align:center; padding:10px;">
                         <h2 style="text-align:center; margin: 0;">Här är din länk:</h2>
-                        <p><strong> ${
-                          resetPassLink
-                        }</strong></p>
-                        <a href="${resetPassLink}">${resetPassLink}</a>
+                        <a style="text-decoration:none; color:white;" href="${resetPassLink}"></strong>${resetPassLink}<strong></a>
                 
          
-                        <p>Klicka på länken så omdirigeras du till att byta lösenord</p>
+                        <p>Klicka på den så omdirigeras du till att byta lösenord</p>
                         
                     
-                        <p style="font-size:13px;">Kontakta oss återställningen inte fungerar.</p>
+                        <p style="font-size:13px;">Kontakta oss om återställningen inte fungerar.</p>
                       </td>
                     <tr>
                   </table>    
@@ -84,7 +84,7 @@ router.post("/api/forgotPass", async (req, res) => {
           },
         ],
         });
-        res.json({message: "Länk för återställning av lösenord har skickats till användaren"});
+        res.json({message: "Länk för återställning av lösenord har skickats till användaren", email:user.email});
         console.log("mejl har skickats iväg till: ", user.email)
     } catch (err) {
         console.error(err);
@@ -98,9 +98,9 @@ router.post("/api/forgotPass/:token",
     "body",{password: (val) => val.length < 8 ? "Lösenordet måste vara minst 8 tecken" : null,}), async (req, res) => {
 
     const {token} = req.params;
-    const {addNewPassword} = req.body;
-    const salted = 10;
-    const hashedPass = await bcrypt.hash(req.body.password, salted);
+    const { password } = req.body;
+    const saltRounds = 10;
+    const hashedPass = await bcrypt.hash(req.body.password, saltRounds);
 
     try{
         const user = await User.findOne({
@@ -121,3 +121,5 @@ router.post("/api/forgotPass/:token",
         res.status(500).json({error: "Kunde inte ändra löenordet"})
     }
 })
+
+export default router
