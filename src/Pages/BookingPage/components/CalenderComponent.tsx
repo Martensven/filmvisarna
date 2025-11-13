@@ -73,10 +73,18 @@ export default function CalenderComponent({
 
   //Seperate todays screening with other screenings
   const today = new Date().toISOString().split("T")[0]; // Declare today with current day date.
-  const todaysScreening = sortScreeningByDate[today] || [];
-  const otherDaysScrenning = Object.keys(sortScreeningByDate).filter(
-    (date) => date > today
+
+  const sortedDates = Object.keys(sortScreeningByDate).sort(
+    (a, b) => new Date(a).getTime() - new Date(b).getTime()
   );
+
+  const availableDates = sortedDates.filter((d) => new Date(d) >= new Date(today));
+  const todayOrNextDate = sortScreeningByDate[today] 
+  ? today : availableDates.length > 0
+  ? availableDates[0] : null;
+
+  const todaysScreening = todayOrNextDate ? sortScreeningByDate[todayOrNextDate] : [];
+  const otherDaysScrenning = sortedDates.filter((date) =>  date !== todayOrNextDate);
 
   return (
     <main
