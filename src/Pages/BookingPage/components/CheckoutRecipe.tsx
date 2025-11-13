@@ -3,6 +3,19 @@ import { useSeats } from "./context/SeatsContext";
 export default function CheckoutRecipe() {
   const { ticketTypes, counts, totalTickets, totalPrice } = useSeats();
 
+  // Fetch movie from local storage
+  const storedMovie = localStorage.getItem("currentMovie");
+  const currentMovie = storedMovie ? JSON.parse(storedMovie) : null;
+
+  // Filter tickets based on age restriction
+  const filteredTickets = ticketTypes.filter(ticket => {
+    if (!currentMovie) return true;
+    if (currentMovie.age >= 15 && ticket.displayName === "Barn") {
+      return false;
+    }
+    return true;
+  });
+
   if (!ticketTypes.length) {
     return (
       <main className="flex justify-center items-center mt-5">
@@ -30,7 +43,7 @@ export default function CheckoutRecipe() {
       sm:w-72 sm:text-sm
       md:flex-col  md:text-base md:w-66">
           {/* Visa varje biljettyp */}
-          {ticketTypes.map((type) => {
+          {filteredTickets.map((type) => { 
             const quantity = counts[type._id] || 0;
             const subtotal = quantity * type.price;
 
@@ -40,7 +53,7 @@ export default function CheckoutRecipe() {
                 className="flex md:flex-row justify-between items-center 
         md:w-full h-10 my-1"
               >
-                <p className="text-[#e4e1e1] text-xs  md:text-base m-1">{type.ticketName}:</p>
+                <p className="text-[#e4e1e1] text-xs  md:text-base m-1">{type.displayName}:</p>
                 {/* <p className="text-[#e4e1e1] text-sm m-2  md:text-base md:m-5 flex justify-center">
                 {quantity} st × {type.price} kr
               </p> */}
