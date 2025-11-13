@@ -14,10 +14,16 @@ router.post('/api/ticket-types', async (req, res) => {
     }
 });
 
-// Get all ticket types
+// Get all ticket types, optionally filter by age
 router.get('/api/ticket-types', async (req, res) => {
     try {
-        const ticketTypes = await TicketType.find();
+        const age = parseInt(req.query.age);
+        let ticketTypes = await TicketType.find();
+
+        if (!isNaN(age) && age>= 15) {
+            ticketTypes = ticketTypes.filter((ticket) => ticket.ticketName !== 'Barn');
+        }
+
         res.status(200).json(ticketTypes);
     } catch (error) {
         res.status(500).json({ message: error.message });

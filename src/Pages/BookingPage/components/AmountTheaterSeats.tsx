@@ -69,7 +69,7 @@ export default function AmountSeatsTheater() {
         <TicketRow
           key={type._id}
           id={type._id}
-          label={type.ticketName}
+          label={type.displayName}
           count={counts[type._id] ?? 0}
           price={type.price}
         />
