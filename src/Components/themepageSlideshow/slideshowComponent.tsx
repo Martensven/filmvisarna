@@ -84,7 +84,7 @@ export default function Slideshow({ day }: SlideshowProps) {
         className="w-11/12 h-60 bg-contain bg-no-repeat bg-right flex flex-col justify-center items-start rounded-md shadow-md relative
         sm:shadow-lg sm:py-2 sm:px-2 xs:h-80
         md:shadow-lg
-        lg:shadow-lg lg:h-72 lg:w-5/8 "
+        lg:shadow-lg lg:h-80 lg:w-210"
         >
             <article style={{color: textDay}} className="w-8/12 text-start mx-2 textDay absolute top-5
             sm:w-9/12 sm:py-2 sm:px-2

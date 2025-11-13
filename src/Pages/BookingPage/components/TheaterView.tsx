@@ -241,11 +241,6 @@ export default function TheaterView({ selectShowing }: Props) {
           </article>
         </section>
       </article>
-
-
-
     </section>
-
-
   );
 }
