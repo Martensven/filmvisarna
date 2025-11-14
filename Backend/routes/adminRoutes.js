@@ -154,16 +154,32 @@ router.get("/bookings/:userId", async (req, res) => {
       .populate("tickets.ticket_id")
       .lean();
 
-      // Filter out past screenings
+      
+      
       const now = new Date();
-
+      // Filter bookings to only include upcoming screenings
       const upcoming = allBookings.filter(b => {
         if (!b.screening_id) return false;
         // Combine date and time into a single Date object
         const dateStr = `${b.screening_id.date}T${b.screening_id.time}`;
         const screeningDate = new Date(dateStr);
-      }
-      })
+        // If screeningDate is larger than or equal to now variable, return true
+        return screeningDate >= now;
+      });
+
+      //-------- Sorting --------
+      // Sort upcoming bookings based on sortBy and sortDir
+      upcoming.sort((a, b) => {
+        // If sortDir is -1, descending order, else ascending
+        const dir = sortDir === -1 ? -1 : 1;
+        // If sortBy is created_at, sort by date and time
+        if (sortBy === "created_at") {
+          return (new Date(a.created_at) - new Date(b.created_at)) * dir;
+        }
+      });
+
+      // -------- Pagination --------
+      
     
   }
 })
