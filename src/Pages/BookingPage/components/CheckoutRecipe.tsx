@@ -30,11 +30,11 @@ export default function CheckoutRecipe() {
       <aside
         className=" flex 
     w-11/12 sm:justify-center sm:gap-2 items-center 
-    md:w-11/12 flex-col mt-10"
+    md:w-11/12 flex-col"
       >
         <section className="Type-of-tickets flex justify-between items-center w-70 h-auto border-t border-gray-400 text-sm
       sm:w-72 sm:text-sm md:flex-row
-       p-1 md:text-base md:w-66 mt-5 pt-3">
+       p-1 md:text-base md:w-66">
           <p className="text-[#e4e1e1] text-xs md:text-base">
             Biljetter:
           </p>
