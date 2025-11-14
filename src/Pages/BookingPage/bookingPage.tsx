@@ -26,25 +26,17 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
           <main
             className="Bookingpage w-screen min-h-screen flex flex-col justify-center items-center overscroll-y-auto pt-5 relative
           sm:pt-0
-          md:w-full md:flex md:items-start md:justify-around  
+          md:w-full md:flex md:items-start md:justify-around md:flex-row
           lg:w-12/13 lg:mt-10 
           xl:w-full"
           >
-            <section
-              className="Recipe w-11/12 flex justify-center items-center h-50 mb-5 sticky top-10 container_box z-1 rounded-md
-            md:flex md:justify-center md:items-center md:fixed md:top-[170px] md:right-[30px] md:w-5/13 md:h-80 md:container_box 
-            lg:right-[35px] lg:top-[180px]
-            xl:right-[60px] xl:top-[220px]"
-            >
-              <CheckoutRecipe />
-            </section>
-
+            <div className="flex flex-col w-full">
             <section
               className="Movie-Screening-Days flex flex-col  sm:flex-row container_box w-11/12 mb-4
             justify-center items-center
             md:w-7/14 md:ml-10
             lg:w-8/14 lg:ml-11
-            xl:ml-18 xl:w-6/12"
+            xl:ml-18 xl:w-8/10"
             >
               <MovieInformation />
               <CalenderComponent
@@ -57,7 +49,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
               className="Booking-component flex flex-col w-11/12 h-auto justify-center items-center container_box
                         md:flex-col md:justify-center md:items-center md:w-7/14 md:ml-10
                         lg:flex lg:flex-col lg:w-8/14 lg:justify-center lg:items-center lg:ml-11
-                        xl:flex-row xl:ml-18 xl:justify-around xl:w-6/12"
+                        xl:flex-row xl:ml-18 xl:justify-around xl:w-8/10"
             >
               <AmountTheaterSeats />
 
@@ -66,12 +58,22 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 selectShowing={selectedShowing}
               />
             </div>
+            </div>
+            <section
+              className="Recipe w-11/12 flex justify-center items-center h-50 sticky top-10 container_box z-1 rounded-md
+            md:flex md:justify-center md:items-center md:self-start md:top-[170px] md:right-[30px] md:w-5/13 md:h-80 md:container_box 
+            lg:right-[35px] lg:top-[180px]
+            xl:right-[60px] xl:top-[220px]"
+            >
+              <CheckoutRecipe />
+            </section>
+          </main>
+          <section className="flex justify-center items-center m-10">
             <section className="w-screen mt-10">
               <CheckoutComponent />
             </section>
 
-
-          </main>
+          </section>
         </CheckoutProvider>
       </SeatsProvider>
     </>
