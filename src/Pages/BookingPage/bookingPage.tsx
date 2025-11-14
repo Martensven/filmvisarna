@@ -66,7 +66,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 selectShowing={selectedShowing}
               />
             </div>
-
+            <CheckoutComponent />
 
           </main>
         </CheckoutProvider>
