@@ -60,7 +60,7 @@ export default function DetailMovie() {
             xl:w-11/12 xl:px-2">
                 <section>
                     {/* Detaljer */}
-                    <section className="flex flex-col container_box mb-5 justify-center items-center  mt-5 w-[90vw]
+                    <section className="flex flex-col w-full container_box mb-5 justify-center items-center  mt-5 h-[] w-[90vw]
                 md:items-center
                 xl:flex-row
                 ">
@@ -72,28 +72,28 @@ export default function DetailMovie() {
                             <img
                                 src={movie.imageSrc}
                                 alt={`${movie.title} poster`}
-                                className="h-130 rounded-md shadow-lg/30
-                             lg:mr-5
+                                className="h-110 sm:h-130 rounded-md shadow-lg/30
+                             lg:mr-5 mt-2 mb-2
                          "
                             />
-                            <p className="h-16 "></p>
+                            <p className="xl:h-16"></p>
                         </section>
 
 
 
                         {/* Trailer */}
                         <article className="flex flex-col justify-center items-center  aspect-video ]
-                        w-9/12
+                        sm:w-9/12 w-11/12
                     
                     ">
-                            <h2 className="text-2xl pl-2 pt-2 my-2
+                            <h2 className="h-11 text-2xl pl-2 pt-2 my-2
                         
                             lg:pt-3 lg:pl-3">{movie.title}</h2>
 
                             <iframe
-                                className="w-full h-72 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
+                                className="w-full h-44 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
                         sm:h-72 
-                        md:h-96 lg:ml-5 md:w-11/12
+                        md:h-96 lg:ml-5 xl:w-11/12
                         lg:h-130  lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
                         xl:shadow-blue-400/50 
 "
@@ -101,7 +101,7 @@ export default function DetailMovie() {
                                 title={movie.title + " Trailer"}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             ></iframe>
-                            <p className="h-16 lg:w-9/12 flex justify-center items-center">{movie.description}</p>
+                            <p className="xl:h-16 mt-2 mb-5 xl:mb-0 lx:mt-0 w-full lg:w-9/12 flex justify-center items-center">{movie.description}</p>
                         </article>
                     </section>
 
