@@ -33,6 +33,7 @@ export default function AdminUsersPage() {
   const [cancelMessage, setCancelMessage] = useState("");
 
   useEffect(() => {
+    // Fetch bookings when selectedUser changes
     const fetchBookings = async () => {
       if (!selectedUser) return;
       try {
@@ -46,6 +47,27 @@ export default function AdminUsersPage() {
 
     fetchBookings();
   }, [selectedUser]); 
+
+  // Function to handle booking cancellation
+  const handleCancelBooking = async (bookingId: string) => {
+    const confirmed = window.confirm(
+      "Är du säker på att du vill avboka denna bokning?"
+    );
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`/api/admin/bookings/${bookingId}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) throw new Error("Kunde inte ta bort bokningen");
+      setCancelMessage("Bokningen har avbokats.");
+      setBookings(bookings.filter((b) => b._id !== bookingId));
+    } catch (error) {
+      console.error("Fel vid avbokning:", error);
+      setCancelMessage("Ett fel uppstod vid avbokning.");
+    }
+    setTimeout(() => setCancelMessage(""), 3000);
+  };
 
   return (
     
