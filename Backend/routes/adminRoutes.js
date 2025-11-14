@@ -87,43 +87,88 @@ router.delete("/admin/api/users/:id", async (req, res) => {
 });
 
 // Get bookings by user ID
+// router.get("/bookings/:userId", async (req, res) => {
+//   try {
+//     const { userId } = req.params;
+//     const page = parseInt(req.query.page) || 1;
+//     const limit = parseInt(req.query.limit) || 5; // visa 5 per sida i modalen
+//     const sortBy = req.query.sortBy || "created_at";
+//     const sortDir = req.query.sortDir === "desc" ? -1 : 1;
+
+//     const query = { user_id: userId };
+//     const total = await Booking.countDocuments(query);
+
+//     const bookings = await Booking.find(query)
+//       .populate({
+//         path: "screening_id",
+//         populate: [
+//           { path: "movie", select: "title" },
+//           { path: "auditorium", select: "name" },
+//         ],
+//       })
+//       .populate("seats.seat_id")
+//       .populate("tickets.ticket_id")
+//       .sort({ [sortBy]: sortDir })
+//       .skip((page - 1) * limit)
+//       .limit(limit)
+//       .lean();
+
+//     res.json({
+//       data: bookings,
+//       total,
+//       page,
+//       totalPages: Math.ceil(total / limit),
+//     });
+//   } catch (error) {
+//     console.error("Fel vid hämtning av bokningar:", error);
+//     res.status(500).json({ error: "Kunde inte hämta bokningar" });
+//   }
+// });
+
 router.get("/bookings/:userId", async (req, res) => {
   try {
+    // Get userId from request parameters
     const { userId } = req.params;
+    // page is which page number, default is 1.
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5; // visa 5 per sida i modalen
+    // limit is how many items per page, default is 5
+    const limit = parseInt(req.query.limit) || 5;
+    // sortBy is which field to sort by, default is created_at
     const sortBy = req.query.sortBy || "created_at";
+    // sortDir is the direction of the sort, either ascending or descending
     const sortDir = req.query.sortDir === "desc" ? -1 : 1;
 
-    const query = { user_id: userId };
-    const total = await Booking.countDocuments(query);
-
-    const bookings = await Booking.find(query)
+    const allBookings = await Booking.find({ user_id: userId })
       .populate({
+        // path to screening_id to get movie and auditorium details
         path: "screening_id",
+        // take out movie title and auditorium name from screening_id
         populate: [
           { path: "movie", select: "title" },
           { path: "auditorium", select: "name" },
         ],
       })
+      // populate seat details from seats array
       .populate("seats.seat_id")
+      // populate ticket details from tickets array
       .populate("tickets.ticket_id")
-      .sort({ [sortBy]: sortDir })
-      .skip((page - 1) * limit)
-      .limit(limit)
       .lean();
 
-    res.json({
-      data: bookings,
-      total,
-      page,
-      totalPages: Math.ceil(total / limit),
-    });
-  } catch (error) {
-    console.error("Fel vid hämtning av bokningar:", error);
-    res.status(500).json({ error: "Kunde inte hämta bokningar" });
+      // Filter out past screenings
+      const now = new Date();
+
+      const upcoming = allBookings.filter(b => {
+        if (!b.screening_id) return false;
+        // Combine date and time into a single Date object
+        const dateStr = `${b.screening_id.date}T${b.screening_id.time}`;
+        const screeningDate = new Date(dateStr);
+      }
+      })
+    
   }
-});
+})
+
+
 
 
 // DELETE bookings/:bookingId
