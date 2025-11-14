@@ -35,7 +35,7 @@ router.post("/api/forgotPass", async (req, res) => {
                 width="600" height="120" align="left">
           
                   <img src="cid:logo" alt="Filmvisarnas logga" width="150" style="margin:10px 20px 2px 20px;" > 
-                  <h2 style="color:white; font-size:20px; margin:1px 20px 10px 20px;" align="center">Bokningsbekräftelse</h2>
+                  <h2 style="color:white; font-size:20px; margin:1px 20px 10px 20px;" align="center">Lösenords återställning</h2>
            
                 </td>
               </tr>
