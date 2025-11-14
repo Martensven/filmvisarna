@@ -71,31 +71,43 @@ export default function CalenderComponent({
   const today = new Date().toISOString().split("T")[0]; // Declare today with current day date.
 
   // Fiter out old dates
-  const futureOrTodayDates = Object.keys(sortScreeningByDate).filter(
-    (date) => new Date(date) >= new Date(today)
-  );
+  const futureOrTodayDates = Object.keys(sortScreeningByDate)
+  .filter((date) => new Date(date) >= new Date(today))
+  .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
   const todaysScreening = sortScreeningByDate[today] ?? [];
   const otherDaysScrenning = futureOrTodayDates.filter(
     (date) => date !== today
   );
-
+  
   useEffect(() => {
-    if (active) return; // Don't overwrite if user already clicked something
+    if (active) return;
 
     let firstAvailable: screening | undefined;
 
-    // Prefer a screening from today if available
     if (todaysScreening.length > 0) {
-      firstAvailable = todaysScreening[0];
+      const sortedToday = todaysScreening
+      .slice()
+      .sort((a, b) => {
+        const [ax, ay] = a.time.split(":").map(Number);
+        const [bx, by] = b.time.split(":").map(Number);
+        return ax * 60 + ay - (bx * 60 + by);
+      });
+      firstAvailable = sortedToday[0];
     }
-    // Otherwise, pick the first screening from "Andra visningar"
+
     else if (otherDaysScrenning.length > 0) {
       const firstDate = otherDaysScrenning[0];
-      const screeningsForThatDay = sortScreeningByDate[firstDate];
-      if (screeningsForThatDay && screeningsForThatDay.length > 0) {
-        firstAvailable = screeningsForThatDay[0];
-      }
+
+      const sortedOther = sortScreeningByDate[firstDate]
+      .slice()
+      .sort((a, b) => {
+        const [ax, ay] = a.time.split(":").map(Number);
+        const [bx, by] = b.time.split(":").map(Number);
+        return ax * 60 + ay - (bx * 60 + by);
+      });
+
+      firstAvailable = sortedOther[0];
     }
 
     if (firstAvailable) {
@@ -111,6 +123,7 @@ export default function CalenderComponent({
     onSelectTheaterId,
     onSelectShowing,
   ]);
+
 
   if (loading) {
     return <p>Laddar data</p>;
@@ -264,10 +277,9 @@ export default function CalenderComponent({
                           xl:w-10/12 xl:h-20 xl:mt-1 
                           
                           
-                          ${
-                            active === screening._id
-                              ? "!border-4 !border-[#07ca00]"
-                              : ""
+                          ${active === screening._id
+                            ? "!border-4 !border-[#07ca00]"
+                            : ""
                           }`}
                       >
                         <li
