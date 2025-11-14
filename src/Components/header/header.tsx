@@ -43,8 +43,8 @@ export default function Header({ onLoginClick }: HeaderProps) {
     };
 
     return (
-        <main className="w-screen">
-            <header className="flex flex-col justify-center relative z-1 items-center text-center text-white mt-3 mb-7">
+        <main className="w-screen flex justify-center items-center">
+            <header className="flex flex-col justify-center relative z-1 items-center text-center text-white mt-3 mb-7 w-210 lg:w-8/10">
                 <nav className="w-11/12 flex flex-col justify-center items-center bg-[#243365] text-white mt-10 mb-5 rounded-md shadow-md
         sm:mb-10
         xl:mt-20 xl:justify-center xl:items-center">
