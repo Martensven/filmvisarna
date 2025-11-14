@@ -20,7 +20,7 @@ export default function CheckoutComponent() {
   const isLoggedIn = !!user; // enklare flagga
 
   return (
-    <main className=" container_box flex flex-col justify-center items-center mt-5 mb-10 lg:mb-0 lg:mt-0">
+    <main className="flex flex-col justify-center items-center mt-5 mb-10 lg:mb-0 lg:mt-0">
       <section className="flex flex-col justify-center items-center md:flex md:flex-row md:mb-10">
         {/* Gästvy */}
         {!isLoggedIn && (
