@@ -66,9 +66,10 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 selectShowing={selectedShowing}
               />
             </div>
-            <CheckoutComponent />
-
           </main>
+          <section className="flex justify-center items-center m-10">
+            <CheckoutComponent />
+          </section>
         </CheckoutProvider>
       </SeatsProvider>
     </>

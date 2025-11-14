@@ -76,10 +76,8 @@ export default function CheckoutRecipe() {
             {totalPrice} kr
           </p>
         </section>
-
+        
       </aside>
-
-
     </>
   );
 }
