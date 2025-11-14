@@ -124,7 +124,7 @@ export default function GuestOrderComponent() {
           <button
             disabled={loading || selectedSeats.length === 0}
             onClick={handleBooking}
-            className="main_buttons w-30 h-8 m-3 cursor-pointer"
+            className="main_buttons w-36 h-12 m-3 cursor-pointer"
           >
             {loading ? "Bokar..." : "Slutför bokning"}
           </button>

@@ -66,7 +66,10 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 selectShowing={selectedShowing}
               />
             </div>
-            <CheckoutComponent />
+            <section className="w-screen mt-10">
+              <CheckoutComponent />
+            </section>
+
 
           </main>
         </CheckoutProvider>
