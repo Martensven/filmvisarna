@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
+
 import "./../../Pages/BookingPage/BookingPageStyle.css"
 
 export default function ResetPassword() {
   const { token } = useParams<{ token: string }>();
+  const navigate = useNavigate();
+
   const [message, setMessage] = useState("");
   const [password, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -14,6 +17,12 @@ export default function ResetPassword() {
     setLoading(true);
     setMessage("");
 
+    if (password !== confirmPassword){
+      setMessage("Lösenord matchar inte");
+      setLoading(false);
+      return
+    }
+    
     try {
       const respond = await fetch(`/api/forgotPass/${token}`, {
         method: "POST",
@@ -24,7 +33,13 @@ export default function ResetPassword() {
       const data = await respond.json();
       setMessage(data.message || data.error);
 
-      
+      //Move user to front page if password reset works
+      if(respond.ok) {
+        setTimeout(() => {
+          navigate("/");
+        },2000)
+      }
+
     } catch (err) {
       console.error(err);
       setMessage("Något gick fel, försök igen");
