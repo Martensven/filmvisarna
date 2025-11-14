@@ -23,6 +23,8 @@ export default function ResetPassword() {
 
       const data = await respond.json();
       setMessage(data.message || data.error);
+
+      
     } catch (err) {
       console.error(err);
       setMessage("Något gick fel, försök igen");
