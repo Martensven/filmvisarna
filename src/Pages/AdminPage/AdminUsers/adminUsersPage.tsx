@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { FaUsers, FaSearch } from "react-icons/fa";
 import { AdminUsersList } from "./adminUsersList";
+import { AdminSearchUser } from "./adminSearchUser";
+import { UserDetail } from "./adminUserDetails";
 import { SearchUserModal } from "./adminSearchUser";
 
 export type User = {
@@ -9,7 +11,7 @@ export type User = {
   lastName: string;
   email: string;
   phoneNumber: number;
-}
+};
 
 export type Booking = {
   _id: string;
@@ -37,7 +39,9 @@ export default function AdminUsersPage() {
     const fetchBookings = async () => {
       if (!selectedUser) return;
       try {
-        const response = await fetch(`/api/admin/bookings/${selectedUser._id}?page=1&limit=5`);
+        const response = await fetch(
+          `/api/admin/bookings/${selectedUser._id}?page=1&limit=5`
+        );
         const data = await response.json();
         setBookings(data.data);
       } catch (error) {
@@ -46,7 +50,7 @@ export default function AdminUsersPage() {
     };
 
     fetchBookings();
-  }, [selectedUser]); 
+  }, [selectedUser]);
 
   // Function to handle booking cancellation
   const handleCancelBooking = async (bookingId: string) => {
@@ -70,7 +74,60 @@ export default function AdminUsersPage() {
   };
 
   return (
-    
+    <main className="max-w-3xl mx-auto bg-[#243365] text-white p-6 flex flex-col min-h-30vh rounded-xl">
+      <header className="text-center mb-10">
+        <h1 className="text-3xl font-bold inline-block px-6 text-white">
+          Användare
+        </h1>
+      </header>
+
+      {/* If view is menu and no user is selected menu is shown */}
+      {view === "menu" && !selectedUser && (
+        <nav className="flex justify-center items-center mb-8 gap-10">
+          <FaSearch
+            size={70}
+            className="cursor-pointer"
+            // sets view to search when clicked
+            onClick={() => setView("search")}
+          />
+          <FaUsers
+            size={80}
+            className="cursor-pointer"
+            // sets view to list when clicked
+            onClick={() => setView("list")}
+          />
+        </nav>
+      )}
+
+      {(view !== "menu" || selectedUser) && (
+        <button
+          className="mb-4 bg-white text-black px-4 py-2 rounded hover:bg-gray-200 cursor-pointer w-fit cursor-pointer mx-auto"
+          onClick={() => {
+            if (selectedUser) setSelectedUser(null);
+            else setView("menu");
+          }}
+        >
+          ← Tillbaka
+        </button>
+      )}
+
+      {/* List or Search view */}
+      {!selectedUser && view === "list" && (
+        <AdminUsersList onSelectUser={setSelectedUser} />
+      )}
+      {!selectedUser && view === "search" && (
+        <AdminSearchUser onSelectUser={setSelectedUser} />
+      )}
+
+      {/* User detail component receives selected user and bookings as props */}
+      {selectedUser && (
+        <UserDetail
+          user={selectedUser}
+          bookings={bookings}
+          onCancelBooking={handleCancelBooking}
+          cancelMessage={cancelMessage}
+        />
+      )}
+    </main>
   );
 }
-
