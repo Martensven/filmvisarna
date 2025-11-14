@@ -69,6 +69,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
               </section>
             </div>
             <CheckoutComponent />
+
           </main>
         </CheckoutProvider>
       </SeatsProvider>

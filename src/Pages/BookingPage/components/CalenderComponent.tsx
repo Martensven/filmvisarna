@@ -277,10 +277,9 @@ export default function CalenderComponent({
                           xl:w-10/12 xl:h-20 xl:mt-1 
                           
                           
-                          ${
-                            active === screening._id
-                              ? "!border-4 !border-[#07ca00]"
-                              : ""
+                          ${active === screening._id
+                            ? "!border-4 !border-[#07ca00]"
+                            : ""
                           }`}
                       >
                         <li
