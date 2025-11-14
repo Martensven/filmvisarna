@@ -1,4 +1,4 @@
-import { User } from "../models/userSchema.js";
+import {User}  from "../models/userSchema.js";
 import express from "express";
 import { validateData } from "./../middleware/dataValidation.js";
 import bcrypt from "bcrypt";

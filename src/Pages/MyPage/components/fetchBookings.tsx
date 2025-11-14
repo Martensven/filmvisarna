@@ -70,7 +70,7 @@ export default function FetchBookings() {
         <>
             {/* pop-up for cancellation confirmation */}
             {selectedBooking && (
-                <div className="flex z-50 inset-50 sticky mb-10">
+                <div className="flex z-50 inset-y-50 sticky mb-10">
                     <div className="bg-[#152333] p-6 rounded-2xl shadow-lg text-center w-80">
                         <h3 className="text-lg font-semibold mb-4 text-white">
                             Är du säker att du vill avboka?
@@ -97,7 +97,7 @@ export default function FetchBookings() {
                 </div>
             )}
             {alertMessage && (
-                <div className={`flex z-50 inset-50 sticky mb-10`}>
+                <div className={`flex z-50 inset-y-50 sticky mb-10`}>
                     <div className={`p-6 rounded-xl shadow-lg text-center w-80 transition-all duration-300 bg-[#152333]`}>
                             <h3 className="text-white text-lg font-semibold mb-3">{alertType === "success" ? "Klart!" : "Fel inträffade"}</h3>
                             <p className="text-white mb-5">{alertMessage}</p>
