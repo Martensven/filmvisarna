@@ -28,7 +28,7 @@ export default function CheckoutRecipe() {
   return (
     <>
       <aside
-        className="flex 
+        className=" flex 
     w-11/12 sm:justify-center sm:gap-2 items-center 
     md:w-11/12 flex-col mt-10"
       >
@@ -51,7 +51,7 @@ export default function CheckoutRecipe() {
             return (
               <div
                 key={type._id}
-                className="flex md:flex-row justify-between items-center 
+                className=" flex md:flex-row justify-between items-center 
         md:w-full my-1"
               >
                 <p className="text-[#e4e1e1] text-xs  md:text-base m-1">{type.ticketName}:</p>
