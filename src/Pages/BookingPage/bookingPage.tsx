@@ -69,7 +69,10 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             </section>
           </main>
           <section className="flex justify-center items-center m-10">
-            <CheckoutComponent />
+            <section className="w-screen mt-10">
+              <CheckoutComponent />
+            </section>
+
           </section>
         </CheckoutProvider>
       </SeatsProvider>
