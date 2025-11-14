@@ -58,6 +58,13 @@ export default function DetailMovie() {
             xs:p-2 
             sm:px-10 
             xl:w-11/12 xl:px-2">
+                {/* Button linked to bookingPage */}
+                <Link className="flex justify-center items-center w-32 h-15 mt-10" to={`/booking/${movie._id}`}>
+                    <button className="main_buttons cursor-pointer w-32 h-15 text-center flex items-center justify-center
+                     ">
+                        Boka Biljetter
+                    </button>
+                </Link>
                 <section>
                     {/* Detaljer */}
                     <section className="flex flex-col w-full container_box mb-5 justify-center items-center  mt-5 h-[] w-[90vw]
@@ -66,7 +73,7 @@ export default function DetailMovie() {
                 ">
                         <section className="p-0 lg:ml-10 mt-0">
                             {/* Movie Poster */}
-                            <h2 className="h-11 text-2xl pl-2 pt-2 my-2
+                            <h2 className="xl:h-11 text-2xl pl-2 pt-2 my-2
                         
                             lg:pt-3 lg:pl-3"></h2>
                             <img

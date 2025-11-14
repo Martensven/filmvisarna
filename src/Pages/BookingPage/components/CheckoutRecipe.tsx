@@ -1,3 +1,4 @@
+import CheckoutComponent from "./CheckoutComponent";
 import { useSeats } from "./context/SeatsContext";
 
 export default function CheckoutRecipe() {
@@ -27,13 +28,13 @@ export default function CheckoutRecipe() {
   return (
     <>
       <aside
-        className="flex h-auto 
+        className="flex 
     w-11/12 sm:justify-center sm:gap-2 items-center 
-    md:w-11/12 flex-col"
+    md:w-11/12 flex-col mt-10"
       >
         <section className="Type-of-tickets flex justify-between items-center w-70 h-auto border-t border-gray-400 text-sm
       sm:w-72 sm:text-sm md:flex-row
-       md:p-1 md:text-base md:w-66 pt-3 pb-3">
+       p-1 md:text-base md:w-66 mt-5 pt-3">
           <p className="text-[#e4e1e1] text-xs md:text-base">
             Biljetter:
           </p>
@@ -43,7 +44,7 @@ export default function CheckoutRecipe() {
       sm:w-72 sm:text-sm
       md:flex-col  md:text-base md:w-66">
           {/* Visa varje biljettyp */}
-          {filteredTickets.map((type) => { 
+          {filteredTickets.map((type) => {
             const quantity = counts[type._id] || 0;
             const subtotal = quantity * type.price;
 
@@ -51,9 +52,9 @@ export default function CheckoutRecipe() {
               <div
                 key={type._id}
                 className="flex md:flex-row justify-between items-center 
-        md:w-full h-10 my-1"
+        md:w-full my-1"
               >
-                <p className="text-[#e4e1e1] text-xs  md:text-base m-1">{type.displayName}:</p>
+                <p className="text-[#e4e1e1] text-xs  md:text-base m-1">{type.ticketName}:</p>
                 {/* <p className="text-[#e4e1e1] text-sm m-2  md:text-base md:m-5 flex justify-center">
                 {quantity} st × {type.price} kr
               </p> */}
@@ -75,6 +76,7 @@ export default function CheckoutRecipe() {
             {totalPrice} kr
           </p>
         </section>
+        <CheckoutComponent />
       </aside>
 
 
