@@ -210,7 +210,7 @@ export default function FrontPage() {
   {user ? (
     <>
       Hej, {" "}
-      <span className="text-green-600 font-bold">
+      <span className="text-white font-bold">
         {user.firstName}
       </span>!
       <br />
