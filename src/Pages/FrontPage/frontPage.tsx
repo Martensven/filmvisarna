@@ -27,7 +27,7 @@ export default function FrontPage() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [selectedAges, setSelectedAges] = useState<number[]>([]);
   const [sortOption, setSortOption] = useState<string>("");
-  
+
   const location = useLocation();
 
   // fetch movies from backend
@@ -80,11 +80,11 @@ export default function FrontPage() {
 
       setThuTheme(thuData);
       setSunTheme(sunData);
-      } catch (error:any) {
-        console.error('Error fetching themes', error);
-      }
-    };
-  
+    } catch (error: any) {
+      console.error('Error fetching themes', error);
+    }
+  };
+
 
   const filterMovies = async () => {
     try {
@@ -203,23 +203,23 @@ export default function FrontPage() {
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
       <h1
-  className="text-center text-lg mb-4 w-11/12
+        className="text-center text-lg mb-4 w-11/12
         sm:text-xl
         md:text-2xl"
->
-  {user ? (
-    <>
-      Hej, {" "}
-      <span className="text-green-600 font-bold">
-        {user.firstName}
-      </span>!
-      <br />
-      Välkommen till Filmvisarna!
-    </>
-  ) : (
-    "Välkommen till Filmvisarna!"
-  )}
-</h1>
+      >
+        {user ? (
+          <>
+            Hej, {" "}
+            <span className="text-green-600 font-bold">
+              {user.firstName}
+            </span>!
+            <br />
+            Välkommen till Filmvisarna!
+          </>
+        ) : (
+          "Välkommen till Filmvisarna!"
+        )}
+      </h1>
       <p
         className="text-center text-sm mb-10 w-11/12
             sm:text-base
@@ -410,7 +410,7 @@ export default function FrontPage() {
 
     lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:h-auto
     xl:h-auto xl:p-2 xl:grid xl:grid-cols-4  
-    2xl:h-auto 2xl:p-2 2xl:grid 2xl:grid-cols-5
+    xl:w-8/12
 
   ">
         {sortedMovies.length === 0 ? (
@@ -468,53 +468,51 @@ export default function FrontPage() {
       {/* Theme days container*/}
       <section
         className="flex flex-col justify-center items-center w-11/12 mt-2
-            md:mt-10 md:flex md:flex-col"
+             md:flex md:flex-col "
       >
-        <h2 className="w-full mt-10 rounded-md shadow-md text-lg glass_effect p-1 justify-center items-center">
+        <h2 className="w-full glass_effect py-5 rounded-md shadow-md text-lg flex justify-center items-center">
           Temadagar
         </h2>
-        <article className="min-h-96 my-5 justify-center items-center flex flex-col text-white" id="thuTheme">
+
+        <article className="min-h-96 max-w-9/12 my-5 justify-center items-center flex flex-col text-white" id="thuTheme
+        ">
           <h2
-            className=" text-center text-xl uppercase font-bold my-2 glass_effect px-20 py-5 
-                    lg:mt-5 lg:underline"
+            className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
+                     lg:underline"
           >
             {thuTheme?.weekDay}
           </h2>
           <section
-            className=" flex flex-col justify-center items-center mt-5
-                    sm:flex-col sm:p-5
+            className="flex flex-col justify-center items-center 
+                    sm:flex-col 
                     md:flex-row 
-                    lg:flex-row"
+                    lg:flex-row "
           >
             <Slideshow day="thursday" />
             <p
-              className="w-11/12 text-center glass_effect px-10 py-28 
-                            sm:w-11/12
-                            md:w-8/12 md:px-2
-                            lg:w-full lg:h-80"
+              className="flex flex-col justify-center items-center w-11/12 text-center md:px-20 py-20 
+                         lg:h-80 shadow-md rounded-md"
             >{thuTheme?.themeDesc}</p>
           </section>
         </article>
 
-        <article className="min-h-96 my-5 justify-center items-center flex  flex-col text-white" id="sunTheme">
+        <article className="min-h-96 max-w-9/12 justify-center items-center flex  flex-col text-white" id="sunTheme">
           <h2
-            className="text-center text-xl uppercase font-bold my-2 glass_effect px-20 py-5 
-                    lg:mt-5 lg:underline"
+            className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
+                     lg:underline"
           >
             {sunTheme?.weekDay}
           </h2>
           <section
-            className="flex flex-col justify-center items-center mt-5
-                    sm:flex-col sm:p-5
+            className="flex flex-col justify-center items-center 
+                    sm:flex-col
                     md:flex-row-reverse  
-                    lg:flex-row-reverse"
+                    lg:flex-row-reverse "
           >
             <Slideshow day="sunday" />
             <p
-              className="w-11/12 text-center glass_effect px-20 py-28 
-                        sm:w-11/12
-                        md:w-8/12 md:px-2 
-                        lg:w-full lg:h-80"
+              className="flex flex-col justify-center items-center w-11/12 text-center md:px-20 py-20 
+                         lg:h-80 rounded-md shadow-md"
             >{sunTheme?.themeDesc}</p>
           </section>
         </article>

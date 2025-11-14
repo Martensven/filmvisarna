@@ -22,7 +22,7 @@ interface SlideshowProps {
 export default function Slideshow({ day }: SlideshowProps) {
     const [movies, setMovies] = useState<movieTheme[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    
+
     const fetchTheme = async () => {
         try {
             const themeMap: Record<SlideshowProps["day"], string> = {
@@ -34,7 +34,7 @@ export default function Slideshow({ day }: SlideshowProps) {
             const response = await fetch(`/api/theme/${themeId}`, {
                 method: 'GET',
                 headers: {
-                        "Content-Type": "application/json",
+                    "Content-Type": "application/json",
                 },
             });
 
@@ -44,7 +44,7 @@ export default function Slideshow({ day }: SlideshowProps) {
 
             const data = await response.json();
             console.log("Fetched theme data:", data);
-            
+
             if (Array.isArray(data)) {
                 setMovies(data);
             } else if (data.movies && Array.isArray(data.movies)) {
@@ -81,12 +81,12 @@ export default function Slideshow({ day }: SlideshowProps) {
             backgroundColor: baseColor,
             backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 45%, transparent), url(${currentMovie.imageSrc})`,
         }}
-        className="w-11/12 h-60 bg-contain bg-no-repeat bg-right flex flex-col justify-center items-start rounded-md shadow-md relative
+            className="w-11/12 h-60 bg-contain bg-no-repeat bg-right flex flex-col justify-center items-start rounded-md shadow-md relative
         sm:shadow-lg sm:py-2 sm:px-2 xs:h-80
         md:shadow-lg
         lg:shadow-lg lg:h-80 lg:w-210"
         >
-            <article style={{color: textDay}} className="w-8/12 text-start mx-2 textDay absolute top-5
+            <article style={{ color: textDay }} className="w-8/12 text-start mx-2 textDay absolute top-5
             sm:w-9/12 sm:py-2 sm:px-2
             md:w-10/12 md:top-0
             lg:mx-3  ">
@@ -103,7 +103,7 @@ export default function Slideshow({ day }: SlideshowProps) {
                 sm:text-sm 
                 lg:text-sm">
                     Filmens Längd: {currentMovie.length} min</h2>
-                <p className="overflow-y-auto w-10/12 text-sm line-clamp-4 h-auto
+                <p className=" w-full text-sm h-auto
                 [&::-webkit-scrollbar]:h-2  
                 [&::-webkit-scrollbar]:w-1
                 [&::-webkit-scrollbar-track]:rounded-full
@@ -114,7 +114,7 @@ export default function Slideshow({ day }: SlideshowProps) {
                 xs:h-30 xs:w-full
                 sm:text-sm 
                 md:w-6/12">{currentMovie.description}</p>
-                
+
             </article>
             <article className="text-sm mt-2 flex gap-3 py-3 absolute bottom-0 left-5
             xs:text-lg
