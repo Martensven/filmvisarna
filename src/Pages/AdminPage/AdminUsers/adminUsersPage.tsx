@@ -1,43 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUsers, FaSearch } from "react-icons/fa";
 import { AdminUsersList } from "./adminUsersList";
 import { SearchUserModal } from "./adminSearchUser";
 
+export type User = {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: number;
+}
+
+export type Booking = {
+  _id: string;
+  screening_id?: {
+    movie?: { title: string };
+    date: string;
+    time: string;
+    auditorium?: { name: string };
+  };
+  totalPrice: number;
+};
+
 export default function AdminUsersPage() {
-  const [showUserList, setShowUserList] = useState(false);
-  const [showSearchModal, setShowSearchModal] = useState(false);
+  // view state to toggle between menu, list users, and search usersviews
+  const [view, setView] = useState<"menu" | "list" | "search">("menu");
+  // State to manage selected user
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  // State to manage bookings of the selected user
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  // State to manage cancellation message
+  const [cancelMessage, setCancelMessage] = useState("");
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      if (!selectedUser) return;
+      try {
+        const response = await fetch(`/api/admin/bookings/${selectedUser._id}?page=1&limit=5`);
+        const data = await response.json();
+        setBookings(data.data);
+      } catch (error) {
+        console.error("Fel vid hämtning av bokningar:", error);
+      }
+    };
+
+    fetchBookings();
+  }, [selectedUser]); 
 
   return (
-    <main className="max-w-3xl mx-auto bg-[#243365] text-white p-6 flex flex-col min-h-30vh rounded-xl">
-      <header className="text-center mb-10">
-        <h1 className="text-3xl font-bold inline-block px-6 text-white">
-          Användare
-        </h1>
-      </header>
-
-      <nav className="flex justify-center items-center mb-8 gap-10">
-        <FaSearch
-          size={70}
-          className="inline-block mr-2 cursor-pointer"
-          aria-label="Sök användare"
-          onClick={() => setShowSearchModal(true)}
-        />
-        <FaUsers
-          size={80}
-          className="inline-block mr-2 cursor-pointer"
-          onClick={() => setShowUserList(true)}
-          aria-label="Visa användare"
-        />
-      </nav>
-
-      {showUserList && (
-        <section className="w-full max-w-3xl">
-          <AdminUsersList />
-        </section>
-      )}
-
-      {showSearchModal && <SearchUserModal onClose={() => setShowSearchModal(false)} />}
-    </main>
+    
   );
 }
 
