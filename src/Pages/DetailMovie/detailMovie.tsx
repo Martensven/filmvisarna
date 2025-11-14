@@ -91,7 +91,7 @@ export default function DetailMovie() {
                             lg:pt-3 lg:pl-3">{movie.title}</h2>
 
                             <iframe
-                                className="w-full h-36 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
+                                className="w-full h-44 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
                         sm:h-72 
                         md:h-96 lg:ml-5 xl:w-11/12
                         lg:h-130  lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
