@@ -19,6 +19,7 @@ import Auditorium from './routes/auditoriumsRoutes.js';
 import Actors from './routes/actorRoutes.js';
 import Kiosk from './routes/kioskRoutes.js';
 import Admin from './routes/adminRoutes.js';
+import ResetPassword from './routes/resetPasswordRoute.js'
 import { initSocket } from './websockets/sockets.js';
 
 
@@ -61,6 +62,7 @@ app.use(Auditorium);
 app.use(Actors);
 app.use(Kiosk);
 app.use("/api/admin", Admin);
+app.use(ResetPassword);
 
 
 io.on("connected", (socket) => {
