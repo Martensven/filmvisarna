@@ -68,8 +68,6 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 <CheckoutRecipe />
               </section>
             </div>
-            <CheckoutComponent />
-
           </main>
         </CheckoutProvider>
       </SeatsProvider>
