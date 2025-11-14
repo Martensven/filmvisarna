@@ -28,13 +28,13 @@ export default function CheckoutRecipe() {
   return (
     <>
       <aside
-        className="flex 
+        className=" flex 
     w-11/12 sm:justify-center sm:gap-2 items-center 
-    md:w-11/12 flex-col mt-10"
+    md:w-11/12 flex-col"
       >
         <section className="Type-of-tickets flex justify-between items-center w-70 h-auto border-t border-gray-400 text-sm
       sm:w-72 sm:text-sm md:flex-row
-       p-1 md:text-base md:w-66 mt-5 pt-3">
+       p-1 md:text-base md:w-66">
           <p className="text-[#e4e1e1] text-xs md:text-base">
             Biljetter:
           </p>
@@ -51,7 +51,7 @@ export default function CheckoutRecipe() {
             return (
               <div
                 key={type._id}
-                className="flex md:flex-row justify-between items-center 
+                className=" flex md:flex-row justify-between items-center 
         md:w-full my-1"
               >
                 <p className="text-[#e4e1e1] text-xs  md:text-base m-1">{type.ticketName}:</p>
@@ -76,7 +76,7 @@ export default function CheckoutRecipe() {
             {totalPrice} kr
           </p>
         </section>
-        <CheckoutComponent />
+
       </aside>
 
 

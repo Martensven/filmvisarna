@@ -67,7 +67,7 @@ export default function GuestOrderComponent() {
       setLoading(false);
     }
   };
-      
+
   //     setOrderId(data._id);
   //   } catch (err) {
   //     console.error(err);
@@ -92,7 +92,7 @@ export default function GuestOrderComponent() {
         <>
           <h2 className="text-lg mb-3">Boka som gäst</h2>
 
-          <div className="flex flex-col justify-center items-center gap-2 mb-4">
+          <div className="container_box flex flex-col justify-center items-center gap-2 mb-4">
             <input
               type="text"
               placeholder="Förnamn"
