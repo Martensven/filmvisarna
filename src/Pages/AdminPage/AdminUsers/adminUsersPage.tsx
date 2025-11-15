@@ -50,7 +50,8 @@ export default function AdminUsersPage() {
     };
 
     fetchBookings();
-  }, [selectedUser]);
+  
+  }, [selectedUser]); // Fetch bookings when selectedUser changes
 
   // Function to handle booking cancellation
   const handleCancelBooking = async (bookingId: string) => {
