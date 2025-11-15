@@ -3,7 +3,6 @@ import { FaUsers, FaSearch } from "react-icons/fa";
 import { AdminUsersList } from "./adminUsersList";
 import { AdminSearchUser } from "./adminSearchUser";
 import { UserDetail } from "./adminUserDetails";
-import { SearchUserModal } from "./adminSearchUser";
 
 export type User = {
   _id: string;
