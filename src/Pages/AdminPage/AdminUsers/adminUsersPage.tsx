@@ -119,7 +119,7 @@ export default function AdminUsersPage() {
         <AdminSearchUser onSelectUser={setSelectedUser} />
       )}
 
-      {/* User detail component receives selected user and bookings as props */}
+      {/* If a user is selected, show their details in the UserDetail component. UserDetail receives selected user and bookings as props */}
       {selectedUser && (
         <UserDetail
           user={selectedUser}
