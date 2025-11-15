@@ -7,7 +7,7 @@ type CookiePref = {
 
 const CookiePopup = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const [analyticsConsent, setAnalyticsConsent] = useState(false);
+  const [analyticsConsent, setAnalyticsConsent] = useState(true);
 
   useEffect(() => {
     const savedPrefs = localStorage.getItem("cookiePreferences");
