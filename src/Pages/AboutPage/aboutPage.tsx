@@ -1,6 +1,6 @@
 export default function AboutPage() {
     return (
-        <main className="w-screen flex flex-col items-center min-h-screen mt-36 font-[biorhyme]">
+        <main className="w-screen flex flex-col items-center min-h-screen mt-36 font-[Noto_Serif]">
   <h1 className="text-4xl">Om Oss</h1>
 
   <section className="min-h-96 m-4 w-11/12 rounded-md shadow-md bg-[#24252C] text-white text-3xl leading-normal p-5 items-center justify-center flex flex-col space-y-10">
