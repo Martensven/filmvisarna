@@ -469,7 +469,7 @@ export default function FrontPage() {
                 <section className="">
                   <Link
                     to={`/movie/${movie._id}`}
-                    className="cursor-pointer p-0 m-0 "
+                    className="cursor-pointer p-0 m-0"
                   >
                     <button className="main_buttons px-3 py-1 mr-2 cursor-pointer hover:scale-105 active:scale-95">
                       Info
@@ -500,8 +500,9 @@ export default function FrontPage() {
           Temadagar
         </h2>
 
-        <article className="min-h-96 max-w-9/12 my-5 justify-center items-center flex flex-col text-white" id="thuTheme
-        ">
+        <article className="min-h-96 max-w-9/12 my-5 
+        flex flex-col justify-center items-center text-white"
+          id="thuTheme">
           <h2
             className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
                      lg:underline"
