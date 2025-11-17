@@ -9,7 +9,7 @@ type Theme = {
   _id: string;
   themeDesc: string;
   weekDay: string;
-}
+};
 
 export default function FrontPage() {
   const [filterOpen, setFilterOpen] = useState(false);
@@ -61,18 +61,20 @@ export default function FrontPage() {
         method: "GET",
         headers: {
           "Conent-Type": "application/json",
-        }
+        },
       });
 
       const responseThu = await fetch(`/api/theme/68ecd482dcb8359901cf375f`, {
         method: "GET",
         headers: {
           "Conent-Type": "application/json",
-        }
+        },
       });
 
       if (!responseSun.ok || !responseThu.ok) {
-        throw new Error(`Serverfel: ${responseSun.status}, ${responseThu.status}`);
+        throw new Error(
+          `Serverfel: ${responseSun.status}, ${responseThu.status}`
+        );
       }
 
       const thuData = await responseThu.json();
@@ -81,10 +83,9 @@ export default function FrontPage() {
       setThuTheme(thuData);
       setSunTheme(sunData);
     } catch (error: any) {
-      console.error('Error fetching themes', error);
+      console.error("Error fetching themes", error);
     }
   };
-
 
   const filterMovies = async () => {
     try {
@@ -202,40 +203,49 @@ export default function FrontPage() {
 
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
-
-      <div>
-              <h1
-  className="text-center text-lg mb-4 w-11/12
+      <div className="WelcomeSign w-10/12 mb-10
+      sm:w-9/12
+      md:w-8/12 md:mb-15
+      lg:w-6/12 lg:mb-15">
+        <div className="w-full border-t-2 border-b-2 border-[#737373] mt-2
+        lg:mt-3">
+          <h1
+            className="text-center text-base mt-1 mb-1 font-bold
         sm:text-xl
-        md:text-2xl"
->
-  {user ? (
-    <>
-      Hej, {" "}
-      <span className="text-white font-bold">
-        {user.firstName}
-      </span>!
-      <br />
-      Välkommen till Filmvisarna!
-    </>
-  ) : (
-    "Välkommen till Filmvisarna!"
-  )}
-</h1>
-      <p
-        className="text-center text-sm mb-10 w-11/12
+        md:text-2xl
+        lg:text-2xl"
+          >
+            {user ? (
+              <>
+                VÄLKOMMEN TILL FILMVISARNA,{" "}
+                <span className="text-black font-bold uppercase">
+                  {user.firstName}!
+                </span>
+              </>
+            ) : (
+              "VÄLKOMMEN TILL FILMVISARNA!"
+            )}
+          </h1>
+        </div>
+
+        <div className="w-full border-b-2 border-[#737373]">
+          <p
+            className="text-center text-[10px] font-bold my-2 uppercase
             sm:text-base
-            md:text-base"
-      >
-        Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
-        filmer från 1910-talet fram till början på 2000-talet. Är detta något
-        för dig? Se då till att se dig runt bland våra filmer och boka en tid
-        som passar dig!
-      </p>
+            md:text-base
+            lg:text-base"
+          >
+            Åk tillbaka i tiden med filmer från 1900-tal till 2000-tal.
+          </p>
+        </div>
+
+        <div className="w-full border-b-2 border-[#737373] mt-1 mb-1
+        lg:mb-3">
+          <p className="mt-1 mb-1 font-bold text-sm uppercase
+          lg:text-lg">
+          &#9733;  Boka din bio upplevelse hos oss  &#9733;</p>
+        </div>
       </div>
-
-
-
 
       {/* Filter & Sort */}
       <section className="w-11/12 mb-5 rounded-md shadow-md flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
@@ -357,15 +367,16 @@ export default function FrontPage() {
           </div>
         </section>
 
-
         <section className="flex w-full">
           {/* Screening Date */}
-          <div className="search-date-box px-2 py-2 
+          <div
+            className="search-date-box px-2 py-2 
         w-11/12
         sm:w-1/2
         flex
         flex-col
-      ">
+      "
+          >
             <label className="block text-sm mb-1">Datum:</label>
             <input
               type="date"
@@ -375,13 +386,14 @@ export default function FrontPage() {
             />
           </div>
 
-
           {/* Schedule Type */}
-          <div className="search-hall-box px-2 py-2 w-11/12
+          <div
+            className="search-hall-box px-2 py-2 w-11/12
         sm:w-1/2
         flex
         flex-col
-        ">
+        "
+          >
             <label className="block text-sm mb-1">Salong:</label>
             <select
               value={scheduledType}
@@ -395,8 +407,6 @@ export default function FrontPage() {
           </div>
         </section>
       </section>
-
-
 
       {/* Movies container*/}
       <section
@@ -416,7 +426,8 @@ export default function FrontPage() {
     xl:h-auto xl:p-2 xl:grid xl:grid-cols-4  
     xl:w-8/12
 
-  ">
+  "
+      >
         {sortedMovies.length === 0 ? (
           <p className="m-auto">Inga filmer hittades.</p>
         ) : (
@@ -427,9 +438,11 @@ export default function FrontPage() {
                             lg:h-auto 
                             xl:h-auto"
             >
-              <section className="flex flex-col items-center justify-start h-auto
+              <section
+                className="flex flex-col items-center justify-start h-auto
                             sm:h-auto m-0
-                            lg:h-auto">
+                            lg:h-auto"
+              >
                 <p
                   className="mt-2 
                              text-xs
@@ -454,7 +467,6 @@ export default function FrontPage() {
                   2xl:h-80"
                 />
 
-
                 <p
                   className="text-sm
                   h-16
@@ -466,8 +478,8 @@ export default function FrontPage() {
                 >
                   {Array.isArray(movie.genres)
                     ? movie.genres
-                      .map((genre: { title: string }) => genre.title)
-                      .join(", ")
+                        .map((genre: { title: string }) => genre.title)
+                        .join(", ")
                     : movie.genres.title}
                 </p>
                 <section className="">
@@ -479,10 +491,7 @@ export default function FrontPage() {
                       Info
                     </button>
                   </Link>
-                  <Link
-                    to={`/booking/${movie._id}`}
-                    className="cursor-pointer"
-                  >
+                  <Link to={`/booking/${movie._id}`} className="cursor-pointer">
                     <button className="main_buttons px-3 py-1 ml-2 cursor-pointer hover:scale-105 active:scale-95">
                       Boka
                     </button>
@@ -492,7 +501,6 @@ export default function FrontPage() {
             </article>
           ))
         )}
-
       </section>
 
       {/* Theme days container*/}
@@ -504,9 +512,11 @@ export default function FrontPage() {
           Temadagar
         </h2>
 
-        <article className="min-h-96 max-w-9/12 my-5 
+        <article
+          className="min-h-96 max-w-9/12 my-5 
         flex flex-col justify-center items-center text-white"
-          id="thuTheme">
+          id="thuTheme"
+        >
           <h2
             className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
                      lg:underline"
@@ -523,11 +533,16 @@ export default function FrontPage() {
             <p
               className="flex flex-col justify-center items-center w-11/12 text-center md:px-20 py-20 
                          lg:h-80 shadow-md rounded-md"
-            >{thuTheme?.themeDesc}</p>
+            >
+              {thuTheme?.themeDesc}
+            </p>
           </section>
         </article>
 
-        <article className="min-h-96 max-w-9/12 justify-center items-center flex  flex-col text-white" id="sunTheme">
+        <article
+          className="min-h-96 max-w-9/12 justify-center items-center flex  flex-col text-white"
+          id="sunTheme"
+        >
           <h2
             className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
                      lg:underline"
@@ -544,7 +559,9 @@ export default function FrontPage() {
             <p
               className="flex flex-col justify-center items-center w-11/12 text-center md:px-20 py-20 
                          lg:h-80 rounded-md shadow-md"
-            >{sunTheme?.themeDesc}</p>
+            >
+              {sunTheme?.themeDesc}
+            </p>
           </section>
         </article>
       </section>

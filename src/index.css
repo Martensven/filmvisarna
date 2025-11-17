@@ -85,3 +85,41 @@
 .animate-fade-in {
   animation: fade-in 0.3s ease-out;
 }
+
+.WelcomeSign {
+  font-family: "Stack Sans Headline", sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background: white;
+  color:black;
+  box-shadow: 1px 1px 15px 3px lightgoldenrodyellow;
+  -webkit-backdrop-filter: drop-shadow(5px);
+  backdrop-filter: 5px;
+
+  border-radius: 3px;
+}
+
+.WelcomeSign::before {
+  content: " ";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  bottom: -5px;
+  right: -5px;
+  border: 7px solid rgb(148, 5, 5);
+  border-radius: 5px;
+} 
+
+.WelcomeSign::after {
+  position: absolute;
+  content: "";
+  border: 8px dotted rgba(241, 241, 179, 0.808);
+  top: -6px;
+  right: -5px;
+  bottom: -6px;
+  left: -5px;
+}
