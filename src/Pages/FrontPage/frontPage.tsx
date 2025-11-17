@@ -210,7 +210,7 @@ export default function FrontPage() {
   {user ? (
     <>
       Hej, {" "}
-      <span className="text-green-600 font-bold">
+      <span className="">
         {user.firstName}
       </span>!
       <br />
@@ -226,8 +226,8 @@ export default function FrontPage() {
             md:text-base"
       >
         Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
-        filmer från 1910 talet fram till början på 2000 talet. Är detta något
-        för dig se då till att se dig runt bland våra filmer och boka en tid
+        filmer från 1910-talet fram till början på 2000-talet. Är detta något
+        för dig? Se då till att se dig runt bland våra filmer och boka en tid
         som passar dig!
       </p>
 
