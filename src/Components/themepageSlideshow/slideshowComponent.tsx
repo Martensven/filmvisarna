@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 type Genre = {
     _id: number;
@@ -59,69 +59,74 @@ export default function Slideshow({ day }: SlideshowProps) {
         fetchTheme();
     }, []);
 
-    if (movies.length === 0) {
+    const nextSlide = useCallback(() => {
+        setCurrentIndex((prev) => (prev + 1) % movies.length);
+    }, [movies.length]);
+
+    const prevSlide = useCallback(() => {
+        setCurrentIndex((prev) => (prev - 1 + movies.length) % movies.length);
+    },[movies.length]);
+
+    useEffect(() => {
+        if (movies.length === 0) return;
+
+        const interval = setInterval(() => {
+            nextSlide();
+        }, 10000);
+
+        return () => clearInterval(interval);
+    }, [movies.length, nextSlide]);
+
+       if (movies.length === 0) {
         return <p>No movies available for {day}</p>
     };
 
     const currentMovie = movies[currentIndex];
 
-    const nextSlide = () => {
-        setCurrentIndex((prev) => (prev + 1) % movies.length);
-    };
-
-    const prevSlide = () => {
-        setCurrentIndex((prev) => (prev - 1 + movies.length) % movies.length);
-    };
-
-    const baseColor = day === "thursday" ? "0, 0, 0" : "36, 51, 101";
-    const textDay = day === "thursday" ? "white" : "#f4c206";
-
     return (
-        <section style={{
-            backgroundColor: baseColor,
-            backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 45%, transparent), url(${currentMovie.imageSrc})`,
-        }}
-            className="w-11/12 h-60 bg-contain bg-no-repeat bg-right flex flex-col justify-center items-start rounded-md shadow-md relative
-        sm:shadow-lg sm:py-2 sm:px-2 xs:h-80
-        md:shadow-lg
-        lg:shadow-lg lg:h-80 lg:w-210"
+        <section className="w-full flex flex-col justify-center items-center rounded-md mt-5
+        md:w-full md:flex-row
+        lg:h-100 lg:w-full lg:mb-5
+        xl:mb-5"
         >
-            <article style={{ color: textDay }} className="w-8/12 text-start mx-2 textDay absolute top-5
-            sm:w-9/12 sm:py-2 sm:px-2
-            md:w-10/12 md:top-0
-            lg:mx-3  ">
-                <h1 className="text-base my-2
+            <img src={currentMovie.imageSrc} alt="Theme day movie posters" 
+            className="w-30 reflection-effect rounded-[5px] mb-5
+            sm:w-45
+            md:w-50 md:ml-20 md:mr-2
+            lg:w-60 lg:ml-40 lg:mr-5
+            xl:w-70 xl:ml-45"/>
+
+            <article style={{ }} className="w-10/12 text-center 
+            md:w-full md:mr-20 md:ml-2
+            lg:ml-0 lg:mr-20
+            xl:mr-45">
+                <h1 className="text-sm my-2
                  sm:text-lg
                  md:text-lg 
-                 lg:text-xl">
+                 lg:text-2xl ">
                     {currentMovie.title} ({currentMovie.releaseYear})</h1>
-                <h2 className="text-sm my-2 
+                <h2 className="text-xs my-2 font-bold
                 sm:text-base 
-                lg:text-sm">
+                lg:text-base">
                     {currentMovie.genres?.map(g => g.title).join(", ")}</h2>
-                <h2 className="text-sm my-2 
+                <h2 className="text-xs my-2 font-bold 
                 sm:text-sm 
-                lg:text-sm">
+                md:text-base
+                lg:text-base">
                     Filmens Längd: {currentMovie.length} min</h2>
-                <p className=" w-full text-sm h-auto
+                <p className=" w-full text-xs h-auto
                 [&::-webkit-scrollbar]:h-2  
                 [&::-webkit-scrollbar]:w-1
                 [&::-webkit-scrollbar-track]:rounded-full
                 [&::-webkit-scrollbar-track]:bg-[#24252C]
                 [&::-webkit-scrollbar-thumb]:rounded-full
                 [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
-                
-                xs:h-30 xs:w-full
-                sm:text-sm 
-                md:w-6/12">{currentMovie.description}</p>
+                sm:text-sm
+                md:text-base
+                lg:text-lg
+                xl:text-lg
+                ">{currentMovie.description}</p>
 
-            </article>
-            <article className="text-sm mt-2 flex gap-3 py-3 absolute bottom-0 left-5
-            xs:text-lg
-            md:text-base
-            lg:text-lg">
-                <button onClick={prevSlide} className="cursor-pointer">&#10216; Föregående</button>
-                <button onClick={nextSlide} className="cursor-pointer">Nästa &#10217;</button>
             </article>
         </section>
     )
