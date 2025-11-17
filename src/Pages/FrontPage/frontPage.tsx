@@ -203,9 +203,9 @@ export default function FrontPage() {
 
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
-      
+
       {/*Welcome sign with function calling the user if it is logged in. Or else just showing FILMVISARNA. */}
-      <div className="WelcomeSign w-10/12 mb-10
+      <div className="welcome-sign w-10/12 mb-10
       sm:w-9/12
       md:w-8/12 md:mb-15
       lg:w-6/12 lg:mb-15">
@@ -507,63 +507,80 @@ export default function FrontPage() {
 
       {/* Theme days container*/}
       <section
-        className="flex flex-col justify-center items-center w-11/12 mt-2
-             md:flex md:flex-col "
+        className="flex flex-col justify-center items-center w-full mt-1
+             md:flex md:flex-col md:mt-20
+             lg:flex-col lg:h-auto "
       >
-        <h2 className="w-full glass_effect py-5 rounded-md shadow-md text-lg flex justify-center items-center">
+        <h2 className="w-11/12 glass_effect py-5 my-20 rounded-md shadow-md text-lg flex justify-center items-center
+        md:mb-20
+        lg:mb-20">
           Temadagar
         </h2>
 
         <article
-          className="min-h-96 max-w-9/12 my-5 
-        flex flex-col justify-center items-center text-white"
+          className="min-h-96 max-w-9/12 my-5 themeday-box
+        flex flex-col justify-center items-center text-white
+        lg:mb-20 "
           id="thuTheme"
         >
           <h2
-            className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
-                     lg:underline"
+            className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20
+                     "
           >
             {thuTheme?.weekDay}
           </h2>
           <section
-            className="flex flex-col justify-center items-center 
+            className="flex flex-col justify-center items-center
                     sm:flex-col 
-                    md:flex-row 
-                    lg:flex-row "
+                    md:flex-col 
+                    lg:flex-col lg:p-0"
           >
             <Slideshow day="thursday" />
+            <div className=" w-10/12 flex flex-col justify-center items-center text-center my-10 mx-5 uppercase text-sm
+            sm:text-base
+            md:w-9/12 md:mb-20 md:mr-1 md:text-lg
+            lg:mx-10 lg:w-8/12 lg:uppercase lg:text-xl lg:mb-20
+            xl:text-2xl">
             <p
-              className="flex flex-col justify-center items-center w-11/12 text-center md:px-20 py-20 
-                         lg:h-80 shadow-md rounded-md"
+              className="flex flex-col justify-center items-center text-center  
+               lg:"
             >
               {thuTheme?.themeDesc}
             </p>
+            </div>
           </section>
         </article>
 
         <article
-          className="min-h-96 max-w-9/12 justify-center items-center flex  flex-col text-white"
+          className="min-h-96 max-w-9/12 my-5 themeday-box
+        flex flex-col justify-center items-center text-white
+        lg:mb-20"
           id="sunTheme"
         >
           <h2
-            className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
-                     lg:underline"
+            className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20 
+                     "
           >
             {sunTheme?.weekDay}
           </h2>
           <section
             className="flex flex-col justify-center items-center 
                     sm:flex-col
-                    md:flex-row-reverse  
-                    lg:flex-row-reverse "
+                    md:flex-col  
+                    lg:flex-col "
           >
             <Slideshow day="sunday" />
-            <p
-              className="flex flex-col justify-center items-center w-11/12 text-center md:px-20 py-20 
-                         lg:h-80 rounded-md shadow-md"
-            >
-              {sunTheme?.themeDesc}
-            </p>
+            <div className="w-10/12 flex flex-col justify-center items-center text-center my-10 mx-5 uppercase text-sm
+            sm:text-base
+            md:w-9/12 md:mb-20 md:mr-1 md:text-lg
+            lg:mx-5 lg:w-8/12 lg:text-xl lg:mb-20
+            xl:text-2xl">
+              <p
+                className="flex flex-col justify-center items-center text-center"
+              >
+                {sunTheme?.themeDesc}
+              </p>
+            </div>
           </section>
         </article>
       </section>
