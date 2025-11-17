@@ -5,6 +5,7 @@ import { validateData } from "../middleware/dataValidation.js";
 import express from "express";
 import crypto from "crypto";
 
+
 const router = express.Router();
 //Router endpoint for forgotten password
 router.post("/api/forgotPass", async (req, res) => {
@@ -105,10 +106,13 @@ router.post("/api/forgotPass/:token",
     try{
         const user = await User.findOne({
             resetPasswordToken: token, 
-            resetPasswordExpire: { $gt: Date.now() }, //This line should check if the token hasn't expired
         });
 
         if(!user) return res.status(400).json({error: "Token ogiltig"});
+
+        if(user.resetPasswordExpire < Date.now()) {
+          return res.status(400).json({ error: "Återställningslänk har gått ut, begär om en ny länk på <strong>Glömt Lösenord</strong>"})
+        }
 
         user.password = hashedPass;
         user.resetPasswordToken = undefined;
@@ -119,6 +123,27 @@ router.post("/api/forgotPass/:token",
     } catch (err) {
         console.error(err);
         res.status(500).json({error: "Kunde inte ändra löenordet"})
+    }
+})
+
+router.get("/api/forgotPass/validate/:token", async (req, res) => {
+  const { token } = req.params;
+
+    try{
+      const user = await User.findOne({ resetPasswordToken: token });
+
+      if(!user) {
+        return res.status(400).json({error: "Ogiltig återställningslänk"});
+      }
+
+      if(user.resetPasswordExpire < Date.now()) {
+        return res.status(400).json({ error: "Återställningslänken har gått ut. Begär en ny"})
+      }
+
+      return res.json({message: "Token är giltig"});
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({error: "Serverfel"})
     }
 })
 

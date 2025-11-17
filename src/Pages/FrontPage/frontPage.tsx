@@ -202,15 +202,17 @@ export default function FrontPage() {
 
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
-      <h1
-        className="text-center text-lg mb-4 w-11/12
+
+      <div>
+              <h1
+  className="text-center text-lg mb-4 w-11/12
         sm:text-xl
         md:text-2xl"
 >
   {user ? (
     <>
       Hej, {" "}
-      <span className="">
+      <span className="text-white font-bold">
         {user.firstName}
       </span>!
       <br />
@@ -230,6 +232,8 @@ export default function FrontPage() {
         för dig? Se då till att se dig runt bland våra filmer och boka en tid
         som passar dig!
       </p>
+      </div>
+
 
 
 
