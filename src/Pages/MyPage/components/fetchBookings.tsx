@@ -73,7 +73,7 @@ export default function FetchBookings() {
                 <div className="flex z-50 inset-y-50 sticky mb-10">
                     <div className="bg-[#152333] p-6 rounded-2xl shadow-lg text-center w-80">
                         <h3 className="text-lg font-semibold mb-4 text-white">
-                            Är du säker att du vill avboka?
+                            Är du säker på att du vill avboka?
                         </h3>
                         <p className="text-gray-300 mb-6">
                             {selectedBooking.screening_id.movie.title} <br />

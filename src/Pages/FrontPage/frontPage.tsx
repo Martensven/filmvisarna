@@ -206,28 +206,28 @@ export default function FrontPage() {
         className="text-center text-lg mb-4 w-11/12
         sm:text-xl
         md:text-2xl"
-      >
-        {user ? (
-          <>
-            Hej, {" "}
-            <span className="text-green-600 font-bold">
-              {user.firstName}
-            </span>!
-            <br />
-            Välkommen till Filmvisarna!
-          </>
-        ) : (
-          "Välkommen till Filmvisarna!"
-        )}
-      </h1>
+>
+  {user ? (
+    <>
+      Hej, {" "}
+      <span className="">
+        {user.firstName}
+      </span>!
+      <br />
+      Välkommen till Filmvisarna!
+    </>
+  ) : (
+    "Välkommen till Filmvisarna!"
+  )}
+</h1>
       <p
         className="text-center text-sm mb-10 w-11/12
             sm:text-base
             md:text-base"
       >
         Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
-        filmer från 1910 talet fram till början på 2000 talet. Är detta något
-        för dig se då till att se dig runt bland våra filmer och boka en tid
+        filmer från 1910-talet fram till början på 2000-talet. Är detta något
+        för dig? Se då till att se dig runt bland våra filmer och boka en tid
         som passar dig!
       </p>
 
