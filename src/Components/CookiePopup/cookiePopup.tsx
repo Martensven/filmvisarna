@@ -7,7 +7,7 @@ type CookiePref = {
 
 const CookiePopup = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const [analyticsConsent, setAnalyticsConsent] = useState(false);
+  const [analyticsConsent, setAnalyticsConsent] = useState(true);
 
   useEffect(() => {
     const savedPrefs = localStorage.getItem("cookiePreferences");
@@ -39,7 +39,7 @@ const CookiePopup = () => {
       >
         <h3 className="text-lg font-semibold mb-3">Cookies inställningar</h3>
         <p className="text-sm mb-4 leading-relaxed">
-          Filmvisarna använder cookies för inloggning och användarsessioner. Fimvisarna använder för nuvarande inte cookies
+          Filmvisarna använder cookies för inloggning och användarsessioner. Filmvisarna använder för nuvarande inte cookies
           för analys eller statistik men kan komma att göra det i framtiden. Du kan hantera dina cookie-inställningar nedan.
         </p>
 

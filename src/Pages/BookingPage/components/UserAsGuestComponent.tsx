@@ -67,7 +67,7 @@ export default function GuestOrderComponent() {
       setLoading(false);
     }
   };
-      
+
   //     setOrderId(data._id);
   //   } catch (err) {
   //     console.error(err);
@@ -92,7 +92,7 @@ export default function GuestOrderComponent() {
         <>
           <h2 className="text-lg mb-3">Boka som gäst</h2>
 
-          <div className="flex flex-col justify-center items-center gap-2 mb-4">
+          <div className="container_box flex flex-col justify-center items-center gap-2 mb-4">
             <input
               type="text"
               placeholder="Förnamn"
@@ -124,7 +124,7 @@ export default function GuestOrderComponent() {
           <button
             disabled={loading || selectedSeats.length === 0}
             onClick={handleBooking}
-            className="main_buttons w-30 h-8 m-3"
+            className="main_buttons w-36 h-12 m-3 cursor-pointer"
           >
             {loading ? "Bokar..." : "Slutför bokning"}
           </button>

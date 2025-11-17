@@ -1,7 +1,21 @@
+import CheckoutComponent from "./CheckoutComponent";
 import { useSeats } from "./context/SeatsContext";
 
 export default function CheckoutRecipe() {
   const { ticketTypes, counts, totalTickets, totalPrice } = useSeats();
+
+  // Fetch movie from local storage
+  const storedMovie = localStorage.getItem("currentMovie");
+  const currentMovie = storedMovie ? JSON.parse(storedMovie) : null;
+
+  // Filter tickets based on age restriction
+  const filteredTickets = ticketTypes.filter(ticket => {
+    if (!currentMovie) return true;
+    if (currentMovie.age >= 15 && ticket.displayName === "Barn") {
+      return false;
+    }
+    return true;
+  });
 
   if (!ticketTypes.length) {
     return (
@@ -14,13 +28,13 @@ export default function CheckoutRecipe() {
   return (
     <>
       <aside
-        className="flex h-auto 
+        className=" flex 
     w-11/12 sm:justify-center sm:gap-2 items-center 
     md:w-11/12 flex-col"
       >
         <section className="Type-of-tickets flex justify-between items-center w-70 h-auto border-t border-gray-400 text-sm
       sm:w-72 sm:text-sm md:flex-row
-       md:p-1 md:text-base md:w-66 pt-3 pb-3">
+       p-1 md:text-base md:w-66">
           <p className="text-[#e4e1e1] text-xs md:text-base">
             Biljetter:
           </p>
@@ -30,15 +44,15 @@ export default function CheckoutRecipe() {
       sm:w-72 sm:text-sm
       md:flex-col  md:text-base md:w-66">
           {/* Visa varje biljettyp */}
-          {ticketTypes.map((type) => {
+          {filteredTickets.map((type) => {
             const quantity = counts[type._id] || 0;
             const subtotal = quantity * type.price;
 
             return (
               <div
                 key={type._id}
-                className="flex md:flex-row justify-between items-center 
-        md:w-full h-10 my-1"
+                className=" flex md:flex-row justify-between items-center 
+        md:w-full my-1"
               >
                 <p className="text-[#e4e1e1] text-xs  md:text-base m-1">{type.ticketName}:</p>
                 {/* <p className="text-[#e4e1e1] text-sm m-2  md:text-base md:m-5 flex justify-center">
@@ -62,9 +76,8 @@ export default function CheckoutRecipe() {
             {totalPrice} kr
           </p>
         </section>
+        
       </aside>
-
-
     </>
   );
 }

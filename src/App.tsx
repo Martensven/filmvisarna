@@ -23,6 +23,7 @@ import AdminUsersPage from "./Pages/AdminPage/AdminUsers/adminUsersPage.tsx";
 import AdminEditScreening from "./Pages/AdminPage/AdminStart/adminEditScreening.tsx";
 import AdminScreeningStart from "./Pages/AdminPage/AdminScreenings/adminScreeningStart.tsx";
 import CookiePopup from "./Components/CookiePopup/cookiePopup.tsx";
+import ResetPassword from "./Components/login/resetPassword.tsx";
 
 function App() {
   const [loginPopup, setLoginPopup] = useState<
@@ -70,6 +71,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/kiosk" element={<KioskPage />} />
         <Route path="/movie/:id" element={<DetailMovie />} />
+        <Route path="/forgotPass/:token" element={<ResetPassword />} />
+
         {/* Adminpages uses nested routes */}
         <Route
           path="/admin"
@@ -98,11 +101,11 @@ function App() {
       {loginPopup && (
         <section
           onClick={handleClosing}
-          className="fixed inset-0 flex justify-end z-50"
+          className="fixed inset-0 flex justify-end items-center z-50"
         >
           <aside
             onClick={(e) => e.stopPropagation()}
-            className={`popup-background flex w-150 h-full shadow-xl p-6 flex-col justify-center ${
+            className={`popup-background flex flex-col justify-center w-[600px] h-full shadow-xl p-6  ${
               popupSlide ? "animation-slideout" : "animation-slidein"
             }`}
           >
@@ -110,7 +113,7 @@ function App() {
               onClick={handleClosing}
               className="self-center rounded-md shadow-md cursor-pointer"
             >
-              [X]
+              [&times;]
             </button>
 
             {loginPopup === "login" && (

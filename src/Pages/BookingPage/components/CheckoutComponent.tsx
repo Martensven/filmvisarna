@@ -20,15 +20,15 @@ export default function CheckoutComponent() {
   const isLoggedIn = !!user; // enklare flagga
 
   return (
-    <main className="flex flex-col justify-center items-center mt-10">
-      <section className="flex flex-col justify-center items-center md:flex md:flex-row md:mb-10 md:w-96">
+    <main className="flex flex-col justify-center items-center mt-5 mb-10 lg:mb-0 lg:mt-0">
+      <section className="flex flex-col justify-center items-center md:flex md:flex-row md:mb-10">
         {/* Gästvy */}
         {!isLoggedIn && (
           <div className="flex flex-col justify-center items-center">
             {!showGuestOrder ? (
               <button
                 onClick={() => setShowGuestOrder(true)}
-                className="main_buttons w-36 m-2 h-10 text-sm"
+                className="main_buttons w-36 m-2 h-10 text-sm cursor-pointer"
               >
                 Boka som Gäst
               </button>
@@ -44,7 +44,7 @@ export default function CheckoutComponent() {
             {!showUserOrder ? (
               <button
                 onClick={() => setShowUserOrder(true)}
-                className="main_buttons w-36 m-2 h-10 text-sm"
+                className="main_buttons w-36 m-2 h-10 text-sm cursor-pointer"
               >
                 Boka som Medlem
               </button>

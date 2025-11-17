@@ -98,12 +98,12 @@ export default function CheckoutPage() {
       <hr className="my-4" />
 
       <section>
-        <h3 className="text-lg font-semibold mb-2 text-white">Stolsnummer</h3>
+        <h3 className="text-lg font-semibold mb-2 text-white">Stolsnummer:</h3>
         <p>{seats.length ? seats.map((s) => s.seatNumber).join(", ") : "Inga platser"}</p>
       </section>
 
       <section className="mt-4">
-        <h3 className="text-lg font-semibold mb-2 text-white">Biljetter</h3>
+        <h3 className="text-lg font-semibold mb-2 text-white">Biljetter:</h3>
         <ul>
           {tickets.length ? (
             tickets.map((t, i) => (

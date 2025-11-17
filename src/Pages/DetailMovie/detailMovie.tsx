@@ -55,52 +55,66 @@ export default function DetailMovie() {
         <main className="w-screen flex flex-col items-center text-white">
             {/* Section for all components */}
             <section className="flex flex-col justify-center items-center w-full px-4
-            xs:w-full xs:p-2 
+            xs:p-2 
             sm:px-10 
             xl:w-11/12 xl:px-2">
+                {/* Button linked to bookingPage */}
+                <Link className="flex justify-center items-center w-32 h-15 mt-10" to={`/booking/${movie._id}`}>
+                    <button className="main_buttons cursor-pointer w-32 h-15 text-center flex items-center justify-center
+                     ">
+                        Boka Biljetter
+                    </button>
+                </Link>
                 <section>
                     {/* Detaljer */}
-                    <section className="flex flex-col container_box mb-5 justify-between items-center gap-5 mt-5 w-full
+                    <section className="flex flex-col w-full container_box mb-5 justify-center items-center  mt-5 h-[] w-[90vw]
                 md:items-center
-                lg:flex-row
+                xl:flex-row
                 ">
-
-                        <img
-                            src={movie.imageSrc}
-                            alt={`${movie.title} poster`}
-                            className="ml-10 mt-10 mb-10 md:mt-0 rounded-md shadow-lg/30
-                            h-130 xl:mb-3 
+                        <section className="p-0 lg:ml-10 mt-0">
+                            {/* Movie Poster */}
+                            <h2 className="xl:h-11 text-2xl pl-2 pt-2 my-2
+                        
+                            lg:pt-3 lg:pl-3"></h2>
+                            <img
+                                src={movie.imageSrc}
+                                alt={`${movie.title} poster`}
+                                className="h-110 sm:h-130 rounded-md shadow-lg/30
+                             lg:mr-5 mt-2 mb-2
                          "
-                        />
+                            />
+                            <p className="xl:h-16"></p>
+                        </section>
+
+
 
                         {/* Trailer */}
                         <article className="flex flex-col justify-center items-center  aspect-video ]
-                        w-full
+                        sm:w-9/12 w-11/12
                     
                     ">
-                            <h2 className="text-2xl pl-2 pt-2 my-2
+                            <h2 className="h-11 text-2xl pl-2 pt-2 my-2
                         
                             lg:pt-3 lg:pl-3">{movie.title}</h2>
 
                             <iframe
-                                className="w-11/12 h-72 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
-                        sm:h-72
-                        md:h-96
-                        lg:h-130 lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
-                        xl:shadow-blue-400/50
+                                className="w-full h-44 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
+                        sm:h-72 
+                        md:h-96 lg:ml-5 xl:w-11/12
+                        lg:h-130  lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
+                        xl:shadow-blue-400/50 
 "
                                 src={`https://www.youtube.com/embed/${movie.youtubeTrailers}`}
                                 title={movie.title + " Trailer"}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             ></iframe>
-                            <p className="w-11/12 pt-2 px-2 pb-5
-                            lg:px-1">{movie.description}</p>
+                            <p className="xl:h-16 mt-2 mb-5 xl:mb-0 lx:mt-0 w-full lg:w-9/12 flex justify-center items-center">{movie.description}</p>
                         </article>
                     </section>
 
                     {/* Section for movie details and reviews */}
                     <section className="flex flex-col  gap-5 w-full
-                    md:flex-row 
+                    lg:flex-row 
                     xl:h-auto">
                         {/* Movie details */}
                         <article className="text-center text-sm container_box mt-10

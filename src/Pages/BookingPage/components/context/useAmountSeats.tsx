@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
-interface TicketType {
+export interface TicketType {
     _id: string;
     ticketName: string;
     price: number;
+    displayName: string;
 }
 
 export function useAmountSeats() {
@@ -13,9 +14,16 @@ export function useAmountSeats() {
     useEffect(() => {
         const fetchTicketTypes = async () => {
             try {
-                const res = await fetch("/api/ticket-types");
+                const storedMovie = localStorage.getItem("currentMovie");
+                const currentMovie = storedMovie ? JSON.parse(storedMovie) : null;
+
+                const url = currentMovie ? `/api/ticket-types?age=${currentMovie.age}` : `/api/ticket-types`;
+
+                const res = await fetch(url);
                 const data = await res.json();
+
                 setTicketTypes(data);
+
                 const initialCounts = data.reduce(
                     (acc: Record<string, number>, type: TicketType) => {
                         acc[type._id] = 0;

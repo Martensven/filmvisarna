@@ -24,27 +24,24 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         <CheckoutProvider>
           {/*----------Container for booking page----------*/}
           <main
-            className="Bookingpage w-screen min-h-screen flex flex-col justify-center items-center overscroll-y-auto pt-5 relative
+            className="Bookingpage min-w-screen min-h-screen flex flex-col justify-center items-center overscroll-y-auto pt-5 relative
           sm:pt-0
-          md:w-full md:flex md:items-start md:justify-around  
+          md:w-full md:flex md:items-start md:justify-around md:flex-row
           lg:w-12/13 lg:mt-10 
           xl:w-full"
           >
+            <div className="flex justify-center items-center flex-col min-w-screen md:justify-start md:items-start md:min-w-0 md:w-full">
             <section
-              className="Recipe w-11/12 flex justify-center items-center h-50 mb-5 sticky top-10 container_box z-1 rounded-md
-            md:flex md:justify-center md:items-center md:fixed md:top-[170px] md:right-[30px] md:w-5/13 md:h-80 md:container_box 
-            lg:right-[35px] lg:top-[180px]
-            xl:right-[60px] xl:top-[220px]"
+              className="Recipe md:hidden flex justify-center sticky container_box rounded-md sticky top-1 w-11/12 h-50 z-50 m-10"
             >
               <CheckoutRecipe />
             </section>
-
             <section
-              className="Movie-Screening-Days flex flex-col  sm:flex-row container_box w-11/12 mb-4
+              className="Movie-Screening-Days flex flex-col sm:flex-row container_box w-11/12 mb-4
             justify-center items-center
-            md:w-7/14 md:ml-10
-            lg:w-8/14 lg:ml-11
-            xl:ml-18 xl:w-6/12"
+            md:w-10/14 md:ml-15
+            lg:w-12/14 lg:ml-20
+            xl:ml-18 xl:w-8/10"
             >
               <MovieInformation />
               <CalenderComponent
@@ -55,9 +52,9 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
 
             <div
               className="Booking-component flex flex-col w-11/12 h-auto justify-center items-center container_box
-                        md:flex-col md:justify-center md:items-center md:w-7/14 md:ml-10
-                        lg:flex lg:flex-col lg:w-8/14 lg:justify-center lg:items-center lg:ml-11
-                        xl:flex-row xl:ml-18 xl:justify-around xl:w-6/12"
+                        md:flex-col md:justify-center md:items-center md:w-10/14 md:ml-15
+                        lg:flex lg:flex-col lg:w-12/14 lg:justify-center lg:items-center lg:ml-20
+                        xl:flex-row xl:ml-18 xl:justify-around xl:w-8/10"
             >
               <AmountTheaterSeats />
 
@@ -66,9 +63,22 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 selectShowing={selectedShowing}
               />
             </div>
-
-            <CheckoutComponent />
+            </div>
+            <section
+              className="Recipe hidden sticky
+            md:flex md:justify-center md:items-center md:self-start md:top-[170px] md:right-[30px] md:w-5/13 md:h-80 container_box rounded-md 
+            lg:right-[35px] lg:top-[180px]
+            xl:right-[60px] xl:top-[220px]"
+            >
+              <CheckoutRecipe />
+            </section>
           </main>
+          <section className="flex justify-center items-center m-10">
+            <section className="w-screen xl:mt-10">
+              <CheckoutComponent />
+            </section>
+
+          </section>
         </CheckoutProvider>
       </SeatsProvider>
     </>

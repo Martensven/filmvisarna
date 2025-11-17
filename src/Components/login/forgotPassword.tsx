@@ -1,16 +1,39 @@
 import { useState } from "react";
 
-export default function ForgotPassword({ onSwitchToLogin }: { onSwitchToLogin: () => void }) {
+export default function ForgotPassword({
+  onSwitchToLogin,
+}: {
+  onSwitchToLogin: () => void;
+}) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Submit klickad", email);
 
-    // Here you would normally call your backend to send reset email
-    console.log("Send reset link to:", email);
+    try {
+      const respond = await fetch("/api/forgotPass", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
 
-    setSubmitted(true);
+      console.log("Respons status:", respond.status);
+
+      const data = await respond.json();
+      console.log("Respons data:", data);
+      setMessage(data.message || data.error);
+
+      // Here you would normally call your backend to send reset email
+      console.log("Send reset link to:", email);
+
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Kunde inte skicka", err);
+      setMessage("Något gick fel, försök igen");
+    }
   };
 
   return (
@@ -28,10 +51,15 @@ export default function ForgotPassword({ onSwitchToLogin }: { onSwitchToLogin: (
               placeholder="Din E-Post"
               required
             />
-            <button type="submit" className="cursor-pointer mt-4 mb-3 p-2 bg-[#243365] md:w-2/3 self-center rounded-md shadow-md">
+            <button
+              type="submit"
+              onClick={() => console.log("klicks togs emot")}
+              className="cursor-pointer mt-4 mb-3 p-2 bg-[#243365] md:w-2/3 self-center rounded-md shadow-md"
+            >
               Skicka återställningslänk
             </button>
           </form>
+
           <button
             onClick={onSwitchToLogin}
             className="mt-3 text-sm underline cursor-pointer"
@@ -43,8 +71,8 @@ export default function ForgotPassword({ onSwitchToLogin }: { onSwitchToLogin: (
         <div>
           <h2 className="text-lg font-bold mb-2">Kolla din e-post!</h2>
           <p className="bg-[#243365] rounded-md shadow-md p-5">
-            Om adressen finns registrerad har vi skickat en återställningslänk till <b>{email}</b>.
-          </p>
+            Återställningslänk skickas till {email}</p>
+            <p>{message && <b>{message}.</b>}</p>
           <button
             onClick={onSwitchToLogin}
             className="mt-4 text-sm underline cursor-pointer"

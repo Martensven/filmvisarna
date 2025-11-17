@@ -207,7 +207,7 @@ export default function TheaterView({ selectShowing }: Props) {
         ))}
 
         {/* Seat summary */}
-        <div className="mt-4 text-center">
+        <div className="mt-4 text-center w-90">
           <strong>Valda stolar:</strong> {selectedSeatsDisplay}
         </div>
 
