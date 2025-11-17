@@ -34,6 +34,14 @@
   box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.253);
 }
 
+.main_buttons:hover {
+  scale: 105%;
+}
+
+.main_buttons:active {
+  scale: 95%;
+}
+
 .seat_range_buttons {
   background-color: #4a66c5;
   color: #e4e1e1;
