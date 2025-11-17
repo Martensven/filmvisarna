@@ -157,7 +157,7 @@ export default function AdminAddScreening() {
           <option value="">-- välj film --</option>
           {movies.map((m) => (
             <option key={m._id} value={m._id}>
-              {m.title}
+              {m.title} | <i>{m.themes?.weekDay || "Ingen tema"}</i>
             </option>
           ))}
         </select>
