@@ -203,6 +203,8 @@ export default function FrontPage() {
 
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
+      
+      {/*Welcome sign with function calling the user if it is logged in. Or else just showing FILMVISARNA. */}
       <div className="WelcomeSign w-10/12 mb-10
       sm:w-9/12
       md:w-8/12 md:mb-15
