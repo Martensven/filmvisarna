@@ -419,38 +419,46 @@ export default function FrontPage() {
           sortedMovies.map((movie) => (
             <article
               key={movie._id}
-              className="flex justify-center items-center h-auto min-w-56 snap-center m-3 p-5
-                            lg:h-auto lg:hover:scale-105
-                            xl:h-auto xl:mt-10"
+              className="flex justify-center items-center h-auto min-w-56 snap-center m-2 p-5
+                            lg:h-auto 
+                            xl:h-auto"
             >
-              <Link
-                to={`/movie/${movie._id}`}
-                className="flex flex-col items-center justify-start h-auto
+              <section className="flex flex-col items-center justify-start h-auto
                             sm:h-auto m-0
-                            lg:h-auto"
-              >
-                <img
-                  src={movie.imageSrc}
-                  alt={movie.title}
-                  className="shadow-2xl w-auto h-4/5 object-cover rounded-md p-0 "
-                />
+                            lg:h-auto">
                 <p
-                  className="mt-2
-                             text-sm
-                                lg:m-0
+                  className="mt-2 
+                             text-xs
+                              flex items-center justify-center
+                             h-12
+                             md:h-14
+                                lg:m-0 
                                 lg:text-md
                                 xl:text-lg
-                                2xl:text-xl"
+                                "
                 >
                   {movie.title}
                 </p>
+                <img
+                  src={movie.imageSrc}
+                  alt={movie.title}
+                  className="shadow-md w-auto  object-cover rounded-md p-0 
+                  h-56
+                  md:h-60
+                  lg:h-64
+                  xl:h-72
+                  2xl:h-80"
+                />
+
 
                 <p
                   className="text-sm
+                  h-16
+                  flex items-center justify-center
                              lg:m-0
                              lg:text-md
                              xl:text-lg
-                             2xl:text-xl"
+                             "
                 >
                   {Array.isArray(movie.genres)
                     ? movie.genres
@@ -458,7 +466,25 @@ export default function FrontPage() {
                       .join(", ")
                     : movie.genres.title}
                 </p>
-              </Link>
+                <section className="">
+                  <Link
+                    to={`/movie/${movie._id}`}
+                    className="cursor-pointer p-0 m-0 "
+                  >
+                    <button className="main_buttons px-3 py-1 mr-2 cursor-pointer hover:scale-105 active:scale-95">
+                      Info
+                    </button>
+                  </Link>
+                  <Link
+                    to={`/booking/${movie._id}`}
+                    className="cursor-pointer"
+                  >
+                    <button className="main_buttons px-3 py-1 ml-2 cursor-pointer hover:scale-105 active:scale-95">
+                      Boka
+                    </button>
+                  </Link>
+                </section>
+              </section>
             </article>
           ))
         )}
