@@ -67,7 +67,7 @@ export default function DetailMovie() {
                 </Link>
                 <section>
                     {/* Detaljer */}
-                    <section className="flex flex-col w-full container_box mb-5 justify-center items-center  mt-5 h-[] w-[90vw]
+                    <section className="flex flex-col w-full container_box mb-5 justify-center items-center  mt-5
                 md:items-center
                 xl:flex-row
                 ">
@@ -79,11 +79,11 @@ export default function DetailMovie() {
                             <img
                                 src={movie.imageSrc}
                                 alt={`${movie.title} poster`}
-                                className="h-110 sm:h-130 rounded-md shadow-lg/30
+                                className="h-110 rounded-md shadow-lg/30
                              lg:mr-5 mt-2 mb-2
                          "
                             />
-                            <p className="xl:h-16"></p>
+                            <p className="xl:h-16 p-0 mt-4"></p>
                         </section>
 
 
@@ -93,22 +93,28 @@ export default function DetailMovie() {
                         sm:w-9/12 w-11/12
                     
                     ">
-                            <h2 className="h-11 text-2xl pl-2 pt-2 my-2
-                        
+                            <h2 className="h-11 text-2xl pl-2 pt-2 mb-10
+                            sm:mb-0
                             lg:pt-3 lg:pl-3">{movie.title}</h2>
 
                             <iframe
                                 className="w-full h-44 rounded-md mt-2 mb-2 bg-blue-300 shadow-md shadow-blue-300/50
-                        sm:h-72 
-                        md:h-96 lg:ml-5 xl:w-11/12
-                        lg:h-130  lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50
-                        xl:shadow-blue-400/50 
+                        sm:h-64 
+                        md:h-80
+                        lg:ml-5  lg:bg-blue-400 lg:shadow-lg lg:shadow-blue-400/50 
+                        xl:w-3xl xl:h-110 xl:shadow-blue-400/50
+                        
+                         
 "
                                 src={`https://www.youtube.com/embed/${movie.youtubeTrailers}`}
                                 title={movie.title + " Trailer"}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             ></iframe>
-                            <p className="xl:h-16 mt-2 mb-5 xl:mb-0 lx:mt-0 w-full lg:w-9/12 flex justify-center items-center">{movie.description}</p>
+                            <p className="flex justify-center items-center mt-2 mb-5 w-full  
+                            sm:w-xl
+                            md:w-2xl
+                            lg:w-3xl
+                            xl:h-16 xl:mb-0 xl:mt-0 xl:w-4xl">{movie.description}</p>
                         </article>
                     </section>
 
@@ -128,8 +134,7 @@ export default function DetailMovie() {
                                     ? movie.genres.map((g: { title: string }) => g.title).join(", ")
                                     : movie.genres?.title || "Okänd"}
                             </p>
-                            <p className="text-start pl-2 pt-0.5 my-2
-                            lg:pt-0.5 lg:pl-3"><strong>Utgivningsår:</strong> {movie.releaseYear}</p>
+                            <p className="text-start pl-2 pt-0.5 my-2 lg:pt-0.5 lg:pl-3"><strong>Utgivningsår:</strong> {movie.releaseYear}</p>
                             <p className="text-start pl-2 pt-0.5 my-2
                             lg:pt-0.5 lg:pl-3"><strong>Speltid: </strong> {movie.length} min</p>
                             <p className="text-start pl-2 pt-0.5 my-2
