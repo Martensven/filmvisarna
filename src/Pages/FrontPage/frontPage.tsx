@@ -9,7 +9,7 @@ type Theme = {
   _id: string;
   themeDesc: string;
   weekDay: string;
-}
+};
 
 export default function FrontPage() {
   const [filterOpen, setFilterOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function FrontPage() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [selectedAges, setSelectedAges] = useState<number[]>([]);
   const [sortOption, setSortOption] = useState<string>("");
-  
+
   const location = useLocation();
 
   // fetch movies from backend
@@ -61,18 +61,20 @@ export default function FrontPage() {
         method: "GET",
         headers: {
           "Conent-Type": "application/json",
-        }
+        },
       });
 
       const responseThu = await fetch(`/api/theme/68ecd482dcb8359901cf375f`, {
         method: "GET",
         headers: {
           "Conent-Type": "application/json",
-        }
+        },
       });
 
       if (!responseSun.ok || !responseThu.ok) {
-        throw new Error(`Serverfel: ${responseSun.status}, ${responseThu.status}`);
+        throw new Error(
+          `Serverfel: ${responseSun.status}, ${responseThu.status}`
+        );
       }
 
       const thuData = await responseThu.json();
@@ -80,11 +82,10 @@ export default function FrontPage() {
 
       setThuTheme(thuData);
       setSunTheme(sunData);
-      } catch (error:any) {
-        console.error('Error fetching themes', error);
-      }
-    };
-  
+    } catch (error: any) {
+      console.error("Error fetching themes", error);
+    }
+  };
 
   const filterMovies = async () => {
     try {
@@ -202,36 +203,51 @@ export default function FrontPage() {
 
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
-      <h1
-  className="text-center text-lg mb-4 w-11/12
+      
+      {/*Welcome sign with function calling the user if it is logged in. Or else just showing FILMVISARNA. */}
+      <div className="WelcomeSign w-10/12 mb-10
+      sm:w-9/12
+      md:w-8/12 md:mb-15
+      lg:w-6/12 lg:mb-15">
+        <div className="w-full border-t-2 border-b-2 border-[#737373] mt-2
+        lg:mt-3">
+          <h1
+            className="text-center text-base mt-1 mb-1 font-bold
         sm:text-xl
-        md:text-2xl"
->
-  {user ? (
-    <>
-      Hej, {" "}
-      <span className="text-green-600 font-bold">
-        {user.firstName}
-      </span>!
-      <br />
-      Välkommen till Filmvisarna!
-    </>
-  ) : (
-    "Välkommen till Filmvisarna!"
-  )}
-</h1>
-      <p
-        className="text-center text-sm mb-10 w-11/12
+        md:text-2xl
+        lg:text-2xl"
+          >
+            {user ? (
+              <>
+                VÄLKOMMEN TILL FILMVISARNA,{" "}
+                <span className="text-black font-bold uppercase">
+                  {user.firstName}!
+                </span>
+              </>
+            ) : (
+              "VÄLKOMMEN TILL FILMVISARNA!"
+            )}
+          </h1>
+        </div>
+
+        <div className="w-full border-b-2 border-[#737373]">
+          <p
+            className="text-center text-[10px] font-bold my-2 uppercase
             sm:text-base
-            md:text-base"
-      >
-        Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
-        filmer från 1910 talet fram till början på 2000 talet. Är detta något
-        för dig se då till att se dig runt bland våra filmer och boka en tid
-        som passar dig!
-      </p>
+            md:text-base
+            lg:text-base"
+          >
+            Åk tillbaka i tiden med filmer från 1900-tal till 2000-tal.
+          </p>
+        </div>
 
-
+        <div className="w-full border-b-2 border-[#737373] mt-1 mb-1
+        lg:mb-3">
+          <p className="mt-1 mb-1 font-bold text-sm uppercase
+          lg:text-lg">
+          &#9733;  Boka din bio upplevelse hos oss  &#9733;</p>
+        </div>
+      </div>
 
       {/* Filter & Sort */}
       <section className="w-11/12 mb-5 rounded-md shadow-md flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
@@ -353,15 +369,16 @@ export default function FrontPage() {
           </div>
         </section>
 
-
         <section className="flex w-full">
           {/* Screening Date */}
-          <div className="search-date-box px-2 py-2 
+          <div
+            className="search-date-box px-2 py-2 
         w-11/12
         sm:w-1/2
         flex
         flex-col
-      ">
+      "
+          >
             <label className="block text-sm mb-1">Datum:</label>
             <input
               type="date"
@@ -371,13 +388,14 @@ export default function FrontPage() {
             />
           </div>
 
-
           {/* Schedule Type */}
-          <div className="search-hall-box px-2 py-2 w-11/12
+          <div
+            className="search-hall-box px-2 py-2 w-11/12
         sm:w-1/2
         flex
         flex-col
-        ">
+        "
+          >
             <label className="block text-sm mb-1">Salong:</label>
             <select
               value={scheduledType}
@@ -391,8 +409,6 @@ export default function FrontPage() {
           </div>
         </section>
       </section>
-
-
 
       {/* Movies container*/}
       <section
@@ -410,112 +426,144 @@ export default function FrontPage() {
 
     lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:h-auto
     xl:h-auto xl:p-2 xl:grid xl:grid-cols-4  
-    2xl:h-auto 2xl:p-2 2xl:grid 2xl:grid-cols-5
+    xl:w-8/12
 
-  ">
+  "
+      >
         {sortedMovies.length === 0 ? (
           <p className="m-auto">Inga filmer hittades.</p>
         ) : (
           sortedMovies.map((movie) => (
             <article
               key={movie._id}
-              className="flex justify-center items-center h-auto min-w-56 snap-center m-3 p-5
-                            lg:h-auto lg:hover:scale-105
-                            xl:h-auto xl:mt-10"
+              className="flex justify-center items-center h-auto min-w-56 snap-center m-2 p-5
+                            lg:h-auto 
+                            xl:h-auto"
             >
-              <Link
-                to={`/movie/${movie._id}`}
+              <section
                 className="flex flex-col items-center justify-start h-auto
                             sm:h-auto m-0
                             lg:h-auto"
               >
-                <img
-                  src={movie.imageSrc}
-                  alt={movie.title}
-                  className="shadow-2xl w-auto h-4/5 object-cover rounded-md p-0 "
-                />
                 <p
-                  className="mt-2
-                             text-sm
-                                lg:m-0
+                  className="mt-2 
+                             text-xs
+                              flex items-center justify-center
+                             h-12
+                             md:h-14
+                                lg:m-0 
                                 lg:text-md
                                 xl:text-lg
-                                2xl:text-xl"
+                                "
                 >
                   {movie.title}
                 </p>
+                <img
+                  src={movie.imageSrc}
+                  alt={movie.title}
+                  className="shadow-md w-auto  object-cover rounded-md p-0 
+                  h-56
+                  md:h-60
+                  lg:h-64
+                  xl:h-72
+                  2xl:h-80"
+                />
 
                 <p
                   className="text-sm
+                  h-16
+                  flex items-center justify-center
                              lg:m-0
                              lg:text-md
                              xl:text-lg
-                             2xl:text-xl"
+                             "
                 >
                   {Array.isArray(movie.genres)
                     ? movie.genres
-                      .map((genre: { title: string }) => genre.title)
-                      .join(", ")
+                        .map((genre: { title: string }) => genre.title)
+                        .join(", ")
                     : movie.genres.title}
                 </p>
-              </Link>
+                <section className="">
+                  <Link
+                    to={`/movie/${movie._id}`}
+                    className="cursor-pointer p-0 m-0"
+                  >
+                    <button className="main_buttons px-3 py-1 mr-2 cursor-pointer hover:scale-105 active:scale-95">
+                      Info
+                    </button>
+                  </Link>
+                  <Link to={`/booking/${movie._id}`} className="cursor-pointer">
+                    <button className="main_buttons px-3 py-1 ml-2 cursor-pointer hover:scale-105 active:scale-95">
+                      Boka
+                    </button>
+                  </Link>
+                </section>
+              </section>
             </article>
           ))
         )}
-
       </section>
 
       {/* Theme days container*/}
       <section
         className="flex flex-col justify-center items-center w-11/12 mt-2
-            md:mt-10 md:flex md:flex-col"
+             md:flex md:flex-col "
       >
-        <h2 className="w-full mt-10 rounded-md shadow-md text-lg glass_effect p-1 justify-center items-center">
+        <h2 className="w-full glass_effect py-5 rounded-md shadow-md text-lg flex justify-center items-center">
           Temadagar
         </h2>
-        <article className="min-h-96 my-5 justify-center items-center flex flex-col text-white" id="thuTheme">
+
+        <article
+          className="min-h-96 max-w-9/12 my-5 
+        flex flex-col justify-center items-center text-white"
+          id="thuTheme"
+        >
           <h2
-            className=" text-center text-xl uppercase font-bold my-2 glass_effect px-20 py-5 
-                    lg:mt-5 lg:underline"
+            className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
+                     lg:underline"
           >
             {thuTheme?.weekDay}
           </h2>
           <section
-            className=" flex flex-col justify-center items-center mt-5
-                    sm:flex-col sm:p-5
+            className="flex flex-col justify-center items-center 
+                    sm:flex-col 
                     md:flex-row 
-                    lg:flex-row"
+                    lg:flex-row "
           >
             <Slideshow day="thursday" />
             <p
-              className="w-11/12 text-center glass_effect px-10 py-28 
-                            sm:w-11/12
-                            md:w-8/12 md:px-2
-                            lg:w-full lg:h-80"
-            >{thuTheme?.themeDesc}</p>
+              className="flex flex-col justify-center items-center w-11/12 text-center md:px-20 py-20 
+                         lg:h-80 shadow-md rounded-md"
+            >
+              {thuTheme?.themeDesc}
+            </p>
           </section>
         </article>
 
-        <article className="min-h-96 my-5 justify-center items-center flex  flex-col text-white" id="sunTheme">
+        <article
+          className="min-h-96 max-w-9/12 justify-center items-center flex  flex-col text-white"
+          id="sunTheme"
+        >
           <h2
-            className="text-center text-xl uppercase font-bold my-2 glass_effect px-20 py-5 
-                    lg:mt-5 lg:underline"
+            className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
+                     lg:underline"
           >
             {sunTheme?.weekDay}
           </h2>
           <section
-            className="flex flex-col justify-center items-center mt-5
-                    sm:flex-col sm:p-5
+            className="flex flex-col justify-center items-center 
+                    sm:flex-col
                     md:flex-row-reverse  
-                    lg:flex-row-reverse"
+                    lg:flex-row-reverse "
           >
             <Slideshow day="sunday" />
             <p
-              className="w-11/12 text-center glass_effect px-20 py-28 
-                        sm:w-11/12
-                        md:w-8/12 md:px-2 
-                        lg:w-full lg:h-80"
-            >{sunTheme?.themeDesc}</p>
+              className="flex flex-col justify-center items-center w-11/12 text-center md:px-20 py-20 
+                         lg:h-80 rounded-md shadow-md"
+            >
+              {sunTheme?.themeDesc}
+            </p>
           </section>
         </article>
       </section>

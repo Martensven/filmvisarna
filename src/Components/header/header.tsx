@@ -32,14 +32,14 @@ export default function Header({ onLoginClick }: HeaderProps) {
     setIsOpen(false);
   };
 
-  const handleScroll = (id: string) => {
-    if (location.pathname !== "/") {
-      navigate("/", { state: { scrollTo: id } });
-    } else {
-      const element = document.getElementById(id);
-      if (element) element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+    const handleScroll = (id: string) => {
+        if (location.pathname !== "/") {
+            navigate("/", { state: { scrollTo: id } });
+        } else {
+            const element = document.getElementById(id);
+            if (element) element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
 
   return (
     <main className="w-screen flex justify-center items-center">
