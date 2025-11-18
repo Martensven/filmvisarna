@@ -7,6 +7,9 @@ import sendMail from "../nodemailer/sendMail.js";
 import { Movies } from "../models/moviesSchema.js";
 import { Auditorium } from "../models/auditoriumSchema.js";
 import schedule from "../schedule.js";
+import { Actors } from "../models/actorSchema.js";
+import { Directors } from "../models/directorsSchema.js";
+import { Distributors } from "../models/distributorSchema.js";
 import { get } from "mongoose";
 
 const router = express.Router();
@@ -549,6 +552,46 @@ router.post("/movie", async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
+});
+
+// --------- Actor routes for admin --------- //
+
+// POST Route, /api/admin/actors
+router.post("/actors", async (req, res) => {
+  try {
+    // the body from the request needs to match the schema
+    const actor = new Actors(req.body);
+    // Saving the newly added actor to the database
+    await actor.save();
+    res.status(201).json(actor);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// --------- Director routes for admin --------- //
+
+// POST Route, /api/admin/directors
+router.post("/directors", async (req, res) => {
+  try {
+    const directors = new Directors(req.body);
+    await directors.save();
+    res.status(201).json(directors);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// --------- Distributor routes for admin --------- //
+
+// POST Route, /api/admin/distributors
+router.post('/distributors', async (req, res) => {
+    try { const distributor = new Distributors(req.body);
+        await distributor.save();
+        res.status(201).json(distributor);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
 });
 
 export default router;

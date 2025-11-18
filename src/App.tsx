@@ -26,8 +26,7 @@ import CookiePopup from "./Components/CookiePopup/cookiePopup.tsx";
 import ResetPassword from "./Components/login/resetPassword.tsx";
 import AdminMovies from "./Pages/AdminPage/AdminMovies/adminMovies.tsx";
 import AdminDeleteMovie from "./Pages/AdminPage/AdminMovies/adminDeleteMovie.tsx";
-import AdminAddActor from "./Pages/AdminPage/AdminAddActor/adminAddActor.tsx";
-
+import AdminAddActorDirectorDist from "./Pages/AdminPage/AdminAddActorDirectorDist/adminAdd.tsx";
 function App() {
   const [loginPopup, setLoginPopup] = useState<
     "login" | "register" | "forgot-password" | null
@@ -93,7 +92,7 @@ function App() {
           <Route path="screenings" element={<AdminScreeningStart />} />
           <Route path="add-movie" element={<AdminAddMoviePage />} />
           <Route path="delete-movie" element={<AdminDeleteMovie />} />
-          <Route path="add-people" element={<AdminAddActor />} />
+          <Route path="add-people" element={<AdminAddActorDirectorDist />} />
         </Route>
       </Routes>
       {/* Making sure Header and Footer are not shown on admin pages */}

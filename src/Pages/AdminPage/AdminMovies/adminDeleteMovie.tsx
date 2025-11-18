@@ -71,10 +71,10 @@ export default function AdminDeleteMovie() {
           </Link>
         </div>
       </nav>
-      <div className="w-full max-w-screen-md p-6 bg-[#243365] my-8 text-white mx-auto rounded-xl">
+      <div className="w-full max-w-screen-md p-6 bg-[#243365] my-8 text-white mx-auto md:rounded-xl">
         <h2 className="text-2xl font-bold mb-4">Radera Film</h2>
         <select
-          
+          aria-label="Välj film att radera"
           value={selectedMovieId}
           onChange={(e) => setSelectedMovieId(e.target.value)}
           className="mb-4 p-2 bg-white text-black rounded w-full"
@@ -83,7 +83,6 @@ export default function AdminDeleteMovie() {
             <option key={movie._id} value={movie._id}>
               {movie.title}
             </option>
-            
           ))}
         </select>
         <button
@@ -96,21 +95,22 @@ export default function AdminDeleteMovie() {
           <Toast message={toastMessage} onClose={() => setToastMessage("")} />
         )}
       </div>
-      
-      {showModal && (
-  <ConfirmModal
-    title="Är du säker?"
-    message={`Vill du verkligen radera "${movies.find(m => m._id === selectedMovieId)?.title}"?`}
-    confirmText="Radera"
-    cancelText="Avbryt"
-    onConfirm={() => {
-      setShowModal(false);
-      handleDelete();
-    }}
-    onCancel={() => setShowModal(false)}
-  />
-)}
 
+      {showModal && (
+        <ConfirmModal
+          title="Är du säker?"
+          message={`Vill du verkligen radera "${
+            movies.find((m) => m._id === selectedMovieId)?.title
+          }"?`}
+          confirmText="Radera"
+          cancelText="Avbryt"
+          onConfirm={() => {
+            setShowModal(false);
+            handleDelete();
+          }}
+          onCancel={() => setShowModal(false)}
+        />
+      )}
     </>
   );
 }

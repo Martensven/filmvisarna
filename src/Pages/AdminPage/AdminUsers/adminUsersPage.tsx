@@ -74,7 +74,7 @@ export default function AdminUsersPage() {
   };
 
   return (
-    <main className="max-w-3xl my-8 mx-auto bg-[#243365] text-white p-6 flex flex-col min-h-30vh rounded-xl">
+    <main className="max-w-3xl my-8 mx-auto bg-[#243365] text-white p-6 flex flex-col min-h-30vh md:rounded-xl">
       <header className="text-center mb-10">
         <h1 className="text-3xl font-bold inline-block px-6 text-white">
           Användare
