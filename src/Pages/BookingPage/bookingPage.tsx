@@ -32,14 +32,14 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
           >
             <div className="flex justify-center items-center flex-col min-w-screen md:justify-start md:items-start md:min-w-0 md:w-full">
             <section
-              className="Recipe md:hidden flex justify-center sticky container_box rounded-md sticky top-1 w-11/12 h-50 z-50 m-10"
+              className="Recipe md:hidden flex justify-center items-center sticky container_box rounded-md sticky top-20 w-11/12 h-50 z-50 m-10"
             >
               <CheckoutRecipe />
             </section>
             <section
               className="Movie-Screening-Days flex flex-col sm:flex-row container_box w-11/12 mb-4
             justify-center items-center
-            md:w-10/14 md:ml-15
+            md:w-12/15 md:ml-15
             lg:w-12/14 lg:ml-20
             xl:ml-18 xl:w-8/10"
             >
@@ -52,7 +52,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
 
             <div
               className="Booking-component flex flex-col w-11/12 h-auto justify-center items-center container_box
-                        md:flex-col md:justify-center md:items-center md:w-10/14 md:ml-15
+                        md:flex-col md:justify-center md:items-center md:w-12/15 md:ml-15
                         lg:flex lg:flex-col lg:w-12/14 lg:justify-center lg:items-center lg:ml-20
                         xl:flex-row xl:ml-18 xl:justify-around xl:w-8/10"
             >
@@ -66,7 +66,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             </div>
             <section
               className="Recipe hidden sticky
-            md:flex md:justify-center md:items-center md:self-start md:top-[170px] md:right-[30px] md:w-5/13 md:h-80 container_box rounded-md 
+            md:flex md:justify-center md:items-center md:self-start md:top-[170px] md:right-[10px] md:w-5/13 md:h-80 container_box rounded-md 
             lg:right-[35px] lg:top-[180px]
             xl:right-[60px] xl:top-[220px]"
             >

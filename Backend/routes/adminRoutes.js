@@ -11,6 +11,7 @@ import { Actors } from "../models/actorSchema.js";
 import { Directors } from "../models/directorsSchema.js";
 import { Distributors } from "../models/distributorSchema.js";
 import { get } from "mongoose";
+import { generateAndSave } from "../generateScreeningTimes.js";
 
 const router = express.Router();
 // Middleware to check if user is admin for all admin routes
@@ -554,7 +555,22 @@ router.post("/movie", async (req, res) => {
   }
 });
 
-// --------- Actor routes for admin --------- //
+router.post("/generate-screenings", async (req, res) => {
+  try {
+    const result = await generateAndSave();
+    res.status(201).json({
+      message: "Screenings genererades",
+      created: result.length,
+      screenings: result
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      errorMSG: "Kunde inte generera screenings " + error.message
+    });
+  }
+});
+
 
 // POST Route, /api/admin/actors
 router.post("/actors", async (req, res) => {

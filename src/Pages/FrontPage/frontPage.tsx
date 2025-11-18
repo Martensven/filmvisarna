@@ -203,9 +203,9 @@ export default function FrontPage() {
 
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
-      
+
       {/*Welcome sign with function calling the user if it is logged in. Or else just showing FILMVISARNA. */}
-      <div className="WelcomeSign w-10/12 mb-10
+      <div className="welcome-sign w-10/12 mb-10
       sm:w-9/12
       md:w-8/12 md:mb-15
       lg:w-6/12 lg:mb-15">
@@ -265,8 +265,8 @@ export default function FrontPage() {
             {filterOpen && (
               <div
                 className="flex flex-row flex-wrap justify-center items-center 
-                        absolute -left-14 mt-5 bg-[#292929] shadow-md rounded p-5 w-72
-                        sm:w-86 sm:mt-1 z-50
+                        absolute bg-[#18203ad0] shadow-md rounded p-5 w-72
+                        sm:w-86 mt-1 z-50
                         lg:max-h-[80vh]
                         
                         "
@@ -283,7 +283,7 @@ export default function FrontPage() {
                 ].map((genre) => (
                   <label
                     key={genre}
-                    className="flex items-center gap-2 px-2 py-1 mt-1 mb-2 w-30 h-8 text-sm
+                    className="flex items-center gap-2 px-2 py-1  mb-2 w-30 h-8 text-sm
                                 hover:underline
                                 sm:text-base
                                 md:text-base"
@@ -327,9 +327,9 @@ export default function FrontPage() {
               Sortera &darr;
             </button>
             {sortOpen && (
-              <ul className="absolute mt-2 bg-[#292929] rounded shadow p-2 -right-9 w-72">
+              <ul className="absolute bg-[#18203ad0] mt-1 rounded shadow w-40 lg:w-76">
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("atoz");
                     setSortOpen(false);
@@ -338,7 +338,7 @@ export default function FrontPage() {
                   A–Ö
                 </li>
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("ztoa");
                     setSortOpen(false);
@@ -347,7 +347,7 @@ export default function FrontPage() {
                   Ö–A
                 </li>
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("newest");
                     setSortOpen(false);
@@ -356,7 +356,7 @@ export default function FrontPage() {
                   Nyast först
                 </li>
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("oldest");
                     setSortOpen(false);
@@ -507,63 +507,80 @@ export default function FrontPage() {
 
       {/* Theme days container*/}
       <section
-        className="flex flex-col justify-center items-center w-11/12 mt-2
-             md:flex md:flex-col "
+        className="flex flex-col justify-center items-center w-full mt-1
+             md:flex md:flex-col md:mt-20
+             lg:flex-col lg:h-auto "
       >
-        <h2 className="w-full glass_effect py-5 rounded-md shadow-md text-lg flex justify-center items-center">
+        <h2 className="w-11/12 glass_effect py-5 my-20 rounded-md shadow-md text-lg flex justify-center items-center
+        md:mb-20
+        lg:mb-20">
           Temadagar
         </h2>
 
         <article
-          className="min-h-96 max-w-9/12 my-5 
-        flex flex-col justify-center items-center text-white"
+          className="min-h-96 max-w-9/12 my-5 themeday-box
+        flex flex-col justify-center items-center text-white
+        lg:mb-20 "
           id="thuTheme"
         >
           <h2
-            className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
-                     lg:underline"
+            className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20
+                     "
           >
             {thuTheme?.weekDay}
           </h2>
           <section
-            className="flex flex-col justify-center items-center 
+            className="flex flex-col justify-center items-center
                     sm:flex-col 
-                    md:flex-row 
-                    lg:flex-row "
+                    md:flex-col 
+                    lg:flex-col lg:p-0"
           >
             <Slideshow day="thursday" />
+            <div className=" w-10/12 flex flex-col justify-center items-center text-center my-10 mx-5 uppercase text-sm
+            sm:text-base
+            md:w-9/12 md:mb-20 md:mr-1 md:text-lg
+            lg:mx-10 lg:w-8/12 lg:uppercase lg:text-xl lg:mb-20
+            xl:text-2xl">
             <p
-              className="flex flex-col justify-center items-center w-11/12 text-center md:px-20 py-20 
-                         lg:h-80 shadow-md rounded-md"
+              className="flex flex-col justify-center items-center text-center  
+               lg:"
             >
               {thuTheme?.themeDesc}
             </p>
+            </div>
           </section>
         </article>
 
         <article
-          className="min-h-96 max-w-9/12 justify-center items-center flex  flex-col text-white"
+          className="min-h-96 max-w-9/12 my-5 themeday-box
+        flex flex-col justify-center items-center text-white
+        lg:mb-20"
           id="sunTheme"
         >
           <h2
-            className="text-center text-xl uppercase font-bold my-2 px-20 py-5 
-                     lg:underline"
+            className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20 
+                     "
           >
             {sunTheme?.weekDay}
           </h2>
           <section
             className="flex flex-col justify-center items-center 
                     sm:flex-col
-                    md:flex-row-reverse  
-                    lg:flex-row-reverse "
+                    md:flex-col  
+                    lg:flex-col "
           >
             <Slideshow day="sunday" />
-            <p
-              className="flex flex-col justify-center items-center w-11/12 text-center md:px-20 py-20 
-                         lg:h-80 rounded-md shadow-md"
-            >
-              {sunTheme?.themeDesc}
-            </p>
+            <div className="w-10/12 flex flex-col justify-center items-center text-center my-10 mx-5 uppercase text-sm
+            sm:text-base
+            md:w-9/12 md:mb-20 md:mr-1 md:text-lg
+            lg:mx-5 lg:w-8/12 lg:text-xl lg:mb-20
+            xl:text-2xl">
+              <p
+                className="flex flex-col justify-center items-center text-center"
+              >
+                {sunTheme?.themeDesc}
+              </p>
+            </div>
           </section>
         </article>
       </section>
