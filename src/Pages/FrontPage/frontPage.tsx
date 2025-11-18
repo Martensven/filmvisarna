@@ -237,7 +237,7 @@ export default function FrontPage() {
             md:text-base
             lg:text-base"
           >
-            Åk tillbaka i tiden med filmer från 1900-tal till 2000-tal.
+            Stort utbud av filmer från 1900-tal till 2000-tal.
           </p>
         </div>
 
@@ -518,7 +518,7 @@ export default function FrontPage() {
         </h2>
 
         <article
-          className="min-h-96 max-w-9/12 my-5 themeday-box
+          className="min-h-96 w-8/12 my-5 themeday-box
         flex flex-col justify-center items-center text-white
         lg:mb-20 "
           id="thuTheme"
@@ -545,14 +545,16 @@ export default function FrontPage() {
               className="flex flex-col justify-center items-center text-center  
                lg:"
             >
-              {thuTheme?.themeDesc}
+              under hela torsdagen spelas filmer från tidigt 1900-tal upp. Res tillbaka i tiden och njut!
+              <br />
+                <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p> 
             </p>
             </div>
           </section>
         </article>
 
         <article
-          className="min-h-96 max-w-9/12 my-5 themeday-box
+          className="min-h-96 w-8/12 my-5 themeday-box
         flex flex-col justify-center items-center text-white
         lg:mb-20"
           id="sunTheme"
@@ -578,7 +580,8 @@ export default function FrontPage() {
               <p
                 className="flex flex-col justify-center items-center text-center"
               >
-                {sunTheme?.themeDesc}
+                Vår lilla salong spelar gamla goda svenska klassiker under hela söndagen, morgon till kväll. <br />
+                <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p>
               </p>
             </div>
           </section>

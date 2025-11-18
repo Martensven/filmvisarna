@@ -63,9 +63,9 @@ export default function Slideshow({ day }: SlideshowProps) {
         setCurrentIndex((prev) => (prev + 1) % movies.length);
     }, [movies.length]);
 
-    const prevSlide = useCallback(() => {
-        setCurrentIndex((prev) => (prev - 1 + movies.length) % movies.length);
-    },[movies.length]);
+    // const prevSlide = useCallback(() => {
+    //     setCurrentIndex((prev) => (prev - 1 + movies.length) % movies.length);
+    // },[movies.length]);
 
     useEffect(() => {
         if (movies.length === 0) return;
@@ -90,7 +90,7 @@ export default function Slideshow({ day }: SlideshowProps) {
         xl:mb-5"
         >
             <img src={currentMovie.imageSrc} alt="Theme day movie posters" 
-            className="w-30 reflection-effect rounded-[5px] mb-5
+            className="w-40 reflection-effect rounded-[5px] mb-5
             sm:w-45
             md:w-50 md:ml-20 md:mr-2
             lg:w-60 lg:ml-40 lg:mr-5
