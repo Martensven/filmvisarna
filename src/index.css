@@ -86,7 +86,7 @@
   animation: fade-in 0.3s ease-out;
 }
 
-.WelcomeSign {
+.welcome-sign {
   font-family: "Stack Sans Headline", sans-serif;
   position: relative;
   display: flex;
@@ -103,7 +103,7 @@
   border-radius: 3px;
 }
 
-.WelcomeSign::before {
+.welcome-sign::before {
   content: " ";
   position: absolute;
   top: -5px;
@@ -114,7 +114,7 @@
   border-radius: 5px;
 } 
 
-.WelcomeSign::after {
+.welcome-sign::after {
   position: absolute;
   content: "";
   border: 8px dotted rgba(241, 241, 179, 0.808);
@@ -123,3 +123,111 @@
   bottom: -6px;
   left: -5px;
 }
+
+
+.themeday-box {
+   font-family: "Stack Sans Headline", sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+
+  background: white;
+  color:black;
+  box-shadow: 1px 1px 20px 3px lightgoldenrodyellow;
+  box-shadow: inset 0 0 50px rgba(138, 106, 0, 0.582);
+  -webkit-backdrop-filter: drop-shadow(5px);
+  backdrop-filter: 5px;
+
+}
+
+.themeday-box::before {
+   content: " ";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  bottom: -4px;
+  right: -4px;
+  border: 10px solid rgb(148, 5, 5);
+  border-radius: 5px;
+}
+
+.themeday-box::after {
+   position: absolute;
+  content: "";
+  border: 5px dotted rgba(241, 241, 179, 0.808);
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  border-radius: 5px;
+}
+
+.theme-movie-box{
+  font-family: "Stack Sans Headline", sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+
+    background: white;
+  color:black;
+  box-shadow: 1px 1px 20px 3px lightgoldenrodyellow;
+  box-shadow: inset 0 0 50px rgba(138, 106, 0, 0.582);
+  -webkit-backdrop-filter: drop-shadow(5px);
+  backdrop-filter: 5px;
+}
+
+.theme-movie-box::before {
+  content: " ";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  bottom: -4px;
+  right: -4px;
+  border: 10px solid rgb(148, 5, 5);
+  border-radius: 5px;
+}
+
+.theme-movie-box::after{
+   position: absolute;
+  content: "";
+  border: 5px dotted rgba(241, 241, 179, 0.808);
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  border-radius: 5px;
+}
+
+
+.stroked-text {
+  -webkit-text-stroke: 0.2px rgb(202, 202, 149);
+  font-family: "Righteous", sans-serif;
+}
+
+.reflection-effect {
+   -webkit-box-reflect: below 2px
+  linear-gradient(transparent 55%, transparent, rgba(41, 41, 41, 0.247)); 
+}
+
+
+
+/*  -webkit-box-reflect: below -10px
+  linear-gradient(transparent, transparent, rgba(19, 19, 19, 0.055)); 
+  
+  
+
+  STYLEN FÖR THEME BOX
+
+  const baseColor = day === "thursday" ? "0, 0, 0" : "36, 51, 101";
+    const textDay = day === "thursday" ? "white" : "#f4c206";
+
+  style={{
+            backgroundColor: baseColor,
+            backgroundImage: `linear-gradient(90deg, rgba(${baseColor}) 45%, transparent), url(${currentMovie.imageSrc})`,
+        }}*/
