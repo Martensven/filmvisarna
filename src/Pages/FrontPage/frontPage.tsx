@@ -265,8 +265,8 @@ export default function FrontPage() {
             {filterOpen && (
               <div
                 className="flex flex-row flex-wrap justify-center items-center 
-                        absolute -left-14 mt-5 bg-[#292929] shadow-md rounded p-5 w-72
-                        sm:w-86 sm:mt-1 z-50
+                        absolute bg-[#18203ad0] shadow-md rounded p-5 w-72
+                        sm:w-86 mt-1 z-50
                         lg:max-h-[80vh]
                         
                         "
@@ -283,7 +283,7 @@ export default function FrontPage() {
                 ].map((genre) => (
                   <label
                     key={genre}
-                    className="flex items-center gap-2 px-2 py-1 mt-1 mb-2 w-30 h-8 text-sm
+                    className="flex items-center gap-2 px-2 py-1  mb-2 w-30 h-8 text-sm
                                 hover:underline
                                 sm:text-base
                                 md:text-base"
@@ -327,9 +327,9 @@ export default function FrontPage() {
               Sortera &darr;
             </button>
             {sortOpen && (
-              <ul className="absolute mt-2 bg-[#292929] rounded shadow p-2 -right-9 w-72">
+              <ul className="absolute bg-[#18203ad0] mt-1 rounded shadow w-40 lg:w-76">
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("atoz");
                     setSortOpen(false);
@@ -338,7 +338,7 @@ export default function FrontPage() {
                   A–Ö
                 </li>
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("ztoa");
                     setSortOpen(false);
@@ -347,7 +347,7 @@ export default function FrontPage() {
                   Ö–A
                 </li>
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("newest");
                     setSortOpen(false);
@@ -356,7 +356,7 @@ export default function FrontPage() {
                   Nyast först
                 </li>
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("oldest");
                     setSortOpen(false);
