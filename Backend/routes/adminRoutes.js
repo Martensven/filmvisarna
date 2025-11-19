@@ -7,6 +7,9 @@ import sendMail from "../nodemailer/sendMail.js";
 import { Movies } from "../models/moviesSchema.js";
 import { Auditorium } from "../models/auditoriumSchema.js";
 import schedule from "../schedule.js";
+import { Actors } from "../models/actorSchema.js";
+import { Directors } from "../models/directorsSchema.js";
+import { Distributors } from "../models/distributorSchema.js";
 import { get } from "mongoose";
 import { generateAndSave } from "../generateScreeningTimes.js";
 
@@ -43,7 +46,6 @@ router.get("/users", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
 
 // get user by id
 router.get("/admin/users/:id", async (req, res) => {
@@ -87,35 +89,69 @@ router.delete("/admin/api/users/:id", async (req, res) => {
   }
 });
 
-// Get bookings by user ID
 router.get("/bookings/:userId", async (req, res) => {
   try {
+    // Get userId from request parameters
     const { userId } = req.params;
+    // page is which page number, default is 1.
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 5; // visa 5 per sida i modalen
+    // limit is how many items per page, default is 5
+    const limit = parseInt(req.query.limit) || 5;
+    // sortBy is which field to sort by, default is created_at
     const sortBy = req.query.sortBy || "created_at";
+    // sortDir is the direction of the sort, either ascending or descending
     const sortDir = req.query.sortDir === "desc" ? -1 : 1;
 
-    const query = { user_id: userId };
-    const total = await Booking.countDocuments(query);
-
-    const bookings = await Booking.find(query)
+    const allBookings = await Booking.find({ user_id: userId })
       .populate({
+        // path to screening_id to get movie and auditorium details
         path: "screening_id",
+        // take out movie title and auditorium name from screening_id
         populate: [
           { path: "movie", select: "title" },
           { path: "auditorium", select: "name" },
         ],
       })
+      // populate seat details from seats array
       .populate("seats.seat_id")
+      // populate ticket details from tickets array
       .populate("tickets.ticket_id")
-      .sort({ [sortBy]: sortDir })
-      .skip((page - 1) * limit)
-      .limit(limit)
       .lean();
 
+    // -------- Filtering upcoming bookings --------
+    const now = new Date();
+    // Filter bookings to only include upcoming ones
+    const upcoming = allBookings.filter((b) => {
+      if (!b.screening_id) return false;
+      // Combine date and time into a single Date object
+      const dateStr = `${b.screening_id.date}T${b.screening_id.time}`;
+      const screeningDate = new Date(dateStr);
+      // If screeningDate is larger than or equal to now variable, return true
+      return screeningDate >= now;
+    });
+
+    //-------- Sorting --------
+    // Sort upcoming bookings based on sortBy and sortDir
+    upcoming.sort((a, b) => {
+      // If sortDir is -1, descending order, else ascending
+      const dir = sortDir === -1 ? -1 : 1;
+      // If sortBy is created_at, sort by date and time
+      if (sortBy === "created_at") {
+        return (new Date(a.created_at) - new Date(b.created_at)) * dir;
+      }
+    });
+
+    // -------- Pagination --------
+    // Calculate total number of upcoming bookings
+    const total = upcoming.length;
+    // Calculate starting index for pagination
+    const start = (page - 1) * limit;
+    // Get paginated bookings based on start index and limit
+    const paginatedBookings = upcoming.slice(start, start + limit);
+
+    // Send response with paginated bookings and pagination info
     res.json({
-      data: bookings,
+      data: paginatedBookings,
       total,
       page,
       totalPages: Math.ceil(total / limit),
@@ -125,7 +161,6 @@ router.get("/bookings/:userId", async (req, res) => {
     res.status(500).json({ error: "Kunde inte hämta bokningar" });
   }
 });
-
 
 // DELETE bookings/:bookingId
 
@@ -227,7 +262,6 @@ router.get("/screenings", async (req, res) => {
   }
 });
 
-
 // Get screenings with booked seats count for today
 
 router.get("/screenings/today", async (req, res) => {
@@ -266,7 +300,6 @@ router.get("/screenings/today", async (req, res) => {
         bookedCount: s.bookedSeats.length,
         totalSeats,
       };
-
     });
 
     res.json({
@@ -338,15 +371,16 @@ router.delete("/screenings/:id", async (req, res) => {
   if (!screening) return res.status(404).json({ error: "Visning saknas" });
 
   // Get bookings to be able to notify users
-  const bookings = await Booking.find({ screening_id: req.params.id })
-    .populate("user_id");
+  const bookings = await Booking.find({ screening_id: req.params.id }).populate(
+    "user_id"
+  );
 
   // Delete screening
   await Screening.findByIdAndDelete(req.params.id);
 
   // Mail users about deleted screening
   await Promise.all(
-    bookings.map(b => {
+    bookings.map((b) => {
       if (!b.user_id?.email) return;
       return sendMail({
         to: b.user_id.email,
@@ -357,7 +391,7 @@ router.delete("/screenings/:id", async (req, res) => {
           <p>${screening.movie.title}, ${screening.date}, ${screening.time}</p>
           <p>Kontakta oss vid frågor.</p>
           <p>Vänliga hälsningar,<br/>Filmvisarna</p>
-        `
+        `,
       });
     })
   );
@@ -404,11 +438,14 @@ router.post("/screenings", async (req, res) => {
     if (conflictingScreening) {
       return res
         .status(400)
-        .json({ error: "Det finns redan en visning i denna salong vid denna tid" });
+        .json({
+          error: "Det finns redan en visning i denna salong vid denna tid",
+        });
     }
 
     // Determine schedule type based on salon name
-    const scheduleType = salonName === "Lilla Salongen" ? "smallTheater" : "bigTheater";
+    const scheduleType =
+      salonName === "Lilla Salongen" ? "smallTheater" : "bigTheater";
 
     const newScreening = new Screening({
       movie: movieId,
@@ -476,7 +513,6 @@ router.get("/schedule", async (req, res) => {
   }
 });
 
-
 // Get total number of seats booked for all screenings today
 router.get("/screenings/today/bookings/count", async (req, res) => {
   try {
@@ -486,7 +522,6 @@ router.get("/screenings/today/bookings/count", async (req, res) => {
     let totalGuests = 0;
 
     for (const screening of screenings) {
-
       const bookings = await Booking.find({ screening_id: screening._id });
 
       for (const booking of bookings) {
@@ -500,7 +535,6 @@ router.get("/screenings/today/bookings/count", async (req, res) => {
     res.status(500).json({ error: "server error" });
   }
 });
-
 
 // Get all auditoriums to populate dropdowns
 router.get("/auditoriums", async (req, res) => {
@@ -538,5 +572,42 @@ router.post("/generate-screenings", async (req, res) => {
 });
 
 
+// POST Route, /api/admin/actors
+router.post("/actors", async (req, res) => {
+  try {
+    // the body from the request needs to match the schema
+    const actor = new Actors(req.body);
+    // Saving the newly added actor to the database
+    await actor.save();
+    res.status(201).json(actor);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// --------- Director routes for admin --------- //
+
+// POST Route, /api/admin/directors
+router.post("/directors", async (req, res) => {
+  try {
+    const directors = new Directors(req.body);
+    await directors.save();
+    res.status(201).json(directors);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// --------- Distributor routes for admin --------- //
+
+// POST Route, /api/admin/distributors
+router.post('/distributors', async (req, res) => {
+    try { const distributor = new Distributors(req.body);
+        await distributor.save();
+        res.status(201).json(distributor);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
 
 export default router;
