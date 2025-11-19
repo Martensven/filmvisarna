@@ -1,4 +1,4 @@
-import "./LoggoStylesheet.css"
+import "./LoggoStylesheet.css";
 
 
 export default function LoggoComponent(){

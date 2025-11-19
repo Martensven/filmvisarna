@@ -45,7 +45,6 @@ export default function CalenderComponent({
           throw new Error(`Kan inte hämta data: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Hämtad screening data: ", data);
         setScreenings(data);
       } catch (error) {
         console.error("Error: ", error);

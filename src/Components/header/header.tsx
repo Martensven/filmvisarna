@@ -107,7 +107,7 @@ export default function Header({ onLoginClick }: HeaderProps) {
 
                     {/* ✅ Mobile menu */}
                     {isOpen && (
-                        <ul className="flex flex-col md:hidden px-4 pb-4 space-y-2 mt-8">
+                        <ul className="flex flex-col justify-center items-center md:hidden px-4 pb-4 space-y-2 mt-8">
                             <li onClick={() => handleScroll("thuTheme")}>
                                 Tysta Torsdagen
                             </li>
