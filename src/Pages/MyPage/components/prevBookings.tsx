@@ -43,13 +43,26 @@ const FAQ = () => {
         }
     }, [userId]);
 
+   
 
-    if (loading) return <p className="text-white text-center mt-10">Laddar...</p>;
-    if (error) return <p className="text-red-500 text-center mt-10">Fel: {error}</p>;
-    if (bookings.length === 0) return <p className="text-white text-center mt-10">Inga bokningar hittades.</p>;
-    console.log(bookings);
 
     return (
+    <>
+        <h2 className="text-white text-2xl font-semibold text-center mt-10">Tidigare bokningar:</h2>
+
+        {loading && (
+            <p className="text-white text-center mt-10">Laddar...</p>
+        )}
+
+        {error && (
+            <p className="text-red-500 text-center mt-10">Fel: {error}</p>
+        )}
+
+        {!loading && !error && bookings.length === 0 && (
+            <p className="text-white text-center mt-10">Inga bokningar hittades.</p>
+        )}
+
+        {!loading && !error && bookings.length > 0 && (
 
         <section className="previous p-4 glass_effect rounded-lg mt-3">
 
@@ -111,7 +124,8 @@ const FAQ = () => {
                 </section>
             </section>
         </section>
+    )}
+    </>
     );
-};
-
+}
 export default FAQ;

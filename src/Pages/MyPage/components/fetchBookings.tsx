@@ -107,12 +107,12 @@ export default function FetchBookings() {
                     </div>
                 </div>
             )}
+            <h2 className="text-2xl font-semibold">Dina bokningar:</h2>
             {bookings.length === 0 ? (
                 <p className="text-white text-center mt-10">Inga bokningar hittades.</p>
             ) : (
 
                 <section className="current space-y-6 leading-loose w-10/12">
-                <h2 className="text-xl font-semibold">Dina bokningar</h2>
                 {bookings.map((b: any, index: number) => (
                     <div key={b._id || index} className="border-b border-gray-700 pb-4">
                         <p className="font-bold">{b.screening_id.movie.title}</p>
