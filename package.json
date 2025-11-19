@@ -1,5 +1,6 @@
 {
   "name": "filmvisarna",
+  "homepage": "https://filmsmedjan.nodehill.se",
   "private": true,
   "version": "0.0.0",
   "type": "module",
