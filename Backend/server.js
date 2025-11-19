@@ -25,7 +25,8 @@ import path from 'path';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 4321;
+const PORT = process.env.PORT || 5170;
+
 const app = express();
 const Socketserver = http.createServer(app);
 const io = initSocket(Socketserver);
