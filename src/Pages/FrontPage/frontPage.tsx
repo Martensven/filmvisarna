@@ -566,8 +566,8 @@ export default function FrontPage() {
               >
                 under hela torsdagen spelas filmer från tidigt 1900-tal upp. Res tillbaka i tiden och njut!
                 <br />
-                <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p>
               </p>
+              <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p>
             </div>
           </section>
         </article>
@@ -599,9 +599,8 @@ export default function FrontPage() {
               <p
                 className="flex flex-col justify-center items-center text-center"
               >
-                Vår lilla salong spelar gamla goda svenska klassiker under hela söndagen, morgon till kväll. <br />
+                Vår lilla salong spelar gamla goda svenska klassiker under hela söndagen, morgon till kväll. <br /></p>
                 <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p>
-              </p>
             </div>
           </section>
         </article>
