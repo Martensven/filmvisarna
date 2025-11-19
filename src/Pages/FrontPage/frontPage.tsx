@@ -247,7 +247,7 @@ export default function FrontPage() {
         lg:mb-3">
           <p className="mt-1 mb-1 font-bold text-sm uppercase
           lg:text-lg">
-            &#9733;  Boka din bio upplevelse hos oss  &#9733;</p>
+            &#9733;  Boka din bioupplevelse hos oss  &#9733;</p>
         </div>
       </div>
 
