@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AdminAddActor from "../AdminAddActorDirectorDist/adminAddActor";
 import AdminAddDirector from "../AdminAddActorDirectorDist/adminAddDirector";
 import AdminAddDistributor from "../AdminAddActorDirectorDist/adminAddDistributor";
@@ -29,13 +29,13 @@ export default function AdminAdd() {
       <AdminAddDirector
         onSuccess={(msg) => showToast(msg, "success")}
         onError={(msg) => showToast(msg, "error")}
-        
+
       />
 
       <AdminAddDistributor
         onSuccess={(msg) => showToast(msg, "success")}
         onError={(msg) => showToast(msg, "error")}
-    
+
       />
 
       {/* TOAST */}

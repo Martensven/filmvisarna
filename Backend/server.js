@@ -24,7 +24,7 @@ import { initSocket } from './websockets/sockets.js';
 
 
 
-const PORT = env.PORT || 4321;
+const PORT = process.env.PORT || 4321;
 const app = express();
 const Socketserver = http.createServer(app);
 const io = initSocket(Socketserver);

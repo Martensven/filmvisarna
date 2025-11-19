@@ -7,6 +7,22 @@ export default defineConfig({
   plugins: [react(),
   tailwindcss()],
 
+  esbuild: {
+    logOverride: {
+      'this-is-undefined-in-esm': 'silent'
+    }
+  },
+
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Suppress unused variable warnings
+        if (warning.code === 'UNUSED_EXTERNAL_IMPORT') return;
+        warn(warning);
+      }
+    }
+  },
+
   server: {
     proxy: {
       '/api': {

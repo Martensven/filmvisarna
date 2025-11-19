@@ -1,5 +1,3 @@
-import React from "react";
-
 type ConfirmModalProps = {
   title: string;
   message: string;

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import type { User, Booking } from "./adminUsersPage";
+import { useState, useEffect } from "react";
+import type { User } from "./adminUsersPage";
 
 type Props = {
   onSelectUser: (user: User) => void;

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Register({
     onSwitchToLogin,
-    onClose,
+
 }: {
     onSwitchToLogin: () => void;
     onClose: (callback?: () => void) => void;
