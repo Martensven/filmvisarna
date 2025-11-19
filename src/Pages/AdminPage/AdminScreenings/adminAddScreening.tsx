@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Toast from "../../../toast/toast";
 
-type Movie = { _id: string; title: string; themes?: { themeDesc?: string; weekDay?: string }  };
+type Movie = { _id: string; title: string; themes?: { themeDesc?: string; weekDay?: string } };
 type Auditorium = { _id: string; name: string };
 
 export default function AdminAddScreening() {
@@ -13,7 +13,7 @@ export default function AdminAddScreening() {
   const [freeTimes, setFreeTimes] = useState<string[]>([]);
   const [selectedTime, setSelectedTime] = useState("");
 
-  const [movieTheme, setMovieTheme] = useState<string>("");
+  const setMovieTheme = useState<string>("")[1];
 
   // toast state
   const [toastMessage, setToastMessage] = useState("");

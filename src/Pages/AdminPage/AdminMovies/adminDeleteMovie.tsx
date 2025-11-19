@@ -11,7 +11,7 @@ export default function AdminDeleteMovie() {
   const [selectedMovieId, setSelectedMovieId] = useState("");
   const [movies, setMovies] = useState<Movie[]>([]);
   const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState<"success" | "error">("success");
+  const setToastType = useState<"success" | "error">("success")[1];
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -39,8 +39,7 @@ export default function AdminDeleteMovie() {
       if (response.ok) {
         setToastType("success");
         setToastMessage(
-          `${
-            movies.find((movie) => movie._id === selectedMovieId)?.title
+          `${movies.find((movie) => movie._id === selectedMovieId)?.title
           } togs bort`
         );
         setMovies((prevMovies) =>
@@ -99,9 +98,8 @@ export default function AdminDeleteMovie() {
       {showModal && (
         <ConfirmModal
           title="Är du säker?"
-          message={`Vill du verkligen radera "${
-            movies.find((m) => m._id === selectedMovieId)?.title
-          }"?`}
+          message={`Vill du verkligen radera "${movies.find((m) => m._id === selectedMovieId)?.title
+            }"?`}
           confirmText="Radera"
           cancelText="Avbryt"
           onConfirm={() => {

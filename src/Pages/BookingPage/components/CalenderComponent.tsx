@@ -71,14 +71,14 @@ export default function CalenderComponent({
 
   // Fiter out old dates
   const futureOrTodayDates = Object.keys(sortScreeningByDate)
-  .filter((date) => new Date(date) >= new Date(today))
-  .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+    .filter((date) => new Date(date) >= new Date(today))
+    .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
   const todaysScreening = sortScreeningByDate[today] ?? [];
   const otherDaysScrenning = futureOrTodayDates.filter(
     (date) => date !== today
   );
-  
+
   useEffect(() => {
     if (active) return;
 
@@ -86,12 +86,12 @@ export default function CalenderComponent({
 
     if (todaysScreening.length > 0) {
       const sortedToday = todaysScreening
-      .slice()
-      .sort((a, b) => {
-        const [ax, ay] = a.time.split(":").map(Number);
-        const [bx, by] = b.time.split(":").map(Number);
-        return ax * 60 + ay - (bx * 60 + by);
-      });
+        .slice()
+        .sort((a, b) => {
+          const [ax, ay] = a.time.split(":").map(Number);
+          const [bx, by] = b.time.split(":").map(Number);
+          return ax * 60 + ay - (bx * 60 + by);
+        });
       firstAvailable = sortedToday[0];
     }
 
@@ -99,12 +99,12 @@ export default function CalenderComponent({
       const firstDate = otherDaysScrenning[0];
 
       const sortedOther = sortScreeningByDate[firstDate]
-      .slice()
-      .sort((a, b) => {
-        const [ax, ay] = a.time.split(":").map(Number);
-        const [bx, by] = b.time.split(":").map(Number);
-        return ax * 60 + ay - (bx * 60 + by);
-      });
+        .slice()
+        .sort((a, b) => {
+          const [ax, ay] = a.time.split(":").map(Number);
+          const [bx, by] = b.time.split(":").map(Number);
+          return ax * 60 + ay - (bx * 60 + by);
+        });
 
       firstAvailable = sortedOther[0];
     }
@@ -175,7 +175,7 @@ export default function CalenderComponent({
                 sm:mb-2 
                 md:w-full md:text-base md:justify-center md:items-center cursor-pointer
                 lg:w-11/12 lg:flex lg:flex-col lg:justify-between lg:items-center">
-          ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
+          ${active === screening._id ? "border-4 border-[#07ca00]" : ""}`}
               >
                 <li
                   className="pt-1 pb-1 text-base font-bold 
