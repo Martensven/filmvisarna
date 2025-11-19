@@ -12,12 +12,8 @@ import CheckoutRecipe from "./components/CheckoutRecipe";
 
 
 export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
-
-
   const [selectedTheaterId, setSelectedTheaterId] = useState<string | null>(null);
   const [selectedShowing, setSelectedShowing] = useState<string | null>(null);
-
-
 
   return (
     <>
@@ -31,12 +27,12 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
           lg:pt-10">
             <section className="flex flex-col items-center w-full md:w-3/4 lg:w-4/5 xl:w-3/4">
               {/* Mobile Recipe */}
-              <article className="md:hidden sticky top-0 z-50 w-11/12 rounded-md mb-6">
+              <article className="md:hidden sticky top-0 z-50 w-11/12 container_box rounded-md mb-6">
                 <CheckoutRecipe />
               </article>
             
               {/* Movie Info + Calendar */}
-              <article className=" w-11/12 mb-6 container_box flex flex-col sm:flex-row gap-4">
+              <article className="w-11/12 mb-6 container_box flex flex-col sm:flex-row gap-4">
                 <MovieInformation />
                 <CalenderComponent onSelectTheaterId={setSelectedTheaterId} onSelectShowing={setSelectedShowing}/>
               </article>
@@ -57,7 +53,7 @@ export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
           </main>
           
           <section className="w-full flex justify-center mt-10">
-            <div className="w-full max-w-screen-xl">
+            <div className="w-full">
               <CheckoutComponent />
             </div>
           </section>
