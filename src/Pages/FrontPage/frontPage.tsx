@@ -207,7 +207,7 @@ export default function FrontPage() {
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
 
       {/*Welcome sign with function calling the user if it is logged in. Or else just showing FILMVISARNA. */}
-      <div className="welcome-sign w-10/12 h-50 mb-10
+      <div className="welcome-sign w-10/12 h-50 mb-5
       sm:w-9/12
       md:w-8/12 md:mb-40
       lg:w-8/12 lg:mb-40">
@@ -252,7 +252,7 @@ export default function FrontPage() {
       </div>
 
 
-    <div className="Header-container-box w-10/12 mt-20 flex flex-col justify-center items-center">
+    <div className="Header-container-box w-10/12 mt-10 flex flex-col justify-center items-center">
         <h2 className="w-full stroked-text text-red-800 text-center text-3xl  uppercase font-extrabold my-6 px-2
         sm:text-4xl
         md:text-5xl
