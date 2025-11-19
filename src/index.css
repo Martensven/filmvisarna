@@ -210,14 +210,10 @@
 
 .main_buttons:hover {
   scale: 105%;
-  border: 3px double rgb(158, 140, 4);
-  box-shadow: 0px 0px 3px 1px rgba(222, 242, 122, 0.225);
 }
 
 .main_buttons:active {
   scale: 95%;
-  border: 1px solid rgba(148, 5, 5, 0.605);
-  box-shadow: 0px 0px 10px 2px rgba(109, 12, 1, 0.537);
 }
 
 .glass_effect {

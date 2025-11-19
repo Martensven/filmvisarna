@@ -520,7 +520,7 @@ export default function FrontPage() {
              lg:flex-col lg:h-auto "
       >
         <div className="Header-container-box w-10/12 h-30 mb-10 ">
-        <h2 className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20">
+        <h2 className="stroked-text text-red-800 text-center text-4xl uppercase font-extrabold my-5 px-20">
           Temadagar
         </h2>
         </div>
