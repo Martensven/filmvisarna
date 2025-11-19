@@ -204,7 +204,7 @@ export default function FrontPage() {
   ];
 
   return (
-    <main className="w-screen flex flex-col items-center min-h-screen mt-14">
+    <main className="w-screen flex flex-col items-center justify-center min-h-screen mt-14">
 
       {/*Welcome sign with function calling the user if it is logged in. Or else just showing FILMVISARNA. */}
       <div className="welcome-sign w-10/12 h-50 mb-5
@@ -438,7 +438,7 @@ export default function FrontPage() {
 
     
 
-    lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:h-auto
+    lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:h-auto lg:w-full
     xl:h-auto xl:p-2 xl:grid xl:grid-cols-4  
     xl:w-8/12
 
