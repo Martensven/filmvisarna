@@ -1,24 +1,25 @@
 import type { CategorySectionProps } from "../kioskPage";
 import "./../kioskStyle.css";
+import "./../../../index.css"
 
 export default function CategorySection({
   title,
   items,
 }: CategorySectionProps) {
   return (
-    <section className="StallContainer KioskTopRoof w-full flex flex-col justify-center items-center  relative">
+    <section className="w-full flex flex-col justify-center items-center  relative">
         <img src="public/images/kiosk/Markis-opacity.png" alt="Markisen" className="mb-5 w-full h-30
         md:w-4/5
         lg:w-11/12"/>
-      <div className="flex flex-col justify-center items-center mb-10
+      <div className="flex flex-col justify-center items-center mb-10 
       md:w-3/4
       lg:w-full">
-        <h3 className="flex justify-center items-center text-lg mb-[-20px] bg-[#455896] rounded-[50%] border w-30 h-15 p-1 z-[1]">
+        <h3 className="category-sign flex justify-center items-center text-lg mb-[-20px]  w-40 h-15 p-1 z-[1] shadow-xl">
           {title}
         </h3>
-      <section className="w-4/5 h-full flex flex-wrap justify-center items-center bg-[#0417209f] gap-4 px-8 py-5 rounded-lg 
+      <section className="glass_effect w-4/5 h-full flex flex-wrap justify-center items-center bg-[#0417209f] gap-4 px-8 py-5 rounded-lg 
       sm:px-15
-      lg:px-2 lg:w-11/12">
+      lg:px-2 lg:w-10/12">
         {items.map((item) => (
           <article
             key={item._id}

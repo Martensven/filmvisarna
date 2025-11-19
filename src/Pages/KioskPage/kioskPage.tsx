@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { KioskItem } from "../../types/kiosk";
 import CategorySection from "./components/categorySection";
 import "./kioskStyle.css"
+import "./../../index.css"
 
 export default function KioskPage() {
   const [items, setItems] = useState<KioskItem[]>([]);
