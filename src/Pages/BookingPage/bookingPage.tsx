@@ -10,7 +10,6 @@ import { SeatsProvider } from "./components/context/SeatsContext";
 import { CheckoutProvider } from "./components/context/CheckoutContext";
 import CheckoutRecipe from "./components/CheckoutRecipe";
 
-
 export default function BookingPage({ }: { isLoggedIn: boolean }) {
   const [selectedTheaterId, setSelectedTheaterId] = useState<string | null>(null);
   const [selectedShowing, setSelectedShowing] = useState<string | null>(null);
@@ -19,35 +18,82 @@ export default function BookingPage({ }: { isLoggedIn: boolean }) {
     <>
       <SeatsProvider>
         <CheckoutProvider>
-          {/*----------Container for booking page----------*/}
-          <main className=" 
-          min-h-screen w-full
-          flex flex-col items-center pt-5
-          md:flex-row md:items-start md:justify-between
-          lg:pt-10">
-            <section className="flex flex-col items-center w-full md:w-3/4 lg:w-4/5 xl:w-3/4">
-              {/* Mobile Recipe */}
-              <article className="md:hidden sticky top-0 z-50 w-11/12 container_box rounded-md mb-6">
+
+          <main
+            className="
+            min-h-screen w-full
+            flex flex-col items-center
+            pt-4
+            lg:flex-row lg:items-start lg:justify-center lg:gap-10
+            lg:pt-10"
+          >
+
+            {/* LEFT SIDE: Everything except desktop recipe */}
+            <section
+              className="
+              flex flex-col items-center
+              w-full
+              sm:w-11/12
+              md:w-4/5
+              lg:w-3/5
+              xl:w-1/2
+              gap-6"
+            >
+
+              {/* Mobile/Tablet Recipe */}
+              <article className="
+                lg:hidden 
+                sticky top-0 z-50
+                w-full
+                container_box rounded-md
+                p-4
+              ">
                 <CheckoutRecipe />
               </article>
 
               {/* Movie Info + Calendar */}
-              <article className="w-11/12 mb-6 container_box flex flex-col sm:flex-row gap-4">
+              <article
+                className="
+                w-full
+                container_box
+                flex flex-col gap-4
+                sm:flex-row sm:justify-between
+                p-4
+              ">
                 <MovieInformation />
-                <CalenderComponent onSelectTheaterId={setSelectedTheaterId} onSelectShowing={setSelectedShowing} />
+                <CalenderComponent
+                  onSelectTheaterId={setSelectedTheaterId}
+                  onSelectShowing={setSelectedShowing}
+                />
               </article>
 
               {/* Theater View */}
-              <article className=" w-11/12 container_box flex flex-col items-center gap-6
-              xl:flex-row xl:justify-between">
+              <article
+                className="
+                w-full
+                container_box
+                flex flex-col items-center gap-4
+                xl:flex-row xl:justify-between
+                p-4
+              ">
                 <AmountTheaterSeats />
-                <TheaterViewContainer selectTheaterId={selectedTheaterId} selectShowing={selectedShowing} />
+                <TheaterViewContainer
+                  selectTheaterId={selectedTheaterId}
+                  selectShowing={selectedShowing}
+                />
               </article>
             </section>
 
-            {/* Desktop Recipe */}
-            <section className="hidden md:flex sticky top-40 container_box rounded-md justify-center items-start ml-4
-            md:w-1/4 lg:w-1/5 xl:w-1/4 xl:p-10">
+            {/* RIGHT SIDE: Desktop Recipe */}
+            <section
+              className="
+              hidden lg:flex
+              sticky top-40
+              container_box rounded-md
+              justify-center items-start
+              p-6 xl:p-10
+              w-75 xl:w-80
+            ">
               <CheckoutRecipe />
             </section>
           </main>
@@ -57,6 +103,7 @@ export default function BookingPage({ }: { isLoggedIn: boolean }) {
               <CheckoutComponent />
             </div>
           </section>
+
         </CheckoutProvider>
       </SeatsProvider>
     </>
