@@ -162,7 +162,7 @@ export default function AddMovieForm() {
   };
 
   return (
-    <div className="w-full p-4 bg-[#243365] rounded-xl text-white">
+    <div className="w-full p-4 bg-[#243365] md:rounded-xl text-white">
       <h2 className="text-2xl font-bold mb-6">Lägg till ny film</h2>
       {loading ? (
         <p className="text-white">Laddar...</p>

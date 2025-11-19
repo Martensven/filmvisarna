@@ -167,6 +167,8 @@ export default function FrontPage() {
     }
   }, [location, loading]);
 
+ 
+
   // Sort based on selected option. (A-Z, Z-A, Newest)
   const sortedMovies = [...movie].sort((a, b) => {
     if (sortOption === "atoz") return a.title.localeCompare(b.title);
@@ -205,11 +207,11 @@ export default function FrontPage() {
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
 
       {/*Welcome sign with function calling the user if it is logged in. Or else just showing FILMVISARNA. */}
-      <div className="welcome-sign w-10/12 mb-10
+      <div className="welcome-sign w-10/12 h-50 mb-10
       sm:w-9/12
-      md:w-8/12 md:mb-15
-      lg:w-6/12 lg:mb-15">
-        <div className="w-full border-t-2 border-b-2 border-[#737373] mt-2
+      md:w-8/12 md:mb-40
+      lg:w-8/12 lg:mb-40">
+        <div className="w-full border-t-2 border-b-2 border-[#737373] mt-2 
         lg:mt-3">
           <h1
             className="text-center text-base mt-1 mb-1 font-bold
@@ -237,7 +239,7 @@ export default function FrontPage() {
             md:text-base
             lg:text-base"
           >
-            Åk tillbaka i tiden med filmer från 1900-tal till 2000-tal.
+            Stort utbud av filmer från 1900-tal till 2000-tal.
           </p>
         </div>
 
@@ -249,8 +251,14 @@ export default function FrontPage() {
         </div>
       </div>
 
+      <div className="Header-container-box w-10/12 mb-10 flex justify-center items-center">
+        <h2 className="w-full stroked-text text-red-800 text-center text-5xl uppercase font-extrabold my-5 px-20
+        ">Visas just nu</h2>
+   </div>
+
       {/* Filter & Sort */}
-      <section className="w-11/12 mb-5 rounded-md shadow-md flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
+      <section className="w-10/12 h-10 p-5 flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
+      
         <section className="flex flex-row w-1/2 justify-around items-center sm:w-full">
           {/* Filter */}
           <nav className="relative ">
@@ -511,14 +519,15 @@ export default function FrontPage() {
              md:flex md:flex-col md:mt-20
              lg:flex-col lg:h-auto "
       >
-        <h2 className="w-11/12 glass_effect py-5 my-20 rounded-md shadow-md text-lg flex justify-center items-center
-        md:mb-20
-        lg:mb-20">
+        <div className="Header-container-box w-10/12 h-30 mb-10 ">
+        <h2 className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20">
           Temadagar
         </h2>
+        </div>
+        
 
         <article
-          className="min-h-96 max-w-9/12 my-5 themeday-box
+          className="min-h-96 w-8/12 my-5 themeday-box
         flex flex-col justify-center items-center text-white
         lg:mb-20 "
           id="thuTheme"
@@ -545,14 +554,16 @@ export default function FrontPage() {
               className="flex flex-col justify-center items-center text-center  
                lg:"
             >
-              {thuTheme?.themeDesc}
+              under hela torsdagen spelas filmer från tidigt 1900-tal upp. Res tillbaka i tiden och njut!
+              <br />
+                <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p> 
             </p>
             </div>
           </section>
         </article>
 
         <article
-          className="min-h-96 max-w-9/12 my-5 themeday-box
+          className="min-h-96 w-8/12 my-5 themeday-box
         flex flex-col justify-center items-center text-white
         lg:mb-20"
           id="sunTheme"
@@ -570,7 +581,7 @@ export default function FrontPage() {
                     lg:flex-col "
           >
             <Slideshow day="sunday" />
-            <div className="w-10/12 flex flex-col justify-center items-center text-center my-10 mx-5 uppercase text-sm
+            <div className="w-10/12 flex flex-col justify-center items-end text-center my-10 mx-5 uppercase text-sm
             sm:text-base
             md:w-9/12 md:mb-20 md:mr-1 md:text-lg
             lg:mx-5 lg:w-8/12 lg:text-xl lg:mb-20
@@ -578,7 +589,8 @@ export default function FrontPage() {
               <p
                 className="flex flex-col justify-center items-center text-center"
               >
-                {sunTheme?.themeDesc}
+                Vår lilla salong spelar gamla goda svenska klassiker under hela söndagen, morgon till kväll. <br />
+                <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p>
               </p>
             </div>
           </section>

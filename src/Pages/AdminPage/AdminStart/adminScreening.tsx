@@ -56,10 +56,11 @@ export default function AdminScreenings() {
   }, [date, page, sortBy, sortDir]);
 
   return (
-    <section className="p-6 bg-[#243365] text-white w-full rounded-xl min-h-[70vh]">
+    <section className="p-6 bg-[#243365] text-white w-full md:rounded-xl min-h-[70vh]">
       <section className="flex items-center justify-between mb-6">
         <h1>Dagens filmvisningar</h1>
         <input
+          aria-label="Välj datum för filmvisningar"
           type="date"
           value={date}
           onChange={(e) => {
