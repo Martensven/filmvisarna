@@ -537,7 +537,7 @@ export default function FrontPage() {
 
 
         <article
-          className="min-h-96 w-8/12 my-5 themeday-box
+          className="min-h-96 w-8/12 my-5 popOut-box
         flex flex-col justify-center items-center text-white
         lg:mb-20 "
           id="thuTheme"
@@ -573,7 +573,7 @@ export default function FrontPage() {
         </article>
 
         <article
-          className="min-h-96 w-8/12 my-5 themeday-box
+          className="min-h-96 w-8/12 my-5 popOut-box
         flex flex-col justify-center items-center text-white
         lg:mb-20"
           id="sunTheme"
