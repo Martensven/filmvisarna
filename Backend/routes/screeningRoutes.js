@@ -1,6 +1,6 @@
 import express from "express";
 import { Screening } from "../models/screeningSchema.js";
-import { generateAndSave } from "./../generateScreeningTimes.js"
+import { generateAndSave } from "./../generateScreeningTimes.js";
 
 const router = express.Router();
 
@@ -11,24 +11,24 @@ router.post("/api/screening", async (req, res) => {
     //Create a automatically generated screening
     const { movie, auditorium, date, time, scheduleType, generate } = req.body;
 
-    if(generate === true) {
-      if(!movie) {
-        return res.status(400).json({error: "Movie ID krävs för att generera visningsdagar och tider"});
+    if (generate === true) {
+      if (!movie) {
+        return res.status(400).json({ error: "Movie ID krävs för att generera visningsdagar och tider" });
       }
       const createdScreening = await generateAndSave(movie);
       return res.status(201).json({
         message: `${createdScreening.length} sparades automatiskt`,
-        screenings:createdScreening,
-      })
+        screenings: createdScreening,
+      });
     }
 
     //Create a manually screening with scheduleType
-    if(!movie || !auditorium || !date || !time || !scheduleType) {
+    if (!movie || !auditorium || !date || !time || !scheduleType) {
       return res.status(400).json({
         error: "Alla nämnda fält måste fyllas i (movie, auditorium, date, time och scheduleType"
       });
     }
-    const showTime = new Date(`${date}T${time}:00`)
+    const showTime = new Date(`${date}T${time}:00`);
 
     const newScreening = new Screening({
       movie,
@@ -122,5 +122,16 @@ router.get("/api/screenings/movie/:movieId", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+router.delete("/api/screening", async (req, res) => {
+  try {
+    const screening = await Screening.find().deleteMany();
+    res.status(200).json(screening);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
 
 export default router;

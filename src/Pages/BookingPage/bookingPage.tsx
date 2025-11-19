@@ -11,64 +11,56 @@ import { CheckoutProvider } from "./components/context/CheckoutContext";
 import CheckoutRecipe from "./components/CheckoutRecipe";
 
 
-
 export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
-  const [selectedTheaterId, setSelectedTheaterId] = useState<string | null>(
-    null
-  );
+
+
+  const [selectedTheaterId, setSelectedTheaterId] = useState<string | null>(null);
   const [selectedShowing, setSelectedShowing] = useState<string | null>(null);
+
+
 
   return (
     <>
       <SeatsProvider>
         <CheckoutProvider>
           {/*----------Container for booking page----------*/}
-          <main
-            className="Bookingpage w-screen min-h-screen flex flex-col justify-center items-center overscroll-y-auto pt-5 relative
-          sm:pt-0
-          md:w-full md:flex md:items-start md:justify-around  
-          lg:w-12/13 lg:mt-10 
-          xl:w-full"
-          >
-            <section
-              className="Recipe w-11/12 flex justify-center items-center h-50 mb-5 sticky top-10 container_box z-1 rounded-md
-            md:flex md:justify-center md:items-center md:fixed md:top-[170px] md:right-[30px] md:w-5/13 md:h-80 md:container_box 
-            lg:right-[35px] lg:top-[180px]
-            xl:right-[60px] xl:top-[220px]"
-            >
+          <main className=" 
+          min-h-screen w-full
+          flex flex-col items-center pt-5
+          md:flex-row md:items-start md:justify-between
+          lg:pt-10">
+            <section className="flex flex-col items-center w-full md:w-3/4 lg:w-4/5 xl:w-3/4">
+              {/* Mobile Recipe */}
+              <article className="md:hidden sticky top-0 z-50 w-11/12 rounded-md mb-6">
+                <CheckoutRecipe />
+              </article>
+            
+              {/* Movie Info + Calendar */}
+              <article className=" w-11/12 mb-6 container_box flex flex-col sm:flex-row gap-4">
+                <MovieInformation />
+                <CalenderComponent onSelectTheaterId={setSelectedTheaterId} onSelectShowing={setSelectedShowing}/>
+              </article>
+
+              {/* Theater View */}
+              <article className=" w-11/12 container_box flex flex-col items-center gap-6
+              xl:flex-row xl:justify-between">
+                <AmountTheaterSeats />
+                <TheaterViewContainer selectTheaterId={selectedTheaterId} selectShowing={selectedShowing}/>
+              </article>
+            </section>
+            
+            {/* Desktop Recipe */}
+            <section className="hidden md:flex sticky top-40 container_box rounded-md justify-center items-start ml-4
+            md:w-1/4 lg:w-1/5 xl:w-1/4 xl:p-10">
               <CheckoutRecipe />
             </section>
-
-            <section
-              className="Movie-Screening-Days flex flex-col  sm:flex-row container_box w-11/12 mb-4
-            justify-center items-center
-            md:w-7/14 md:ml-10
-            lg:w-8/14 lg:ml-11
-            xl:ml-18 xl:w-6/12"
-            >
-              <MovieInformation />
-              <CalenderComponent
-                onSelectTheaterId={setSelectedTheaterId}
-                onSelectShowing={setSelectedShowing}
-              />
-            </section>
-
-            <div
-              className="Booking-component flex flex-col w-11/12 h-auto justify-center items-center container_box
-                        md:flex-col md:justify-center md:items-center md:w-7/14 md:ml-10
-                        lg:flex lg:flex-col lg:w-8/14 lg:justify-center lg:items-center lg:ml-11
-                        xl:flex-row xl:ml-18 xl:justify-around xl:w-6/12"
-            >
-              <AmountTheaterSeats />
-
-              <TheaterViewContainer
-                selectTheaterId={selectedTheaterId}
-                selectShowing={selectedShowing}
-              />
-            </div>
-
-            <CheckoutComponent />
           </main>
+          
+          <section className="w-full flex justify-center mt-10">
+            <div className="w-full max-w-screen-xl">
+              <CheckoutComponent />
+            </div>
+          </section>
         </CheckoutProvider>
       </SeatsProvider>
     </>

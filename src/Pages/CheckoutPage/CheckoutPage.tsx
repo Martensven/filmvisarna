@@ -71,7 +71,7 @@ export default function CheckoutPage() {
   const { user_id, screening_id, seats, tickets, totalPrice } = booking;
 
   return (
-    <div className="max-w-3xl mx-auto glass_effect rounded-xl shadow-md p-6 mt-10">
+    <div className="max-w-3xl mx-auto glass_effect Loggo-box rounded-xl shadow-md p-6 mt-10">
       <h2 className="text-2xl font-bold mb-6 text-center text-white">🎬 Bokningsinformation</h2>
 
       <div className="flex flex-col md:flex-row gap-4">
@@ -81,8 +81,8 @@ export default function CheckoutPage() {
           className="w-48 rounded-lg shadow-md"
         />
 
-        <div className="text-xl font-semibold text-white">
-          <h3 className="text-xl font-semibold text-white">{screening_id.movie.title}</h3>
+        <div className="text-xl font-semibold text-white text-left leading-10">
+          <h3 className="text-2xl font-semibold text-white text-center pb-6">{screening_id.movie.title}</h3>
           <p>
             <strong>Datum & Tid:</strong> {screening_id.date} – {screening_id.time}
           </p>
@@ -98,12 +98,12 @@ export default function CheckoutPage() {
       <hr className="my-4" />
 
       <section>
-        <h3 className="text-lg font-semibold mb-2 text-white">Stolsnummer</h3>
-        <p>{seats.length ? seats.map((s) => s.seatNumber).join(", ") : "Inga platser"}</p>
+        <h3 className="text-xl font-extrabold mb-2 text-white">Stolsnummer:</h3>
+        <p className="text-xl">{seats.length ? seats.map((s) => s.seatNumber).join(", ") : "Inga platser"}</p>
       </section>
 
-      <section className="mt-4">
-        <h3 className="text-lg font-semibold mb-2 text-white">Biljetter</h3>
+      <section className="mt-4 text-xl">
+        <h3 className="text-xl font-extrabold mb-2 text-white">Biljetter:</h3>
         <ul>
           {tickets.length ? (
             tickets.map((t, i) => (
@@ -117,8 +117,8 @@ export default function CheckoutPage() {
         </ul>
       </section>
 
-      <section className="mt-4">
-        <h3 className="text-lg font-semibold mb-2 text-white">Användarinformation</h3>
+      <section className="mt-4 text-xl">
+        <h3 className="text-xl font-extrabold mb-2 text-white">Användarinformation:</h3>
         {user_id ? (
           <>
             <p>
@@ -132,7 +132,7 @@ export default function CheckoutPage() {
       </section>
 
       <div className="text-right mt-6">
-        <h3 className="text-xl font-bold text-white">Summa: {totalPrice} kr</h3>
+        <h3 className="text-xl font-bold text-white text-right">Summa: {totalPrice} kr</h3>
       </div>
     </div>
   );

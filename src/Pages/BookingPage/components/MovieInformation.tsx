@@ -8,6 +8,7 @@ interface FetchedMovieInfo {
   releaseYear: number;
   genre: string[];
   length: number;
+  age: number;
 
 }
 //Components contains movie box, like poster, year, time and about the movie.
@@ -30,8 +31,8 @@ export default function MovieInformation() {
         }
 
         const data = await response.json();
-        console.log("Hämtad data: ", data);
         setMovieInfo(data);
+        localStorage.setItem("currentMovie", JSON.stringify(data)); //Store current movie in local storage
       } catch (error) {
         console.error("Error: ", error);
       } finally {

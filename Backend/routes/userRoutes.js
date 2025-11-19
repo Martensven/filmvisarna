@@ -1,4 +1,4 @@
-import { User } from "../models/userSchema.js";
+import {User}  from "../models/userSchema.js";
 import express from "express";
 import { validateData } from "./../middleware/dataValidation.js";
 import bcrypt from "bcrypt";
@@ -63,7 +63,7 @@ router.post(
       await sendMail({
         to: user.email,
         subject: "Bekräftelsemejl",
-        text: "Konto-registrering",
+        text: "Kontoregistrering",
         html: 
         `
          <table align="center" width="600" cellpadding="0" cellspacing="3" style="font-family: Arial, serif; padding:10px;">
@@ -72,7 +72,7 @@ router.post(
                 width="600" height="120" align="left">
           
                   <img src="cid:logo" alt="Filmvisarnas logga" width="150" style="margin:10px 20px 2px 20px;" > 
-                  <h2 style="color:white; font-size:20px; margin:1px 20px 10px 20px;" align="center">Konto-registrering</h2>
+                  <h2 style="color:white; font-size:20px; margin:1px 20px 10px 20px;" align="center">Kontoregistrering</h2>
            
                 </td>
               </tr>
@@ -96,8 +96,8 @@ router.post(
                   <table align="center" cellpadding="0" cellspacing="0" width="600">
                     <tr>
                       <td style="color: white; text-align: center; padding: 10px;">
-                        <p style="padding: 5px; font-size: 15px;">Vi hoppas att du ska finna mycket nöje med vårt utbud av gamla goda klassiker mellan tidigt 1900tal och senare 2000tal.</p>
-                        <p style="padding: 2px; font-size: 12px;">Ytterligare information om ditt konto eller behov av lösenords-återställning finns att hämta hos oss vår kundservice.</p>
+                        <p style="padding: 5px; font-size: 15px;">Vi hoppas att du ska finna mycket nöje med vårt utbud av gamla goda klassiker mellan tidigt 1900-tal och senare 2000-tal.</p>
+                        <p style="padding: 2px; font-size: 12px;">Ytterligare information om ditt konto eller behov av lösenordsåterställning finns att hämta hos vår kundservice.</p>
                       </td>
                     </td>
                   </table> 

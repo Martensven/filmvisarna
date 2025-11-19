@@ -3,18 +3,20 @@ import { Link, useLocation } from "react-router-dom";
 import Slideshow from "../../Components/themepageSlideshow/slideshowComponent.tsx";
 import "../BookingPage/BookingPageStyle.css";
 import "../../index.css";
+import { useAuth } from "../../../src/context/authContext.tsx";
 
 type Theme = {
   _id: string;
   themeDesc: string;
   weekDay: string;
-}
+};
 
 export default function FrontPage() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [scheduledType, setScheduledType] = useState<string>("");
+  const { user } = useAuth();
 
   const [movie, setMovie] = useState<any[]>([]); // State to hold fetched movies
   const [sunTheme, setSunTheme] = useState<Theme>();
@@ -25,7 +27,7 @@ export default function FrontPage() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [selectedAges, setSelectedAges] = useState<number[]>([]);
   const [sortOption, setSortOption] = useState<string>("");
-  
+
   const location = useLocation();
 
   // fetch movies from backend
@@ -59,18 +61,20 @@ export default function FrontPage() {
         method: "GET",
         headers: {
           "Conent-Type": "application/json",
-        }
+        },
       });
 
       const responseThu = await fetch(`/api/theme/68ecd482dcb8359901cf375f`, {
         method: "GET",
         headers: {
           "Conent-Type": "application/json",
-        }
+        },
       });
 
       if (!responseSun.ok || !responseThu.ok) {
-        throw new Error(`Serverfel: ${responseSun.status}, ${responseThu.status}`);
+        throw new Error(
+          `Serverfel: ${responseSun.status}, ${responseThu.status}`
+        );
       }
 
       const thuData = await responseThu.json();
@@ -78,11 +82,10 @@ export default function FrontPage() {
 
       setThuTheme(thuData);
       setSunTheme(sunData);
-      } catch (error:any) {
-        console.error('Error fetching themes', error);
-      }
-    };
-  
+    } catch (error: any) {
+      console.error("Error fetching themes", error);
+    }
+  };
 
   const filterMovies = async () => {
     try {
@@ -164,6 +167,8 @@ export default function FrontPage() {
     }
   }, [location, loading]);
 
+ 
+
   // Sort based on selected option. (A-Z, Z-A, Newest)
   const sortedMovies = [...movie].sort((a, b) => {
     if (sortOption === "atoz") return a.title.localeCompare(b.title);
@@ -200,28 +205,60 @@ export default function FrontPage() {
 
   return (
     <main className="w-screen flex flex-col items-center min-h-screen mt-14">
-      <h1
-        className="text-center text-lg mb-4 w-11/12
-            sm:text-xl
-            md:text-2xl"
-      >
-        Välkommen till Filmvisarna!
-      </h1>
-      <p
-        className="text-center text-sm mb-10 w-11/12
+
+      {/*Welcome sign with function calling the user if it is logged in. Or else just showing FILMVISARNA. */}
+      <div className="welcome-sign w-10/12 h-50 mb-10
+      sm:w-9/12
+      md:w-8/12 md:mb-40
+      lg:w-8/12 lg:mb-40">
+        <div className="w-full border-t-2 border-b-2 border-[#737373] mt-2 
+        lg:mt-3">
+          <h1
+            className="text-center text-base mt-1 mb-1 font-bold
+        sm:text-xl
+        md:text-2xl
+        lg:text-2xl"
+          >
+            {user ? (
+              <>
+                VÄLKOMMEN TILL FILMVISARNA,{" "}
+                <span className="text-black font-bold uppercase">
+                  {user.firstName}!
+                </span>
+              </>
+            ) : (
+              "VÄLKOMMEN TILL FILMVISARNA!"
+            )}
+          </h1>
+        </div>
+
+        <div className="w-full border-b-2 border-[#737373]">
+          <p
+            className="text-center text-[10px] font-bold my-2 uppercase
             sm:text-base
-            md:text-base"
-      >
-        Här kan du se filmer som verkligen tar dig bakåt i tiden. Vi erbjuder
-        filmer från 1910 talet fram till början på 2000 talet. Är detta något
-        för dig se då till att se dig runt bland våra filmer och boka en tid
-        som passar dig!
-      </p>
+            md:text-base
+            lg:text-base"
+          >
+            Stort utbud av filmer från 1900-tal till 2000-tal.
+          </p>
+        </div>
 
+        <div className="w-full border-b-2 border-[#737373] mt-1 mb-1
+        lg:mb-3">
+          <p className="mt-1 mb-1 font-bold text-sm uppercase
+          lg:text-lg">
+          &#9733;  Boka din bio upplevelse hos oss  &#9733;</p>
+        </div>
+      </div>
 
+      <div className="Header-container-box w-10/12 mb-10 flex justify-center items-center">
+        <h2 className="w-full stroked-text text-red-800 text-center text-5xl uppercase font-extrabold my-5 px-20
+        ">Visas just nu</h2>
+   </div>
 
       {/* Filter & Sort */}
-      <section className="w-11/12 mb-5 rounded-md shadow-md flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
+      <section className="w-10/12 h-10 p-5 flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
+      
         <section className="flex flex-row w-1/2 justify-around items-center sm:w-full">
           {/* Filter */}
           <nav className="relative ">
@@ -236,8 +273,8 @@ export default function FrontPage() {
             {filterOpen && (
               <div
                 className="flex flex-row flex-wrap justify-center items-center 
-                        absolute -left-14 mt-5 bg-[#292929] shadow-md rounded p-5 w-72
-                        sm:w-86 sm:mt-1 z-50
+                        absolute bg-[#18203ad0] shadow-md rounded p-5 w-72
+                        sm:w-86 mt-1 z-50
                         lg:max-h-[80vh]
                         
                         "
@@ -254,7 +291,7 @@ export default function FrontPage() {
                 ].map((genre) => (
                   <label
                     key={genre}
-                    className="flex items-center gap-2 px-2 py-1 mt-1 mb-2 w-30 h-8 text-sm
+                    className="flex items-center gap-2 px-2 py-1  mb-2 w-30 h-8 text-sm
                                 hover:underline
                                 sm:text-base
                                 md:text-base"
@@ -298,9 +335,9 @@ export default function FrontPage() {
               Sortera &darr;
             </button>
             {sortOpen && (
-              <ul className="absolute mt-2 bg-[#292929] rounded shadow p-2 -right-9 w-72">
+              <ul className="absolute bg-[#18203ad0] mt-1 rounded shadow w-40 lg:w-76">
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("atoz");
                     setSortOpen(false);
@@ -309,7 +346,7 @@ export default function FrontPage() {
                   A–Ö
                 </li>
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("ztoa");
                     setSortOpen(false);
@@ -318,7 +355,7 @@ export default function FrontPage() {
                   Ö–A
                 </li>
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("newest");
                     setSortOpen(false);
@@ -327,7 +364,7 @@ export default function FrontPage() {
                   Nyast först
                 </li>
                 <li
-                  className="px-2 py-1 hover:bg-gray-100 hover:text-black cursor-pointer"
+                  className="px-2 py-1 hover:underline cursor-pointer"
                   onClick={() => {
                     setSortOption("oldest");
                     setSortOpen(false);
@@ -340,15 +377,16 @@ export default function FrontPage() {
           </div>
         </section>
 
-
         <section className="flex w-full">
           {/* Screening Date */}
-          <div className="search-date-box px-2 py-2 
+          <div
+            className="search-date-box px-2 py-2 
         w-11/12
         sm:w-1/2
         flex
         flex-col
-      ">
+      "
+          >
             <label className="block text-sm mb-1">Datum:</label>
             <input
               type="date"
@@ -358,13 +396,14 @@ export default function FrontPage() {
             />
           </div>
 
-
           {/* Schedule Type */}
-          <div className="search-hall-box px-2 py-2 w-11/12
+          <div
+            className="search-hall-box px-2 py-2 w-11/12
         sm:w-1/2
         flex
         flex-col
-        ">
+        "
+          >
             <label className="block text-sm mb-1">Salong:</label>
             <select
               value={scheduledType}
@@ -378,8 +417,6 @@ export default function FrontPage() {
           </div>
         </section>
       </section>
-
-
 
       {/* Movies container*/}
       <section
@@ -397,111 +434,165 @@ export default function FrontPage() {
 
     lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:h-auto
     xl:h-auto xl:p-2 xl:grid xl:grid-cols-4  
-    2xl:h-auto 2xl:p-2 2xl:grid 2xl:grid-cols-5
+    xl:w-8/12
 
-  ">
+  "
+      >
         {sortedMovies.length === 0 ? (
           <p className="m-auto">Inga filmer hittades.</p>
         ) : (
           sortedMovies.map((movie) => (
             <article
               key={movie._id}
-              className="flex justify-center items-center h-auto min-w-56 snap-center m-3 p-5
-                            lg:h-auto lg:hover:scale-105
-                            xl:h-auto xl:mt-10"
+              className="flex justify-center items-center h-auto min-w-56 snap-center m-2 p-5
+                            lg:h-auto 
+                            xl:h-auto"
             >
-              <Link
-                to={`/movie/${movie._id}`}
+              <section
                 className="flex flex-col items-center justify-start h-auto
                             sm:h-auto m-0
                             lg:h-auto"
               >
-                <img
-                  src={movie.imageSrc}
-                  alt={movie.title}
-                  className="shadow-2xl w-auto h-4/5 object-cover rounded-md p-0 "
-                />
                 <p
-                  className="mt-2
-                             text-sm
-                                lg:m-0
+                  className="mt-2 
+                             text-xs
+                              flex items-center justify-center
+                             h-12
+                             md:h-14
+                                lg:m-0 
                                 lg:text-md
                                 xl:text-lg
-                                2xl:text-xl"
+                                "
                 >
                   {movie.title}
                 </p>
+                <img
+                  src={movie.imageSrc}
+                  alt={movie.title}
+                  className="shadow-md w-auto  object-cover rounded-md p-0 
+                  h-56
+                  md:h-60
+                  lg:h-64
+                  xl:h-72
+                  2xl:h-80"
+                />
 
                 <p
                   className="text-sm
+                  h-16
+                  flex items-center justify-center
                              lg:m-0
                              lg:text-md
                              xl:text-lg
-                             2xl:text-xl"
+                             "
                 >
                   {Array.isArray(movie.genres)
                     ? movie.genres
-                      .map((genre: { title: string }) => genre.title)
-                      .join(", ")
+                        .map((genre: { title: string }) => genre.title)
+                        .join(", ")
                     : movie.genres.title}
                 </p>
-              </Link>
+                <section className="">
+                  <Link
+                    to={`/movie/${movie._id}`}
+                    className="cursor-pointer p-0 m-0"
+                  >
+                    <button className="main_buttons px-3 py-1 mr-2 cursor-pointer hover:scale-105 active:scale-95">
+                      Info
+                    </button>
+                  </Link>
+                  <Link to={`/booking/${movie._id}`} className="cursor-pointer">
+                    <button className="main_buttons px-3 py-1 ml-2 cursor-pointer hover:scale-105 active:scale-95">
+                      Boka
+                    </button>
+                  </Link>
+                </section>
+              </section>
             </article>
           ))
         )}
-
       </section>
 
       {/* Theme days container*/}
       <section
-        className="flex flex-col justify-center items-center w-11/12 mt-2
-            md:mt-10 md:flex md:flex-col"
+        className="flex flex-col justify-center items-center w-full mt-1
+             md:flex md:flex-col md:mt-20
+             lg:flex-col lg:h-auto "
       >
-        <h2 className="w-full mt-10 rounded-md shadow-md text-lg glass_effect p-1 justify-center items-center">
+        <div className="Header-container-box w-10/12 h-30 mb-10 ">
+        <h2 className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20">
           Temadagar
         </h2>
-        <article className="min-h-96 my-5 justify-center items-center flex flex-col text-white" id="thuTheme">
+        </div>
+        
+
+        <article
+          className="min-h-96 w-8/12 my-5 themeday-box
+        flex flex-col justify-center items-center text-white
+        lg:mb-20 "
+          id="thuTheme"
+        >
           <h2
-            className=" text-center text-xl uppercase font-bold my-2 glass_effect px-20 py-5 
-                    lg:mt-5 lg:underline"
+            className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20
+                     "
           >
             {thuTheme?.weekDay}
           </h2>
           <section
-            className=" flex flex-col justify-center items-center 
-                    sm:flex-col sm:p-5
-                    md:flex-row 
-                    lg:flex-row  "
+            className="flex flex-col justify-center items-center
+                    sm:flex-col 
+                    md:flex-col 
+                    lg:flex-col lg:p-0"
           >
             <Slideshow day="thursday" />
+            <div className=" w-10/12 flex flex-col justify-center items-center text-center my-10 mx-5 uppercase text-sm
+            sm:text-base
+            md:w-9/12 md:mb-20 md:mr-1 md:text-lg
+            lg:mx-10 lg:w-8/12 lg:uppercase lg:text-xl lg:mb-20
+            xl:text-2xl">
             <p
-              className="w-11/12 m-10 text-center glass_effect px-10 py-28 
-                            sm:w-11/12
-                            md:w-7/12 md:px-2"
-            >{thuTheme?.themeDesc}</p>
+              className="flex flex-col justify-center items-center text-center  
+               lg:"
+            >
+              under hela torsdagen spelas filmer från tidigt 1900-tal upp. Res tillbaka i tiden och njut!
+              <br />
+                <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p> 
+            </p>
+            </div>
           </section>
         </article>
 
-        <article className="min-h-96 my-5 justify-center items-center flex  flex-col text-white" id="sunTheme">
+        <article
+          className="min-h-96 w-8/12 my-5 themeday-box
+        flex flex-col justify-center items-center text-white
+        lg:mb-20"
+          id="sunTheme"
+        >
           <h2
-            className="text-center text-xl uppercase font-bold my-2 glass_effect px-20 py-5 
-                    lg:mt-5 lg:underline"
+            className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20 
+                     "
           >
             {sunTheme?.weekDay}
           </h2>
           <section
-            className="flex flex-col justify-center items-center
-                    sm:flex-col sm:p-5
-                    md:flex-row-reverse  
-                    lg:flex-row-reverse lg:w-full"
+            className="flex flex-col justify-center items-center 
+                    sm:flex-col
+                    md:flex-col  
+                    lg:flex-col "
           >
             <Slideshow day="sunday" />
-            <p
-              className=" w-11/12 m-10 text-center glass_effect px-10 py-28 
-                        sm:w-11/12
-                        md:w-7/12 md:px-2
-                        lg:w-7/12"
-            >{sunTheme?.themeDesc}</p>
+            <div className="w-10/12 flex flex-col justify-center items-end text-center my-10 mx-5 uppercase text-sm
+            sm:text-base
+            md:w-9/12 md:mb-20 md:mr-1 md:text-lg
+            lg:mx-5 lg:w-8/12 lg:text-xl lg:mb-20
+            xl:text-2xl">
+              <p
+                className="flex flex-col justify-center items-center text-center"
+              >
+                Vår lilla salong spelar gamla goda svenska klassiker under hela söndagen, morgon till kväll. <br />
+                <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p>
+              </p>
+            </div>
           </section>
         </article>
       </section>

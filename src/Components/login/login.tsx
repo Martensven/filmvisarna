@@ -42,19 +42,19 @@ export default function Login({
     };
 
     // ✅ Om användaren redan är inloggad → visa Logga ut
-    if (user) {
-        return (
-            <section className="rounded p-6 flex flex-col m-5 text-center text-white">
-                <h1 className="text-3xl mb-4 font-semibold">Du är redan inloggad</h1>
-                <button
-                    onClick={handleLogout}
-                    className="bg-red-500 hover:bg-red-600 cursor-pointer my-3 p-3 rounded-md shadow-md w-40 mx-auto"
-                >
-                    Logga ut
-                </button>
-            </section>
-        );
-    }
+    // if (user) {
+    //     return (
+    //         <section className="rounded p-6 flex flex-col m-5 text-center text-white">
+    //             {/* <h1 className="text-3xl mb-4 font-semibold">Du är redan inloggad</h1> */}
+    //             <button
+    //                 onClick={handleLogout}
+    //                 className="bg-red-500 hover:bg-red-600 cursor-pointer my-3 p-3 rounded-md shadow-md w-40 mx-auto"
+    //             >
+    //                 Logga ut
+    //             </button>
+    //         </section>
+    //     );
+    // }
 
     return (
         <section className="rounded p-5 flex flex-col m-5 text-white">
@@ -85,7 +85,7 @@ export default function Login({
                 <button
                     type="button"
                     onClick={onSwitchToForgot}
-                    className="text-xs mt-1 underline text-blue-300 hover:text-blue-400 self-start"
+                    className="text-xs mt-1 underline text-blue-300 hover:text-blue-400 self-start ml-2"
                 >
                     Glömt ditt lösenord?
                 </button>
@@ -109,7 +109,7 @@ export default function Login({
                 onClick={onSwitchToRegister}
                 className="mt-1 underline cursor-pointer"
             >
-                Har inget konto? Skapa här
+                Har du inget konto? Skapa här
             </button>
         </section>
     );

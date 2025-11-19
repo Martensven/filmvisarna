@@ -16,13 +16,17 @@ import KioskPage from "./Pages/KioskPage/kioskPage.tsx";
 import DetailMovie from "./Pages/DetailMovie/detailMovie.tsx";
 import ForgotPassword from "./Components/login/forgotPassword.tsx";
 import AdminPage from "./Pages/AdminPage/adminPage.tsx";
-import AdminAddMoviePage from "./Pages/AdminPage/AdminAddMovie/adminAddMovie.tsx";
+import AdminAddMoviePage from "./Pages/AdminPage/AdminMovies/adminAddMovie.tsx";
 import AdminStart from "./Pages/AdminPage/AdminStart/adminStart.tsx";
 import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.tsx";
 import AdminUsersPage from "./Pages/AdminPage/AdminUsers/adminUsersPage.tsx";
 import AdminEditScreening from "./Pages/AdminPage/AdminStart/adminEditScreening.tsx";
 import AdminScreeningStart from "./Pages/AdminPage/AdminScreenings/adminScreeningStart.tsx";
-
+import CookiePopup from "./Components/CookiePopup/cookiePopup.tsx";
+import ResetPassword from "./Components/login/resetPassword.tsx";
+import AdminMovies from "./Pages/AdminPage/AdminMovies/adminMovies.tsx";
+import AdminDeleteMovie from "./Pages/AdminPage/AdminMovies/adminDeleteMovie.tsx";
+import AdminAddActorDirectorDist from "./Pages/AdminPage/AdminAddActorDirectorDist/adminAdd.tsx";
 function App() {
   const [loginPopup, setLoginPopup] = useState<
     "login" | "register" | "forgot-password" | null
@@ -69,6 +73,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/kiosk" element={<KioskPage />} />
         <Route path="/movie/:id" element={<DetailMovie />} />
+        <Route path="/forgotPass/:token" element={<ResetPassword />} />
+
         {/* Adminpages uses nested routes */}
         <Route
           path="/admin"
@@ -77,30 +83,34 @@ function App() {
           }
         >
           <Route index element={<AdminStart />} />
-          <Route path="add-movie" element={<AdminAddMoviePage />} />
+          <Route path="movies" element={<AdminMovies />} />
           <Route path="users" element={<AdminUsersPage />} />
           <Route
             path="screenings/:id"
             element={<AdminEditScreening />}
           />
           <Route path="screenings" element={<AdminScreeningStart />} />
+          <Route path="add-movie" element={<AdminAddMoviePage />} />
+          <Route path="delete-movie" element={<AdminDeleteMovie />} />
+          <Route path="add-people" element={<AdminAddActorDirectorDist />} />
         </Route>
       </Routes>
       {/* Making sure Header and Footer are not shown on admin pages */}
       {!window.location.pathname.startsWith("/admin") && (
         <>
           <Footer />
+          <CookiePopup />
         </>
       )}
 
       {loginPopup && (
         <section
           onClick={handleClosing}
-          className="fixed inset-0 flex justify-end z-50"
+          className="fixed inset-0 flex justify-end items-center z-50"
         >
           <aside
             onClick={(e) => e.stopPropagation()}
-            className={`popup-background flex w-150 h-full shadow-xl p-6 flex-col justify-center ${
+            className={`popup-background flex flex-col justify-center w-[600px] h-full shadow-xl p-6  ${
               popupSlide ? "animation-slideout" : "animation-slidein"
             }`}
           >
@@ -108,7 +118,7 @@ function App() {
               onClick={handleClosing}
               className="self-center rounded-md shadow-md cursor-pointer"
             >
-              [X]
+              [&times;]
             </button>
 
             {loginPopup === "login" && (

@@ -45,7 +45,6 @@ export default function CalenderComponent({
           throw new Error(`Kan inte hämta data: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Hämtad screening data: ", data);
         setScreenings(data);
       } catch (error) {
         console.error("Error: ", error);
@@ -56,6 +55,75 @@ export default function CalenderComponent({
     fetchScreeningTimes();
   }, [id]);
 
+  // Group up in date categories
+  const sortScreeningByDate = screenings.reduce((acc, s) => {
+    // Create a localKey without time to group by date only
+    const d = new Date(s.date);
+    const localKey = d.toISOString().split("T")[0];
+
+    if (!acc[localKey]) acc[localKey] = [];
+    acc[localKey].push(s);
+    return acc;
+  }, {} as Record<string, screening[]>);
+
+  //Seperate todays screening with other screenings
+  const today = new Date().toISOString().split("T")[0]; // Declare today with current day date.
+
+  // Fiter out old dates
+  const futureOrTodayDates = Object.keys(sortScreeningByDate)
+  .filter((date) => new Date(date) >= new Date(today))
+  .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+  const todaysScreening = sortScreeningByDate[today] ?? [];
+  const otherDaysScrenning = futureOrTodayDates.filter(
+    (date) => date !== today
+  );
+  
+  useEffect(() => {
+    if (active) return;
+
+    let firstAvailable: screening | undefined;
+
+    if (todaysScreening.length > 0) {
+      const sortedToday = todaysScreening
+      .slice()
+      .sort((a, b) => {
+        const [ax, ay] = a.time.split(":").map(Number);
+        const [bx, by] = b.time.split(":").map(Number);
+        return ax * 60 + ay - (bx * 60 + by);
+      });
+      firstAvailable = sortedToday[0];
+    }
+
+    else if (otherDaysScrenning.length > 0) {
+      const firstDate = otherDaysScrenning[0];
+
+      const sortedOther = sortScreeningByDate[firstDate]
+      .slice()
+      .sort((a, b) => {
+        const [ax, ay] = a.time.split(":").map(Number);
+        const [bx, by] = b.time.split(":").map(Number);
+        return ax * 60 + ay - (bx * 60 + by);
+      });
+
+      firstAvailable = sortedOther[0];
+    }
+
+    if (firstAvailable) {
+      setActive(firstAvailable._id);
+      onSelectTheaterId(firstAvailable.auditorium._id);
+      onSelectShowing(firstAvailable._id);
+    }
+  }, [
+    active,
+    todaysScreening,
+    otherDaysScrenning,
+    sortScreeningByDate,
+    onSelectTheaterId,
+    onSelectShowing,
+  ]);
+
+
   if (loading) {
     return <p>Laddar data</p>;
   }
@@ -63,20 +131,6 @@ export default function CalenderComponent({
   if (!screenings) {
     return <p>Ingen filmdata hämtad</p>;
   }
-
-  // Group up in date categories
-  const sortScreeningByDate = screenings.reduce((acc, s) => {
-    if (!acc[s.date]) acc[s.date] = [];
-    acc[s.date].push(s);
-    return acc;
-  }, {} as Record<string, screening[]>);
-
-  //Seperate todays screening with other screenings
-  const today = new Date().toISOString().split("T")[0]; // Declare today with current day date.
-  const todaysScreening = sortScreeningByDate[today] || [];
-  const otherDaysScrenning = Object.keys(sortScreeningByDate).filter(
-    (date) => date > today
-  );
 
   return (
     <main
@@ -87,10 +141,12 @@ export default function CalenderComponent({
       xl:w-8/12"
     >
       {/*----------Containers for calender days----------*/}
-      <div className="todays-container flex flex-col justify-center items-center mt-2 h-auto w-full
+      <div
+        className="todays-container flex flex-col justify-center items-center mt-2 h-auto w-full
       md:w-11/12 md:justify-center md:items-center
       lg:w-11/12
-      xl:w-11/12">
+      xl:w-11/12"
+      >
         <h2
           className="text-[#e4e1e1] text-sm
         md:text-lg md:p-2
@@ -138,8 +194,10 @@ export default function CalenderComponent({
               </ul>
             ))
           ) : (
-            <p className="flex h-20 px-2 justify-center items-center bg-[#e4e1e1] text-black mt-2 rounded-sm shadow-xl/20
-             ">
+            <p
+              className="flex h-20 px-2 justify-center items-center bg-[#e4e1e1] text-black mt-2 rounded-sm shadow-xl/20
+             "
+            >
               Ingen visning idag
             </p>
           )}
@@ -147,9 +205,11 @@ export default function CalenderComponent({
       </div>
 
       {/* Other dates */}
-      <div className="other-days-container flex flex-col justify-center items-center w-full
+      <div
+        className="other-days-container flex flex-col justify-center items-center w-full
        md:mt-2 
-       ">
+       "
+      >
         <h2
           className="text-[#e4e1e1] mt-2 text-sm 
        md:text-lg
@@ -195,19 +255,21 @@ export default function CalenderComponent({
                 >
                   {/*time in a string renders out right date but not the right order on time. This function sorters that out by sorting the numbers correctly before we map it out 
                   ex 10:00 before 20:00. */}
-                  {sortScreeningByDate[date].slice().sort((a, b) => {
-                     const [ax, ay] = a.time.split(":").map(Number);
-                     const [bx, by] = b.time.split(":").map(Number);
-                     return ax *60 + ay - (bx * 60 + by);   
-                  })
-                  .map((screening) => (
-                    <ul
-                      onClick={() => {
-                        setActive(screening._id);
-                        onSelectTheaterId(screening.auditorium._id);
-                        onSelectShowing(screening._id);
-                      }}
-                      className={`container_box calenderDatesContainer min-w-36 cursor-pointer w-9/12 h-15 flex flex-col justify-center items-center
+                  {sortScreeningByDate[date]
+                    .slice()
+                    .sort((a, b) => {
+                      const [ax, ay] = a.time.split(":").map(Number);
+                      const [bx, by] = b.time.split(":").map(Number);
+                      return ax * 60 + ay - (bx * 60 + by);
+                    })
+                    .map((screening) => (
+                      <ul
+                        onClick={() => {
+                          setActive(screening._id);
+                          onSelectTheaterId(screening.auditorium._id);
+                          onSelectShowing(screening._id);
+                        }}
+                        className={`container_box calenderDatesContainer min-w-36 cursor-pointer w-9/12 h-15 flex flex-col justify-center items-center
                           sm:w-11/12 sm:h-15
                           md:w-11/12 md:h-12 md:text-xs
                           lg:w-11/12 lg:h-20
@@ -215,24 +277,25 @@ export default function CalenderComponent({
                           
                           
                           ${active === screening._id
-                          ? "!border-4 !border-[#07ca00]"
-                          : ""
-                        }`}
-                    >
-                      <li
-                        className="pt-1 text-sm font-bold
+                            ? "!border-4 !border-[#07ca00]"
+                            : ""
+                          }`}
+                      >
+                        <li
+                          className="pt-1 text-sm font-bold
                     lg:text-base"
-                      >
-                        {screening.time.slice(0, 5)}  {/*Getting rid of the seconds area when fetching screening time*/}
-                      </li>
-                      <li
-                        className="pb-1 px-1 text-xs 
+                        >
+                          {screening.time.slice(0, 5)}{" "}
+                          {/*Getting rid of the seconds area when fetching screening time*/}
+                        </li>
+                        <li
+                          className="pb-1 px-1 text-xs 
                     lg:text-sm"
-                      >
-                        {screening.auditorium.name}
-                      </li>
-                    </ul>
-                  ))}
+                        >
+                          {screening.auditorium.name}
+                        </li>
+                      </ul>
+                    ))}
                 </div>
               </div>
             ))

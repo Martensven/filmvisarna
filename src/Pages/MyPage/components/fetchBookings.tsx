@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/authContext";
+import "../../BookingPage/BookingPageStyle.css";
 
 export default function FetchBookings() {
     const { user } = useAuth();
@@ -7,6 +8,8 @@ export default function FetchBookings() {
     const [error, setError] = useState<string | null>(null);
     const [bookings, setBookings] = useState<any[]>([]);
     const [selectedBooking, setSelectedBooking] = useState<any | null>(null); // För popup
+    const [alertMessage, setAlertMessage] = useState<string | null>(null);
+    const [alertType, setAlertType] = useState<"success" | "error" | null>(null);
 
     const userId = user?.userId ? user.userId : "";
 
@@ -49,10 +52,12 @@ export default function FetchBookings() {
 
             // Ta bort bokningen från listan utan att ladda om
             setBookings((prev) => prev.filter((b) => b._id !== bookingId));
-            alert("Avbokning genomförd!");
+            setAlertMessage("Avbokning genomförd!");
+            setAlertType("success")
         } catch (err: any) {
             console.error("Fel vid avbokning:", err);
-            alert(err.message);
+            setAlertMessage(err.message);
+            setAlertType("error");
         } finally {
             setSelectedBooking(null);
         }
@@ -60,14 +65,54 @@ export default function FetchBookings() {
 
     if (loading) return <p className="text-white text-center mt-10">Laddar...</p>;
     if (error) return <p className="text-red-500 text-center mt-10">Fel: {error}</p>;
-    if (bookings.length === 0)
-        return <p className="text-white text-center mt-10">Inga bokningar hittades.</p>;
 
     return (
         <>
-            <section className="current space-y-6 leading-loose w-10/12">
-                <h2 className="text-xl font-semibold">Dina bokningar</h2>
+            {/* pop-up for cancellation confirmation */}
+            {selectedBooking && (
+                <div className="flex z-50 inset-y-50 sticky mb-10">
+                    <div className="bg-[#152333] p-6 rounded-2xl shadow-lg text-center w-80">
+                        <h3 className="text-lg font-semibold mb-4 text-white">
+                            Är du säker på att du vill avboka?
+                        </h3>
+                        <p className="text-gray-300 mb-6">
+                            {selectedBooking.screening_id.movie.title} <br />
+                            {selectedBooking.screening_id.date} – {selectedBooking.screening_id.time}
+                        </p>
+                        <div className="flex justify-center gap-4">
+                            <button
+                                onClick={() => handleDeleteBooking(selectedBooking._id)}
+                                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                            >
+                                Ja, avboka
+                            </button>
+                            <button
+                                onClick={() => setSelectedBooking(null)}
+                                className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+                            >
+                                Nej, avbryt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {alertMessage && (
+                <div className={`flex z-50 inset-y-50 sticky mb-10`}>
+                    <div className={`p-6 rounded-xl shadow-lg text-center w-80 transition-all duration-300 bg-[#152333]`}>
+                            <h3 className="text-white text-lg font-semibold mb-3">{alertType === "success" ? "Klart!" : "Fel inträffade"}</h3>
+                            <p className="text-white mb-5">{alertMessage}</p>
+                            <button onClick={() => setAlertMessage(null)} className={`text-white px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700`}>
+                                Stäng
+                            </button>
+                    </div>
+                </div>
+            )}
+            {bookings.length === 0 ? (
+                <p className="text-white text-center mt-10">Inga bokningar hittades.</p>
+            ) : (
 
+                <section className="current space-y-6 leading-loose w-10/12">
+                <h2 className="text-xl font-semibold">Dina bokningar</h2>
                 {bookings.map((b: any, index: number) => (
                     <div key={b._id || index} className="border-b border-gray-700 pb-4">
                         <p className="font-bold">{b.screening_id.movie.title}</p>
@@ -99,7 +144,7 @@ export default function FetchBookings() {
                         <p>Bokningsnummer: {b.bookingNumber}</p>
 
                         <button
-                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mt-3"
+                            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 mt-3"
                             onClick={() => setSelectedBooking(b)}
                         >
                             Avboka
@@ -107,34 +152,6 @@ export default function FetchBookings() {
                     </div>
                 ))}
             </section>
-
-            {/* pop-up for cancellation confirmation */}
-            {selectedBooking && (
-                <div className="fixed inset-0 popup-background flex items-center justify-center z-50">
-                    <div className="bg-gray-800 p-6 rounded-2xl shadow-lg text-center w-80">
-                        <h3 className="text-lg font-semibold mb-4 text-white">
-                            Är du säker att du vill avboka?
-                        </h3>
-                        <p className="text-gray-300 mb-6">
-                            {selectedBooking.screening_id.movie.title} <br />
-                            {selectedBooking.screening_id.date} – {selectedBooking.screening_id.time}
-                        </p>
-                        <div className="flex justify-center gap-4">
-                            <button
-                                onClick={() => handleDeleteBooking(selectedBooking._id)}
-                                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-                            >
-                                Ja, avboka
-                            </button>
-                            <button
-                                onClick={() => setSelectedBooking(null)}
-                                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600"
-                            >
-                                Nej, avbryt
-                            </button>
-                        </div>
-                    </div>
-                </div>
             )}
         </>
     );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export default function Register({
     onSwitchToLogin,
@@ -63,9 +63,9 @@ export default function Register({
             const data = await response.json();
             console.log("Registered User:", data);
 
-            // ✅ Navigera och stäng popup först EFTER lyckad registrering
-            navigate("/my-page");
-            onClose();
+            // ✅ Navigate to front page and slide in the login window
+            onSwitchToLogin();
+            navigate("/");
 
         } catch (error: any) {
             console.error("Error registering user:", error);
