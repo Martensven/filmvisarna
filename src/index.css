@@ -136,11 +136,10 @@
 
   background: white;
   color:black;
-  box-shadow: 1px 1px 20px 3px lightgoldenrodyellow;
+  box-shadow: 1px 1px 20px 10px lightgoldenrodyellow;
   box-shadow: inset 0 0 50px rgba(138, 106, 0, 0.582);
   -webkit-backdrop-filter: drop-shadow(5px);
   backdrop-filter: 5px;
-
 }
 
 .themeday-box::before {
@@ -151,6 +150,7 @@
   bottom: -4px;
   right: -4px;
   border: 10px solid rgb(148, 5, 5);
+  box-shadow: 1px 1px 15px 3px lightgoldenrodyellow;
   border-radius: 5px;
 }
 
@@ -176,18 +176,10 @@
 
   background:#2433651d;
   color:black;
-  box-shadow: 1px 1px 20px 3px lightgoldenrodyellow;
-  box-shadow: inset 0 0 10px rgba(28, 28, 28, 0.288);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
 
-.big-frame{
-  background-image: url(/public/images/BigFrame.png);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
 .stroked-text {
   -webkit-text-stroke: 0.5px rgb(202, 202, 149);
   font-family: "Righteous", sans-serif;
@@ -210,14 +202,10 @@
 
 .main_buttons:hover {
   scale: 105%;
-  border: 3px double rgb(158, 140, 4);
-  box-shadow: 0px 0px 3px 1px rgba(222, 242, 122, 0.225);
 }
 
 .main_buttons:active {
   scale: 95%;
-  border: 1px solid rgba(148, 5, 5, 0.605);
-  box-shadow: 0px 0px 10px 2px rgba(109, 12, 1, 0.537);
 }
 
 .glass_effect {
