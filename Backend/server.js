@@ -21,6 +21,7 @@ import Kiosk from './routes/kioskRoutes.js';
 import Admin from './routes/adminRoutes.js';
 import ResetPassword from './routes/resetPasswordRoute.js';
 import { initSocket } from './websockets/sockets.js';
+import path from 'path';
 
 dotenv.config();
 
@@ -62,6 +63,14 @@ app.use(Kiosk);
 app.use("/api/admin", Admin);
 app.use(ResetPassword);
 
+// Serve static files from the dist folder
+app.use(express.static(path.join(import.meta.dirname, '..', 'dist')));
+
+// If not route is matched serve the dist/index.html file
+// and let react router do it's routing
+app.get('/*splat', (_req, res) => {
+  res.sendFile(path.join(import.meta.dirname, '..', 'dist', 'index.html'));
+});
 
 io.on("connected", (socket) => {
   console.log("Client connected", socket.id);
