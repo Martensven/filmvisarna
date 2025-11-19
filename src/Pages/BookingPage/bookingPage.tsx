@@ -11,12 +11,13 @@ import { CheckoutProvider } from "./components/context/CheckoutContext";
 import CheckoutRecipe from "./components/CheckoutRecipe";
 
 
-
 export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
-  const [selectedTheaterId, setSelectedTheaterId] = useState<string | null>(
-    null
-  );
+
+
+  const [selectedTheaterId, setSelectedTheaterId] = useState<string | null>(null);
   const [selectedShowing, setSelectedShowing] = useState<string | null>(null);
+
+
 
   return (
     <>
