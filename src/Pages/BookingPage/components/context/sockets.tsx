@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-export const sockets = io("http://localhost:4321", {
+export const sockets = io("http://localhost:5170", {
   transports: ["websocket"], // use websocket for more stable connection
 });
 
