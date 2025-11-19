@@ -2,6 +2,8 @@
 import { MdMovieEdit } from "react-icons/md";
 import { FaUsersCog } from "react-icons/fa";
 import { TbMovie } from "react-icons/tb";
+import { MdGroupAdd } from "react-icons/md";
+import TooltipLink from "./Components/ToolTipLink/toolTipLink";
 
 import { Link } from "react-router";
 import { Outlet } from "react-router-dom";
@@ -9,7 +11,7 @@ import { Outlet } from "react-router-dom";
 export default function AdminPage() {
   return (
     <div className="w-screen min-h-screen bg-[#ffffff]">
-      <nav className="bg-[#ffffff] shadow-md text-black">
+      <nav className="bg-[#FFF5ED] shadow-md text-black">
         <div
           className="
             flex flex-col sm:flex-row
@@ -30,23 +32,27 @@ export default function AdminPage() {
               justify-center sm:justify-end
             "
           >
-            <Link to="screenings" className="hover:text-gray-300 transition">
+            <TooltipLink to="screenings" tooltip="Visningar">
               <TbMovie size={24} />
-            </Link>
-            <Link to="add-movie" className="hover:text-gray-300 transition">
+            </TooltipLink>
+
+            <TooltipLink to="movies" tooltip="Filmer">
               <MdMovieEdit size={28} />
-            </Link>
+            </TooltipLink>
             {/* <Link to="sales" className="hover:text-gray-300 transition">
               <BsGraphUpArrow size={24} />
             </Link> */}
-            <Link to="users"className="hover:text-gray-300 transition">
+            <TooltipLink to="add-people" tooltip="Lägg till skådespelare/regissör/distributör">
+              <MdGroupAdd size={24} />
+            </TooltipLink>
+            <TooltipLink to="users" tooltip="Användare">
               <FaUsersCog size={24} />
-            </Link>
-                      </div>
+            </TooltipLink>
+          </div>
         </div>
       </nav>
 
-      <main className="w-full mx-auto my-8 min-h-[80vh] p-4">
+      <main className="w-full mx-auto min-h-[80vh]">
         <Outlet />
       </main>
     </div>

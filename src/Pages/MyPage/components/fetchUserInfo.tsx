@@ -63,16 +63,7 @@ export default function FetchUserInfo() {
                     <button onClick={() => setEditMode(true)} className="px-4 py-2 bg-[#243365] cursor-pointer rounded hover:bg-blue-900 mb-4">
                         Redigera information
                     </button>
-                    {user.role === "admin" && (
-                    <a
-                        href="/admin"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                    >
-                        Gå till Adminpanel
-                    </a>
-                )}
+                   
                     </>
                 ) : (
                     <article className="flex flex-col gap-3 mb-4">

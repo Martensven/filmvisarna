@@ -57,7 +57,7 @@ export default function AdminAllScreenings() {
   }, [page, sortBy, sortDir]);
 
   return (
-    <section className="p-6 bg-[#243365] text-white w-full rounded-xl min-h-[70vh]">
+    <section className="p-6 bg-[#243365] text-white w-full md:rounded-xl min-h-[70vh]">
       <section className="flex items-center justify-between mb-6">
         <h1>Alla filmvisningar</h1>
       </section>
