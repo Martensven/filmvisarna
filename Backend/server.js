@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import express from 'express';
-import { Server } from "socket.io"
+import { Server } from "socket.io";
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import http from "http"
+import http from "http";
 import dotenv from 'dotenv';
 import MoviesRoute from './routes/moviesRoute.js';
 import ThemeRoute from './routes/themeRoute.js';
@@ -19,12 +19,12 @@ import Auditorium from './routes/auditoriumsRoutes.js';
 import Actors from './routes/actorRoutes.js';
 import Kiosk from './routes/kioskRoutes.js';
 import Admin from './routes/adminRoutes.js';
-import ResetPassword from './routes/resetPasswordRoute.js'
+import ResetPassword from './routes/resetPasswordRoute.js';
 import { initSocket } from './websockets/sockets.js';
 
 
 
-const PORT = 4321;
+const PORT = process.env.PORT || 4321;
 const app = express();
 const Socketserver = http.createServer(app);
 const io = initSocket(Socketserver);
@@ -66,21 +66,21 @@ app.use(ResetPassword);
 
 
 io.on("connected", (socket) => {
-    console.log("Client connected", socket.id);
+  console.log("Client connected", socket.id);
 
-    socket.on("disconnect", () => {
-        console.log("Client disconnected", socket.id);
-        
-    })
+  socket.on("disconnect", () => {
+    console.log("Client disconnected", socket.id);
+
+  });
 });
 
 mongoose.connect(process.env.DB_CONNECT) // connect to database
-    .then(() => {
-        Socketserver.listen(PORT, () => {
-            console.log('Connected to MongoDB');
-            console.log(`Server is running on http://localhost:${PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.error('Error connecting to MongoDB:', err);
+  .then(() => {
+    Socketserver.listen(PORT, () => {
+      console.log('Connected to MongoDB');
+      console.log(`Server is running on http://localhost:${PORT}`);
     });
+  })
+  .catch((err) => {
+    console.error('Error connecting to MongoDB:', err);
+  });

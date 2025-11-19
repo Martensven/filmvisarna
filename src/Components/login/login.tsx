@@ -11,7 +11,7 @@ export default function Login({
     onClose: (callback?: () => void) => void;
 }) {
 
-    const { user, login, logout } = useAuth();
+    const { login } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -36,10 +36,10 @@ export default function Login({
         onClose();
     };
 
-    const handleLogout = async () => {
-        await logout();
-        onClose();
-    };
+    // const handleLogout = async () => {
+    //     await logout();
+    //     onClose();
+    // };
 
     // ✅ Om användaren redan är inloggad → visa Logga ut
     // if (user) {

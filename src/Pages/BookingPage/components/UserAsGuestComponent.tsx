@@ -7,7 +7,7 @@ import { useCheckout } from "./context/CheckoutContext";
 export default function GuestOrderComponent() {
   const { totalPrice, ticketTypes, counts } = useSeats();
   const { screeningId, selectedSeats } = useCheckout();
-  const [orderId, setOrderId] = useState<string | null>(null);
+  const [orderId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");

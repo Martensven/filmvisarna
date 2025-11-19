@@ -1,4 +1,4 @@
-import {User}  from "../models/userSchema.js";
+import { User } from "../models/userSchema.js";
 import express from "express";
 import { validateData } from "./../middleware/dataValidation.js";
 import bcrypt from "bcrypt";
@@ -64,8 +64,8 @@ router.post(
         to: user.email,
         subject: "Bekräftelsemejl",
         text: "Kontoregistrering",
-        html: 
-        `
+        html:
+          `
          <table align="center" width="600" cellpadding="0" cellspacing="3" style="font-family: Arial, serif; padding:10px;">
               <tr>
                 <td style="background-color: #243365; padding:5px; border-radius:5px;" 
@@ -117,8 +117,8 @@ router.post(
                 </td>
               </tr>
             </table>
-        `, 
-          attachments: [
+        `,
+        attachments: [
           {
             filename: "LoggoMail.png",
             path: "./assets/LoggoMail.png",
@@ -191,7 +191,7 @@ router.post("/api/login", async (req, res) => {
       message: "Already logged in",
       user: {
         email: req.session.userEmail,
-        
+
       },
     });
   }
