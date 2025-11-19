@@ -22,7 +22,7 @@ export default function FrontPage() {
   const [sunTheme, setSunTheme] = useState<Theme>();
   const [thuTheme, setThuTheme] = useState<Theme>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const setError = useState<string | null>(null)[1];
 
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [selectedAges, setSelectedAges] = useState<number[]>([]);
@@ -167,7 +167,7 @@ export default function FrontPage() {
     }
   }, [location, loading]);
 
- 
+
 
   // Sort based on selected option. (A-Z, Z-A, Newest)
   const sortedMovies = [...movie].sort((a, b) => {
@@ -247,18 +247,18 @@ export default function FrontPage() {
         lg:mb-3">
           <p className="mt-1 mb-1 font-bold text-sm uppercase
           lg:text-lg">
-          &#9733;  Boka din bio upplevelse hos oss  &#9733;</p>
+            &#9733;  Boka din bio upplevelse hos oss  &#9733;</p>
         </div>
       </div>
 
       <div className="Header-container-box w-10/12 mb-10 flex justify-center items-center">
         <h2 className="w-full stroked-text text-red-800 text-center text-5xl uppercase font-extrabold my-5 px-20
         ">Visas just nu</h2>
-   </div>
+      </div>
 
       {/* Filter & Sort */}
       <section className="w-10/12 h-10 p-5 flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
-      
+
         <section className="flex flex-row w-1/2 justify-around items-center sm:w-full">
           {/* Filter */}
           <nav className="relative ">
@@ -488,8 +488,8 @@ export default function FrontPage() {
                 >
                   {Array.isArray(movie.genres)
                     ? movie.genres
-                        .map((genre: { title: string }) => genre.title)
-                        .join(", ")
+                      .map((genre: { title: string }) => genre.title)
+                      .join(", ")
                     : movie.genres.title}
                 </p>
                 <section className="">
@@ -520,11 +520,11 @@ export default function FrontPage() {
              lg:flex-col lg:h-auto "
       >
         <div className="Header-container-box w-10/12 h-30 mb-10 ">
-        <h2 className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20">
-          Temadagar
-        </h2>
+          <h2 className="stroked-text text-red-800 text-center text-3xl uppercase font-extrabold my-5 px-20">
+            Temadagar
+          </h2>
         </div>
-        
+
 
         <article
           className="min-h-96 w-8/12 my-5 themeday-box
@@ -550,14 +550,14 @@ export default function FrontPage() {
             md:w-9/12 md:mb-20 md:mr-1 md:text-lg
             lg:mx-10 lg:w-8/12 lg:uppercase lg:text-xl lg:mb-20
             xl:text-2xl">
-            <p
-              className="flex flex-col justify-center items-center text-center  
+              <p
+                className="flex flex-col justify-center items-center text-center  
                lg:"
-            >
-              under hela torsdagen spelas filmer från tidigt 1900-tal upp. Res tillbaka i tiden och njut!
-              <br />
-                <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p> 
-            </p>
+              >
+                under hela torsdagen spelas filmer från tidigt 1900-tal upp. Res tillbaka i tiden och njut!
+                <br />
+                <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p>
+              </p>
             </div>
           </section>
         </article>

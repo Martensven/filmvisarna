@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Select from "react-select";
-import type { User, Booking } from "./adminUsersPage";
+import type { User } from "./adminUsersPage";
 // Props from parent component
 type Props = {
   onSelectUser: (user: User) => void;
@@ -9,7 +9,7 @@ type Props = {
 export function AdminSearchUser({ onSelectUser }: Props) {
   // state to manage users and selected option
   const [users, setUsers] = useState<User[]>([]);
-  const [selectedOption, setSelectedOption] = useState<User | null>(null);
+  const setSelectedOption = useState<User | null>(null)[1];
 
   useEffect(() => {
     const fetchUsers = async () => {

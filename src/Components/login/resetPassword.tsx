@@ -7,7 +7,7 @@ export default function ResetPassword() {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
 
-  const [validToken, setValidToken] = useState(false);
+  const setValidToken = useState(false)[1];
   const [message, setMessage] = useState("");
   const [password, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -15,11 +15,11 @@ export default function ResetPassword() {
 
   useEffect(() => {
     const tokenValidation = async () => {
-      try{
+      try {
         const response = await fetch(`/api/forgotPass/validate/${token}`);
         const data = await response.json();
 
-        if(response.ok) {
+        if (response.ok) {
           setValidToken(true)
         } else {
           setValidToken(false);
@@ -32,7 +32,7 @@ export default function ResetPassword() {
         setLoading(false);
       }
     };
-      tokenValidation();
+    tokenValidation();
   }, [token]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,12 +40,12 @@ export default function ResetPassword() {
     setLoading(true);
     setMessage("");
 
-    if (password !== confirmPassword){
+    if (password !== confirmPassword) {
       setMessage("Lösenord matchar inte");
       setLoading(false);
       return
     }
-    
+
     try {
       const respond = await fetch(`/api/forgotPass/${token}`, {
         method: "POST",
@@ -55,18 +55,18 @@ export default function ResetPassword() {
 
       const data = await respond.json();
 
-       if(data.error === "Återställningslänk har gått ut, begär om en ny länk på <strong>Glömt Lösenord</strong>") {
+      if (data.error === "Återställningslänk har gått ut, begär om en ny länk på <strong>Glömt Lösenord</strong>") {
         setMessage(data.error);
         return;
       }
-    
+
       setMessage(data.message || data.error);
 
       //Move user to front page if password reset works
-      if(respond.ok) {
+      if (respond.ok) {
         setTimeout(() => {
           navigate("/");
-        },2000)
+        }, 2000)
       }
 
 
@@ -89,21 +89,21 @@ export default function ResetPassword() {
           className="container_box w-50 h-10 my-1 mx-2 rounded-md shadow-md text-gray-300 text-center"
           required
         />
-         <h2 className="my-2">Bekräfta Lösenord</h2>
-            <input
-                className="container_box w-50 h-10 my-1 mx-2 rounded-md shadow-md text-gray-300 text-center"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Skriv lösenord igen"
-            />
+        <h2 className="my-2">Bekräfta Lösenord</h2>
+        <input
+          className="container_box w-50 h-10 my-1 mx-2 rounded-md shadow-md text-gray-300 text-center"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="Skriv lösenord igen"
+        />
 
         <button type="submit" disabled={loading} className="main_buttons w-45 h-15 mt-5 p-2">
           Återställ Lösenordet
         </button>
-          {message && <p className="text-red-400 mt-5">{message}</p>}
+        {message && <p className="text-red-400 mt-5">{message}</p>}
       </form>
-        
+
     </section>
   );
 }
