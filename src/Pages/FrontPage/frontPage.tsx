@@ -251,14 +251,19 @@ export default function FrontPage() {
         </div>
       </div>
 
-      <div className="Header-container-box w-10/12 mb-10 flex justify-center items-center">
-        <h2 className="w-full stroked-text text-red-800 text-center text-5xl uppercase font-extrabold my-5 px-20
+
+    <div className="Header-container-box w-10/12 mt-20 flex flex-col justify-center items-center">
+        <h2 className="w-full stroked-text text-red-800 text-center text-3xl  uppercase font-extrabold my-6 px-2
+        sm:text-4xl
+        md:text-5xl
+        lg:text-5xl
+        xl:text-5xl
         ">Visas just nu</h2>
-   </div>
+    
 
       {/* Filter & Sort */}
-      <section className="w-10/12 h-10 p-5 flex flex-col sm:flex-row  justify-center items-center relative glass_effect text-white ">
-      
+      <section className="w-10/12 h-auto p-2 flex flex-col sm:flex-row  justify-center items-center relative text-white ">
+            
         <section className="flex flex-row w-1/2 justify-around items-center sm:w-full">
           {/* Filter */}
           <nav className="relative ">
@@ -417,13 +422,14 @@ export default function FrontPage() {
           </div>
         </section>
       </section>
+      </div>
 
       {/* Movies container*/}
       <section
         className="
-    h-96 w-11/12 mx-5
+    h-96 w-11/12 mx-5 my-5
     flex flex-row overflow-x-auto overflow-y-hidden
-    [&::-webkit-scrollbar]:h-2  
+    [&::-webkit-scrollbar]:h-2   
     [&::-webkit-scrollbar-track]:rounded-full
     [&::-webkit-scrollbar-track]:bg-[#24252C]
     [&::-webkit-scrollbar-thumb]:rounded-full
@@ -492,7 +498,7 @@ export default function FrontPage() {
                         .join(", ")
                     : movie.genres.title}
                 </p>
-                <section className="">
+                <section className="mb-10">
                   <Link
                     to={`/movie/${movie._id}`}
                     className="cursor-pointer p-0 m-0"
@@ -519,8 +525,12 @@ export default function FrontPage() {
              md:flex md:flex-col md:mt-20
              lg:flex-col lg:h-auto "
       >
-        <div className="Header-container-box w-10/12 h-30 mb-10 ">
-        <h2 className="stroked-text text-red-800 text-center text-4xl uppercase font-extrabold my-5 px-20">
+        <div className="Header-container-box w-10/12 mb-10 mt-20 flex justify-center items-center">
+        <h2 className="stroked-text text-red-800 text-center text-2xl uppercase font-extrabold my-5 px-20
+        sm:text-3xl
+        md:text-4xl
+        lg:text-5xl
+        xl:text-5xl">
           Temadagar
         </h2>
         </div>

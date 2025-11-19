@@ -176,18 +176,10 @@
 
   background:#2433651d;
   color:black;
-  box-shadow: 1px 1px 20px 3px lightgoldenrodyellow;
-  box-shadow: inset 0 0 10px rgba(28, 28, 28, 0.288);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
 
-.big-frame{
-  background-image: url(/public/images/BigFrame.png);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
 .stroked-text {
   -webkit-text-stroke: 0.5px rgb(202, 202, 149);
   font-family: "Righteous", sans-serif;
