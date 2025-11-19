@@ -8,7 +8,7 @@ export default function CategorySection({
 }: CategorySectionProps) {
   return (
     <section className="w-full flex flex-col justify-center items-center  relative">
-        <img src="public/images/kiosk/Markis-opacity.png" alt="Markisen" className="mb-5 w-full h-30
+        <img src="/images/kiosk/Markis-opacity.png" alt="Markisen" className="mb-5 w-full h-30
         md:w-4/5
         lg:w-11/12"/>
       <div className="flex flex-col justify-center items-center mb-10 

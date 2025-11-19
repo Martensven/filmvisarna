@@ -49,7 +49,7 @@ export default function KioskPage() {
       </section>
 
       <div className="w-full flex flex-row justify-center items-start mt-10 ">
-        <img src="public/images/kiosk/Cartoon-retro-kiosk.png" alt="Animerad gubbe" className="w-40 my-5"/>
+        <img src="/images/kiosk/Cartoon-retro-kiosk.png" alt="Animerad gubbe" className="w-40 my-5"/>
         <p className="w-40 h-20 bg-[#f0e0c7] rounded-[50%] text-black text-sm flex justify-center items-center p-2">Finns att köpa på plats</p>
       </div>
     </main>
