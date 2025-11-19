@@ -22,14 +22,12 @@ import Admin from './routes/adminRoutes.js';
 import ResetPassword from './routes/resetPasswordRoute.js';
 import { initSocket } from './websockets/sockets.js';
 
-
+dotenv.config();
 
 const PORT = process.env.PORT || 4321;
 const app = express();
 const Socketserver = http.createServer(app);
 const io = initSocket(Socketserver);
-
-dotenv.config();
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'veryhushhushsecret',
