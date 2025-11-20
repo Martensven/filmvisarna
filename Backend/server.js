@@ -20,6 +20,7 @@ import Actors from './routes/actorRoutes.js';
 import Kiosk from './routes/kioskRoutes.js';
 import Admin from './routes/adminRoutes.js';
 import ResetPassword from './routes/resetPasswordRoute.js';
+import { generateAndSave } from './generateScreeningTimes.js';
 import { initSocket } from './websockets/sockets.js';
 import path from 'path';
 
@@ -81,6 +82,18 @@ io.on("connected", (socket) => {
 
   });
 });
+
+const tenMinutes = 10 * 60 * 1000;
+
+setInterval(async () => {
+  console.log("⏳ Genererar screenings (via setInterval)...");
+  try {
+    await generateAndSave();
+    console.log("✔ Screenings genererade!");
+  } catch (err) {
+    console.error("Fel vid schemagenerering:", err);
+  }
+}, tenMinutes);
 
 mongoose.connect(process.env.DB_CONNECT) // connect to database
   .then(() => {
