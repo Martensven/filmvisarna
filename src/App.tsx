@@ -5,7 +5,6 @@ import { useAuth } from "./context/authContext";
 
 import FrontPage from "./Pages/FrontPage/frontPage.js";
 import BookingPage from "./Pages/BookingPage/bookingPage.tsx";
-import MoviePage from "./Pages/MoviePage/moviePage.tsx";
 import Header from "./Components/header/header.tsx";
 import Footer from "./Components/footer/footer.tsx";
 import MyPage from "./Pages/MyPage/myPage.tsx";
@@ -67,7 +66,6 @@ function App() {
           path="/booking/:id"
           element={<BookingPage isLoggedIn={isLoggedIn} />}
         />
-        <Route path="/movie" element={<MoviePage />} />
         <Route path="/my-page/" element={<MyPage />} />
         <Route path="/checkout/:bookingId" element={<CheckoutPage />} />
         <Route path="/about" element={<AboutPage />} />

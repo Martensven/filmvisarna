@@ -22,7 +22,6 @@ export default function AdminDeleteMovie() {
         const data = await resMovies.json();
         // Handle the fetched movie data
         setMovies(data);
-        console.log("Fetched movies:", data);
       } catch (error) {
         console.error("Fel vid hämtning av filmer:", error);
       }

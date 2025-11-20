@@ -9,10 +9,8 @@ const FAQ = () => {
     const [bookings, setBookings] = useState<any[]>([]);
     const [accordionOpen, setAccordionOpen] = useState(false);
 
-
     const userId = user?.userId ? user.userId : "";
     console.log(userId);
-
 
     const fetchUserBookings = async () => {
         try {
@@ -42,9 +40,6 @@ const FAQ = () => {
             fetchUserBookings();
         }
     }, [userId]);
-
-   
-
 
     return (
     <>
