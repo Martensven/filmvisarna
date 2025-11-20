@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Routes, Route } from "react-router";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./context/authContext";
+import { CgClose } from "react-icons/cg";
+
 
 import FrontPage from "./Pages/FrontPage/frontPage.js";
 import BookingPage from "./Pages/BookingPage/bookingPage.tsx";
@@ -26,6 +28,8 @@ import ResetPassword from "./Components/login/resetPassword.tsx";
 import AdminMovies from "./Pages/AdminPage/AdminMovies/adminMovies.tsx";
 import AdminDeleteMovie from "./Pages/AdminPage/AdminMovies/adminDeleteMovie.tsx";
 import AdminAddActorDirectorDist from "./Pages/AdminPage/AdminAddActorDirectorDist/adminAdd.tsx";
+import "./index.css"
+
 function App() {
   const [loginPopup, setLoginPopup] = useState<
     "login" | "register" | "forgot-password" | null
@@ -114,9 +118,9 @@ function App() {
           >
             <button
               onClick={handleClosing}
-              className="self-center rounded-md shadow-md cursor-pointer"
+              className="self-end alert_buttons py-2 px-2 rounded-md shadow-md cursor-pointer"
             >
-              [&times;]
+              <CgClose />
             </button>
 
             {loginPopup === "login" && (

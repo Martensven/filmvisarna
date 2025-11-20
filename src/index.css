@@ -66,11 +66,6 @@
   backdrop-filter: blur(10px);
 }
 
-/** .popup-background:hover {
-  background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.tenor.com%2F6aWBg0rV1EYAAAAi%2Ftoothless-dancing.gif&f=1&nofb=1&ipt=9421cb7e06523915cc6ea2c86042939e72eb6539590452589e1562a78530f89c);
-  background-repeat: no-repeat;
-  background-position: 65px 100px;
-} **/
 
 @keyframes fade-in {
   from {
