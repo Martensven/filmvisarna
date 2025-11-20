@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Routes, Route } from "react-router";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./context/authContext";
+import { CgClose } from "react-icons/cg";
+
 
 import FrontPage from "./Pages/FrontPage/frontPage.js";
 import BookingPage from "./Pages/BookingPage/bookingPage.tsx";
-import MoviePage from "./Pages/MoviePage/moviePage.tsx";
 import Header from "./Components/header/header.tsx";
 import Footer from "./Components/footer/footer.tsx";
 import MyPage from "./Pages/MyPage/myPage.tsx";
@@ -27,6 +28,8 @@ import ResetPassword from "./Components/login/resetPassword.tsx";
 import AdminMovies from "./Pages/AdminPage/AdminMovies/adminMovies.tsx";
 import AdminDeleteMovie from "./Pages/AdminPage/AdminMovies/adminDeleteMovie.tsx";
 import AdminAddActorDirectorDist from "./Pages/AdminPage/AdminAddActorDirectorDist/adminAdd.tsx";
+import "./index.css"
+
 function App() {
   const [loginPopup, setLoginPopup] = useState<
     "login" | "register" | "forgot-password" | null
@@ -67,7 +70,6 @@ function App() {
           path="/booking/:id"
           element={<BookingPage isLoggedIn={isLoggedIn} />}
         />
-        <Route path="/movie" element={<MoviePage />} />
         <Route path="/my-page/" element={<MyPage />} />
         <Route path="/checkout/:bookingId" element={<CheckoutPage />} />
         <Route path="/about" element={<AboutPage />} />
@@ -103,6 +105,7 @@ function App() {
         </>
       )}
 
+      {/*Login slide, importing components like login.tsx*/}
       {loginPopup && (
         <section
           onClick={handleClosing}
@@ -115,10 +118,11 @@ function App() {
             }`}
           >
             <button
+              title="Close login slide"
               onClick={handleClosing}
-              className="self-center rounded-md shadow-md cursor-pointer"
+              className="self-end alert_buttons py-2 px-2 rounded-md shadow-md cursor-pointer"
             >
-              [&times;]
+              <CgClose />
             </button>
 
             {loginPopup === "login" && (

@@ -23,7 +23,6 @@ export default function DetailMovie() {
             }
 
             const data = await response.json();
-            console.log("Fetched movie:", data);
             setMovie(data);
         } catch (error: any) {
             console.error("Error fetching movie:", error);
@@ -137,6 +136,8 @@ export default function DetailMovie() {
                             <p className="text-start pl-2 pt-0.5 my-2 lg:pt-0.5 lg:pl-3"><strong>Utgivningsår:</strong> {movie.releaseYear}</p>
                             <p className="text-start pl-2 pt-0.5 my-2
                             lg:pt-0.5 lg:pl-3"><strong>Speltid: </strong> {movie.length} min</p>
+                            <p className="text-start pl-2 pt-0.5 my-2
+                            lg:pt-0.5 lg:pl-3"><strong>Åldersgräns: </strong> {movie.age} år</p>
                             <p className="text-start pl-2 pt-0.5 my-2
                             lg:pt-0.5 lg:pl-3"><strong>Regissör: </strong>
                                 {Array.isArray(movie.directors)

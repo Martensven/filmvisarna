@@ -45,7 +45,6 @@ export default function Slideshow({ day }: SlideshowProps) {
             }
 
             const data = await response.json();
-            console.log("Fetched theme data:", data);
 
             if (Array.isArray(data)) {
                 setMovies(data);

@@ -11,7 +11,7 @@ export default function ForgotPassword({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submit klickad", email);
+
 
     try {
       const respond = await fetch("/api/forgotPass", {
@@ -20,31 +20,24 @@ export default function ForgotPassword({
         body: JSON.stringify({ email }),
       });
 
-      console.log("Respons status:", respond.status);
-
       const data = await respond.json();
-      console.log("Respons data:", data);
       setMessage(data.message || data.error);
-
-      // Here you would normally call your backend to send reset email
-      console.log("Send reset link to:", email);
 
       setSubmitted(true);
     } catch (err) {
-      console.error("Kunde inte skicka", err);
       setMessage("Något gick fel, försök igen");
     }
   };
 
   return (
-    <section className="p-5 flex flex-col m-5">
+    <section className="popOut-box p-4 flex flex-col my-7 mx-2 text-black">
       {!submitted ? (
         <>
           <h1 className="text-2xl mb-4">Återställ lösenord</h1>
           <form onSubmit={handleSubmit} className="flex flex-col">
             <label className="my-2">E-Post</label>
             <input
-              className="my-1 p-2 bg-[#243365] rounded-md shadow-md text-gray-400"
+              className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 rounded-md shadow-md text-gray-950"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -54,7 +47,7 @@ export default function ForgotPassword({
             <button
               type="submit"
               onClick={() => console.log("klicks togs emot")}
-              className="cursor-pointer mt-4 mb-3 p-2 bg-[#243365] md:w-2/3 self-center rounded-md shadow-md"
+              className="cursor-pointer p-2 mt-4 mb-3 bg-[#243365] self-center rounded-md shadow-md text-white hover:bg-[#1c2a4a] transition-colors"
             >
               Skicka återställningslänk
             </button>
@@ -72,7 +65,7 @@ export default function ForgotPassword({
           <h2 className="text-lg font-bold mb-2">Kolla din e-post!</h2>
           <p className="bg-[#243365] rounded-md shadow-md p-5">
             Återställningslänk skickas till {email}</p>
-            <p>{message && <b>{message}.</b>}</p>
+            <p>{message && <b>{message}.</b>}</p> {/**Setting the message for either successfull operation or not */}
           <button
             onClick={onSwitchToLogin}
             className="mt-4 text-sm underline cursor-pointer"

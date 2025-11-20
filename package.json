@@ -23,7 +23,6 @@
     "react-router": "^7.9.1",
     "react-router-dom": "^7.9.2",
     "react-select": "^5.10.2",
-    "scrollbar": "^0.1.12",
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "tailwind": "^2.3.1"
