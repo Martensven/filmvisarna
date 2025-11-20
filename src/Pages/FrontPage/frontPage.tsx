@@ -221,13 +221,13 @@ export default function FrontPage() {
           >
             {user ? (
               <>
-                VÄLKOMMEN TILL FILMVISARNA,{" "}
+                VÄLKOMMEN TILL FILMSMEDJAN,{" "}
                 <span className="text-black font-bold uppercase">
                   {user.firstName}!
                 </span>
               </>
             ) : (
-              "VÄLKOMMEN TILL FILMVISARNA!"
+              "VÄLKOMMEN TILL FILMSMEDJAN!"
             )}
           </h1>
         </div>
