@@ -5,8 +5,6 @@ export default function AmountSeatsTheater() {
     ticketTypes,
     counts,
     setCount,
-    totalTickets,
-    totalPrice,
   } = useSeats();
 
   if (!ticketTypes.length) {
