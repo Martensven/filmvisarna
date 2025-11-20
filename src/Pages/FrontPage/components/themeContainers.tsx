@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import Slideshow from "../../../Components/themepageSlideshow/slideshowComponent";
 
 type Theme = {
@@ -8,12 +7,9 @@ type Theme = {
     weekDay: string;
 };
 
-export default function ThemeContainers() {
+export default function ThemeContainers({ onLoaded }: { onLoaded: () => void }) {
     const [sunTheme, setSunTheme] = useState<Theme>();
     const [thuTheme, setThuTheme] = useState<Theme>();
-    const loading = useState<boolean>(true)[1];
-
-    const location = useLocation();
 
     const fetchThemes = async () => {
         try {
@@ -42,6 +38,7 @@ export default function ThemeContainers() {
 
             setThuTheme(thuData);
             setSunTheme(sunData);
+            setTimeout(() => onLoaded(), 0);
         } catch (error: any) {
             console.error("Error fetching themes", error);
         }
@@ -50,18 +47,6 @@ export default function ThemeContainers() {
     useEffect(() => {
         fetchThemes();
     }, []);
-
-    useEffect(() => {
-        if (!loading) return; // don't scroll until data is ready
-
-        const scrollTo = location.state?.scrollTo;
-        if (scrollTo) {
-            const element = document.getElementById(scrollTo);
-            if (element) {
-                element.scrollIntoView({ behavior: "smooth" });
-            }
-        }
-    }, [location, loading]);
 
     return (
         <>

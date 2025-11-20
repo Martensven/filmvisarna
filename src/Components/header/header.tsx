@@ -34,7 +34,7 @@ export default function Header({ onLoginClick }: HeaderProps) {
 
     const handleScroll = (id: string) => {
         if (location.pathname !== "/") {
-            navigate("/", { state: { scrollTo: id } });
+            navigate("/", { state: { scrollTo: id, t: Date.now() } });
         } else {
             const element = document.getElementById(id);
             if (element) element.scrollIntoView({ behavior: "smooth" });
