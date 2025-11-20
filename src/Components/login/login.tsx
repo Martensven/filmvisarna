@@ -85,7 +85,7 @@ export default function Login({
                 <button
                     type="button"
                     onClick={onSwitchToForgot}
-                    className="text-xs mt-1 underline text-blue-300 hover:text-blue-400 self-start ml-2"
+                    className="text-xs mt-1 underline text-blue-300 hover:text-blue-400 self-start ml-2 cursor-pointer"
                 >
                     Glömt ditt lösenord?
                 </button>

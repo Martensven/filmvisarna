@@ -203,7 +203,7 @@ export default function FrontPage() {
   ];
 
   return (
-    <main className="w-screen flex flex-col items-center min-h-screen mt-14">
+    <main className="w-screen flex flex-col items-center justify-center min-h-screen mt-14">
 
       {/*Welcome sign with function calling the user if it is logged in. Or else just showing FILMVISARNA. */}
       <div className="welcome-sign w-10/12 h-50 mb-5
@@ -220,13 +220,13 @@ export default function FrontPage() {
           >
             {user ? (
               <>
-                VÄLKOMMEN TILL FILMVISARNA,{" "}
+                VÄLKOMMEN TILL FILMSMEDJAN,{" "}
                 <span className="text-black font-bold uppercase">
                   {user.firstName}!
                 </span>
               </>
             ) : (
-              "VÄLKOMMEN TILL FILMVISARNA!"
+              "VÄLKOMMEN TILL FILMSMEDJAN!"
             )}
           </h1>
         </div>
@@ -426,7 +426,7 @@ export default function FrontPage() {
       {/* Movies container*/}
       <section
         className="
-    h-96 w-11/12 mx-5 my-5
+    h-100 w-11/12 mx-5 my-5
     flex flex-row overflow-x-auto overflow-y-hidden
     [&::-webkit-scrollbar]:h-2   
     [&::-webkit-scrollbar-track]:rounded-full
@@ -437,7 +437,7 @@ export default function FrontPage() {
 
     
 
-    lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:h-auto
+    lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:h-auto lg:w-full
     xl:h-auto xl:p-2 xl:grid xl:grid-cols-4  
     xl:w-8/12
 
@@ -463,6 +463,7 @@ export default function FrontPage() {
                              text-xs
                               flex items-center justify-center
                              h-12
+                             mt-6
                              md:h-14
                                 lg:m-0 
                                 lg:text-md
@@ -471,16 +472,25 @@ export default function FrontPage() {
                 >
                   {movie.title}
                 </p>
-                <img
-                  src={movie.imageSrc}
-                  alt={movie.title}
-                  className="shadow-md w-auto  object-cover rounded-md p-0 
-                  h-56
-                  md:h-60
-                  lg:h-64
-                  xl:h-72
-                  2xl:h-80"
-                />
+                
+                <div className="relative">
+  {/* Åldersbadge */}
+  <div className="glass_effect w-12 absolute top-8 left-2 text-white px-2 text-xs rounded-md shadow-md">
+    {movie.age}+
+  </div>
+
+  {/* Bild */}
+  <img
+    src={movie.imageSrc}
+    alt={movie.title}
+    className="shadow-md w-auto object-cover rounded-md p-0 
+    h-56
+    md:h-60
+    lg:h-64
+    xl:h-72
+    2xl:h-80"
+  />
+</div>
 
                 <p
                   className="text-sm
@@ -510,6 +520,7 @@ export default function FrontPage() {
                     <button className="main_buttons px-3 py-1 ml-2 cursor-pointer hover:scale-105 active:scale-95">
                       Boka
                     </button>
+                    
                   </Link>
                 </section>
               </section>
@@ -565,8 +576,8 @@ export default function FrontPage() {
               >
                 under hela torsdagen spelas filmer från tidigt 1900-tal upp. Res tillbaka i tiden och njut!
                 <br />
-                <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p>
               </p>
+              <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p>
             </div>
           </section>
         </article>
@@ -598,9 +609,8 @@ export default function FrontPage() {
               <p
                 className="flex flex-col justify-center items-center text-center"
               >
-                Vår lilla salong spelar gamla goda svenska klassiker under hela söndagen, morgon till kväll. <br />
+                Vår lilla salong spelar gamla goda svenska klassiker under hela söndagen, morgon till kväll. <br /></p>
                 <p className="italic text-xs sm:text-sm md:text-sm lg:text-base xl:text-base">Boka biljett för enskild film vid ankomst eller på vår bokningssida.</p>
-              </p>
             </div>
           </section>
         </article>

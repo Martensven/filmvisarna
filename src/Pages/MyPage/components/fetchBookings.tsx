@@ -70,25 +70,25 @@ export default function FetchBookings() {
         <>
             {/* pop-up for cancellation confirmation */}
             {selectedBooking && (
-                <div className="flex z-50 inset-y-50 sticky mb-10">
-                    <div className="bg-[#152333] p-6 rounded-2xl shadow-lg text-center w-80">
-                        <h3 className="text-lg font-semibold mb-4 text-white">
+                <div className="flex z-50 inset-y-50 sticky mb-10 ">
+                    <div className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-6 rounded-2xl shadow-lg text-center w-80 text-black">
+                        <h3 className="text-lg font-semibold mb-4 text-black">
                             Är du säker på att du vill avboka?
                         </h3>
-                        <p className="text-gray-300 mb-6">
+                        <p className="text-gray-800 mb-6">
                             {selectedBooking.screening_id.movie.title} <br />
                             {selectedBooking.screening_id.date} – {selectedBooking.screening_id.time}
                         </p>
                         <div className="flex justify-center gap-4">
                             <button
                                 onClick={() => handleDeleteBooking(selectedBooking._id)}
-                                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                                className="alert_buttons text-white px-4 py-2 rounded-lg hover:bg-red-700"
                             >
                                 Ja, avboka
                             </button>
                             <button
                                 onClick={() => setSelectedBooking(null)}
-                                className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+                                className="bg-gray-600 main_buttons text-black px-4 py-2 rounded-lg hover:bg-gray-700"
                             >
                                 Nej, avbryt
                             </button>
@@ -99,9 +99,9 @@ export default function FetchBookings() {
             {alertMessage && (
                 <div className={`flex z-50 inset-y-50 sticky mb-10`}>
                     <div className={`p-6 rounded-xl shadow-lg text-center w-80 transition-all duration-300 bg-[#152333]`}>
-                            <h3 className="text-white text-lg font-semibold mb-3">{alertType === "success" ? "Klart!" : "Fel inträffade"}</h3>
-                            <p className="text-white mb-5">{alertMessage}</p>
-                            <button onClick={() => setAlertMessage(null)} className={`text-white px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700`}>
+                            <h3 className="text-black text-lg font-semibold mb-3">{alertType === "success" ? "Klart!" : "Fel inträffade"}</h3>
+                            <p className="text-black mb-5">{alertMessage}</p>
+                            <button onClick={() => setAlertMessage(null)} className={`text-black px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700`}>
                                 Stäng
                             </button>
                     </div>
@@ -109,7 +109,7 @@ export default function FetchBookings() {
             )}
             <h2 className="text-2xl font-semibold">Dina bokningar:</h2>
             {bookings.length === 0 ? (
-                <p className="text-white text-center mt-10">Inga bokningar hittades.</p>
+                <p className="text-black text-center mt-10">Inga bokningar hittades.</p>
             ) : (
 
                 <section className="current space-y-6 leading-loose w-10/12">
@@ -139,12 +139,12 @@ export default function FetchBookings() {
                             {b.tickets.map((t: any) => `${t.ticketName} x${t.quantity}`).join(", ")}
                         </p>
 
-                        <p className="font-medium">Pris: {b.totalPrice} kr</p>
+                        <p className="font-medium ">Pris: {b.totalPrice} kr</p>
                         {/* <p>Bokat: {b.created_at}</p> */}
-                        <p>Bokningsnummer: {b.bookingNumber}</p>
+                        <p className="mb-5">Bokningsnummer: {b.bookingNumber}</p>
 
                         <button
-                            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 mt-3"
+                            className="alert_buttons px-4 py-2"
                             onClick={() => setSelectedBooking(b)}
                         >
                             Avboka

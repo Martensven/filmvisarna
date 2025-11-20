@@ -6,14 +6,14 @@ export default function AboutPage() {
 
       <header className="Header-container-box w-10/12 h-20 mb-5
       lg:w-10/12">
-        <h1 className="w-full stroked-text text-red-800 text-center text-3xl">Om Oss</h1>
+        <h1 className="w-full stroked-text text-red-800 text-center text-4xl">Om Oss</h1>
       </header>
       
 
-      <section className="glass_effect m-4 w-10/12 h-auto rounded-md text-white text-3xl leading-normal items-center justify-center flex flex-col space-y-10
+      <section className="popOut-box m-4 w-10/12 h-auto rounded-md text-black text-3xl leading-normal items-center justify-center flex flex-col space-y-10
       lg:flex-col lg:w-10/12 lg:m-2 lg:justify-center lg:items-center lg:mt-10 lg:gap-3">
 
-      <div className="m-4 w-9/12 h-auto rounded-md text-white text-3xl leading-normal items-center justify-center flex flex-col space-y-10
+      <div className="m-4 w-9/12 h-auto rounded-md text-black text-3xl leading-normal items-center justify-center flex flex-col space-y-10
       lg:flex lg:flex-col lg:w-11/12 lg:m-2 lg:justify-center lg:items-center lg:mt-10 lg:gap-3
       xl:w-11/12">
 
@@ -30,7 +30,7 @@ export default function AboutPage() {
           <p className="text-sm mt-5 w-full
           md:text-base
           lg:text-lg lg:text-center lg:mx-5">
-            Filmvisarna grundades i den charmiga staden Småstad, där bio alltid
+            Filmsmedjan grundades i den charmiga staden Småstad, där bio alltid
             har varit mer än bara underhållning, det har varit en samlingsplats
             för drömmare, familjer och filmälskare i generationer. Idén föddes
             av en grupp passionerade cineaster som delade en och samma vision:
@@ -52,7 +52,7 @@ export default function AboutPage() {
           md:text-base
           lg:text-lg lg:text-center lg:mx-5">
             I en tid då moderna blockbusters och digitala effekter dominerar
-            ville Filmvisarna skapa något annorlunda, ett levande minnesrum för
+            ville Filmsmedjan skapa något annorlunda, ett levande minnesrum för
             filmens guldår. Vår kärlek sträcker sig från de tidiga svartvita
             stumfilmerna från 1910-talet, genom Hollywoods gyllene era, 70- och
             80-talets kultklassiker, ända fram till de ikoniska 90-talsfilmerna
@@ -73,7 +73,7 @@ export default function AboutPage() {
           <p className="text-sm mt-5 w-full
           md:text-base
           lg:text-lg lg:text-center lg:mx-5">
-            Filmvisarna är mer än en biograf, det är en tidsmaskin. Vi brinner
+            Filmsmedjan är mer än en biograf, det är en tidsmaskin. Vi brinner
             för att väcka nostalgiska känslor och låta publiken återuppleva
             filmhistoriens pärlor precis som de var tänkta att ses: med
             gemenskap, skratt, spänning och applåder i salongen. Oavsett om det
@@ -81,7 +81,7 @@ export default function AboutPage() {
             familjevänlig nostalgifilm på helgen, strävar vi efter att skapa en
             unik och varm filmupplevelse. Vi vill bevara filmarvet, hylla
             historiens mästerverk och föra dem vidare till nya generationer. För
-            hos Filmvisarna handlar det inte bara om att titta på film, det
+            hos Filmsmedjan handlar det inte bara om att titta på film, det
             handlar om att minnas, känna och uppleva film på riktigt.
           </p>
         </article>

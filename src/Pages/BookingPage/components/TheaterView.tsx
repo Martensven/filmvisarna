@@ -191,8 +191,8 @@ export default function TheaterView({ selectShowing }: Props) {
                   key={seat._id}
                   onClick={() => handleToggle(seat._id)}
                   style={{
-                    width: 26,
-                    height: 26,
+                    width: 24,
+                    height: 24,
                     margin: 2,
                     borderTopLeftRadius: 5,
                     borderTopRightRadius: 5,

@@ -7,7 +7,6 @@ export default function AmountSeatsTheater() {
     setCount,
   } = useSeats();
 
-  // Ingen "loading" eller "error" behövs längre – hooken kan kompletteras med det om du vill
   if (!ticketTypes.length) {
     return (
       <main className="flex justify-center items-center mt-10">

@@ -137,6 +137,8 @@ export default function DetailMovie() {
                             <p className="text-start pl-2 pt-0.5 my-2
                             lg:pt-0.5 lg:pl-3"><strong>Speltid: </strong> {movie.length} min</p>
                             <p className="text-start pl-2 pt-0.5 my-2
+                            lg:pt-0.5 lg:pl-3"><strong>Åldersgräns: </strong> {movie.age} år</p>
+                            <p className="text-start pl-2 pt-0.5 my-2
                             lg:pt-0.5 lg:pl-3"><strong>Regissör: </strong>
                                 {Array.isArray(movie.directors)
                                     ? movie.directors.map((d: { name: string }) => d.name).join(", ")
