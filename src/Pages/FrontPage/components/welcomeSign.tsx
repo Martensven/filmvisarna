@@ -7,7 +7,7 @@ export default function WelcomeSign() {
         <section className="welcome-sign w-10/12 h-50 mb-5
       sm:w-9/12
       md:w-8/12 md:mb-40
-      lg:w-8/12 lg:mb-40">
+      lg:w-8/12 lg:mb-5">
             <article className="w-full border-t-2 border-b-2 border-[#737373] mt-2 
         lg:mt-3">
                 <h1
