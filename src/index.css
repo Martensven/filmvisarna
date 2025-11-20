@@ -167,7 +167,7 @@
   pointer-events: none;
 }
 
-.Header-container-box{
+.Header-container-box {
   font-family: "Stack Sans Headline", sans-serif;
   position: relative;
   display: flex;
@@ -208,12 +208,12 @@
 }
 
 .alert_buttons {
-   margin: 3px;
+  margin: 3px;
   position: relative;
   background-color: #cb1717;
   color: #e4e1e1;
   border-radius: 5px;
-  box-shadow: inset 0px 50px 100px -20px rgba(43, 43, 99, 0.345), 0px 30px 60px -30px rgba(0, 0, 0, 0.219), 0px -2px 6px 0px rgba(10, 37, 64, 0.219) ;
+  box-shadow: inset 0px 50px 100px -20px rgba(43, 43, 99, 0.345), 0px 30px 60px -30px rgba(0, 0, 0, 0.219), 0px -2px 6px 0px rgba(10, 37, 64, 0.219);
 }
 
 .alert_buttons:hover {
@@ -227,9 +227,25 @@
 .glass_effect {
   position: relative;
   border-radius: 8px;
-  background: #2433651d;
-  box-shadow: inset 2px 2px 100px rgb(0, 0, 0);
+  background: #243365a2;
+  box-shadow: inset 2px 2px 100px rgba(0, 0, 0, 0.445);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
 }
