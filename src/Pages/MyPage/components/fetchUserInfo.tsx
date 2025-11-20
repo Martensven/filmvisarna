@@ -64,7 +64,6 @@ export default function FetchUserInfo() {
                     <button onClick={() => setEditMode(true)} className="main_buttons cursor-pointer mb-4 text-sm py-2 px-2">
                         Redigera information
                     </button>
-                   
                     </>
                 ) : (
                     <article className="w-full flex flex-col gap-3 mb-4 justify-center items-center">
