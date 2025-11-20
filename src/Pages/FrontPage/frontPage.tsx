@@ -13,7 +13,9 @@ export default function FrontPage() {
   const location = useLocation();
 
   useEffect(() => {
-    if (!moviesLoaded || !themesLoaded) return;
+    setTimeout(() => {
+      if (!moviesLoaded || !themesLoaded) return;
+    }, 100)
 
     const scrollTo = location.state?.scrollTo;
     if (!scrollTo) return;
@@ -23,7 +25,7 @@ export default function FrontPage() {
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
-    }, 100);
+    }, 500);
   }, [moviesLoaded, themesLoaded, location.state?.scrollTo]);
 
   return (
