@@ -8,7 +8,7 @@ export default function UserOrderComponent() {
   const { totalPrice, ticketTypes, counts } = useSeats();
   const { screeningId, selectedSeats } = useCheckout();
   const { user } = useAuth();
-  const [orderId, setOrderId] = useState<string | null>(null);
+  const [orderId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();

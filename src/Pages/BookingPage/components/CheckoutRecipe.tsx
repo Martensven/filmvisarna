@@ -1,4 +1,3 @@
-import CheckoutComponent from "./CheckoutComponent";
 import { useSeats } from "./context/SeatsContext";
 
 export default function CheckoutRecipe() {
@@ -76,7 +75,7 @@ export default function CheckoutRecipe() {
             {totalPrice} kr
           </p>
         </section>
-        
+
       </aside>
     </>
   );
