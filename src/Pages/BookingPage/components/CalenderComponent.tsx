@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 //Component contains todays showing and other dates. This ones are going to be clickable
 
 interface Props {
-  // movieId: string;
   onSelectTheaterId: (theaterId: string) => void;
   onSelectShowing: (showing: string) => void;
 }
+
 interface screening {
   movie: {
     _id: string;
@@ -35,15 +35,12 @@ export default function CalenderComponent({
   useEffect(() => {
     const fetchScreeningTimes = async () => {
       try {
-        const response = await fetch(`/api/screenings/movie/${id}`, {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-          },
-        });
+        const response = await fetch(`/api/screenings/movie/${id}`);
+
         if (!response.ok) {
           throw new Error(`Kan inte hämta data: ${response.status}`);
         }
+
         const data = await response.json();
         setScreenings(data);
       } catch (error) {
@@ -52,6 +49,7 @@ export default function CalenderComponent({
         setLoading(false);
       }
     };
+
     fetchScreeningTimes();
   }, [id]);
 
@@ -63,51 +61,61 @@ export default function CalenderComponent({
 
     if (!acc[localKey]) acc[localKey] = [];
     acc[localKey].push(s);
+
     return acc;
   }, {} as Record<string, screening[]>);
 
-  //Seperate todays screening with other screenings
-  const today = new Date().toISOString().split("T")[0]; // Declare today with current day date.
+  const today = new Date().toISOString().split("T")[0];
+  const now = new Date();
 
-  // Fiter out old dates
+  // Future or today (date-wise)
   const futureOrTodayDates = Object.keys(sortScreeningByDate)
     .filter((date) => new Date(date) >= new Date(today))
     .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
-    // Only show screenings that are yet to come today)
-  const now = new Date();
+  // Remove screenings earlier than current time
   const todaysScreening = (sortScreeningByDate[today] ?? []).filter((s) => {
+    // Combine date and time to compare with now
     const screeningDateTime = new Date(`${s.date}T${s.time}`);
+    // Only keep screenings later than now
     return screeningDateTime >= now;
   });
-  const otherDaysScrenning = futureOrTodayDates.filter(
-    (date) => date !== today
-  );
+  // Other days than today
+  const otherDaysScrenning = futureOrTodayDates.filter((d) => d !== today);
 
+  // Dropdown list of extra dates (AFTER the first 4)
+  const extraScreenings: screening[] = otherDaysScrenning
+    .slice(4)
+    .flatMap((date) =>
+      sortScreeningByDate[date]
+        .slice()
+        .sort((a, b) => {
+          const [ax, ay] = a.time.split(":").map(Number);
+          const [bx, by] = b.time.split(":").map(Number);
+          return ax * 60 + ay - (bx * 60 + by);
+        })
+    );
+
+  // Auto-select first available screening
   useEffect(() => {
     if (active) return;
 
     let firstAvailable: screening | undefined;
 
     if (todaysScreening.length > 0) {
-      const sortedToday = todaysScreening.slice().sort((a, b) => {
+      firstAvailable = [...todaysScreening].sort((a, b) => {
         const [ax, ay] = a.time.split(":").map(Number);
         const [bx, by] = b.time.split(":").map(Number);
         return ax * 60 + ay - (bx * 60 + by);
-      });
-      firstAvailable = sortedToday[0];
+      })[0];
     } else if (otherDaysScrenning.length > 0) {
       const firstDate = otherDaysScrenning[0];
-
-      const sortedOther = sortScreeningByDate[firstDate]
-        .slice()
-        .sort((a, b) => {
-          const [ax, ay] = a.time.split(":").map(Number);
-          const [bx, by] = b.time.split(":").map(Number);
-          return ax * 60 + ay - (bx * 60 + by);
-        });
-
-      firstAvailable = sortedOther[0];
+      firstAvailable = [...sortScreeningByDate[firstDate]].sort((a, b) => {
+      
+        const [ax, ay] = a.time.split(":").map(Number);
+        const [bx, by] = b.time.split(":").map(Number);
+        return ax * 60 + ay - (bx * 60 + by);
+      })[0];
     }
 
     if (firstAvailable) {
@@ -124,121 +132,59 @@ export default function CalenderComponent({
     onSelectShowing,
   ]);
 
-  if (loading) {
-    return <p>Laddar data</p>;
-  }
-
-  if (!screenings) {
-    return <p>Ingen filmdata hämtad</p>;
-  }
+  if (loading) return <p>Laddar data…</p>;
+  if (!screenings) return <p>Ingen filmdata hämtad</p>;
 
   return (
     <main
-      className="Container-for-days w-7/12  flex flex-col justify-center items-center
-      sm:justify-center sm:items-center sm:mb-5
-      md:w-full md:justify-center md:items-center
-      lg:w-6/12 
-      xl:w-8/12"
+      className="Container-for-days w-7/12 flex flex-col justify-center items-center
+      md:w-full lg:w-6/12 xl:w-8/12"
     >
-      {/*----------Containers for calender days----------*/}
-      <div
-        className="todays-container flex flex-col justify-center items-center mt-2 h-auto w-full
-      md:w-11/12 md:justify-center md:items-center
-      lg:w-11/12
-      xl:w-11/12"
-      >
-        <h2
-          className="text-[#e4e1e1] text-sm
-        md:text-lg md:p-2
-        lg:w-10/12 lg:p-2 "
-        >
-          Dagens visningar
-        </h2>
-        <section
-          className="Todays flex flex-col justify-center items-center w-11/12 rounded-md          
-          md:flex-row md:w-5/12 md:justify-center md:items-center
-          lg:flex-row lg:justify-center lg:w-10/12 
-          xl:w-7/12 "
-        >
+      {/* Todays screenings */}
+      <div className="todays-container flex flex-col items-center mt-2 w-full md:w-11/12">
+        <h2 className="text-[#e4e1e1] text-sm md:text-lg">Dagens visningar</h2>
+
+        <section className="Todays flex flex-col items-center w-11/12 rounded-md md:flex-row md:w-5/12 lg:w-10/12 xl:w-7/12">
           {todaysScreening.length > 0 ? (
             todaysScreening.map((screening) => (
               <ul
-                // Setting active state to mark selected calender date and onSelectTheater to get the selected theater
-                // This will be used dynamically later on
                 key={screening._id}
                 onClick={() => {
                   setActive(screening._id);
                   onSelectTheaterId(screening.auditorium._id);
                   onSelectShowing(screening._id);
                 }}
-                className={`calenderDatesContainer container_box bg-[#e4e1e1] w-9/12 h-auto shadow-xl/20
-                sm:mb-2 
-                md:w-full md:text-base md:justify-center md:items-center cursor-pointer
-                lg:w-11/12 lg:flex lg:flex-col lg:justify-between lg:items-center">
-          ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
+                className={`calenderDatesContainer container_box bg-[#e4e1e1] w-9/12 h-auto cursor-pointer mb-2
+                ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
               >
-                <li
-                  className="pt-1 pb-1 text-base font-bold 
-                  md:p-0
-              "
-                >
+                <li className="pt-1 pb-1 text-base font-bold">
                   {screening.time}
                 </li>
-                <li
-                  className="px-1 pb-1 text-xs 
-              md:text-xs md:pb-2 
-              "
-                >
-                  {screening.auditorium.name}
-                </li>
+                <li className="px-1 pb-1 text-xs">{screening.auditorium.name}</li>
               </ul>
             ))
           ) : (
-            <p
-              className="flex h-20 px-2 justify-center items-center bg-[#e4e1e1] text-black mt-2 rounded-sm shadow-xl/20
-             "
-            >
+            <p className="flex h-20 px-2 items-center bg-[#e4e1e1] text-black mt-2 rounded-sm">
               Ingen visning idag
             </p>
           )}
         </section>
       </div>
 
-      {/* Other dates */}
-      <div
-        className="other-days-container flex flex-col justify-center items-center w-full
-       md:mt-2 
-       "
-      >
-        <h2
-          className="text-[#e4e1e1] mt-2 text-sm 
-       md:text-lg
-       lg:text-lg lg:p-2
-       lg:w-full lg:mt-1 lg:pb-1 
-       xl:p-0 "
-        >
+      {/* Other screenings */}
+      <div className="other-days-container flex flex-col items-center w-full md:mt-2">
+        <h2 className="text-[#e4e1e1] mt-2 text-sm md:text-lg">
           Andra visningar
         </h2>
+
         <section
-          className="Otherdays flex flex-col justify-start items-center mt-1 w-11/12 rounded-md
-          md:w-11/12  md:mb-7
-          lg:justify-center lg:gap-2 lg:w-full lg:m-0
-          xl:w-full  xl:flex-row xl:justify-start xl:items-start xl:grid xl:grid-cols-2 xl:mt-2
-        "
+          className="Otherdays flex flex-col items-center mt-1 w-11/12 rounded-md
+          md:w-11/12 lg:gap-2 lg:w-full xl:grid xl:grid-cols-2 xl:mt-2"
         >
           {otherDaysScrenning.length > 0 ? (
-            otherDaysScrenning.slice(0).map((date) => (
-              <div
-                key={date}
-                className="flex flex-col justify-center items-center underline w-56
-                lg:w-full lg:m-0 lg:p-0
-                
-                "
-              >
-                <h3
-                  className="text-sm
-                  md:text-base"
-                >
+            otherDaysScrenning.slice(0, 4).map((date) => (
+              <div key={date} className="flex flex-col items-center underline w-56 lg:w-full">
+                <h3 className="text-sm md:text-base">
                   {new Date(date).toLocaleDateString("sv-SE", {
                     weekday: "short",
                     day: "2-digit",
@@ -246,15 +192,7 @@ export default function CalenderComponent({
                   })}
                 </h3>
 
-                <div
-                  className="w-full flex flex-col justify-center items-center 
-                  sm:w-11/12 sm:mb-2 
-                   md:mt-2 md:mb-2 lg:grid lg:grid-cols-1
-                   lg:h-auto lg:justify-center xl:grid xl:grid-col-2
-                  "
-                >
-                  {/*time in a string renders out right date but not the right order on time. This function sorters that out by sorting the numbers correctly before we map it out 
-                  ex 10:00 before 20:00. */}
+                <div className="w-full flex flex-col items-center md:mt-2 lg:grid lg:grid-cols-1">
                   {sortScreeningByDate[date]
                     .slice()
                     .sort((a, b) => {
@@ -264,37 +202,23 @@ export default function CalenderComponent({
                     })
                     .map((screening) => (
                       <ul
+                        key={screening._id}
                         onClick={() => {
                           setActive(screening._id);
                           onSelectTheaterId(screening.auditorium._id);
                           onSelectShowing(screening._id);
                         }}
-                        className={`container_box calenderDatesContainer min-w-36 cursor-pointer w-9/12 h-15 flex flex-col justify-center items-center
-                          sm:w-11/12 sm:h-15
-                          md:w-11/12 md:h-12 md:text-xs
-                          lg:w-11/12 lg:h-20
-                          xl:w-10/12 xl:h-20 xl:mt-1 
-                          
-                          
+                        className={`container_box calenderDatesContainer min-w-36 cursor-pointer w-9/12 flex flex-col items-center
                           ${
                             active === screening._id
                               ? "!border-4 !border-[#07ca00]"
                               : ""
                           }`}
                       >
-                        <li
-                          className="pt-1 text-sm font-bold
-                    lg:text-base"
-                        >
-                          {screening.time.slice(0, 5)}{" "}
-                          {/*Getting rid of the seconds area when fetching screening time*/}
+                        <li className="pt-1 text-sm font-bold">
+                          {screening.time.slice(0, 5)}
                         </li>
-                        <li
-                          className="pb-1 px-1 text-xs 
-                    lg:text-sm"
-                        >
-                          {screening.auditorium.name}
-                        </li>
+                        <li className="pb-1 px-1 text-xs">{screening.auditorium.name}</li>
                       </ul>
                     ))}
                 </div>
@@ -304,6 +228,36 @@ export default function CalenderComponent({
             <p>Inga andra visningar</p>
           )}
         </section>
+
+        {/* Dropdown for the extra screenings */}
+        {extraScreenings.length > 0 && (
+          <select
+            className={`mt-2 mb-5 p-2 rounded-md bg-[#e4e1e1] text-black
+            ${extraScreenings.some((s) => s._id === active) ? "border-4 border-[#07ca00]" : ""}`}
+            onChange={(e) => {
+              const selected = screenings.find((s) => s._id === e.target.value);
+              if (selected) {
+                setActive(selected._id);
+                onSelectTheaterId(selected.auditorium._id);
+                onSelectShowing(selected._id);
+              }
+            }}
+            value={extraScreenings.some((s) => s._id === active) ? active! : ""}
+          >
+            <option value="">Fler visningar…</option>
+
+            {extraScreenings.map((screening) => (
+              <option key={screening._id} value={screening._id}>
+                {new Date(screening.date).toLocaleDateString("sv-SE", {
+                  weekday: "short",
+                  day: "2-digit",
+                  month: "2-digit",
+                })}{" "}
+                {screening.time.slice(0, 5)} – {screening.auditorium.name}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
     </main>
   );
