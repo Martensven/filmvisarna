@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../context/authContext";
+import "./../../index.css"
 
 export default function Login({
     onSwitchToRegister,
@@ -36,45 +37,26 @@ export default function Login({
         onClose();
     };
 
-    // const handleLogout = async () => {
-    //     await logout();
-    //     onClose();
-    // };
-
-    // ✅ Om användaren redan är inloggad → visa Logga ut
-    // if (user) {
-    //     return (
-    //         <section className="rounded p-6 flex flex-col m-5 text-center text-white">
-    //             {/* <h1 className="text-3xl mb-4 font-semibold">Du är redan inloggad</h1> */}
-    //             <button
-    //                 onClick={handleLogout}
-    //                 className="bg-red-500 hover:bg-red-600 cursor-pointer my-3 p-3 rounded-md shadow-md w-40 mx-auto"
-    //             >
-    //                 Logga ut
-    //             </button>
-    //         </section>
-    //     );
-    // }
 
     return (
-        <section className="rounded p-5 flex flex-col m-5 text-white">
-            <h1 className="text-4xl">Logga In</h1>
+        <section className="popOut-box p-4 flex flex-col my-7 mx-2 text-black">
+            <h1 className="w-6/12 self-center text-4xl p-5">Logga In</h1>
 
-            <form className="flex flex-col m-4" onSubmit={handleLogin}>
+            <form className="flex flex-col m-4 gap-3" onSubmit={handleLogin}>
                 <h2 className="my-2">E-Post</h2>
                 <input
                     autoFocus
-                    className="bg-[#243365] p-2 rounded-md shadow-md text-gray-200"
+                    className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 rounded-md shadow-md text-gray-950"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Din E-Post"
+                    placeholder="Din E-post"
                     required
                 />
 
                 <h2 className="my-2">Lösenord</h2>
                 <input
-                    className="bg-[#243365] p-2 rounded-md shadow-md text-gray-200"
+                    className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 rounded-md shadow-md text-gray-950"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -85,7 +67,7 @@ export default function Login({
                 <button
                     type="button"
                     onClick={onSwitchToForgot}
-                    className="text-xs mt-1 underline text-blue-300 hover:text-blue-400 self-start ml-2 cursor-pointer"
+                    className="text-xs mt-1 underline text-grey-700 hover:text-black self-start ml-2 cursor-pointer"
                 >
                     Glömt ditt lösenord?
                 </button>
@@ -99,7 +81,7 @@ export default function Login({
                 <button
                     type="submit"
                     disabled={loading}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 cursor-pointer my-3 p-4 self-center rounded-md shadow-md w-1/2"
+                    className="main_buttons cursor-pointer p-3 self-center w-1/2"
                 >
                     {loading ? "Loggar in..." : "Logga In"}
                 </button>
