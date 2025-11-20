@@ -16,11 +16,10 @@ import { SeatsProvider } from "./components/context/SeatsContext";
 import { CheckoutProvider } from "./components/context/CheckoutContext";
 
 export default function BookingPage({}: { isLoggedIn?: boolean }) {
-  // Support för flera param-namn: movieId eller id
+  
   const params = useParams<{ movieId?: string; id?: string }>();
   const location = useLocation();
 
-  // försök i denna ordning: movieId -> id -> sista path-segment
   const paramId =
     params.movieId ?? params.id ?? location.pathname.split("/").pop() ?? null;
 
@@ -34,7 +33,6 @@ export default function BookingPage({}: { isLoggedIn?: boolean }) {
   const [selectedShowing, setSelectedShowing] = useState<string | null>(null);
 
   useEffect(() => {
-    // Om inget id så logga och returnera
     if (!paramId) {
       setMovieError("No movie id in URL");
       console.warn("BookingPage: no movie id found in params or pathname.");
@@ -71,14 +69,12 @@ export default function BookingPage({}: { isLoggedIn?: boolean }) {
     fetchMovie();
   }, [paramId]);
 
-  // Fallback-UI (liten)
   if (!paramId) {
     return <div className="p-6">Ingen film vald (ogiltig url).</div>;
   }
 
   return (
     <>
-      {/* SeatsProvider använder movie?.age; det är ok att det börjar som null */}
       <SeatsProvider movieAge={movie?.age ?? null}>
         <CheckoutProvider>
 
