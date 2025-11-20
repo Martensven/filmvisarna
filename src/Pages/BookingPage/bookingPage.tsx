@@ -56,7 +56,7 @@ export default function BookingPage({ }: { isLoggedIn: boolean }) {
                 className="
                 w-full
                 container_box
-                flex flex-col gap-4
+                flex flex-col items-center gap-4
                 sm:flex-row sm:justify-between
                 p-4
               ">
