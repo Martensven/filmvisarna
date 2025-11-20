@@ -100,6 +100,7 @@ export default function BookingPage({ }: { isLoggedIn?: boolean }) {
 
               {/* Mobile/Tablet Recipe */}
               <article className="
+              flex justify-center items-center
                 lg:hidden 
                 sticky top-0 z-50
                 w-full
