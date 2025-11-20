@@ -11,7 +11,7 @@ export default function ForgotPassword({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submit klickad", email);
+
 
     try {
       const respond = await fetch("/api/forgotPass", {
@@ -20,15 +20,11 @@ export default function ForgotPassword({
         body: JSON.stringify({ email }),
       });
 
-      console.log("Respons status:", respond.status);
-
       const data = await respond.json();
-      console.log("Respons data:", data);
       setMessage(data.message || data.error);
 
       setSubmitted(true);
     } catch (err) {
-      console.error("Kunde inte skicka", err);
       setMessage("Något gick fel, försök igen");
     }
   };
@@ -69,7 +65,7 @@ export default function ForgotPassword({
           <h2 className="text-lg font-bold mb-2">Kolla din e-post!</h2>
           <p className="bg-[#243365] rounded-md shadow-md p-5">
             Återställningslänk skickas till {email}</p>
-            <p>{message && <b>{message}.</b>}</p>
+            <p>{message && <b>{message}.</b>}</p> {/**Setting the message for either successfull operation or not */}
           <button
             onClick={onSwitchToLogin}
             className="mt-4 text-sm underline cursor-pointer"
