@@ -3,8 +3,8 @@ import { useAmountSeats } from "./useAmountSeats";
 
 const SeatsContext = createContext<ReturnType<typeof useAmountSeats> | null>(null);
 
-export function SeatsProvider({ children }: { children: React.ReactNode }) {
-  const seats = useAmountSeats();
+export function SeatsProvider({ children, movieAge, }: { children: React.ReactNode; movieAge?: number | null; }) {
+  const seats = useAmountSeats(movieAge);
   return <SeatsContext.Provider value={seats}>{children}</SeatsContext.Provider>;
 }
 
