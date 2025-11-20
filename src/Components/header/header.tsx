@@ -33,11 +33,20 @@ export default function Header({ onLoginClick }: HeaderProps) {
     };
 
     const handleScroll = (id: string) => {
+        const offset = 25;
+
         if (location.pathname !== "/") {
-            navigate("/", { state: { scrollTo: id, t: Date.now() } });
+            navigate("/", { state: { scrollTo: id, t: Date.now(), offset: offset } });
         } else {
             const element = document.getElementById(id);
-            if (element) element.scrollIntoView({ behavior: "smooth" });
+            if (element) {
+                const y = element.getBoundingClientRect().top + window.pageYOffset - offset;
+
+                window.scrollTo({
+                    top: y,
+                    behavior: "smooth"
+                });
+            }
         }
     };
 
