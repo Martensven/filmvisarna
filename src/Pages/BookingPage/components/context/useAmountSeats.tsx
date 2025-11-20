@@ -7,17 +7,15 @@ export interface TicketType {
     displayName: string;
 }
 
-export function useAmountSeats() {
+export function useAmountSeats(movieAge?: number | null) {
     const [ticketTypes, setTicketTypes] = useState<TicketType[]>([]);
     const [counts, setCounts] = useState<Record<string, number>>({});
 
     useEffect(() => {
         const fetchTicketTypes = async () => {
             try {
-                const storedMovie = localStorage.getItem("currentMovie");
-                const currentMovie = storedMovie ? JSON.parse(storedMovie) : null;
 
-                const url = currentMovie ? `/api/ticket-types?age=${currentMovie.age}` : `/api/ticket-types`;
+                const url = typeof movieAge === "number" ? `/api/ticket-types?age=${movieAge}` : `/api/ticket-types`;
 
                 const res = await fetch(url);
                 const data = await res.json();
@@ -37,7 +35,7 @@ export function useAmountSeats() {
             }
         };
         fetchTicketTypes();
-    }, []);
+    }, [movieAge]);
 
     const setCount = (id: string, value: number) =>
         setCounts((prev) => ({ ...prev, [id]: value }));
