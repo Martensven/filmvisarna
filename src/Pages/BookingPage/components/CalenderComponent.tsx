@@ -292,11 +292,14 @@ export default function CalenderComponent({
                           ${active === screening._id
                             ? "!border-4 !border-[#07ca00]"
                             : ""
-                          }`}
+                          }`
+                        }
+                        key={screening._id}
                       >
                         <li
                           className="pt-1 text-sm font-bold
                     lg:text-base"
+
                         >
                           {screening.time.slice(0, 5)}{" "}
                           {/*Getting rid of the seconds area when fetching screening time*/}
