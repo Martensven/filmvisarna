@@ -14,8 +14,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  font-family:"Stack Sans Headline", sans-serif;
+  font-family: "Stack Sans Headline", sans-serif;
   background-image: url("/images/BackgroundBlue.png");
   background-size: cover;
   background-position: center;
@@ -76,6 +77,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -95,7 +97,7 @@
   align-items: center;
 
   background: white;
-  color:black;
+  color: black;
   box-shadow: 1px 1px 15px 3px lightgoldenrodyellow;
   -webkit-backdrop-filter: drop-shadow(5px);
   backdrop-filter: 5px;
@@ -112,7 +114,7 @@
   right: -5px;
   border: 7px solid rgb(148, 5, 5);
   border-radius: 5px;
-} 
+}
 
 .welcome-sign::after {
   position: absolute;
@@ -135,15 +137,15 @@
   border-radius: 5px;
 
   background: white;
-  color:black;
-  box-shadow: 1px 1px 15px 5px lightgoldenrodyellow;
-  box-shadow: inset 0 0 50px #8a6a0094;
+  color: black;
+  box-shadow: 1px 1px 20px 10px lightgoldenrodyellow;
+  box-shadow: inset 0 0 50px rgba(138, 106, 0, 0.582);
   -webkit-backdrop-filter: drop-shadow(5px);
   backdrop-filter: 5px;
 }
 
 .popOut-box::before {
-   content: " ";
+  content: " ";
   position: absolute;
   top: -4px;
   left: -4px;
@@ -155,7 +157,7 @@
 }
 
 .popOut-box::after {
-   position: absolute;
+  position: absolute;
   content: "";
   border: 5px dotted rgba(241, 241, 179, 0.808);
   top: -2px;
@@ -179,8 +181,8 @@
   align-items: center;
   border-radius: 5px;
   box-shadow: 1px 1px 15px 5px #0000002d;
-  background:#2433651d;
-  color:black;
+  background: #2433651d;
+  color: black;
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
 }
@@ -192,8 +194,7 @@
 }
 
 .reflection-effect {
-   -webkit-box-reflect: below 2px
-  linear-gradient(transparent 55%, transparent, rgba(41, 41, 41, 0.247)); 
+  -webkit-box-reflect: below 2px linear-gradient(transparent 55%, transparent, rgba(41, 41, 41, 0.247));
 }
 
 .main_buttons {
@@ -202,7 +203,7 @@
   background-color: #243365;
   color: #e4e1e1;
   border-radius: 5px;
-  box-shadow: inset 0px 50px 100px -20px rgba(43, 43, 99, 0.345), 0px 30px 60px -30px rgba(0, 0, 0, 0.219), 0px -2px 6px 0px rgba(10, 37, 64, 0.219) ;
+  box-shadow: inset 0px 50px 100px -20px rgba(43, 43, 99, 0.345), 0px 30px 60px -30px rgba(0, 0, 0, 0.219), 0px -2px 6px 0px rgba(10, 37, 64, 0.219);
 }
 
 .main_buttons:hover {
@@ -233,7 +234,7 @@
 .glass_effect {
   position: relative;
   border-radius: 8px;
-  background:#2433651d;
+  background: #2433651d;
   box-shadow: inset 2px 2px 100px rgb(0, 0, 0);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);

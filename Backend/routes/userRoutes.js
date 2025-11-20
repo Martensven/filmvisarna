@@ -120,8 +120,8 @@ router.post(
         `,
         attachments: [
           {
-            filename: "LoggoMail.png",
-            path: "./assets/LoggoMail.png",
+            filename: "LoggoMail.jpg",
+            path: "./assets/LoggoMail.jpg",
             cid: "logo",
           },
         ],
