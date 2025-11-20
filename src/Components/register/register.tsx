@@ -78,25 +78,24 @@ export default function Register({
     };
 
     return (
-        <section className="rounded p-5 mx-7 flex flex-col">
+        <section className="popOut-box p-4 flex flex-col my-7 mx-2 text-black ">
             <h1 className="text-4xl">Skapa ditt konto</h1>
 
             {/* Popup om registrering lyckas */}
             {
                 successMessage && (
-                    <div className="absolute left-0 top-70 inset-0 glass_effect text-center ">
+                    <div className="popOut-box absolute left-0 top-70 inset-0 text-center w-8/12">
                         <div className=" p-5 rounded-lg shadow-lg animate-fade-in h-48 flex flex-col justify-center items-center">
                             <h2 className="text-xl font-bold mb-2">Registrering lyckades!</h2>
                             <p>{successMessage}</p>
                         </div>
                     </div>
-                )
-            }
+                )}
 
-            <form className="flex flex-col m-4" onSubmit={handleRegister}>
+            <form className="flex flex-col m-4 justify-between" onSubmit={handleRegister}>
                 <h2 className="my-2">Förnamn</h2>
                 <input
-                    className="bg-[#243365] my-1 p-2 rounded-md shadow-md text-gray-400"
+                    className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 rounded-md shadow-md text-gray-950"
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
@@ -105,7 +104,7 @@ export default function Register({
 
                 <h2 className="my-2">Efternamn</h2>
                 <input
-                    className="bg-[#243365] my-1 p-2 rounded-md shadow-md text-gray-400"
+                    className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 rounded-md shadow-md text-gray-950"
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
@@ -114,7 +113,7 @@ export default function Register({
 
                 <h2 className="my-2">E-Post</h2>
                 <input
-                    className="bg-[#243365] my-1 p-2 rounded-md shadow-md text-gray-400"
+                    className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 rounded-md shadow-md text-gray-950"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -123,7 +122,7 @@ export default function Register({
 
                 <h2 className="my-2">Telefonnummer</h2>
                 <input
-                    className="bg-[#243365] my-1 p-2 rounded-md shadow-md text-gray-400"
+                    className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 rounded-md shadow-md text-gray-950"
                     type="tel"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
@@ -132,7 +131,7 @@ export default function Register({
 
                 <h2 className="my-2">Lösenord</h2>
                 <input
-                    className="bg-[#243365] my-1 p-2 rounded-md shadow-md text-gray-400"
+                    className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 rounded-md shadow-md text-gray-950"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -141,7 +140,7 @@ export default function Register({
 
                 <h2 className="my-2">Bekräfta Lösenord</h2>
                 <input
-                    className="bg-[#243365] my-1 p-2 rounded-md shadow-md text-gray-400"
+                    className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 mb-10 rounded-md shadow-md text-gray-950"
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -159,7 +158,7 @@ export default function Register({
 
                 <button
                     type="submit"
-                    className="bg-[#243365] cursor-pointer mt-3 p-4 self-center rounded-md shadow-md md:w-1/2"
+                    className="main_buttons cursor-pointer p-3 self-center"
                 >
                     Skapa konto
                 </button>
