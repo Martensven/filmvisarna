@@ -45,7 +45,6 @@ export default function FrontPage() {
       }
 
       const data = await response.json();
-      console.log(data);
       setMovie(data);
     } catch (error: any) {
       console.error("Error fetching movies:", error);

@@ -5,8 +5,6 @@ export default function AmountSeatsTheater() {
     ticketTypes,
     counts,
     setCount,
-    totalTickets,
-    totalPrice,
   } = useSeats();
 
   // Ingen "loading" eller "error" behövs längre – hooken kan kompletteras med det om du vill

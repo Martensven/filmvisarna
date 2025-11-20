@@ -61,7 +61,6 @@ export default function Register({
             }
 
             const data = await response.json();
-            console.log("Registered User:", data);
 
             // ✅ Navigate to front page and slide in the login window
             onSwitchToLogin();

@@ -156,7 +156,7 @@ export default function AddMovieForm() {
         themes: "",
       });
     } catch (error: any) {
-      console.log("Fel vid tilläggning av film", +error);
+      console.error("Fel vid tilläggning av film", +error);
       setMessage(error.message);
     }
   };

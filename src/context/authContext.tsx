@@ -39,7 +39,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }
 
             const basicData = await res.json();
-            console.log(basicData.userId);
 
             const userId = basicData.userId;
 
@@ -52,7 +51,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             if (userDetailsRes.ok) {
                 const fullData = await userDetailsRes.json();
                 setUser({ ...fullData, ...basicData }); // Spara den mer detaljerade användaren
-                console.log(user);
 
             } else {
                 setUser(basicData); // Fallback till grunddata
