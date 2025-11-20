@@ -101,7 +101,7 @@ export default function ResetPassword() {
         <button type="submit" disabled={loading} className="main_buttons w-45 h-15 mt-5 p-2">
           Återställ Lösenordet
         </button>
-        {message && <p className="text-red-400 mt-5">{message}</p>}
+        {message && <p className="text-white font-bolder underline mt-5">{message}</p>}
       </form>
 
     </section>
