@@ -188,7 +188,7 @@ export default function CalenderComponent({
                 sm:mb-2 
                 md:w-full md:text-base md:justify-center md:items-center cursor-pointer
                 lg:w-11/12 lg:flex lg:flex-col lg:justify-between lg:items-center">
-          ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
+          ${active === screening._id ? "border-4! border-[#07ca00]!" : ""}`}
               >
                 <li
                   className="pt-1 pb-1 text-base font-bold 
@@ -290,7 +290,7 @@ export default function CalenderComponent({
                           
                           
                           ${active === screening._id
-                            ? "!border-4 !border-[#07ca00]"
+                            ? "border-4! border-[#07ca00]!"
                             : ""
                           }`
                         }
