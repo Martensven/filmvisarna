@@ -39,7 +39,7 @@ const CookiePopup = () => {
       >
         <h3 className="text-lg font-semibold mb-3">Cookies inställningar</h3>
         <p className="text-sm mb-4 leading-relaxed">
-          Filmvisarna använder cookies för inloggning och användarsessioner. Fimvisarna använder för nuvarande inte cookies
+          Filmsmedjan använder cookies för inloggning och användarsessioner. Filmsmedjan använder för nuvarande inte cookies
           för analys eller statistik men kan komma att göra det i framtiden. Du kan hantera dina cookie-inställningar nedan.
         </p>
 
