@@ -105,6 +105,7 @@ function App() {
         </>
       )}
 
+      {/*Login slide, importing components like login.tsx*/}
       {loginPopup && (
         <section
           onClick={handleClosing}
@@ -117,6 +118,7 @@ function App() {
             }`}
           >
             <button
+              title="Close login slide"
               onClick={handleClosing}
               className="self-end alert_buttons py-2 px-2 rounded-md shadow-md cursor-pointer"
             >

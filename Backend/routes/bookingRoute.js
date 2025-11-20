@@ -114,7 +114,7 @@ router.post("/api/bookings", async (req, res) => {
       try {
         await sendMail({
           to: user.email,
-          subject: "Filmvisarna - Bokningsbekräftelse",
+          subject: "Filmsmedjan - Bokningsbekräftelse",
           html: `
       
             <table align="center" width="600" cellpadding="0" cellspacing="3" style="font-family: Arial, serif; padding:10px;">
@@ -154,9 +154,9 @@ router.post("/api/bookings", async (req, res) => {
                   <table cellpadding="0" cellspacing="0" style="color:white; margin:20px auto 25px auto;" align="center">
                     <tr>
                       <td align="center">
-                        <h1 style="font-size:25px; margin:3px;">Filmvisarna</h1>
+                        <h1 style="font-size:25px; margin:3px;">Filmsmedjan</h1>
                         <h3 style="font-size:20px; margin:2px 0px;">Kontakt</h3>
-                        <p style="font-size:15px; margin:2px;">Epost: info@filmvisarna.se</p>
+                        <p style="font-size:15px; margin:2px;">Epost: info@filmsmedjan.se</p>
                         <p style="font-size:15px; margin:2px;">Telefon: 123-456 78 90</p>
                         <p style="font-size:15px; margin:2px;">Adress: Biogatan 1, 123 45, Filmstaden</p>
                       </td>
@@ -189,7 +189,7 @@ router.post("/api/bookings", async (req, res) => {
         .join("<br>");
       await sendMail({
         to: email,
-        subject: "Filmvisarna - Bokningsbekräftelse",
+        subject: "Filmsmedjan - Bokningsbekräftelse",
         html: `
           <table align="center" width="600" cellpadding="0" cellspacing="3" style="font-family: Arial, serif; padding:10px;">
               <tr>
@@ -235,9 +235,9 @@ router.post("/api/bookings", async (req, res) => {
                   <table cellpadding="0" cellspacing="0" style="color:white; margin:20px auto 25px auto;" align="center">
                     <tr>
                       <td align="center">
-                        <h1 style="font-size:25px; margin:3px;">Filmvisarna</h1>
+                        <h1 style="font-size:25px; margin:3px;">Filmsmedjan</h1>
                         <h3 style="font-size:20px; margin:2px 0px;">Kontakt</h3>
-                        <p style="font-size:15px; margin:2px;">Epost: info@filmvisarna.se</p>
+                        <p style="font-size:15px; margin:2px;">Epost: info@filmsmedjan.se</p>
                         <p style="font-size:15px; margin:2px;">Telefon: 123-456 78 90</p>
                         <p style="font-size:15px; margin:2px;">Adress: Biogatan 1, 123 45, Filmstaden</p>
                       </td>
@@ -405,7 +405,7 @@ router.delete("/api/bookings/:id", async (req, res) => {
       try {
         await sendMail({
           to: email,
-          subject: "Filmvisarna - Avbokad bokning",
+          subject: "Filmsmedjan - Avbokad bokning",
           html: `
           <table align="center" width="600" cellpadding="0" cellspacing="3" style="font-family: Arial, serif; padding:10px;">
               <tr>
@@ -436,9 +436,9 @@ router.delete("/api/bookings/:id", async (req, res) => {
                   <table cellpadding="0" cellspacing="0" style="color:white; margin:20px auto 25px auto;" align="center">
                     <tr>
                       <td align="center">
-                        <h1 style="font-size:25px; margin:3px;">Filmvisarna</h1>
+                        <h1 style="font-size:25px; margin:3px;">Filmsmedjan</h1>
                         <h3 style="font-size:20px; margin:2px 0px;">Kontakt</h3>
-                        <p style="font-size:15px; margin:2px;">Epost: info@filmvisarna.se</p>
+                        <p style="font-size:15px; margin:2px;">Epost: info@filmsmedjan.se</p>
                         <p style="font-size:15px; margin:2px;">Telefon: 123-456 78 90</p>
                         <p style="font-size:15px; margin:2px;">Adress: Biogatan 1, 123 45, Filmstaden</p>
                       </td>
