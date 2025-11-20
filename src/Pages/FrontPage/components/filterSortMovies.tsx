@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 
-export default function FilterSortMovies() {
+export default function FilterSortMovies({ onLoaded }: { onLoaded: () => void }) {
   const [movie, setMovie] = useState<any[]>([]); // State to hold fetched movies
   const [filterOpen, setFilterOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
@@ -84,6 +84,7 @@ export default function FilterSortMovies() {
       setError(error.message);
     } finally {
       setLoading(false);
+      setTimeout(() => onLoaded(), 0);
     }
   };
 
