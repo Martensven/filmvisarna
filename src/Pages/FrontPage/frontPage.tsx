@@ -1,6 +1,6 @@
 import "../BookingPage/BookingPageStyle.css";
 import "../../index.css";
-import WelcomeSign from "./components/welcomesign.tsx";
+import WelcomeSign from "./components/welcomeSign.tsx";
 import FilterSortMovies from "./components/filterSortMovies.tsx";
 import ThemeContainers from "./components/themeContainers.tsx";
 
