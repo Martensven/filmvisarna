@@ -6,14 +6,14 @@ export default function AboutPage() {
 
       <header className="Header-container-box w-10/12 h-20 mb-5
       lg:w-10/12">
-        <h1 className="w-full stroked-text text-red-800 text-center text-3xl">Om Oss</h1>
+        <h1 className="w-full stroked-text text-red-800 text-center text-4xl">Om Oss</h1>
       </header>
       
 
-      <section className="glass_effect m-4 w-10/12 h-auto rounded-md text-white text-3xl leading-normal items-center justify-center flex flex-col space-y-10
+      <section className="popOut-box m-4 w-10/12 h-auto rounded-md text-black text-3xl leading-normal items-center justify-center flex flex-col space-y-10
       lg:flex-col lg:w-10/12 lg:m-2 lg:justify-center lg:items-center lg:mt-10 lg:gap-3">
 
-      <div className="m-4 w-9/12 h-auto rounded-md text-white text-3xl leading-normal items-center justify-center flex flex-col space-y-10
+      <div className="m-4 w-9/12 h-auto rounded-md text-black text-3xl leading-normal items-center justify-center flex flex-col space-y-10
       lg:flex lg:flex-col lg:w-11/12 lg:m-2 lg:justify-center lg:items-center lg:mt-10 lg:gap-3
       xl:w-11/12">
 

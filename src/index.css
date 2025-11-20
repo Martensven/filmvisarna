@@ -167,7 +167,12 @@
   border-radius: 5px;
 }
 
-.Header-container-box {
+.popOut-box::before,
+.popOut-box::after {
+  pointer-events: none;
+}
+
+.Header-container-box{
   font-family: "Stack Sans Headline", sans-serif;
   position: relative;
   display: flex;
@@ -206,6 +211,23 @@
 }
 
 .main_buttons:active {
+  scale: 95%;
+}
+
+.alert_buttons {
+   margin: 3px;
+  position: relative;
+  background-color: #cb1717;
+  color: #e4e1e1;
+  border-radius: 5px;
+  box-shadow: inset 0px 50px 100px -20px rgba(43, 43, 99, 0.345), 0px 30px 60px -30px rgba(0, 0, 0, 0.219), 0px -2px 6px 0px rgba(10, 37, 64, 0.219) ;
+}
+
+.alert_buttons:hover {
+  scale: 105%;
+}
+
+.alert_buttons:active {
   scale: 95%;
 }
 

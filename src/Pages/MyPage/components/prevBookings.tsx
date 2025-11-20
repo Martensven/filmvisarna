@@ -48,7 +48,7 @@ const FAQ = () => {
 
     return (
     <>
-        <h2 className="text-white text-2xl font-semibold text-center mt-10">Tidigare bokningar:</h2>
+        <h2 className="text-black text-2xl font-semibold text-center mt-10">Tidigare bokningar:</h2>
 
         {loading && (
             <p className="text-white text-center mt-10">Laddar...</p>
@@ -59,7 +59,7 @@ const FAQ = () => {
         )}
 
         {!loading && !error && bookings.length === 0 && (
-            <p className="text-white text-center mt-10">Inga bokningar hittades.</p>
+            <p className="text-black text-center mt-10">Inga bokningar hittades.</p>
         )}
 
         {!loading && !error && bookings.length > 0 && (
