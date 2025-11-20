@@ -25,7 +25,7 @@ export default function FrontPage() {
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
-    }, 500);
+    }, 100);
   }, [moviesLoaded, themesLoaded, location.state?.scrollTo]);
 
   return (
