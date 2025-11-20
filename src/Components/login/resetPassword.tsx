@@ -13,10 +13,12 @@ export default function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [loading, setLoading] = useState(false);
 
+  //Fetching url with token, working within the timespan of token that works. If it's not a working token session it will render out a message about 
+  //token being out of time.
   useEffect(() => {
     const tokenValidation = async () => {
       try {
-        const response = await fetch(`/api/forgotPass/validate/${token}`);
+        const response = await fetch(`/api/forgotPass/validate/${token}`); 
         const data = await response.json();
 
         if (response.ok) {
