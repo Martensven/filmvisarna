@@ -16,6 +16,7 @@ export default function Register({
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
     const [error, setError] = useState<string[]>([]);
 
     const handleRegister = async (e: React.FormEvent) => {
@@ -46,7 +47,7 @@ export default function Register({
             return;
         }
 
-        // ✅ Skicka till backend
+        // ✅ send data to backend
         try {
             const response = await fetch("/api/users/", {
                 method: "POST",
@@ -60,21 +61,37 @@ export default function Register({
                 throw new Error("Registrering misslyckades.");
             }
 
-            const data = await response.json();
+            setSuccessMessage("Ditt konto har skapats!");
 
-            // ✅ Navigate to front page and slide in the login window
-            onSwitchToLogin();
-            navigate("/");
+            // set a timeout to switch to login page after 2.5 seconds
+            setTimeout(() => {
+                onSwitchToLogin();
+                navigate("/");
+            }, 2500);
 
         } catch (error: any) {
             console.error("Error registering user:", error);
             setError([error.message]);
         }
+
+
     };
 
     return (
         <section className="rounded p-5 mx-7 flex flex-col">
             <h1 className="text-4xl">Skapa ditt konto</h1>
+
+            {/* Popup om registrering lyckas */}
+            {
+                successMessage && (
+                    <div className="absolute left-0 top-70 inset-0 glass_effect text-center ">
+                        <div className=" p-5 rounded-lg shadow-lg animate-fade-in h-48 flex flex-col justify-center items-center">
+                            <h2 className="text-xl font-bold mb-2">Registrering lyckades!</h2>
+                            <p>{successMessage}</p>
+                        </div>
+                    </div>
+                )
+            }
 
             <form className="flex flex-col m-4" onSubmit={handleRegister}>
                 <h2 className="my-2">Förnamn</h2>
@@ -139,6 +156,7 @@ export default function Register({
                     </ul>
                 )}
 
+
                 <button
                     type="submit"
                     className="bg-[#243365] cursor-pointer mt-3 p-4 self-center rounded-md shadow-md md:w-1/2"
@@ -153,6 +171,8 @@ export default function Register({
             >
                 Har du redan ett konto? Logga in här
             </button>
+
+
         </section>
     );
 };
