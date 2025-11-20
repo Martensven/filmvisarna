@@ -15,8 +15,8 @@ import CheckoutRecipe from "./components/CheckoutRecipe";
 import { SeatsProvider } from "./components/context/SeatsContext";
 import { CheckoutProvider } from "./components/context/CheckoutContext";
 
-export default function BookingPage({}: { isLoggedIn?: boolean }) {
-  
+export default function BookingPage({ }: { isLoggedIn?: boolean }) {
+
   const params = useParams<{ movieId?: string; id?: string }>();
   const location = useLocation();
 
@@ -80,8 +80,8 @@ export default function BookingPage({}: { isLoggedIn?: boolean }) {
 
           <main
             className="
-            min-h-screen w-full
-            flex flex-col items-center
+            min-h-screen w-screen
+            flex flex-col items-center justify-center
             pt-4
             lg:flex-row lg:items-start lg:justify-center lg:gap-10
             lg:pt-10"
@@ -91,8 +91,7 @@ export default function BookingPage({}: { isLoggedIn?: boolean }) {
             <section
               className="
               flex flex-col items-center
-              w-full
-              sm:w-11/12
+              w-11/12
               md:w-4/5
               lg:w-3/5
               xl:w-1/2
