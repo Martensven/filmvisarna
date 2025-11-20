@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Routes, Route } from "react-router";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./context/authContext";
+import { CgClose } from "react-icons/cg";
+
 
 import FrontPage from "./Pages/FrontPage/frontPage.js";
 import BookingPage from "./Pages/BookingPage/bookingPage.tsx";
-import MoviePage from "./Pages/MoviePage/moviePage.tsx";
 import Header from "./Components/header/header.tsx";
 import Footer from "./Components/footer/footer.tsx";
 import MyPage from "./Pages/MyPage/myPage.tsx";
@@ -16,7 +17,7 @@ import KioskPage from "./Pages/KioskPage/kioskPage.tsx";
 import DetailMovie from "./Pages/DetailMovie/detailMovie.tsx";
 import ForgotPassword from "./Components/login/forgotPassword.tsx";
 import AdminPage from "./Pages/AdminPage/adminPage.tsx";
-import AdminAddMoviePage from "./Pages/AdminPage/AdminAddMovie/adminAddMovie.tsx";
+import AdminAddMoviePage from "./Pages/AdminPage/AdminMovies/adminAddMovie.tsx";
 import AdminStart from "./Pages/AdminPage/AdminStart/adminStart.tsx";
 import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage.tsx";
 import AdminUsersPage from "./Pages/AdminPage/AdminUsers/adminUsersPage.tsx";
@@ -24,6 +25,10 @@ import AdminEditScreening from "./Pages/AdminPage/AdminStart/adminEditScreening.
 import AdminScreeningStart from "./Pages/AdminPage/AdminScreenings/adminScreeningStart.tsx";
 import CookiePopup from "./Components/CookiePopup/cookiePopup.tsx";
 import ResetPassword from "./Components/login/resetPassword.tsx";
+import AdminMovies from "./Pages/AdminPage/AdminMovies/adminMovies.tsx";
+import AdminDeleteMovie from "./Pages/AdminPage/AdminMovies/adminDeleteMovie.tsx";
+import AdminAddActorDirectorDist from "./Pages/AdminPage/AdminAddActorDirectorDist/adminAdd.tsx";
+import "./index.css"
 
 function App() {
   const [loginPopup, setLoginPopup] = useState<
@@ -65,7 +70,6 @@ function App() {
           path="/booking/:id"
           element={<BookingPage isLoggedIn={isLoggedIn} />}
         />
-        <Route path="/movie" element={<MoviePage />} />
         <Route path="/my-page/" element={<MyPage />} />
         <Route path="/checkout/:bookingId" element={<CheckoutPage />} />
         <Route path="/about" element={<AboutPage />} />
@@ -81,13 +85,16 @@ function App() {
           }
         >
           <Route index element={<AdminStart />} />
-          <Route path="add-movie" element={<AdminAddMoviePage />} />
+          <Route path="movies" element={<AdminMovies />} />
           <Route path="users" element={<AdminUsersPage />} />
           <Route
             path="screenings/:id"
             element={<AdminEditScreening />}
           />
           <Route path="screenings" element={<AdminScreeningStart />} />
+          <Route path="add-movie" element={<AdminAddMoviePage />} />
+          <Route path="delete-movie" element={<AdminDeleteMovie />} />
+          <Route path="add-people" element={<AdminAddActorDirectorDist />} />
         </Route>
       </Routes>
       {/* Making sure Header and Footer are not shown on admin pages */}
@@ -98,6 +105,7 @@ function App() {
         </>
       )}
 
+      {/*Login slide, importing components like login.tsx*/}
       {loginPopup && (
         <section
           onClick={handleClosing}
@@ -110,10 +118,11 @@ function App() {
             }`}
           >
             <button
+              title="Close login slide"
               onClick={handleClosing}
-              className="self-center rounded-md shadow-md cursor-pointer"
+              className="self-end alert_buttons py-2 px-2 rounded-md shadow-md cursor-pointer"
             >
-              [&times;]
+              <CgClose />
             </button>
 
             {loginPopup === "login" && (

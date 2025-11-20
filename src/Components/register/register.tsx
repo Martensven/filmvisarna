@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Register({
     onSwitchToLogin,
-    onClose,
+
 }: {
     onSwitchToLogin: () => void;
     onClose: (callback?: () => void) => void;
@@ -61,7 +61,6 @@ export default function Register({
             }
 
             const data = await response.json();
-            console.log("Registered User:", data);
 
             // ✅ Navigate to front page and slide in the login window
             onSwitchToLogin();

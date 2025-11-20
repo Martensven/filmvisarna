@@ -1,84 +1,177 @@
-import { useState } from "react";
+// bookingPage.tsx (robust version)
+import { useState, useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
+
 import "./BookingPageStyle.css";
 import "../../index.css";
+
 import TheaterViewContainer from "./components/TheaterViewContainer";
 import MovieInformation from "./components/MovieInformation";
 import CalenderComponent from "./components/CalenderComponent";
 import CheckoutComponent from "./components/CheckoutComponent";
 import AmountTheaterSeats from "./components/AmountTheaterSeats";
-import { SeatsProvider } from "./components/context/SeatsContext";
-import { CheckoutProvider } from "./components/context/CheckoutContext";
 import CheckoutRecipe from "./components/CheckoutRecipe";
 
+import { SeatsProvider } from "./components/context/SeatsContext";
+import { CheckoutProvider } from "./components/context/CheckoutContext";
 
+export default function BookingPage({ }: { isLoggedIn?: boolean }) {
 
-export default function BookingPage({ isLoggedIn }: { isLoggedIn: boolean }) {
+  const params = useParams<{ movieId?: string; id?: string }>();
+  const location = useLocation();
+
+  const paramId =
+    params.movieId ?? params.id ?? location.pathname.split("/").pop() ?? null;
+
+  const [movie, setMovie] = useState<any | null>(null);
+  const [loadingMovie, setLoadingMovie] = useState<boolean>(false);
+  const [movieError, setMovieError] = useState<string | null>(null);
+
   const [selectedTheaterId, setSelectedTheaterId] = useState<string | null>(
     null
   );
   const [selectedShowing, setSelectedShowing] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!paramId) {
+      setMovieError("No movie id in URL");
+      console.warn("BookingPage: no movie id found in params or pathname.");
+      return;
+    }
+
+    const fetchMovie = async () => {
+      setLoadingMovie(true);
+      setMovieError(null);
+      try {
+        console.log("BookingPage: fetching movie with id:", paramId);
+        const res = await fetch(`/api/movie/${paramId}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (!res.ok) {
+          const text = await res.text().catch(() => "");
+          throw new Error(`HTTP ${res.status} ${res.statusText} ${text}`);
+        }
+
+        const data = await res.json();
+        console.log("BookingPage: movie data:", data);
+        setMovie(data);
+      } catch (err: any) {
+        console.error("BookingPage: could not fetch movie:", err);
+        setMovieError(err?.message ?? String(err));
+        setMovie(null);
+      } finally {
+        setLoadingMovie(false);
+      }
+    };
+
+    fetchMovie();
+  }, [paramId]);
+
+  if (!paramId) {
+    return <div className="p-6">Ingen film vald (ogiltig url).</div>;
+  }
+
   return (
     <>
-      <SeatsProvider>
+      <SeatsProvider movieAge={movie?.age ?? null}>
         <CheckoutProvider>
-          {/*----------Container for booking page----------*/}
+
           <main
-            className="Bookingpage min-w-screen min-h-screen flex flex-col justify-center items-center overscroll-y-auto pt-5 relative
-          sm:pt-0
-          md:w-full md:flex md:items-start md:justify-around md:flex-row
-          lg:w-12/13 lg:mt-10 
-          xl:w-full"
+            className="
+            min-h-screen w-screen
+            flex flex-col items-center justify-center
+            pt-4
+            lg:flex-row lg:items-start lg:justify-center lg:gap-10
+            lg:pt-10"
           >
-            <div className="flex justify-center items-center flex-col min-w-screen md:justify-start md:items-start md:min-w-0 md:w-full">
+
+            {/* LEFT SIDE: Everything except desktop recipe */}
             <section
-              className="Recipe md:hidden flex justify-center sticky container_box rounded-md sticky top-1 w-11/12 h-50 z-50 m-10"
+              className="
+              flex flex-col items-center
+              w-11/12
+              md:w-4/5
+              lg:w-3/5
+              xl:w-1/2
+              gap-6"
             >
-              <CheckoutRecipe />
-            </section>
-            <section
-              className="Movie-Screening-Days flex flex-col sm:flex-row container_box w-11/12 mb-4
-            justify-center items-center
-            md:w-10/14 md:ml-15
-            lg:w-12/14 lg:ml-20
-            xl:ml-18 xl:w-8/10"
-            >
-              <MovieInformation />
-              <CalenderComponent
-                onSelectTheaterId={setSelectedTheaterId}
-                onSelectShowing={setSelectedShowing}
-              />
+
+              {/* Mobile/Tablet Recipe */}
+              <article className="
+              flex justify-center items-center
+                lg:hidden 
+                sticky top-0 z-50
+                w-full
+                container_box rounded-md
+                p-4
+              ">
+                <CheckoutRecipe />
+              </article>
+
+              {/* Movie Info + Calendar */}
+              <article
+                className="
+                w-full
+                container_box
+                flex flex-col items-center gap-4
+                sm:flex-row sm:justify-between
+                p-4
+              ">
+                <MovieInformation />
+                <CalenderComponent
+                  onSelectTheaterId={setSelectedTheaterId}
+                  onSelectShowing={setSelectedShowing}
+                />
+              </article>
+
+              {/* Visa loading/error */}
+              {loadingMovie && (
+                <div className="text-sm text-gray-300">Laddar film...</div>
+              )}
+              {movieError && (
+                <div className="text-sm text-red-400">Fel: {movieError}</div>
+              )}
+
+              {/* Theater View */}
+              <article
+                className="
+                w-full
+                container_box
+                flex flex-col items-center gap-4
+                xl:flex-row xl:justify-between
+                p-4
+              ">
+                <AmountTheaterSeats />
+                <TheaterViewContainer
+                  selectTheaterId={selectedTheaterId}
+                  selectShowing={selectedShowing}
+                />
+              </article>
             </section>
 
-            <div
-              className="Booking-component flex flex-col w-11/12 h-auto justify-center items-center container_box
-                        md:flex-col md:justify-center md:items-center md:w-10/14 md:ml-15
-                        lg:flex lg:flex-col lg:w-12/14 lg:justify-center lg:items-center lg:ml-20
-                        xl:flex-row xl:ml-18 xl:justify-around xl:w-8/10"
-            >
-              <AmountTheaterSeats />
-
-              <TheaterViewContainer
-                selectTheaterId={selectedTheaterId}
-                selectShowing={selectedShowing}
-              />
-            </div>
-            </div>
+            {/* RIGHT SIDE: Desktop Recipe */}
             <section
-              className="Recipe hidden sticky
-            md:flex md:justify-center md:items-center md:self-start md:top-[170px] md:right-[30px] md:w-5/13 md:h-80 container_box rounded-md 
-            lg:right-[35px] lg:top-[180px]
-            xl:right-[60px] xl:top-[220px]"
-            >
+              className="
+              hidden lg:flex
+              sticky top-40
+              container_box rounded-md
+              justify-center items-start
+              p-6 xl:p-10
+              w-75 xl:w-80
+            ">
               <CheckoutRecipe />
             </section>
           </main>
-          <section className="flex justify-center items-center m-10">
-            <section className="w-screen xl:mt-10">
-              <CheckoutComponent />
-            </section>
 
+          {/* Checkout */}
+          <section className="w-full flex justify-center mt-10">
+            <div className="w-full">
+              <CheckoutComponent />
+            </div>
           </section>
+
         </CheckoutProvider>
       </SeatsProvider>
     </>

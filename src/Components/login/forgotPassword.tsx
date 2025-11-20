@@ -26,9 +26,6 @@ export default function ForgotPassword({
       console.log("Respons data:", data);
       setMessage(data.message || data.error);
 
-      // Here you would normally call your backend to send reset email
-      console.log("Send reset link to:", email);
-
       setSubmitted(true);
     } catch (err) {
       console.error("Kunde inte skicka", err);

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../../context/authContext";
+import "./../../../index.css"
 
 
 export default function FetchUserInfo() {
@@ -52,64 +53,54 @@ export default function FetchUserInfo() {
 
     return (
         <>
-            <section className="mb-8 text-center leading-loose w-10/12 flex flex-col items-center justify-center">
-                <h2 className="text-xl font-bold mb-2">Användarinformation:</h2>
+            <section className="mb-8 text-center leading-loose flex flex-col items-center justify-center w-full text-black">
+                <h2 className="text-lg font-bold mb-2 ">Användarinformation:</h2>
                 {!editMode ? (
                     <>
-                    <p>Namn: {`${formData.firstName} ${formData.lastName}`}</p>
-                    <p>Email: {formData.email}</p>
+                    <p className="text-base">Namn: {`${formData.firstName} ${formData.lastName}`}</p>
+                    <p className="text-base">Email: {formData.email}</p>
                     <p className="mb-4">Telefon: 0{formData.phoneNumber}</p>
 
-                    <button onClick={() => setEditMode(true)} className="px-4 py-2 bg-[#243365] cursor-pointer rounded hover:bg-blue-900 mb-4">
+                    <button onClick={() => setEditMode(true)} className="main_buttons cursor-pointer mb-4 text-sm py-2 px-2">
                         Redigera information
                     </button>
-                    {user.role === "admin" && (
-                    <a
-                        href="/admin"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                    >
-                        Gå till Adminpanel
-                    </a>
-                )}
                     </>
                 ) : (
-                    <article className="flex flex-col gap-3 mb-4">
+                    <article className="w-full flex flex-col gap-3 mb-4 justify-center items-center">
                         <input
                         type="text"
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
-                        className="p-2 my-2 border-2 border-white rounded text-white"
+                        className="p-2 my-2 border-1 border-grey-500  rounded w-10/12"
                         placeholder="Förnamn" />
                         <input 
                         type="text"
                         name="lastName"
                         value={formData.lastName}
                         onChange={handleChange}
-                        className="p-2 my-2 border-2 border-white rounded text-white"
+                        className="p-2 my-2 border-1 border-grey-500  rounded w-10/12"
                         placeholder="Efternamn" />
                         <input 
                         type="email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="p-2 my-2 border-2 border-white rounded text-white"
+                        className="p-2 my-2 border-1 border-grey-500 rounded w-10/12"
                         placeholder="Email" />
                         <input 
                         type="text"
                         name="phoneNumber"
                         value={formData.phoneNumber}
                         onChange={handleChange}
-                        className="p-2 my-2 border-2 border-white rounded text-white"
+                        className="p-2 my-2 border-1 border-grey-500 rounded w-10/12"
                         placeholder="Telefonnummer" />
 
                         <section className="flex gap-2 justify-center">
-                            <button onClick={handleSave} disabled={updating} className="px-4 py-2 cursor-pointer bg-green-700 rounded hover:bg-green-600">
+                            <button onClick={handleSave} disabled={updating} className="px-2 py-2 cursor-pointer main_buttons text-sm">
                                 {updating ? "Sparar...." : "Sparar ändringar"}
                             </button>
-                            <button onClick={() => setEditMode(false)} className="px-4 py-2 cursor-pointer bg-red-700 rounded hover:bg-red-600">
+                            <button onClick={() => setEditMode(false)} className="px-2 py-2 cursor-pointer main_buttons text-sm">
                                 Avbryt
                             </button>
                         </section>

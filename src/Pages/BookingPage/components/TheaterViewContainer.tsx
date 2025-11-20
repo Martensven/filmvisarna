@@ -22,7 +22,6 @@ export default function TheaterViewContainer({ selectTheaterId, selectShowing }:
           headers: {"Content-Type": "application/json"}
         });
         const data = await res.json();
-        console.log("This is auditorium data:", data);
         setTheater(data);
       } catch (err) {
         console.error("Failed to fetch theater:", err);
@@ -43,7 +42,6 @@ export default function TheaterViewContainer({ selectTheaterId, selectShowing }:
           headers: {"Content-Type": "application/json"}
         });
         const data = await res.json();
-        console.log("this is screening data:", data);
         setCurrentShowing(data);
       } catch (err) {
         console.error("Failed to fetch showing:", err);

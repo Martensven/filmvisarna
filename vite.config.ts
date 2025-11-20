@@ -7,10 +7,28 @@ export default defineConfig({
   plugins: [react(),
   tailwindcss()],
 
+  // base: '/',
+
+  esbuild: {
+    logOverride: {
+      'this-is-undefined-in-esm': 'silent'
+    }
+  },
+
+  build: {
+    rollupOptions: {
+      onwarn(warning, warn) {
+        // Suppress unused variable warnings
+        if (warning.code === 'UNUSED_EXTERNAL_IMPORT') return;
+        warn(warning);
+      }
+    }
+  },
+
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:4321',
+        target: 'http://localhost:5170',
         changeOrigin: true,
         secure: false,
         ws: true

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Toast from "../../../toast/toast";
 
-type Movie = { _id: string; title: string; themes?: { themeDesc?: string } };
+type Movie = { _id: string; title: string; themes?: { themeDesc?: string; weekDay?: string } };
 type Auditorium = { _id: string; name: string };
 
 export default function AdminAddScreening() {
@@ -13,7 +13,7 @@ export default function AdminAddScreening() {
   const [freeTimes, setFreeTimes] = useState<string[]>([]);
   const [selectedTime, setSelectedTime] = useState("");
 
-  const [movieTheme, setMovieTheme] = useState<string>("");
+  const setMovieTheme = useState<string>("")[1];
 
   // toast state
   const [toastMessage, setToastMessage] = useState("");
@@ -144,7 +144,7 @@ export default function AdminAddScreening() {
   };
 
   return (
-    <div className="p-6 bg-[#243365] text-white w-full rounded-xl min-h-[70vh] flex flex-col gap-4">
+    <div className="p-6 bg-[#243365] text-white w-full md:rounded-xl min-h-[70vh] flex flex-col gap-4">
       <h1 className="text-2xl font-bold">Skapa visning</h1>
 
       <label className="flex flex-col">
@@ -157,7 +157,7 @@ export default function AdminAddScreening() {
           <option value="">-- välj film --</option>
           {movies.map((m) => (
             <option key={m._id} value={m._id}>
-              {m.title}
+              {m.title} | {m.themes?.weekDay || "Ingen tema"}
             </option>
           ))}
         </select>

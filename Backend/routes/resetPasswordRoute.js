@@ -5,6 +5,7 @@ import { validateData } from "../middleware/dataValidation.js";
 import express from "express";
 import crypto from "crypto";
 
+
 const router = express.Router();
 //Router endpoint for forgotten password
 router.post("/api/forgotPass", async (req, res) => {
@@ -23,11 +24,12 @@ router.post("/api/forgotPass", async (req, res) => {
         user.resetPasswordExpire = Date.now()+15*60*1000;
         await user.save();
 
+        //Sending a link with a valid token to reset password and change it
         const resetPassLink = `http://localhost:5173/forgotPass/${generateToken}`;
         
         await sendMail({
             to: email,
-            subject: "Filmvisarna - Återställning av lösenord",
+            subject: "Filmsmedjan - Återställning av lösenord",
             html: `
                <table align="center" width="600" cellpadding="0" cellspacing="3" style="font-family: Arial, serif; padding:10px;">
               <tr>
@@ -63,9 +65,9 @@ router.post("/api/forgotPass", async (req, res) => {
                   <table cellpadding="0" cellspacing="0" style="color:white; margin:20px auto 25px auto;" align="center">
                     <tr>
                       <td align="center">
-                        <h1 style="font-size:25px; margin:3px;">Filmvisarna</h1>
+                        <h1 style="font-size:25px; margin:3px;">Filmvsmedjan</h1>
                         <h3 style="font-size:20px; margin:2px 0px;">Kontakt</h3>
-                        <p style="font-size:15px; margin:2px;">Epost: info@filmvisarna.se</p>
+                        <p style="font-size:15px; margin:2px;">Epost: info@filmsmedjan.se</p>
                         <p style="font-size:15px; margin:2px;">Telefon: 123-456 78 90</p>
                         <p style="font-size:15px; margin:2px;">Adress: Biogatan 1, 123 45, Filmstaden</p>
                       </td>
@@ -105,10 +107,13 @@ router.post("/api/forgotPass/:token",
     try{
         const user = await User.findOne({
             resetPasswordToken: token, 
-            resetPasswordExpire: { $gt: Date.now() }, //This line should check if the token hasn't expired
         });
 
         if(!user) return res.status(400).json({error: "Token ogiltig"});
+
+        if(user.resetPasswordExpire < Date.now()) {
+          return res.status(400).json({ error: "Återställningslänk har gått ut, begär om en ny länk på <strong>Glömt Lösenord</strong>"})
+        }
 
         user.password = hashedPass;
         user.resetPasswordToken = undefined;
@@ -119,6 +124,27 @@ router.post("/api/forgotPass/:token",
     } catch (err) {
         console.error(err);
         res.status(500).json({error: "Kunde inte ändra löenordet"})
+    }
+})
+
+router.get("/api/forgotPass/validate/:token", async (req, res) => {
+  const { token } = req.params;
+
+    try{
+      const user = await User.findOne({ resetPasswordToken: token });
+
+      if(!user) {
+        return res.status(400).json({error: "Ogiltig återställningslänk"});
+      }
+
+      if(user.resetPasswordExpire < Date.now()) {
+        return res.status(400).json({ error: "Återställningslänken har gått ut. Begär en ny"})
+      }
+
+      return res.json({message: "Token är giltig"});
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({error: "Serverfel"})
     }
 })
 

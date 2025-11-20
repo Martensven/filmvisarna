@@ -20,8 +20,8 @@ export default function AddMovieForm() {
     title: "",
     imageSrc: "",
     releaseYear: new Date().getFullYear(),
-    age: "",
-    length: "",
+    age: 0,
+    length: 0,
     description: "",
     youtubeTrailers: "",
     genres: [],
@@ -145,8 +145,8 @@ export default function AddMovieForm() {
         title: "",
         imageSrc: "",
         releaseYear: new Date().getFullYear(),
-        age: "",
-        length: "",
+        age: 0,
+        length: 0,
         description: "",
         youtubeTrailers: "",
         genres: [],
@@ -156,13 +156,13 @@ export default function AddMovieForm() {
         themes: "",
       });
     } catch (error: any) {
-      console.log("Fel vid tilläggning av film", +error);
+      console.error("Fel vid tilläggning av film", +error);
       setMessage(error.message);
     }
   };
 
   return (
-    <div className="w-full p-4 bg-[#243365] rounded-xl text-white">
+    <div className="w-full p-4 bg-[#243365] md:rounded-xl text-white">
       <h2 className="text-2xl font-bold mb-6">Lägg till ny film</h2>
       {loading ? (
         <p className="text-white">Laddar...</p>

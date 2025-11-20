@@ -1,4 +1,4 @@
-import "./LoggoStylesheet.css"
+import "./LoggoStylesheet.css";
 
 
 export default function LoggoComponent(){
@@ -12,7 +12,7 @@ export default function LoggoComponent(){
             <h1 className="h1-font m-0 p-0 absolute top-5 text-lg
             xs:text-base xs:top-5 
             md:text-lg md:top-7 
-            lg:text-2xl lg:top-6">FILMVISARNA</h1>
+            lg:text-2xl lg:top-6">FILMSMEDJAN</h1>
             <h2 className="h2-font flex flex-row m-0 p-0 text-red-200 absolute top-11 text-xs
             xs:text-xs xs:top-10
             md:text-sm md:top-12  

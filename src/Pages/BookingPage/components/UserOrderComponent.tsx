@@ -8,7 +8,7 @@ export default function UserOrderComponent() {
   const { totalPrice, ticketTypes, counts } = useSeats();
   const { screeningId, selectedSeats } = useCheckout();
   const { user } = useAuth();
-  const [orderId, setOrderId] = useState<string | null>(null);
+  const [orderId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ export default function UserOrderComponent() {
   // };
 
   return (
-    <main className="container_box w-86 h-auto p-3 m-3 text-center">
+    <main className="flex justify-center items-center container_box w-86 h-auto p-3 m-3 text-center">
       {orderId ? (
         <>
           <p className="m-3">Ordernummer {orderId} har sparats och skickats till din mejl</p>

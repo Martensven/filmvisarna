@@ -1,6 +1,5 @@
 .container_box {
   border: none;
-  padding: 1px;
   border-radius: 10px;
   background: #0417209f;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.253);
@@ -27,13 +26,6 @@
   background-color: #efefef;
 }
 
-.main_buttons {
-  background-color: #243365;
-  color: #e4e1e1;
-  border-radius: 5px;
-  box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.253);
-}
-
 .seat_range_buttons {
   background-color: #4a66c5;
   color: #e4e1e1;
@@ -41,9 +33,3 @@
   box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.253);
 }
 
-.glass_effect {
-  border-radius: 8px;
-  background: #18203a3b;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
-}

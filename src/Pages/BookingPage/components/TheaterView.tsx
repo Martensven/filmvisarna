@@ -31,7 +31,6 @@ export default function TheaterView({ selectShowing }: Props) {
   // When the socket connects, we save its unique ID.
   useEffect(() => {
     const handleConnect = () => {
-      console.log("✅ Socket connected:", sockets.id);
       setSocketId(sockets.id ?? "");
     };
 
@@ -192,10 +191,11 @@ export default function TheaterView({ selectShowing }: Props) {
                   key={seat._id}
                   onClick={() => handleToggle(seat._id)}
                   style={{
-                    width: 22,
-                    height: 22,
+                    width: 24,
+                    height: 24,
                     margin: 2,
-                    borderRadius: 4,
+                    borderTopLeftRadius: 5,
+                    borderTopRightRadius: 5,
                     backgroundColor: color,
                     cursor: isBooked || isPendingByOther ? "not-allowed" : "pointer",
                   }}

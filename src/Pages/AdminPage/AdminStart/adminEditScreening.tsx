@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import ConfirmModal from "../Components/ConfirmModal/confirmModal";
 import Toast from "../../../toast/toast";
 
 export default function AdminEditScreening() {
@@ -7,11 +8,15 @@ export default function AdminEditScreening() {
   const { id } = useParams();
   const nav = useNavigate();
 
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
   const [time, setTime] = useState("");
   const [screeningData, setScreeningData] = useState<{
     movieTitle: string;
     auditoriumName: string;
     id: string;
+    date: string;
+    time: string;
   } | null>(null);
 
   // toast state
@@ -89,7 +94,7 @@ export default function AdminEditScreening() {
       <button onClick={handleSave} className="bg-green-500 p-2 rounded-md cursor-pointer">
         Spara
       </button>
-      <button onClick={handleDelete} className="bg-red-500 p-2 rounded-md cursor-pointer">
+      <button onClick={() => setShowConfirmModal(true)} className="bg-red-500 p-2 rounded-md cursor-pointer">
         Ta bort visningen
       </button>
 
@@ -98,6 +103,17 @@ export default function AdminEditScreening() {
           message={toastMessage}
           type={toastType}
           onClose={() => setToastMessage("")}
+        />
+      )}
+      {showConfirmModal && (
+        <ConfirmModal
+          title="Bekräfta radering"
+          message={`Är du säker på att du vill ta bort visningen för ${screeningData?.movieTitle} den ${screeningData?.date} kl ${screeningData?.time}?`}
+          onConfirm={() => {
+            handleDelete();
+            setShowConfirmModal(false);
+          }}
+          onCancel={() => setShowConfirmModal(false)}
         />
       )}
     </div>
