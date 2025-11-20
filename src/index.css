@@ -183,8 +183,7 @@
   box-shadow: 1px 1px 15px 5px #0000002d;
   background: #2433651d;
   color: black;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  background-color: rgba(24, 32, 58, 0.816);
 }
 
 .stroked-text {

@@ -150,7 +150,7 @@ export default function FilterSortMovies() {
         </h2>
 
         {/* Filter & Sort */}
-        <section className="w-10/12 h-auto p-2 flex flex-col sm:flex-row  justify-center items-center relative text-white ">
+        <section className="w-10/12 h-auto p-2 flex flex-col sm:flex-row  justify-center items-center relative text-white">
           <section className="flex flex-row w-1/2 justify-around items-center sm:w-full">
             {/* Filter */}
             <nav className="relative ">
@@ -271,9 +271,6 @@ export default function FilterSortMovies() {
         [&::-webkit-scrollbar-thumb]:rounded-full
         [&::-webkit-scrollbar-thumb]:bg-[#cdd3fe24]
         snap-x snap-mandatory text-white
-    
-        
-    
         lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:h-auto lg:w-full
         xl:h-auto xl:p-2 xl:grid xl:grid-cols-4  
         xl:w-8/12
@@ -357,7 +354,6 @@ export default function FilterSortMovies() {
                     <button className="main_buttons px-3 py-1 ml-2 cursor-pointer hover:scale-105 active:scale-95">
                       Boka
                     </button>
-
                   </Link>
                 </section>
               </section>
