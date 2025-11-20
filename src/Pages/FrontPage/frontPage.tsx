@@ -427,7 +427,7 @@ export default function FrontPage() {
       {/* Movies container*/}
       <section
         className="
-    h-96 w-11/12 mx-5 my-5
+    h-100 w-11/12 mx-5 my-5
     flex flex-row overflow-x-auto overflow-y-hidden
     [&::-webkit-scrollbar]:h-2   
     [&::-webkit-scrollbar-track]:rounded-full
@@ -464,6 +464,7 @@ export default function FrontPage() {
                              text-xs
                               flex items-center justify-center
                              h-12
+                             mt-6
                              md:h-14
                                 lg:m-0 
                                 lg:text-md
@@ -472,16 +473,25 @@ export default function FrontPage() {
                 >
                   {movie.title}
                 </p>
-                <img
-                  src={movie.imageSrc}
-                  alt={movie.title}
-                  className="shadow-md w-auto  object-cover rounded-md p-0 
-                  h-56
-                  md:h-60
-                  lg:h-64
-                  xl:h-72
-                  2xl:h-80"
-                />
+                
+                <div className="relative">
+  {/* Åldersbadge */}
+  <div className="glass_effect w-12 absolute top-8 left-2 text-white px-2 text-xs rounded-md shadow-md">
+    {movie.age}+
+  </div>
+
+  {/* Bild */}
+  <img
+    src={movie.imageSrc}
+    alt={movie.title}
+    className="shadow-md w-auto object-cover rounded-md p-0 
+    h-56
+    md:h-60
+    lg:h-64
+    xl:h-72
+    2xl:h-80"
+  />
+</div>
 
                 <p
                   className="text-sm
@@ -511,6 +521,7 @@ export default function FrontPage() {
                     <button className="main_buttons px-3 py-1 ml-2 cursor-pointer hover:scale-105 active:scale-95">
                       Boka
                     </button>
+                    
                   </Link>
                 </section>
               </section>
