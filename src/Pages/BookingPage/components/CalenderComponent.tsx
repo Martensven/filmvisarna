@@ -74,7 +74,12 @@ export default function CalenderComponent({
     .filter((date) => new Date(date) >= new Date(today))
     .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
-  const todaysScreening = sortScreeningByDate[today] ?? [];
+    // Only show screenings that are yet to come today)
+  const now = new Date();
+  const todaysScreening = (sortScreeningByDate[today] ?? []).filter((s) => {
+    const screeningDateTime = new Date(`${s.date}T${s.time}`);
+    return screeningDateTime >= now;
+  });
   const otherDaysScrenning = futureOrTodayDates.filter(
     (date) => date !== today
   );
@@ -85,17 +90,13 @@ export default function CalenderComponent({
     let firstAvailable: screening | undefined;
 
     if (todaysScreening.length > 0) {
-      const sortedToday = todaysScreening
-        .slice()
-        .sort((a, b) => {
-          const [ax, ay] = a.time.split(":").map(Number);
-          const [bx, by] = b.time.split(":").map(Number);
-          return ax * 60 + ay - (bx * 60 + by);
-        });
+      const sortedToday = todaysScreening.slice().sort((a, b) => {
+        const [ax, ay] = a.time.split(":").map(Number);
+        const [bx, by] = b.time.split(":").map(Number);
+        return ax * 60 + ay - (bx * 60 + by);
+      });
       firstAvailable = sortedToday[0];
-    }
-
-    else if (otherDaysScrenning.length > 0) {
+    } else if (otherDaysScrenning.length > 0) {
       const firstDate = otherDaysScrenning[0];
 
       const sortedOther = sortScreeningByDate[firstDate]
@@ -123,7 +124,6 @@ export default function CalenderComponent({
     onSelectShowing,
   ]);
 
-
   if (loading) {
     return <p>Laddar data</p>;
   }
@@ -131,19 +131,6 @@ export default function CalenderComponent({
   if (!screenings) {
     return <p>Ingen filmdata hämtad</p>;
   }
-
-  // Skapa lista över alla kommande screenings utöver de fyra första datumen
-  const extraScreenings: screening[] = otherDaysScrenning
-    .slice(4)                                   // ta bort de första 4 datumen
-    .flatMap(date =>
-      sortScreeningByDate[date]
-        .slice()
-        .sort((a, b) => {
-          const [ax, ay] = a.time.split(":").map(Number);
-          const [bx, by] = b.time.split(":").map(Number);
-          return ax * 60 + ay - (bx * 60 + by);
-        })
-    );
 
   return (
     <main
@@ -188,7 +175,7 @@ export default function CalenderComponent({
                 sm:mb-2 
                 md:w-full md:text-base md:justify-center md:items-center cursor-pointer
                 lg:w-11/12 lg:flex lg:flex-col lg:justify-between lg:items-center">
-          ${active === screening._id ? "border-4! border-[#07ca00]!" : ""}`}
+          ${active === screening._id ? "!border-4 !border-[#07ca00]" : ""}`}
               >
                 <li
                   className="pt-1 pb-1 text-base font-bold 
@@ -230,7 +217,7 @@ export default function CalenderComponent({
        lg:w-full lg:mt-1 lg:pb-1 
        xl:p-0 "
         >
-          Kommande visningar
+          Andra visningar
         </h2>
         <section
           className="Otherdays flex flex-col justify-start items-center mt-1 w-11/12 rounded-md
@@ -240,7 +227,7 @@ export default function CalenderComponent({
         "
         >
           {otherDaysScrenning.length > 0 ? (
-            otherDaysScrenning.slice(0, 4).map((date) => (
+            otherDaysScrenning.slice(0).map((date) => (
               <div
                 key={date}
                 className="flex flex-col justify-center items-center underline w-56
@@ -289,17 +276,15 @@ export default function CalenderComponent({
                           xl:w-10/12 xl:h-20 xl:mt-1 
                           
                           
-                          ${active === screening._id
-                            ? "border-4! border-[#07ca00]!"
-                            : ""
-                          }`
-                        }
-                        key={screening._id}
+                          ${
+                            active === screening._id
+                              ? "!border-4 !border-[#07ca00]"
+                              : ""
+                          }`}
                       >
                         <li
                           className="pt-1 text-sm font-bold
                     lg:text-base"
-
                         >
                           {screening.time.slice(0, 5)}{" "}
                           {/*Getting rid of the seconds area when fetching screening time*/}
@@ -312,7 +297,6 @@ export default function CalenderComponent({
                         </li>
                       </ul>
                     ))}
-
                 </div>
               </div>
             ))
@@ -320,36 +304,6 @@ export default function CalenderComponent({
             <p>Inga andra visningar</p>
           )}
         </section>
-        {/* dropdown for other dates if more than 4 future dates (with time and auditorium) */}
-        {extraScreenings.length > 0 && (
-          <select
-            className={`mt-2 mb-5 p-2 rounded-md bg-[#e4e1e1] text-black
-      ${extraScreenings.some(s => s._id === active) ? "border-4 border-[#07ca00]" : ""}
-    `}
-            onChange={(e) => {
-              const selected = screenings.find(s => s._id === e.target.value);
-              if (selected) {
-                setActive(selected._id);
-                onSelectTheaterId(selected.auditorium._id);
-                onSelectShowing(selected._id);
-              }
-            }}
-            value={extraScreenings.some(s => s._id === active) ? active! : ""}
-          >
-            <option value="">Fler visningar…</option>
-
-            {extraScreenings.map((screening) => (
-              <option key={screening._id} value={screening._id}>
-                {new Date(screening.date).toLocaleDateString("sv-SE", {
-                  weekday: "short",
-                  day: "2-digit",
-                  month: "2-digit",
-                })}{" "}
-                {screening.time.slice(0, 5)} – {screening.auditorium.name}
-              </option>
-            ))}
-          </select>
-        )}
       </div>
     </main>
   );
