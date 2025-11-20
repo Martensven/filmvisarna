@@ -136,7 +136,7 @@
 
   background: white;
   color:black;
-  box-shadow: 1px 1px 20px 10px lightgoldenrodyellow;
+  box-shadow: 1px 1px 15px 5px lightgoldenrodyellow;
   box-shadow: inset 0 0 50px rgba(138, 106, 0, 0.582);
   -webkit-backdrop-filter: drop-shadow(5px);
   backdrop-filter: 5px;
