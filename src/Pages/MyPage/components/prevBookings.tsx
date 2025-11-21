@@ -58,19 +58,18 @@ const FAQ = () => {
 
             {!loading && !error && bookings.length > 0 && (
 
-                <section className="previous p-4 glass_effect rounded-lg mt-3">
+                <section className="previous p-4 bg-amber-50 rounded-lg mt-3 inset-shadow-sm inset-shadow-[#8a6a0094] rounded-2xl shadow-lg m-5">
 
-                    <section className="py-2 w-10/12 flex flex-col items-center justify-center mx-auto text-white">
+                    <section className="py-2 w-10/12 flex flex-col items-center justify-center mx-auto text-black">
                         <button
                             onClick={() => setAccordionOpen(!accordionOpen)}
-                            className="flex justify-between w-full">
+                            className="flex justify-between w-full mx-15 md:mx-30">
                             <h2>Historik</h2>
                             {accordionOpen ? <h2>-</h2> : <h2>+</h2>}
-
                         </button>
                         <section className={`grid overflow-hidden transition-all duration-300 ease-in-out text-sm  ${accordionOpen
                             ? 'grid-rows[1fr] opacity-100'
-                            : 'grid-rows[0fr] opacity-0'
+                            : 'grid-rows[0fr] opacity-0 hidden'
                             }`}>
                             {bookings.map((b: any, index: number) => (
                                 <div key={b._id || index} className="border-b border-gray-700 pb-4">
