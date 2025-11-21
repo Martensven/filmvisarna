@@ -43,7 +43,6 @@ export default function BookingPage({ }: { isLoggedIn?: boolean }) {
       setLoadingMovie(true);
       setMovieError(null);
       try {
-        console.log("BookingPage: fetching movie with id:", paramId);
         const res = await fetch(`/api/movie/${paramId}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -55,7 +54,6 @@ export default function BookingPage({ }: { isLoggedIn?: boolean }) {
         }
 
         const data = await res.json();
-        console.log("BookingPage: movie data:", data);
         setMovie(data);
       } catch (err: any) {
         console.error("BookingPage: could not fetch movie:", err);
