@@ -199,6 +199,24 @@
   box-shadow: inset 0px 50px 100px -20px rgba(43, 43, 99, 0.345), 0px 30px 60px -30px rgba(0, 0, 0, 0.219), 0px -2px 6px 0px rgba(10, 37, 64, 0.219);
 }
 
+.main_buttons_blue {
+  margin: 3px;
+  position: relative;
+  background-color: #243365;
+  color: #e4e1e1;
+  border-radius: 5px;
+  box-shadow: inset 0px 50px 100px -20px rgba(43, 43, 99, 0.345), 0px 30px 60px -30px rgba(0, 0, 0, 0.219), 0px -2px 6px 0px rgba(10, 37, 64, 0.219);
+}
+
+.main_buttons_red {
+  margin: 3px;
+  position: relative;
+  background-color: rgb(148, 5, 5);
+  color: #e4e1e1;
+  border-radius: 5px;
+  box-shadow: inset 0px 50px 100px -20px rgba(43, 43, 99, 0.345), 0px 30px 60px -30px rgba(0, 0, 0, 0.219), 0px -2px 6px 0px rgba(10, 37, 64, 0.219);
+}
+
 .main_buttons:hover {
   scale: 105%;
 }
