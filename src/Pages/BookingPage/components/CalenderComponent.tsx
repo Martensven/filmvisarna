@@ -208,7 +208,7 @@ export default function CalenderComponent({
                           onSelectTheaterId(screening.auditorium._id);
                           onSelectShowing(screening._id);
                         }}
-                        className={`container_box calenderDatesContainer min-w-36 cursor-pointer flex flex-col items-center
+                        className={`container_box calenderDatesContainer min-w-36 cursor-pointer flex flex-col justify-start items-center
                           ${active === screening._id
                             ? "border-4! border-[#07ca00]!"
                             : ""
