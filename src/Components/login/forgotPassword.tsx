@@ -65,7 +65,7 @@ export default function ForgotPassword({
           <h2 className="text-lg font-bold mb-2">Kolla din e-post!</h2>
           <p className="bg-[#243365] rounded-md shadow-md p-5">
             Återställningslänk skickas till {email}</p>
-            <p>{message && <b>{message}.</b>}</p> {/**Setting the message for either successfull operation or not */}
+          <p>{message && <b>{message}.</b>}</p> {/**Setting the message for either successfull operation or not */}
           <button
             onClick={onSwitchToLogin}
             className="mt-4 text-sm underline cursor-pointer"
