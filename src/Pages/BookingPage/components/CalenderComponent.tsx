@@ -210,7 +210,7 @@ export default function CalenderComponent({
                         }}
                         className={`container_box calenderDatesContainer min-w-36 cursor-pointer w-9/12 flex flex-col items-center
                           ${active === screening._id
-                            ? "!border-4 !border-[#07ca00]"
+                            ? "border-4! border-[#07ca00]!"
                             : ""
                           }`}
                       >
