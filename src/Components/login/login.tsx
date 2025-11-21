@@ -81,7 +81,7 @@ export default function Login({
                 <button
                     type="submit"
                     disabled={loading}
-                    className="main_buttons cursor-pointer p-3 self-center w-1/2"
+                    className="main_buttons_red cursor-pointer p-3 self-center w-1/2"
                 >
                     {loading ? "Loggar in..." : "Logga In"}
                 </button>

@@ -18,7 +18,7 @@ export default function ResetPassword() {
   useEffect(() => {
     const tokenValidation = async () => {
       try {
-        const response = await fetch(`/api/forgotPass/validate/${token}`); 
+        const response = await fetch(`/api/forgotPass/validate/${token}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -100,7 +100,7 @@ export default function ResetPassword() {
           placeholder="Skriv lösenord igen"
         />
 
-        <button type="submit" disabled={loading} className="main_buttons w-45 h-15 mt-5 p-2">
+        <button type="submit" disabled={loading} className="main_buttons_red w-45 h-15 mt-5 p-2">
           Återställ Lösenordet
         </button>
         {message && <p className="text-white font-bolder underline mt-5">{message}</p>}
