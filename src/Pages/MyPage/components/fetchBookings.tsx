@@ -82,13 +82,13 @@ export default function FetchBookings() {
                         <div className="flex justify-center gap-4">
                             <button
                                 onClick={() => handleDeleteBooking(selectedBooking._id)}
-                                className="alert_buttons text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                                className="alert_buttons text-white px-4 py-2 rounded-lg"
                             >
                                 Ja, avboka
                             </button>
                             <button
                                 onClick={() => setSelectedBooking(null)}
-                                className="bg-gray-600 main_buttons text-black px-4 py-2 rounded-lg hover:bg-gray-700"
+                                className="main_buttons text-black px-4 py-2 rounded-lg"
                             >
                                 Nej, avbryt
                             </button>
@@ -98,10 +98,10 @@ export default function FetchBookings() {
             )}
             {alertMessage && (
                 <div className={`flex z-50 inset-y-50 sticky mb-10`}>
-                    <div className={`p-6 rounded-xl shadow-lg text-center w-80 transition-all duration-300 bg-[#152333]`}>
+                    <div className={`bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-6 rounded-2xl shadow-lg text-center w-80 text-black`}>
                             <h3 className="text-black text-lg font-semibold mb-3">{alertType === "success" ? "Klart!" : "Fel inträffade"}</h3>
                             <p className="text-black mb-5">{alertMessage}</p>
-                            <button onClick={() => setAlertMessage(null)} className={`text-black px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700`}>
+                            <button onClick={() => setAlertMessage(null)} className={`alert_buttons text-white px-4 py-2 rounded-lg`}>
                                 Stäng
                             </button>
                     </div>
