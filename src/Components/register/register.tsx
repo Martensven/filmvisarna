@@ -158,7 +158,7 @@ export default function Register({
 
                 <button
                     type="submit"
-                    className="main_buttons cursor-pointer p-3 self-center"
+                    className="main_buttons_red cursor-pointer p-3 self-center"
                 >
                     Skapa konto
                 </button>

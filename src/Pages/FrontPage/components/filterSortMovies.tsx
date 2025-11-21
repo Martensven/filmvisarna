@@ -347,12 +347,12 @@ export default function FilterSortMovies({ onLoaded }: { onLoaded: () => void })
                     to={`/movie/${movie._id}`}
                     className="cursor-pointer p-0 m-0"
                   >
-                    <button className="main_buttons px-3 py-1 mr-2 cursor-pointer hover:scale-105 active:scale-95">
+                    <button className="main_buttons w-[60px] px-3 py-1 mr-2 cursor-pointer hover:scale-105 active:scale-95">
                       Info
                     </button>
                   </Link>
                   <Link to={`/booking/${movie._id}`} className="cursor-pointer">
-                    <button className="main_buttons px-3 py-1 ml-2 cursor-pointer hover:scale-105 active:scale-95">
+                    <button className="main_buttons w-[60px] px-3 py-1 ml-2 cursor-pointer hover:scale-105 active:scale-95">
                       Boka
                     </button>
                   </Link>

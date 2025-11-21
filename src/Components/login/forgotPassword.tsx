@@ -37,7 +37,7 @@ export default function ForgotPassword({
           <form onSubmit={handleSubmit} className="flex flex-col">
             <label className="my-2">E-Post</label>
             <input
-              className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 rounded-md shadow-md text-gray-950"
+              className="bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-2 rounded-md shadow-md text-gray-950 mb-5"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -47,7 +47,7 @@ export default function ForgotPassword({
             <button
               type="submit"
               onClick={() => console.log("klicks togs emot")}
-              className="cursor-pointer p-2 mt-4 mb-3 bg-[#243365] self-center rounded-md shadow-md text-white hover:bg-[#1c2a4a] transition-colors"
+              className="cursor-pointer p-2  mb-3 main_buttons_red mt-5 self-center rounded-md shadow-md text-white hover:bg-[#1c2a4a] transition-colors"
             >
               Skicka återställningslänk
             </button>

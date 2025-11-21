@@ -88,7 +88,7 @@ export default function FetchBookings() {
                             </button>
                             <button
                                 onClick={() => setSelectedBooking(null)}
-                                className="main_buttons text-black px-4 py-2 rounded-lg"
+                                className="main_buttons_red text-black px-4 py-2 rounded-lg"
                             >
                                 Nej, avbryt
                             </button>
@@ -99,11 +99,11 @@ export default function FetchBookings() {
             {alertMessage && (
                 <div className={`flex z-50 inset-y-50 sticky mb-10`}>
                     <div className={`bg-amber-50 inset-shadow-sm inset-shadow-[#8a6a0094] p-6 rounded-2xl shadow-lg text-center w-80 text-black`}>
-                            <h3 className="text-black text-lg font-semibold mb-3">{alertType === "success" ? "Klart!" : "Fel inträffade"}</h3>
-                            <p className="text-black mb-5">{alertMessage}</p>
-                            <button onClick={() => setAlertMessage(null)} className={`alert_buttons text-white px-4 py-2 rounded-lg`}>
-                                Stäng
-                            </button>
+                        <h3 className="text-black text-lg font-semibold mb-3">{alertType === "success" ? "Klart!" : "Fel inträffade"}</h3>
+                        <p className="text-black mb-5">{alertMessage}</p>
+                        <button onClick={() => setAlertMessage(null)} className={`alert_buttons text-white px-4 py-2 rounded-lg`}>
+                            Stäng
+                        </button>
                     </div>
                 </div>
             )}
@@ -113,45 +113,45 @@ export default function FetchBookings() {
             ) : (
 
                 <section className="current space-y-6 leading-loose w-10/12">
-                {bookings.map((b: any, index: number) => (
-                    <div key={b._id || index} className="border-b border-gray-700 pb-4">
-                        <p className="font-bold">{b.screening_id.movie.title}</p>
-                        <p>
-                            Datum: {b.screening_id.date} – {b.screening_id.time}
-                        </p>
-                        <p>Salong: {b.screening_id.auditoriumName}</p>
+                    {bookings.map((b: any, index: number) => (
+                        <div key={b._id || index} className="border-b border-gray-700 pb-4">
+                            <p className="font-bold">{b.screening_id.movie.title}</p>
+                            <p>
+                                Datum: {b.screening_id.date} – {b.screening_id.time}
+                            </p>
+                            <p>Salong: {b.screening_id.auditoriumName}</p>
 
-                        <p>
-                            Plats(er):{" "}
-                            {b.seats?.length
-                                ? b.seats
-                                    .map((s: any) =>
-                                        s?.seat_id
-                                            ? `Rad: ${s.seat_id.rowNumber}, Plats: ${s.seat_id.seatNumber}`
-                                            : "Okänd plats"
-                                    )
-                                    .join(", ")
-                                : "Inga platser"}
-                        </p>
+                            <p>
+                                Plats(er):{" "}
+                                {b.seats?.length
+                                    ? b.seats
+                                        .map((s: any) =>
+                                            s?.seat_id
+                                                ? `Rad: ${s.seat_id.rowNumber}, Plats: ${s.seat_id.seatNumber}`
+                                                : "Okänd plats"
+                                        )
+                                        .join(", ")
+                                    : "Inga platser"}
+                            </p>
 
-                        <p>
-                            Biljetter:{" "}
-                            {b.tickets.map((t: any) => `${t.ticketName} x${t.quantity}`).join(", ")}
-                        </p>
+                            <p>
+                                Biljetter:{" "}
+                                {b.tickets.map((t: any) => `${t.ticketName} x${t.quantity}`).join(", ")}
+                            </p>
 
-                        <p className="font-medium ">Pris: {b.totalPrice} kr</p>
-                        {/* <p>Bokat: {b.created_at}</p> */}
-                        <p className="mb-5">Bokningsnummer: {b.bookingNumber}</p>
+                            <p className="font-medium ">Pris: {b.totalPrice} kr</p>
+                            {/* <p>Bokat: {b.created_at}</p> */}
+                            <p className="mb-5">Bokningsnummer: {b.bookingNumber}</p>
 
-                        <button
-                            className="alert_buttons px-4 py-2"
-                            onClick={() => setSelectedBooking(b)}
-                        >
-                            Avboka
-                        </button>
-                    </div>
-                ))}
-            </section>
+                            <button
+                                className="alert_buttons px-4 py-2"
+                                onClick={() => setSelectedBooking(b)}
+                            >
+                                Avboka
+                            </button>
+                        </div>
+                    ))}
+                </section>
             )}
         </>
     );
