@@ -141,7 +141,7 @@ export default function CalenderComponent({
       md:w-full lg:w-6/12 xl:w-8/12"
     >
       {/* Todays screenings */}
-      <div className="todays-container flex flex-col items-center mt-2 w-full md:w-11/12">
+      <div className="todays-container flex flex-col items-center mt-2 w-full ">
         <h2 className="text-[#e4e1e1] text-sm md:text-lg">Dagens visningar</h2>
 
         <section className="Todays flex flex-col items-center mt-3 justify-center w-11/12 rounded-md md:flex-row  lg:w-10/12 ">
@@ -174,12 +174,12 @@ export default function CalenderComponent({
       {/* Other screenings */}
       <div className="other-days-container flex flex-col items-center justify-center w-full md:mt-2">
         <h2 className="text-[#e4e1e1] mt-2 text-sm md:text-lg">
-          Andra visningar
+          Kommande datum
         </h2>
 
         <section
-          className="Otherdays flex flex-col items-start justify-start mt-1 w-11/12 rounded-md
-          md:w-11/12 lg:gap-2 lg:w-full xl:grid xl:grid-cols-2 xl:mt-2"
+          className="Otherdays flex flex-col items-center justify-start mt-1 w-11/12 rounded-md
+           lg:gap-2  2xl:grid 2xl:grid-cols-2 2xl:mt-2"
         >
           {otherDaysScrenning.length > 0 ? (
             otherDaysScrenning.slice(0, 4).map((date) => (
@@ -208,7 +208,7 @@ export default function CalenderComponent({
                           onSelectTheaterId(screening.auditorium._id);
                           onSelectShowing(screening._id);
                         }}
-                        className={`container_box calenderDatesContainer min-w-36 cursor-pointer w-9/12 flex flex-col items-center
+                        className={`container_box calenderDatesContainer min-w-36 cursor-pointer flex flex-col items-center
                           ${active === screening._id
                             ? "border-4! border-[#07ca00]!"
                             : ""
