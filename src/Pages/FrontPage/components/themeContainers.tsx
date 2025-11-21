@@ -67,7 +67,7 @@ export default function ThemeContainers({ onLoaded }: { onLoaded: () => void }) 
 
 
                 <article
-                    className="min-h-96 w-8/12 my-5 popOut-box
+                    className="min-h-96 w-11/12 sm:w-8/12 my-5 popOut-box
         flex flex-col justify-center items-center text-white
         lg:mb-20 "
                     id="thuTheme"
@@ -103,7 +103,7 @@ export default function ThemeContainers({ onLoaded }: { onLoaded: () => void }) 
                 </article>
 
                 <article
-                    className="min-h-96 w-8/12 my-5 popOut-box
+                    className="min-h-96 w-11/12 sm:w-8/12 my-5 popOut-box
         flex flex-col justify-center items-center text-white
         lg:mb-20"
                     id="sunTheme"
